@@ -2,508 +2,247 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1200">
-<title>AIM HIGH Technologies Banner</title>
+<title>AIM HIGH Banner</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Poppins:wght@500;600;700;800;900&family=Playfair+Display:ital,wght@1,600;1,700;1,800&display=block" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Dancing+Script:wght@700&display=swap');
-
+  @page { size: 30in 81in; margin: 0; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  body {
-    width: 1200px;
-    height: 3240px;
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    background: #000;
-  }
+  html, body { width: 30in; height: 81in; background: #06125c; }
+  body { font-family: 'Poppins', sans-serif; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 
   .banner {
-    width: 1200px;
-    height: 3240px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
+    width: 30in; height: 81in; position: relative; overflow: hidden;
+    background:
+      radial-gradient(ellipse 26in 20in at 50% 8in, #1b2fa8 0%, rgba(27,47,168,0) 70%),
+      linear-gradient(180deg, #0a1878 0%, #071266 45%, #050d4f 100%);
+    display: flex; flex-direction: column; align-items: center;
   }
-
-  /* Top Section - Header */
-  .header {
-    background: linear-gradient(135deg, #FFD700 0%, #FFC107 50%, #FFB300 100%);
-    padding: 50px 40px 30px;
-    text-align: center;
-    position: relative;
+  /* subtle dot texture */
+  .banner::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background-image: radial-gradient(rgba(255,255,255,0.07) 0.045in, transparent 0.05in);
+    background-size: 0.42in 0.42in;
   }
+  .banner > * { position: relative; }
 
-  .logo-circle {
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    background: #0a0a3a;
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 8px solid #fff;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  .topstripe { width: 100%; height: 0.9in; display: flex; flex: none; }
+  .topstripe i { flex: 1; }
+
+  /* ---------- Logo + Name ---------- */
+  .logo { width: 11.2in; height: 9.84in; flex: none; margin-top: 1.35in; filter: drop-shadow(0 0.18in 0.3in rgba(0,0,0,0.45)); }
+
+  .brand {
+    margin-top: 1.1in; width: 100%; background: #fff200;
+    border-radius: 2.2in 2.2in 0 0;
+    padding: 0.95in 0.8in 0.75in; text-align: center;
+    box-shadow: 0 -0.08in 0 #ffd200 inset;
   }
-
-  .logo-text {
-    color: #fff;
-    font-size: 52px;
-    font-weight: 900;
-    letter-spacing: 2px;
-    line-height: 1;
+  .aim {
+    font-family: 'Poppins', sans-serif; font-weight: 800; color: #0d2f9e;
+    font-size: 4.05in; line-height: 1; letter-spacing: 0.02em;
   }
-
-  .logo-text .bar-chart {
-    display: inline-block;
-    margin-left: 2px;
+  .tech {
+    font-family: 'Poppins', sans-serif; font-weight: 700; color: #ed1c24;
+    font-size: 3.55in; line-height: 1.05; letter-spacing: -0.01em; margin-top: 0.15in;
   }
-
-  .logo-text .bar-chart span {
-    display: inline-block;
-    width: 8px;
-    margin: 0 2px;
-    background: #FFD700;
-    vertical-align: bottom;
-    border-radius: 2px 2px 0 0;
-  }
-
-  .company-name {
-    font-size: 72px;
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 5px;
-  }
-
-  .company-name .aim-high {
-    color: #0a0a6e;
-  }
-
-  .company-name .tech {
-    color: #cc0000;
-  }
-
+  .uline { display: flex; gap: 0.22in; width: 26in; margin: 0.05in auto 0; }
+  .uline i { height: 0.2in; flex: 1; border-radius: 0.1in; }
   .tagline {
-    font-family: 'Dancing Script', cursive;
-    font-size: 36px;
-    color: #0a0a6e;
-    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
+    color: #0d2f9e; font-size: 1.62in; margin-top: 0.45in; letter-spacing: 0.005em;
   }
 
-  /* Services Bar */
-  .services-bar {
-    background: linear-gradient(90deg, #1a0a5e, #3a1a8e, #1a0a5e);
-    padding: 22px 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+  /* ---------- Services ---------- */
+  .services {
+    width: 100%; background: #3a0a6e;
+    background: linear-gradient(90deg, #2c0763, #4a0f86 50%, #2c0763);
+    display: flex; justify-content: center; align-items: center; gap: 0.5in;
+    padding: 0.6in 0.6in; border-top: 0.14in solid #ed1c24; border-bottom: 0.14in solid #ed1c24;
+  }
+  .services span {
+    font-family: 'Poppins', sans-serif; font-weight: 700; color: #fff; font-size: 1.12in; white-space: nowrap;
+  }
+  .services b { width: 0.16in; height: 1.15in; background: #fff200; border-radius: 0.08in; }
+
+  /* ---------- Classroom & Online ---------- */
+  .mode {
+    margin-top: 0.95in; display: flex; align-items: center; gap: 0.5in;
+    font-family: 'Anton', sans-serif; color: #fff200; font-size: 2.05in; letter-spacing: 0.02em; line-height: 1;
+  }
+  .mode .dot { width: 0.42in; height: 0.42in; border-radius: 50%; background: #ed1c24; box-shadow: 0 0 0 0.12in #fff; }
+
+  .heading {
+    margin-top: 0.8in; background: #ed1c24; color: #fff;
+    font-family: 'Anton', sans-serif; font-size: 2.3in; line-height: 1; letter-spacing: 0.04em;
+    padding: 0.42in 1.6in 0.5in; border-radius: 1.0in;
+    box-shadow: 0 0.16in 0 #9e0b12;
   }
 
-  .services-bar span {
-    color: #fff;
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: 1px;
+  /* ---------- Course grid ---------- */
+  .grid {
+    margin-top: 1.0in; width: calc(100% - 2.0in);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.42in 0.45in;
   }
-
-  .services-bar .divider {
-    color: #FFD700;
-    font-size: 36px;
-    font-weight: 400;
+  .card {
+    height: 2.78in; border-radius: 0.5in; display: flex; align-items: center; gap: 0.42in;
+    padding: 0 0.45in; color: #fff; position: relative; overflow: hidden;
+    box-shadow: 0 0.14in 0 rgba(0,0,0,0.28);
   }
-
-  /* Classroom & Online Training */
-  .training-mode {
-    background: linear-gradient(135deg, #4a0e8f, #2d0660);
-    padding: 24px;
-    text-align: center;
-    border-bottom: 4px solid #FFD700;
+  .card::after { /* gloss */
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 45%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0));
   }
-
-  .training-mode h2 {
-    color: #FFD700;
-    font-size: 40px;
-    font-weight: 800;
-    letter-spacing: 2px;
+  .ic {
+    flex: none; width: 1.9in; height: 1.9in; border-radius: 50%;
+    background: rgba(255,255,255,0.97); display: flex; align-items: center; justify-content: center;
   }
+  .ic svg { width: 1.2in; height: 1.2in; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .ic svg .f { fill: currentColor; stroke: none; }
+  .txt { display: flex; flex-direction: column; justify-content: center; min-width: 0; }
+  .t { font-family: 'Anton', sans-serif; font-size: 1.22in; line-height: 1.02; letter-spacing: 0.01em; }
+  .s { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.56in; line-height: 1.15; margin-top: 0.1in; opacity: 0.96; }
 
-  /* Courses Section */
-  .courses-section {
-    background: linear-gradient(180deg, #b71c1c 0%, #880e0e 100%);
-    flex: 1;
-    padding: 40px 35px 30px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+  .c1 { background: #f47b20; } .c1 .ic { color: #f47b20; }
+  .c2 { background: #7b2cbf; } .c2 .ic { color: #7b2cbf; }
+  .c3 { background: #0aa3d8; } .c3 .ic { color: #0a8fc0; }
+  .c4 { background: #12a150; } .c4 .ic { color: #12a150; }
+  .c5 { background: #e8124f; } .c5 .ic { color: #e8124f; }
+  .c6 { background: #1d2a6b; } .c6 .ic { color: #1d2a6b; }
+  .c7 { background: #2b6fd6; } .c7 .ic { color: #2b6fd6; }
+  .c8 { background: #d9341a; } .c8 .ic { color: #d9341a; }
+  .c9 { background: #0f9488; } .c9 .ic { color: #0f9488; }
+  .c10 { background: #b0127a; } .c10 .ic { color: #b0127a; }
+  .c11 { background: #e0a100; } .c11 .ic { color: #c98f00; }
+  .c12 { background: #5b3fd1; } .c12 .ic { color: #5b3fd1; }
+  .c13 { background: #0b7fd1; } .c13 .ic { color: #0b7fd1; }
+  .c14 { background: #c2185b; } .c14 .ic { color: #c2185b; }
+
+  .card.wide { grid-column: 1 / -1; height: 3.15in; justify-content: center; gap: 0.6in;
+    background: linear-gradient(90deg, #ed1c24, #b5121b); }
+  .card.wide .ic { color: #0d2f9e; width: 2.2in; height: 2.2in; }
+  .card.wide .ic svg { width: 1.45in; height: 1.45in; }
+  .card.wide .t { font-size: 1.55in; }
+  .card.wide .s { font-size: 0.72in; font-weight: 700; color: #fff200; letter-spacing: 0.06em; }
+
+  /* ---------- Features ---------- */
+  .features {
+    margin-top: 1.1in; width: fit-content; min-width: 22in; background: #fff; border-radius: 0.7in;
+    padding: 0.65in 1.6in; display: flex; flex-direction: column; gap: 0.38in;
+    box-shadow: 0 0.16in 0 rgba(0,0,0,0.3);
   }
+  .feat { display: flex; align-items: center; gap: 0.5in;
+    font-family: 'Poppins', sans-serif; font-weight: 700; color: #0d2f9e; font-size: 1.0in; line-height: 1.1; }
+  .feat .ck { flex: none; width: 1.05in; height: 1.05in; border-radius: 50%; background: #0d2f9e;
+    display: flex; align-items: center; justify-content: center; }
+  .feat .ck svg { width: 0.62in; height: 0.62in; fill: none; stroke: #fff200; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; }
 
-  .section-title {
-    text-align: center;
-    color: #FFD700;
-    font-size: 46px;
-    font-weight: 900;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    letter-spacing: 2px;
+  /* ---------- Contact ---------- */
+  .contact {
+    margin-top: 0.9in; width: 100%; background: #fff200; text-align: center;
+    padding: 0.65in 0.8in 0.7in; border-top: 0.2in solid #ed1c24;
   }
+  .call { display: inline-flex; align-items: center; gap: 0.35in;
+    font-family: 'Poppins', sans-serif; font-weight: 800; color: #ed1c24; font-size: 1.05in; letter-spacing: 0.08em; line-height: 1; }
+  .call svg { width: 0.95in; height: 0.95in; fill: #ed1c24; }
+  .num { font-family: 'Anton', sans-serif; color: #0d2f9e; font-size: 3.15in; line-height: 1.02; letter-spacing: 0.015em; }
+  .num:first-of-type { margin-top: 0.25in; }
 
-  .courses-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    flex: 1;
-  }
-
-  .course-card {
-    background: #fff;
-    border-radius: 18px;
-    padding: 24px 18px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
-    transition: transform 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .course-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 6px;
-    border-radius: 18px 18px 0 0;
-  }
-
-  .course-card.orange::before { background: #FF6F00; }
-  .course-card.blue::before { background: #1565C0; }
-  .course-card.green::before { background: #2E7D32; }
-  .course-card.purple::before { background: #6A1B9A; }
-  .course-card.red::before { background: #C62828; }
-  .course-card.teal::before { background: #00838F; }
-  .course-card.pink::before { background: #AD1457; }
-  .course-card.indigo::before { background: #283593; }
-  .course-card.amber::before { background: #FF8F00; }
-  .course-card.cyan::before { background: #00695C; }
-
-  .course-icon {
-    font-size: 56px;
-    margin-bottom: 10px;
-    display: block;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .course-name {
-    font-size: 24px;
-    font-weight: 800;
-    line-height: 1.2;
-    color: #1a1a2e;
-  }
-
-  .course-sub {
-    font-size: 16px;
-    font-weight: 600;
-    color: #555;
-    margin-top: 4px;
-  }
-
-  .course-card.highlight {
-    background: linear-gradient(135deg, #FFD700, #FFC107);
-  }
-
-  .course-card.highlight .course-name {
-    color: #0a0a3a;
-  }
-
-  .course-card.dark {
-    background: linear-gradient(135deg, #0a0a3a, #1a1a5e);
-  }
-
-  .course-card.dark .course-name {
-    color: #FFD700;
-  }
-
-  .course-card.dark .course-sub {
-    color: #ccc;
-  }
-
-  /* Full Width Course */
-  .course-full {
-    grid-column: 1 / -1;
-  }
-
-  /* Highlights Section */
-  .highlights {
-    background: #fff;
-    padding: 30px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .highlight-item {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .highlight-dot {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #0a0a6e;
-    flex-shrink: 0;
-  }
-
-  .highlight-text {
-    font-size: 28px;
-    font-weight: 700;
-    color: #1a1a2e;
-  }
-
-  /* Phone Section */
-  .phone-section {
-    background: linear-gradient(90deg, #0a0a5e, #1a1a8e, #0a0a5e);
-    padding: 35px 30px;
-    text-align: center;
-  }
-
-  .phone-label {
-    color: #FFD700;
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    letter-spacing: 3px;
-  }
-
-  .phone-numbers {
-    color: #fff;
-    font-size: 52px;
-    font-weight: 900;
-    letter-spacing: 3px;
-  }
-
-  /* Footer */
-  .footer {
-    background: #FFD700;
-    padding: 20px;
-    text-align: center;
-  }
-
-  .footer-text {
-    color: #0a0a3a;
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 2px;
-  }
-
-  /* SVG Icons inline */
-  .icon-svg {
-    width: 60px;
-    height: 60px;
-  }
+  .foot { width: 100%; min-height: 2.2in; flex: 1 0 auto; background: #06125c; display: flex; flex-direction: column; }
+  .foot .bars { display: flex; height: 0.9in; }
+  .foot .bars i { flex: 1; }
 </style>
 </head>
 <body>
 <div class="banner">
 
-  <!-- Header -->
-  <div class="header">
-    <div class="logo-circle">
-      <div class="logo-text">
-        <span style="font-size:28px; display:block; margin-bottom:-5px;">A</span>
-        <span>MH</span><span style="font-size:36px;">i</span><span style="font-size:36px;">l</span>
-        <div class="bar-chart">
-          <span style="height:18px;"></span>
-          <span style="height:28px;"></span>
-          <span style="height:40px;"></span>
-        </div>
-        <div style="font-size:11px; color:#FFD700; font-style:italic; margin-top:2px; font-weight:400; font-family:'Dancing Script',cursive;">Pathway to Innovative Techies...</div>
-      </div>
-    </div>
-    <div class="company-name">
-      <span class="aim-high">AIM HIGH</span><br>
-      <span class="tech">Technologies</span>
-    </div>
+  <div class="topstripe"><i style="background:#ed1c24"></i><i style="background:#fff200"></i><i style="background:#ed1c24"></i><i style="background:#fff200"></i><i style="background:#ed1c24"></i></div>
+
+  <svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="22 19 576 506">
+<ellipse cx="310" cy="272" rx="286" ry="251" fill="#ffffff"/>
+<ellipse cx="310" cy="272" rx="264" ry="230" fill="#0b1220"/>
+<path d="M215.10,366.38C214.88,366.03 213.71,364.14 212.50,362.17C211.28,360.20 209.45,357.23 208.42,355.58C207.39,353.93 205.10,350.22 203.33,347.33C201.56,344.45 199.91,341.78 199.66,341.42C199.41,341.05 198.05,338.84 196.63,336.50C195.21,334.16 193.66,331.65 193.19,330.92C192.20,329.38 192.03,328.75 192.39,328.06C192.86,327.18 203.53,315.68 204.22,315.31C204.44,315.19 204.64,315.22 204.94,315.42C205.52,315.80 205.86,316.33 218.00,335.92C219.99,339.12 222.03,342.39 222.53,343.17C223.03,343.95 224.48,346.27 225.74,348.33C227.01,350.40 228.37,352.60 228.77,353.24C229.60,354.55 229.72,355.39 229.18,356.28C228.79,356.91 225.08,362.70 223.46,365.21L222.30,367.00L218.90,367.00L215.50,367.00L215.10,366.38ZM246.74,356.50C245.61,356.27 244.00,355.54 243.06,354.83C241.21,353.43 242.28,355.46 224.79,320.17C222.54,315.63 218.02,306.52 214.75,299.92C211.48,293.32 205.76,281.77 202.05,274.25C198.33,266.73 195.11,260.34 194.89,260.04C194.42,259.42 193.72,259.31 193.28,259.80C192.93,260.19 192.26,261.63 189.58,267.83C188.37,270.63 185.90,276.29 184.10,280.42C182.29,284.54 180.10,289.57 179.22,291.58C178.34,293.60 177.13,296.34 176.54,297.67C175.94,299.00 174.54,302.22 173.42,304.83C172.30,307.45 170.66,311.20 169.79,313.17C168.31,316.50 167.32,318.78 164.05,326.33C160.52,334.50 159.16,337.43 158.68,337.86C158.34,338.18 157.93,338.34 157.30,338.41C156.82,338.47 152.79,338.50 148.36,338.47C140.53,338.42 140.30,338.41 140.06,338.08C139.92,337.89 139.85,337.56 139.90,337.30C140.01,336.75 142.37,331.26 150.07,313.70C152.05,309.18 153.67,305.45 153.67,305.42C153.67,305.39 154.59,303.28 155.73,300.73C156.86,298.17 158.59,294.21 159.58,291.92C160.56,289.62 161.76,286.85 162.25,285.75C165.88,277.54 167.26,274.40 168.79,270.83C169.75,268.59 171.53,264.50 172.75,261.75C173.96,259.00 175.91,254.54 177.08,251.83C178.57,248.39 179.35,246.78 179.69,246.46L180.17,246.00L193.71,246.00C206.77,246.00 207.27,246.01 207.78,246.32C208.34,246.66 207.56,245.14 220.54,271.33C235.21,300.92 238.16,306.80 238.40,306.89C238.55,306.94 238.77,306.95 238.91,306.90C239.56,306.65 239.56,306.70 239.62,279.92C239.65,265.71 239.71,253.92 239.75,253.71C239.80,253.51 239.99,253.26 240.17,253.17C240.40,253.04 245.36,252.99 256.03,253.00C272.70,253.00 272.04,252.97 272.49,253.81C272.58,253.99 272.89,254.98 273.18,256.02C273.47,257.06 273.88,258.55 274.11,259.33C274.33,260.11 274.69,261.35 274.90,262.08C275.11,262.82 275.59,264.47 275.96,265.75C276.34,267.03 276.80,268.65 277.00,269.33C277.56,271.33 278.12,273.31 278.56,274.83C278.78,275.61 279.21,277.11 279.50,278.17C280.60,282.13 280.88,283.11 281.17,284.17C281.46,285.23 282.34,288.33 283.35,291.83C284.21,294.83 284.86,297.02 285.36,298.63C285.62,299.48 285.83,300.26 285.83,300.38C285.83,300.49 286.01,301.18 286.23,301.92C287.82,307.18 287.89,307.33 288.59,307.33C289.10,307.33 289.46,306.79 289.84,305.45C290.00,304.88 290.62,302.80 291.21,300.83C291.81,298.86 292.53,296.43 292.83,295.42C293.12,294.41 293.54,293.02 293.75,292.33C293.96,291.65 294.41,290.15 294.75,289.00C295.09,287.85 295.62,286.13 295.92,285.17C297.19,281.14 300.88,268.86 301.28,267.33C301.41,266.83 301.69,265.85 301.91,265.17C302.12,264.48 302.50,263.24 302.74,262.42C302.99,261.59 303.40,260.24 303.66,259.42C303.92,258.59 304.37,257.13 304.66,256.17C304.96,255.20 305.28,254.20 305.38,253.95C305.75,252.94 304.86,252.99 321.85,252.99L337.42,252.99L337.79,253.42L338.17,253.85L338.13,299.36L338.08,344.86L337.68,345.19C337.30,345.50 336.97,345.51 327.82,345.46C318.98,345.42 318.33,345.40 318.05,345.12C317.76,344.84 317.75,343.09 317.67,308.79C317.60,280.86 317.54,272.65 317.38,272.29C317.10,271.66 316.58,271.70 316.17,272.37C315.85,272.90 315.26,274.69 314.08,278.67C313.75,279.81 313.40,280.94 313.32,281.17C313.23,281.40 312.98,282.22 312.76,283.00C312.53,283.78 312.13,285.13 311.86,286.00C311.59,286.87 311.09,288.48 310.75,289.58C309.40,293.97 306.99,302.00 305.98,305.50C305.70,306.46 305.30,307.81 305.09,308.50C304.89,309.19 304.52,310.39 304.29,311.17C303.22,314.72 302.75,316.28 301.66,319.75C301.24,321.11 297.83,332.44 297.23,334.46C297.01,335.21 296.64,336.49 296.40,337.29C296.16,338.09 295.78,339.39 295.55,340.17C295.31,340.95 294.96,342.15 294.76,342.83C294.27,344.49 293.95,345.08 293.38,345.32C293.03,345.46 291.15,345.50 286.60,345.46L280.30,345.42L279.91,344.95C279.69,344.70 279.39,344.06 279.24,343.54C279.10,343.01 278.84,342.17 278.67,341.67C278.36,340.75 277.60,338.17 276.76,335.17C276.22,333.26 275.66,331.33 274.99,329.08C274.72,328.17 274.16,326.22 273.74,324.75C273.31,323.28 272.79,321.48 272.58,320.75C272.36,320.02 271.91,318.48 271.58,317.33C270.65,314.12 269.50,310.22 269.05,308.75C268.82,308.02 268.46,306.78 268.24,306.00C267.61,303.72 267.08,301.89 266.41,299.67C266.07,298.52 265.66,297.10 265.50,296.50C265.02,294.73 262.69,286.67 262.35,285.58C261.86,284.05 260.25,278.64 259.67,276.58C258.75,273.37 258.03,271.67 257.58,271.67C257.44,271.67 257.23,271.87 257.12,272.12C256.83,272.78 256.72,341.38 257.01,345.26C257.16,347.29 257.16,348.23 257.01,349.18C256.27,353.96 251.41,357.42 246.74,356.50ZM354.38,345.33C354.16,345.24 353.95,344.94 353.84,344.55C353.70,344.10 353.67,331.21 353.70,298.78L353.75,253.64L354.14,253.32C354.52,253.01 354.93,253.00 363.91,253.00C373.23,253.00 373.28,253.00 373.60,253.35C373.91,253.69 373.92,254.25 373.96,270.88C374.00,289.64 373.94,288.63 374.94,289.01C375.53,289.23 401.56,289.22 402.38,288.99C403.67,288.63 403.57,289.99 403.67,270.80C403.75,254.66 403.77,253.66 404.05,253.38C404.28,253.15 404.73,253.06 406.13,252.99C408.11,252.88 422.37,252.97 422.95,253.09C423.16,253.14 423.42,253.34 423.54,253.54C423.71,253.84 423.75,262.75 423.75,299.31L423.75,344.70L423.28,345.10L422.81,345.50L413.82,345.50C406.08,345.50 404.75,345.46 404.33,345.25C404.05,345.11 403.82,344.97 403.80,344.95C403.77,344.93 403.72,336.63 403.67,326.50C403.57,306.32 403.65,307.58 402.59,307.13C402.19,306.96 399.21,306.92 388.75,306.92C381.42,306.92 375.21,306.97 374.96,307.04C374.71,307.11 374.37,307.37 374.21,307.62C373.94,308.04 373.92,308.84 373.97,320.16C374.00,326.81 373.97,335.09 373.91,338.56C373.80,344.41 373.77,344.90 373.48,345.19C373.18,345.49 372.73,345.50 363.96,345.49C358.89,345.48 354.59,345.41 354.38,345.33ZM440.41,345.09L440.00,344.68L440.00,299.17C440.00,253.89 440.00,253.67 440.33,253.33C440.66,253.01 440.89,253.00 450.31,253.00C459.90,253.00 459.95,253.00 460.27,253.35C460.58,253.69 460.58,254.72 460.63,298.79C460.66,330.09 460.62,344.07 460.49,344.53C460.37,344.98 460.19,345.23 459.90,345.34C459.65,345.44 455.68,345.50 450.15,345.50L440.82,345.50L440.41,345.09ZM478.91,345.09L478.50,344.68L478.54,269.68L478.58,194.68L478.96,194.30L479.33,193.93L489.18,193.97C495.39,193.99 499.14,194.06 499.34,194.17C499.51,194.26 499.73,194.62 499.83,194.96C500.07,195.85 500.07,343.92 499.82,344.63C499.70,344.97 499.47,345.20 499.13,345.32C498.79,345.44 495.41,345.50 488.97,345.50L479.32,345.50L478.91,345.09ZM101.38,337.16C100.61,336.85 100.85,336.10 103.00,332.17C103.52,331.20 105.51,327.34 107.41,323.58C109.31,319.82 110.93,316.68 111.00,316.58C111.07,316.49 112.95,312.85 115.17,308.50C117.39,304.15 119.98,299.12 120.91,297.33C121.85,295.55 123.82,291.72 125.29,288.83C126.76,285.95 129.01,281.56 130.29,279.08C131.57,276.61 133.61,272.63 134.83,270.25C136.05,267.87 137.85,264.38 138.84,262.50C139.82,260.62 141.32,257.70 142.17,256.00C143.01,254.30 145.22,249.99 147.08,246.42C148.93,242.84 151.59,237.67 152.99,234.92C154.39,232.17 155.59,229.84 155.66,229.75C155.73,229.66 157.16,226.88 158.84,223.58C160.51,220.28 162.65,216.12 163.59,214.33C164.52,212.55 166.58,208.53 168.17,205.42C169.75,202.30 171.50,198.89 172.04,197.83C172.59,196.78 174.35,193.37 175.95,190.25C177.56,187.13 180.19,182.03 181.80,178.92C184.70,173.30 188.01,166.86 193.08,156.95C194.65,153.89 195.84,151.75 196.04,151.65C196.31,151.50 196.45,151.54 196.76,151.86C196.97,152.07 198.73,155.36 200.67,159.17C202.62,162.97 205.35,168.30 206.75,171.00C208.15,173.70 210.09,177.51 211.07,179.47C212.05,181.42 213.21,183.67 213.65,184.47C214.09,185.26 215.78,188.54 217.41,191.75C219.05,194.96 221.22,199.20 222.26,201.17C223.29,203.14 225.74,207.90 227.71,211.75C236.85,229.60 241.02,237.71 241.17,237.92C241.45,238.29 244.54,244.56 244.67,245.01C244.78,245.38 244.74,245.58 244.50,245.87L244.20,246.25L235.64,246.30C230.93,246.33 226.76,246.31 226.36,246.25C225.92,246.18 225.46,245.97 225.17,245.70C224.88,245.43 223.29,242.50 221.20,238.42C214.62,225.54 210.96,218.41 208.92,214.50C207.80,212.35 205.54,207.96 203.91,204.75C199.46,196.02 197.58,192.48 197.08,191.88C196.55,191.24 196.13,191.19 195.60,191.71C195.18,192.14 194.96,192.55 184.33,213.25C180.10,221.50 176.31,228.85 175.92,229.58C175.53,230.32 174.17,232.98 172.91,235.50C171.64,238.02 170.25,240.74 169.81,241.53C169.37,242.33 166.68,247.54 163.82,253.12C160.97,258.69 158.57,263.32 158.50,263.42C158.43,263.51 157.30,265.72 155.99,268.33C154.68,270.95 152.92,274.40 152.08,276.00C151.23,277.60 149.59,280.79 148.42,283.08C143.51,292.69 142.28,295.09 142.16,295.25C142.09,295.34 140.38,298.64 138.37,302.58C133.64,311.87 125.22,328.24 122.78,332.92C121.59,335.21 120.70,336.71 120.42,336.92C119.99,337.24 119.69,337.25 110.86,337.28C105.63,337.30 101.59,337.25 101.38,337.16Z" fill="#ffffff" fill-rule="evenodd"/>
+<path d="M263.81,363.35C263.47,363.07 263.42,362.89 263.43,361.97C263.45,360.32 263.63,359.71 264.28,358.99C264.69,358.54 265.13,358.26 265.72,358.08C266.46,357.86 280.00,357.83 384.99,357.84C465.80,357.84 503.65,357.90 504.16,358.01C505.06,358.22 505.90,358.83 506.27,359.54C506.66,360.30 506.78,362.81 506.45,363.25C506.19,363.58 505.97,363.58 385.20,363.63C266.15,363.67 264.20,363.66 263.81,363.35ZM445.48,242.60C443.00,242.16 439.70,239.84 438.01,237.35C437.07,235.95 436.72,235.20 436.13,233.22C435.66,231.62 435.60,231.19 435.60,229.42C435.60,227.75 435.68,227.14 436.07,225.76C437.18,221.76 439.53,218.81 442.92,217.15C445.12,216.08 446.54,215.78 448.92,215.88C452.22,216.03 454.81,217.26 457.20,219.82C458.70,221.42 459.35,222.49 460.09,224.58C461.31,227.97 461.22,231.66 459.86,234.82C458.98,236.86 458.56,237.45 456.66,239.35C455.33,240.69 454.83,241.07 453.66,241.64C451.35,242.74 448.29,243.11 445.48,242.60ZM486.45,182.65C484.65,182.23 481.88,180.50 480.47,178.92C478.47,176.67 477.00,172.81 477.00,169.84C477.00,168.09 477.63,165.21 478.32,163.72C479.33,161.56 481.75,159.02 483.83,157.93C485.33,157.14 487.83,156.50 489.42,156.50C491.00,156.50 493.50,157.14 494.99,157.93C498.98,160.02 501.74,164.90 501.73,169.83C501.72,173.77 499.82,177.86 496.91,180.22C495.70,181.20 493.62,182.23 492.17,182.57C490.97,182.85 487.51,182.90 486.45,182.65Z" fill="#f2b21b" fill-rule="evenodd"/>
+<text x="389" y="389" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-style="italic" font-weight="600" font-size="20" fill="#f07a1f">Pathway to Innovative Techies...</text>
+</svg>
+
+  <div class="brand">
+    <div class="aim">AIM HIGH</div>
+    <div class="tech">Technologies</div>
+    <div class="uline"><i style="background:#0d2f9e"></i><i style="background:#ed1c24"></i><i style="background:#0d2f9e"></i><i style="background:#ed1c24"></i></div>
     <div class="tagline">Pathway to Innovative Techies...</div>
   </div>
 
-  <!-- Services Bar -->
-  <div class="services-bar">
-    <span>Training</span>
-    <span class="divider">||</span>
-    <span>Software Development</span>
-    <span class="divider">||</span>
-    <span>IT Consulting</span>
+  <div class="services">
+    <span>Training</span><b></b><span>Software Development</span><b></b><span>IT Consulting</span>
   </div>
 
-  <!-- Training Mode -->
-  <div class="training-mode">
-    <h2>Classroom & Online Training</h2>
+  <div class="mode"><span class="dot"></span>CLASSROOM &amp; ONLINE TRAINING<span class="dot"></span></div>
+
+  <div class="heading">OUR COURSES</div>
+
+  <div class="grid">
+    <!-- Generative AI -->
+    <div class="card c1"><div class="ic"><svg viewBox="0 0 24 24"><path class="f" d="M11 2.5l1.9 5.1 5.1 1.9-5.1 1.9L11 16.5l-1.9-5.1L4 9.5l5.1-1.9z"/><path class="f" d="M18.5 13.5l1 2.5 2.5 1-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/><path class="f" d="M5.5 16l.75 1.75L8 18.5l-1.75.75L5.5 21l-.75-1.75L3 18.5l1.75-.75z"/></svg></div>
+      <div class="txt"><div class="t">Generative AI</div></div></div>
+    <!-- Agentic AI -->
+    <div class="card c2"><div class="ic"><svg viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3.5"/><path d="M12 4.6V8"/><circle class="f" cx="12" cy="3.6" r="1.5"/><circle class="f" cx="9" cy="13.4" r="1.6"/><circle class="f" cx="15" cy="13.4" r="1.6"/><path d="M9.8 17h4.4"/><path d="M1.8 12.5v3.5M22.2 12.5v3.5"/></svg></div>
+      <div class="txt"><div class="t">Agentic AI</div></div></div>
+    <!-- Prompt Engineering -->
+    <div class="card c3"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4.5 4h15A1.5 1.5 0 0 1 21 5.5v10a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.8V17h-1A1.5 1.5 0 0 1 3 15.5v-10A1.5 1.5 0 0 1 4.5 4z"/><path d="M7.5 8.3l2.7 2.2-2.7 2.2"/><path d="M12.5 12.8h4.5"/></svg></div>
+      <div class="txt"><div class="t">Prompt Engineering</div></div></div>
+    <!-- Data Science -->
+    <div class="card c4"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3.5 3.5v17h17"/><path d="M7 16l4-5 3.2 3L20 6.5"/><circle class="f" cx="7" cy="16" r="1.5"/><circle class="f" cx="11" cy="11" r="1.5"/><circle class="f" cx="14.2" cy="14" r="1.5"/><circle class="f" cx="20" cy="6.5" r="1.5"/></svg></div>
+      <div class="txt"><div class="t">Data Science</div></div></div>
+    <!-- Power BI -->
+    <div class="card c11"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3.5" y="12" width="3.6" height="8.5" rx="1"/><rect x="10.2" y="7.5" width="3.6" height="13" rx="1"/><rect x="16.9" y="3.5" width="3.6" height="17" rx="1"/></svg></div>
+      <div class="txt"><div class="t">Power BI</div><div class="s">with AI</div></div></div>
+    <!-- Cybersecurity -->
+    <div class="card c6"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"/><rect x="8.6" y="11" width="6.8" height="5.4" rx="1.1"/><path d="M10 11V9.4a2 2 0 0 1 4 0V11"/></svg></div>
+      <div class="txt"><div class="t">Cybersecurity</div></div></div>
+    <!-- Python -->
+    <div class="card c7"><div class="ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M2.5 8h19"/><path d="M6.5 11.5l3 2.5-3 2.5"/><path d="M11.5 16.5h6"/></svg></div>
+      <div class="txt"><div class="t">Python</div><div class="s">Programming &amp; Full Stack</div></div></div>
+    <!-- Java -->
+    <div class="card c8"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4.5 10h12v4.5a5.5 5.5 0 0 1-5.5 5.5h-1a5.5 5.5 0 0 1-5.5-5.5z"/><path d="M16.5 11.2h1.6a2.6 2.6 0 0 1 0 5.2h-2"/><path d="M8 2.8c-1.2 1.4 1.2 2.4 0 4.2"/><path d="M12 2.8c-1.2 1.4 1.2 2.4 0 4.2"/><path d="M3.5 22h15"/></svg></div>
+      <div class="txt"><div class="t">Java</div><div class="s">Full Stack Development</div></div></div>
+    <!-- MERN -->
+    <div class="card c9"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.8l9 4.5-9 4.5-9-4.5z"/><path d="M3 12l9 4.5 9-4.5"/><path d="M3 16.5l9 4.5 9-4.5"/></svg></div>
+      <div class="txt"><div class="t">MERN Stack</div><div class="s">Full Stack Development</div></div></div>
+    <!-- Web Development -->
+    <div class="card c10"><div class="ic"><svg viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M2.5 8h19"/><circle class="f" cx="5.3" cy="6" r=".8"/><circle class="f" cx="7.8" cy="6" r=".8"/><path d="M9.5 11.3L7 14l2.5 2.7"/><path d="M14.5 11.3L17 14l-2.5 2.7"/><path d="M12.8 10.8l-1.6 6.4"/></svg></div>
+      <div class="txt"><div class="t">Web Development</div></div></div>
+    <!-- Testing Tools -->
+    <div class="card c5"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.8"/><path d="M15.5 15.5L21 21"/><path d="M7.4 10.6l2.2 2.2 3.8-4"/></svg></div>
+      <div class="txt"><div class="t">Testing Tools</div><div class="s">Manual &amp; Automation · AI</div></div></div>
+    <!-- AWS / DevOps -->
+    <div class="card c12"><div class="ic"><svg viewBox="0 0 24 24"><path d="M7 8c-2.2 0-4 1.8-4 4s1.8 4 4 4c4 0 6-8 10-8 2.2 0 4 1.8 4 4s-1.8 4-4 4c-4 0-6-8-10-8z"/></svg></div>
+      <div class="txt"><div class="t">AWS / DevOps</div></div></div>
+    <!-- Salesforce -->
+    <div class="card c13"><div class="ic"><svg viewBox="0 0 24 24"><path d="M7 19h10.5a4.5 4.5 0 0 0 .7-8.95A6.2 6.2 0 0 0 6.3 10.6 4.2 4.2 0 0 0 7 19z"/></svg></div>
+      <div class="txt"><div class="t">Salesforce</div></div></div>
+    <!-- Digital Marketing -->
+    <div class="card c14"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 9.8v4.4h3.2l7.3 4.3V5.5L6.2 9.8z"/><path d="M6.4 14.4l1.4 5.1h2.6l-1.1-4.4"/><path d="M16.5 9a4 4 0 0 1 0 6"/><path d="M19 6.5a7.5 7.5 0 0 1 0 11"/></svg></div>
+      <div class="txt"><div class="t">Digital Marketing</div></div></div>
+    <!-- SAP -->
+    <div class="card wide"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.6" height="7.6" rx="1.6"/><rect x="13.4" y="3" width="7.6" height="7.6" rx="1.6"/><rect x="3" y="13.4" width="7.6" height="7.6" rx="1.6"/><rect class="f" x="13.4" y="13.4" width="7.6" height="7.6" rx="1.6"/></svg></div>
+      <div class="txt"><div class="t">SAP – All Modules</div><div class="s">FICO · ABAP · HR · SD · MM</div></div></div>
   </div>
 
-  <!-- Courses Section -->
-  <div class="courses-section">
-    <div class="section-title">Our Courses</div>
-    <div class="courses-grid">
-
-      <div class="course-card orange">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#FFF3E0"/><path d="M20 40c0-6.6 5.4-12 12-12s12 5.4 12 12" stroke="#FF6F00" stroke-width="3" fill="none"/><circle cx="32" cy="22" r="6" fill="#FF6F00"/><path d="M26 36l6-4 6 4" stroke="#FF6F00" stroke-width="2"/><circle cx="22" cy="30" r="2" fill="#FFB74D"/><circle cx="42" cy="30" r="2" fill="#FFB74D"/><path d="M18 44h28" stroke="#FF6F00" stroke-width="2" stroke-dasharray="4 2"/></svg>
-        </div>
-        <div class="course-name">Generative AI</div>
-      </div>
-
-      <div class="course-card blue">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#E3F2FD"/><rect x="18" y="20" width="28" height="22" rx="3" stroke="#1565C0" stroke-width="2.5" fill="none"/><circle cx="32" cy="31" r="6" stroke="#1565C0" stroke-width="2" fill="none"/><path d="M28 28l4 3 4-3M24 36h16" stroke="#1565C0" stroke-width="1.5"/><path d="M38 24l4-4M42 20l-2 4 4-2" stroke="#1565C0" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">Agentic AI</div>
-      </div>
-
-      <div class="course-card green">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#E8F5E9"/><rect x="16" y="22" width="32" height="22" rx="2" stroke="#2E7D32" stroke-width="2.5" fill="none"/><path d="M20 30h8M20 34h12M20 38h6" stroke="#2E7D32" stroke-width="2"/><circle cx="42" cy="34" r="5" stroke="#2E7D32" stroke-width="2" fill="none"/><path d="M40 34h4M42 32v4" stroke="#2E7D32" stroke-width="1.5"/></svg>
-        </div>
-        <div class="course-name">Data Science</div>
-      </div>
-
-      <div class="course-card purple">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#F3E5F5"/><path d="M22 24h20v18H22z" stroke="#6A1B9A" stroke-width="2.5" fill="none"/><path d="M26 28h12M26 32h8M26 36h10" stroke="#6A1B9A" stroke-width="2"/><path d="M32 18v6M26 20l2 4M38 20l-2 4" stroke="#6A1B9A" stroke-width="2"/><circle cx="32" cy="16" r="3" fill="#6A1B9A"/></svg>
-        </div>
-        <div class="course-name">Cybersecurity</div>
-      </div>
-
-      <div class="course-card dark">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#1a1a4e"/><text x="32" y="30" text-anchor="middle" fill="#FFD700" font-size="14" font-weight="bold" font-family="Poppins">SAP</text><text x="32" y="42" text-anchor="middle" fill="#aaa" font-size="9" font-family="Poppins">FICO/ABAP/HR</text><text x="32" y="51" text-anchor="middle" fill="#aaa" font-size="9" font-family="Poppins">SD/MM</text></svg>
-        </div>
-        <div class="course-name">SAP</div>
-        <div class="course-sub">All Modules</div>
-      </div>
-
-      <div class="course-card teal">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#E0F7FA"/><path d="M22 42V26l10-6 10 6v16l-10 6z" stroke="#00838F" stroke-width="2.5" fill="none"/><path d="M22 26l10 6 10-6M32 32v16" stroke="#00838F" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">Prompt Engineering</div>
-      </div>
-
-      <div class="course-card red">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#FFEBEE"/><circle cx="30" cy="30" r="10" stroke="#C62828" stroke-width="2.5" fill="none"/><path d="M37 37l8 8" stroke="#C62828" stroke-width="3" stroke-linecap="round"/><path d="M26 30h8M30 26v8" stroke="#C62828" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">Testing Tools</div>
-        <div class="course-sub">Manual & Automation</div>
-      </div>
-
-      <div class="course-card pink">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#FCE4EC"/><rect x="20" y="22" width="24" height="16" rx="2" stroke="#AD1457" stroke-width="2.5" fill="none"/><path d="M24 34h6v4h-6z" fill="#AD1457"/><path d="M34 30h6v8h-6z" fill="#AD1457" opacity="0.6"/><path d="M24 28h16" stroke="#AD1457" stroke-width="1.5" stroke-dasharray="3 2"/><path d="M32 38v6M26 44h12" stroke="#AD1457" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">Power BI - AI</div>
-      </div>
-
-      <div class="course-card highlight">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#FFF8E1"/><path d="M20 38l6-10 6 6 8-14 6 10" stroke="#0a0a3a" stroke-width="2.5" fill="none" stroke-linejoin="round"/><path d="M18 42h28" stroke="#0a0a3a" stroke-width="2"/><circle cx="20" cy="38" r="2" fill="#0a0a3a"/><circle cx="26" cy="28" r="2" fill="#0a0a3a"/><circle cx="32" cy="34" r="2" fill="#0a0a3a"/><circle cx="40" cy="20" r="2" fill="#0a0a3a"/><circle cx="46" cy="30" r="2" fill="#0a0a3a"/></svg>
-        </div>
-        <div class="course-name">Python FSD</div>
-      </div>
-
-      <div class="course-card highlight">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#FFF8E1"/><text x="32" y="30" text-anchor="middle" fill="#0a0a3a" font-size="16" font-weight="900" font-family="Poppins">{ }</text><path d="M22 38h20" stroke="#0a0a3a" stroke-width="2"/><path d="M26 42h12" stroke="#0a0a3a" stroke-width="1.5" stroke-dasharray="3 2"/></svg>
-        </div>
-        <div class="course-name">Java FSD</div>
-      </div>
-
-      <div class="course-card indigo">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#E8EAF6"/><path d="M20 22h24v20H20z" stroke="#283593" stroke-width="2.5" fill="none" rx="2"/><text x="32" y="35" text-anchor="middle" fill="#283593" font-size="11" font-weight="700" font-family="monospace">&lt;/&gt;</text><path d="M32 42v4M26 46h12" stroke="#283593" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">MERN FSD</div>
-      </div>
-
-      <div class="course-card amber">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#FFF8E1"/><path d="M20 24h24v16H20z" stroke="#FF8F00" stroke-width="2.5" fill="none" rx="2"/><text x="32" y="35" text-anchor="middle" fill="#FF8F00" font-size="10" font-weight="700" font-family="monospace">www</text><path d="M32 40v4M26 44h12" stroke="#FF8F00" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">Web Development</div>
-      </div>
-
-      <div class="course-card cyan">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#E0F2F1"/><path d="M24 22v20l8-4 8 4V22z" stroke="#00695C" stroke-width="2.5" fill="none"/><path d="M28 28h8M28 32h6M28 36h4" stroke="#00695C" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">Digital Marketing</div>
-      </div>
-
-      <div class="course-card blue">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#E3F2FD"/><path d="M22 38c0-8 4-16 10-18 6 2 10 10 10 18" stroke="#1565C0" stroke-width="2.5" fill="none"/><path d="M18 38h28" stroke="#1565C0" stroke-width="2"/><rect x="28" y="28" width="8" height="10" rx="1" stroke="#1565C0" stroke-width="2" fill="none"/><path d="M32 22v-4M26 24l-2-3M38 24l2-3" stroke="#1565C0" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">AWS / DevOps</div>
-      </div>
-
-      <div class="course-card purple">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#F3E5F5"/><path d="M22 28c0-5.5 4.5-10 10-10s10 4.5 10 10c0 4-2.3 7.4-5.6 9H27.6C24.3 35.4 22 32 22 28z" stroke="#6A1B9A" stroke-width="2.5" fill="none"/><path d="M26 40h12M28 44h8" stroke="#6A1B9A" stroke-width="2"/><path d="M32 22v-4" stroke="#6A1B9A" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">Salesforce</div>
-      </div>
-
-      <div class="course-card orange">
-        <div class="course-icon">
-          <svg class="icon-svg" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="28" fill="#FFF3E0"/><path d="M24 20h16v24H24z" stroke="#FF6F00" stroke-width="2.5" fill="none" rx="2"/><text x="32" y="30" text-anchor="middle" fill="#FF6F00" font-size="10" font-weight="700" font-family="monospace">Py</text><path d="M28 36h8M28 40h6" stroke="#FF6F00" stroke-width="2"/></svg>
-        </div>
-        <div class="course-name">Python Programming</div>
-      </div>
-
-    </div>
+  <div class="features">
+    <div class="feat"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Industry-Oriented Curriculum</div>
+    <div class="feat"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Hands-on Practical Training</div>
+    <div class="feat"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Expert Trainers &amp; Mentorship</div>
   </div>
 
-  <!-- Highlights -->
-  <div class="highlights">
-    <div class="highlight-item">
-      <div class="highlight-dot"></div>
-      <div class="highlight-text">Industry-Oriented Curriculum</div>
-    </div>
-    <div class="highlight-item">
-      <div class="highlight-dot"></div>
-      <div class="highlight-text">Hands-on Practical Training</div>
-    </div>
-    <div class="highlight-item">
-      <div class="highlight-dot"></div>
-      <div class="highlight-text">Expert Trainers & Mentorship</div>
-    </div>
-    <div class="highlight-item">
-      <div class="highlight-dot"></div>
-      <div class="highlight-text">100% Placement Assistance</div>
-    </div>
+  <div class="contact">
+    <div class="call"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>CALL NOW</div>
+    <div class="num">99 855 88511</div>
+    <div class="num">99 593 18416</div>
   </div>
 
-  <!-- Phone -->
-  <div class="phone-section">
-    <div class="phone-label">CALL US NOW</div>
-    <div class="phone-numbers">99 855 88511 / 99 593 18416</div>
+  <div class="foot">
+    <div class="bars"><i style="background:#ed1c24"></i><i style="background:#fff200"></i><i style="background:#ed1c24"></i><i style="background:#fff200"></i><i style="background:#ed1c24"></i></div>
   </div>
-
-  <!-- Footer -->
-  <div class="footer">
-    <div class="footer-text">AIM HIGH TECHNOLOGIES - PATHWAY TO INNOVATIVE TECHIES</div>
-  </div>
-
 </div>
 </body>
 </html>
