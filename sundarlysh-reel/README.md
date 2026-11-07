@@ -17,11 +17,11 @@
 | 14 s | **DROP 2**: end card — logo, WORKSHOP, COMING SOON, @sundarlyshevents | full beat |
 | 17 s | final impact, ring-out | |
 
-## Use your real logo
-Save your Instagram profile picture as `logo.png` (or `.jpg`) in this folder and run `./build.sh`.
-It gets cropped into the gold circular badge automatically. Without it, a gold "S" badge is used.
+## Logo
+`logo.jpg` is the Sundarlysh Events logo; it is cropped into the rose-gold circular badge automatically.
+Replace it (logo.png / logo.jpg) and run `./build.sh` to change it.
 
 ## Change the words
 Edit the `COPY` block at the top of `reel.html` (brand, handle, the four words, tagline), then `./build.sh`.
 
-Requires python3 + numpy, node + playwright (Chromium), ffmpeg. The music is synthesised from scratch in `audio.py` (no samples, no copyright issues).
+Requires python3 + numpy, node + playwright (Chromium), ffmpeg. The music (beat, piano-pluck hook with echo, music-box bells, sparkle shimmers, silk swooshes, countdown beeps, typing clicks, notification ding) is synthesised from scratch in `audio.py` (no samples, no copyright issues).

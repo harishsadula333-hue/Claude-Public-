@@ -26,7 +26,7 @@ const COPY = {
   tagline: 'GET READY  ·  STAY TUNED',
   cta:     'FOLLOW  ·  TURN ON NOTIFICATIONS',
 };
-const C = { bg: '#07050b', gold: '#FFC857', gold2: '#E0901F', mag: '#FF2D78', vio: '#7B2CFF', white: '#FFFFFF' };
+const C = { bg: '#0b0609', gold: '#F4BFA6', gold2: '#C98270', mag: '#F06E96', vio: '#7A2A5E', white: '#FFFFFF' };
 
 const W = 1080, H = 1920;
 const TL = window.TIMELINE;
@@ -59,7 +59,7 @@ const ramp = (t, a, b) => (t >= a && t < b) ? eInCubic(prog(t, a, b)) : 0;
 
 function goldGrad(g, size) {
   const gr = g.createLinearGradient(0, -size * 0.42, 0, size * 0.42);
-  gr.addColorStop(0, '#FFF4CC'); gr.addColorStop(0.45, C.gold); gr.addColorStop(1, C.gold2);
+  gr.addColorStop(0, '#FFF1EA'); gr.addColorStop(0.45, C.gold); gr.addColorStop(1, C.gold2);
   return gr;
 }
 
@@ -163,7 +163,7 @@ function radial(g, cx, cy, r, stops) {
 function lightLine(g, cx, cy, len, th, a) {
   g.save(); g.globalCompositeOperation = 'lighter';
   const gr = g.createLinearGradient(cx - len / 2, 0, cx + len / 2, 0);
-  gr.addColorStop(0, 'rgba(255,200,87,0)'); gr.addColorStop(0.5, `rgba(255,230,170,${clamp(a)})`); gr.addColorStop(1, 'rgba(255,200,87,0)');
+  gr.addColorStop(0, 'rgba(244,191,166,0)'); gr.addColorStop(0.5, `rgba(255,228,215,${clamp(a)})`); gr.addColorStop(1, 'rgba(244,191,166,0)');
   g.fillStyle = gr; g.shadowColor = C.gold; g.shadowBlur = 40;
   g.fillRect(cx - len / 2, cy - th / 2, len, th);
   g.restore();
@@ -193,7 +193,7 @@ function bokeh(g, t, k = 1) {
 }
 const STARS = Array.from({ length: 34 }, (_, i) => { const r = rnd(5000 + i); return { x: 60 + r() * (W - 120), y: 200 + r() * (H - 500), s: 6 + r() * 16, ph: r() * 10, sp: 2 + r() * 4 }; });
 function twinkles(g, t, k = 1) {
-  g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = '#FFF1C8';
+  g.save(); g.globalCompositeOperation = 'lighter'; g.fillStyle = '#FFF0EA';
   for (const st of STARS) {
     const a = Math.pow(Math.max(0, Math.sin(t * st.sp + st.ph)), 6) * k;
     if (a < 0.02) continue;
@@ -221,7 +221,7 @@ function sparks(g, cx, cy, t, at, seed, count = 240) {
   for (let i = 0; i < count; i++) {
     const r = rnd(seed * 1000 + i);
     const ang = r() * Math.PI * 2, sp = 400 + Math.pow(r(), 1.5) * 2800, life = 0.6 + r() * 1.6, k = 2.4 + r() * 2.2;
-    const lw = 1.5 + r() * 4.5, col = ['#FFE3A0', '#FFFFFF', C.mag, C.gold][Math.floor(r() * 4)];
+    const lw = 1.5 + r() * 4.5, col = ['#FFE1D6', '#FFFFFF', C.mag, C.gold][Math.floor(r() * 4)];
     if (d > life) continue;
     const pos = dd => { const dist = sp * (1 - Math.exp(-k * dd)) / k; return [cx + Math.cos(ang) * dist, cy + Math.sin(ang) * dist + 260 * dd * dd]; };
     const [x1, y1] = pos(Math.max(0, d - 0.05)), [x2, y2] = pos(d), a = 1 - d / life;
@@ -246,11 +246,11 @@ function logo(g, cx, cy, r, t) {
   if (r <= 1) return;
   g.save(); g.translate(cx, cy);
   const gl = g.createRadialGradient(0, 0, r * 0.8, 0, 0, r * 2);
-  gl.addColorStop(0, 'rgba(255,200,87,0.38)'); gl.addColorStop(1, 'rgba(255,200,87,0)');
+  gl.addColorStop(0, 'rgba(244,191,166,0.38)'); gl.addColorStop(1, 'rgba(244,191,166,0)');
   g.fillStyle = gl; g.beginPath(); g.arc(0, 0, r * 2, 0, 7); g.fill();
   // orbit
   g.save(); g.rotate(t * 0.6);
-  g.strokeStyle = 'rgba(255,200,87,0.6)'; g.lineWidth = Math.max(1.5, r * 0.012);
+  g.strokeStyle = 'rgba(244,191,166,0.6)'; g.lineWidth = Math.max(1.5, r * 0.012);
   g.setLineDash([r * 0.05, r * 0.07]); g.beginPath(); g.arc(0, 0, r * 1.2, 0, 7); g.stroke(); g.setLineDash([]);
   for (let k = 0; k < 3; k++) { const a = k * 2.094; g.fillStyle = k === 1 ? C.mag : C.gold;
     g.beginPath(); g.arc(Math.cos(a) * r * 1.2, Math.sin(a) * r * 1.2, r * 0.035, 0, 7); g.fill(); }
@@ -267,17 +267,17 @@ function logo(g, cx, cy, r, t) {
     const df = g.createRadialGradient(0, -r * 0.3, 0, 0, 0, r);
     df.addColorStop(0, '#2c1240'); df.addColorStop(1, '#0a0510'); g.fillStyle = df; g.fill();
     g.save(); g.rotate(-t * 0.35);
-    g.font = `${r * 0.1}px JBM`; g.letterSpacing = '0px'; g.fillStyle = 'rgba(255,200,87,0.9)'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.font = `${r * 0.1}px JBM`; g.letterSpacing = '0px'; g.fillStyle = 'rgba(244,191,166,0.9)'; g.textAlign = 'center'; g.textBaseline = 'middle';
     const ring = 'SUNDARLYSH • EVENTS • WORKSHOP • ';
     for (let i = 0; i < ring.length; i++) { g.save(); g.rotate(i / ring.length * Math.PI * 2); g.translate(0, -r * 0.83); g.fillText(ring[i], 0, 0); g.restore(); }
     g.restore();
-    g.strokeStyle = 'rgba(255,200,87,0.5)'; g.lineWidth = r * 0.012; g.beginPath(); g.arc(0, 0, r * 0.69, 0, 7); g.stroke();
+    g.strokeStyle = 'rgba(244,191,166,0.5)'; g.lineWidth = r * 0.012; g.beginPath(); g.arc(0, 0, r * 0.69, 0, 7); g.stroke();
     g.font = `${r * 0.95}px IDBI`; g.textAlign = 'center'; g.textBaseline = 'middle';
-    g.fillStyle = goldGrad(g, r * 0.95); g.shadowColor = 'rgba(255,200,87,0.7)'; g.shadowBlur = r * 0.18;
+    g.fillStyle = goldGrad(g, r * 0.95); g.shadowColor = 'rgba(244,191,166,0.7)'; g.shadowBlur = r * 0.18;
     g.fillText('S', -r * 0.02, r * 0.05); g.shadowBlur = 0;
   }
   const rg = g.createLinearGradient(-r, -r, r, r);
-  rg.addColorStop(0, '#FFF4CC'); rg.addColorStop(0.5, C.gold); rg.addColorStop(1, '#B8661A');
+  rg.addColorStop(0, '#FFF1EA'); rg.addColorStop(0.5, C.gold); rg.addColorStop(1, '#A85E50');
   g.strokeStyle = rg; g.lineWidth = r * 0.055; g.beginPath(); g.arc(0, 0, r, 0, 7); g.stroke();
   g.restore();
 }
@@ -289,7 +289,7 @@ const clapE = (t, d = 0.15) => env(t, TL.claps, d);
 function sceneIntro(g, t) {
   fillBg(g);
   const hb = env(t, [0, 1, 2], 0.22), cy = H / 2;
-  radial(g, W / 2, cy, 1000, [[0, `rgba(123,44,255,${0.12 + 0.3 * hb})`], [0.5, `rgba(255,45,120,${0.05 + 0.08 * hb})`], [1, 'rgba(0,0,0,0)']]);
+  radial(g, W / 2, cy, 1000, [[0, `rgba(122,42,94,${0.12 + 0.3 * hb})`], [0.5, `rgba(240,110,150,${0.05 + 0.08 * hb})`], [1, 'rgba(0,0,0,0)']]);
   const rise = prog(t, 2, 3.875);
   lightLine(g, W / 2, cy + 250, 260 + 820 * hb + 900 * rise, 3 + 6 * hb + 6 * rise, 0.55 + 0.45 * hb);
   lightLine(g, W / 2, cy - 250, 260 + 820 * hb + 900 * rise, 3 + 6 * hb + 6 * rise, 0.55 + 0.45 * hb);
@@ -300,7 +300,7 @@ function sceneIntro(g, t) {
     txt(g, scramble('SOMETHING', p, Math.floor(t * 30)), W / 2, cy, { font: 'JBM', size: 118, track: 14, color: '#fff', aberr: 16 * env(t, [0], 0.18) + 2, glow: 24, glowColor: 'rgba(255,255,255,0.45)' });
   } else if (t < 2) {
     const d = t - 1, k = lerp(2.6, 1, eOutExpo(prog(d, 0, 0.22)));
-    txt(g, 'BIG', W / 2, cy, { size: 460, scale: k * (1 + 0.03 * Math.sin(d * 12)), gold: true, shine: prog(d, 0.2, 0.85), aberr: 34 * Math.exp(-d / 0.14) + 3, glow: 50, glowColor: 'rgba(255,200,87,0.5)' });
+    txt(g, 'BIG', W / 2, cy, { size: 460, scale: k * (1 + 0.03 * Math.sin(d * 12)), gold: true, shine: prog(d, 0.2, 0.85), aberr: 34 * Math.exp(-d / 0.14) + 3, glow: 50, glowColor: 'rgba(244,191,166,0.5)' });
   } else if (t < 3) {
     const d = t - 2;
     txt(g, 'IS', W / 2, cy - 190, { font: 'JBM', size: 84, track: 40, color: C.gold, alpha: prog(d, 0, 0.08) });
@@ -317,14 +317,14 @@ function sceneIntro(g, t) {
     const d = t - 3.5, z = 1 + 0.7 * eInCubic(prog(d, 0, 0.375));
     speedLines(g, W / 2, cy, t, 0.4 + prog(d, 0, 0.375));
     const size = fit('READY', 'IDB', 980, 330);
-    txt(g, 'READY', W / 2, cy, { size, scale: lerp(1.7, 1, eOutExpo(prog(d, 0, 0.15))) * z, gold: true, aberr: 10 + 40 * prog(d, 0, 0.375), glow: 50, glowColor: 'rgba(255,200,87,0.6)' });
+    txt(g, 'READY', W / 2, cy, { size, scale: lerp(1.7, 1, eOutExpo(prog(d, 0, 0.15))) * z, gold: true, aberr: 10 + 40 * prog(d, 0, 0.375), glow: 50, glowColor: 'rgba(244,191,166,0.6)' });
   }
 }
 
 function sceneLogo(g, t) {
   const d = t - 4, cx = W / 2, cy = 760;
   fillBg(g);
-  radial(g, cx, cy, 1150, [[0, `rgba(255,45,120,${0.32 + 0.15 * clapE(t)})`], [0.45, 'rgba(123,44,255,0.18)'], [1, 'rgba(0,0,0,0)']]);
+  radial(g, cx, cy, 1150, [[0, `rgba(240,110,150,${0.32 + 0.15 * clapE(t)})`], [0.45, 'rgba(122,42,94,0.18)'], [1, 'rgba(0,0,0,0)']]);
   rays(g, cx, cy, t * 0.22, 16, C.gold, 0.12 + 0.16 * clapE(t) + 0.3 * Math.exp(-d / 0.4));
   bokeh(g, t, 0.9);
   twinkles(g, t, 0.8);
@@ -339,7 +339,7 @@ function sceneLogo(g, t) {
   logo(g, cx, cy, r, t);
 
   const size = fit(COPY.brand, 'IDB', 940, 150, 8), shineP = ((t - 4.6) % 1.6) / 1.6;
-  row(g, COPY.brand, cx, 1095, { size, track: 8, glow: 28, glowColor: 'rgba(255,200,87,0.45)' }, (i, n) => {
+  row(g, COPY.brand, cx, 1095, { size, track: 8, glow: 28, glowColor: 'rgba(244,191,166,0.45)' }, (i, n) => {
     const st = 4.18 + i * 0.035, p = eOutExpo(prog(t, st, st + 0.35));
     return { dy: (1 - p) * 140, alpha: p, gold: true, scale: 1 + (1 - p) * 0.4,
       lit: t > 4.6 ? Math.max(0, 1 - Math.abs(shineP * 1.6 - 0.3 - i / n) * 7) * 0.75 : 0, aberr: 10 * kickE(t, 0.06) };
@@ -364,7 +364,7 @@ function sceneType(g, t) {
     const p1 = eOutExpo(prog(t, 8, 8.22)), p2 = eOutExpo(prog(t, 8.12, 8.36));
     txt(g, 'GET', lerp(-600, W / 2, p1), cy - 170, { size: 330, stroke: 7, color: '#fff', scale: kp });
     const sz = fit('READY', 'IDB', 990, 330);
-    txt(g, 'READY', lerp(W + 700, W / 2, p2), cy + 130, { size: sz, gold: true, scale: kp, aberr: 16 * kickE(t, 0.07), glow: 40, glowColor: 'rgba(255,200,87,0.5)' });
+    txt(g, 'READY', lerp(W + 700, W / 2, p2), cy + 130, { size: sz, gold: true, scale: kp, aberr: 16 * kickE(t, 0.07), glow: 40, glowColor: 'rgba(244,191,166,0.5)' });
   } else if (t < 9.5) {
     fillBg(g, C.mag);
     const d = t - 9;
@@ -388,7 +388,7 @@ function sceneType(g, t) {
     }
     const sz = fit(COPY.event, 'IDB', 1010, 240);
     g.fillStyle = '#050308'; g.fillRect(0, cy - rh / 2, W, rh);
-    txt(g, COPY.event, W / 2, cy, { size: sz, gold: true, scale: lerp(1.6, 1, eOutExpo(prog(d, 0, 0.18))) * kp, aberr: 26 * Math.exp(-d / 0.12) + 10 * kickE(t, 0.07), glow: 40, glowColor: 'rgba(255,200,87,0.55)', shine: prog(d, 0.25, 0.9) });
+    txt(g, COPY.event, W / 2, cy, { size: sz, gold: true, scale: lerp(1.6, 1, eOutExpo(prog(d, 0, 0.18))) * kp, aberr: 26 * Math.exp(-d / 0.12) + 10 * kickE(t, 0.07), glow: 40, glowColor: 'rgba(244,191,166,0.55)', shine: prog(d, 0.25, 0.9) });
   } else {
     const idx = Math.min(3, Math.floor((t - 11) / 0.25)), d = t - 11 - idx * 0.25;
     const bgs = ['#FFFFFF', C.mag, C.gold, C.vio], fgs = ['#0b0510', '#0b0510', '#0b0510', '#FFFFFF'];
@@ -407,7 +407,7 @@ function sceneCount(g, t) {
     radial(g, W / 2, cy, 1100, [[0, hexA(C.vio, 0.45 * Math.exp(-d / 0.3) + 0.1)], [1, 'rgba(0,0,0,0)']]);
     txt(g, scramble('ARE YOU', prog(d, 0, 0.2), Math.floor(t * 30)), W / 2, cy - 190, { font: 'JBM', size: 80, track: 24, color: '#fff' });
     const sz = fit('READY?', 'IDB', 1000, 320);
-    txt(g, 'READY?', W / 2, cy + 20, { size: sz, gold: true, scale: lerp(1.8, 1, eOutExpo(prog(d, 0, 0.18))), aberr: 30 * Math.exp(-d / 0.12) + 4, glow: 40, glowColor: 'rgba(255,200,87,0.5)' });
+    txt(g, 'READY?', W / 2, cy + 20, { size: sz, gold: true, scale: lerp(1.8, 1, eOutExpo(prog(d, 0, 0.18))), aberr: 30 * Math.exp(-d / 0.12) + 4, glow: 40, glowColor: 'rgba(244,191,166,0.5)' });
     return;
   }
   const idx = t < 13 ? 0 : t < 13.5 ? 1 : 2, st = [12.5, 13, 13.5][idx], d = t - st;
@@ -426,10 +426,10 @@ function sceneCount(g, t) {
 }
 
 function sceneFinal(g, t) {
-  const d = t - 14, cx = W / 2, ly = 515, kp = t < 17 ? kickE(t, 0.12) : 0;
+  const d = t - 14, cx = W / 2, ly = 495, kp = t < 17 ? kickE(t, 0.12) : 0;
   fillBg(g);
-  radial(g, cx, ly, 1300, [[0, `rgba(255,45,120,${0.3 + 0.12 * clapE(t)})`], [0.4, 'rgba(123,44,255,0.2)'], [1, 'rgba(0,0,0,0)']]);
-  radial(g, cx, H + 200, 1100, [[0, 'rgba(255,200,87,0.16)'], [1, 'rgba(0,0,0,0)']]);
+  radial(g, cx, ly, 1300, [[0, `rgba(240,110,150,${0.3 + 0.12 * clapE(t)})`], [0.4, 'rgba(122,42,94,0.2)'], [1, 'rgba(0,0,0,0)']]);
+  radial(g, cx, H + 200, 1100, [[0, 'rgba(244,191,166,0.16)'], [1, 'rgba(0,0,0,0)']]);
   rays(g, cx, ly, t * 0.2, 18, C.gold, 0.1 + 0.12 * clapE(t) + 0.3 * Math.exp(-d / 0.4) + 0.3 * env(t, [17], 0.5));
   bokeh(g, t, 1);
   twinkles(g, t, 1);
@@ -441,8 +441,8 @@ function sceneFinal(g, t) {
   const push = 1 + 0.035 * eOutCubic(prog(t, 17, 18));
   g.save(); g.translate(cx, 900); g.scale(push, push); g.translate(-cx, -900);
 
-  logo(g, cx, ly, 150 * eOutBack(prog(d, 0, 0.45)) * (1 + 0.05 * kp), t);
-  txt(g, `${COPY.brand} ${COPY.sub}`, cx, 728, { font: 'JBM', size: 36, track: 12, color: C.gold, alpha: eOutExpo(prog(t, 14.2, 14.45)) });
+  logo(g, cx, ly, 172 * eOutBack(prog(d, 0, 0.45)) * (1 + 0.05 * kp), t);
+  txt(g, `${COPY.brand} ${COPY.sub}`, cx, 748, { font: 'JBM', size: 36, track: 12, color: C.gold, alpha: eOutExpo(prog(t, 14.2, 14.45)) });
 
   const sz = fit(COPY.event, 'IDB', 860, 230), shineP = ((t - 14.6) % 1.4) / 1.4;
   row(g, COPY.event, cx, 885, { size: sz, track: 4, glow: 36, glowColor: 'rgba(255,255,255,0.35)' }, (i, n) => {
@@ -457,8 +457,8 @@ function sceneFinal(g, t) {
     g.save(); g.translate(cx, py); g.scale(1 + 0.035 * kp, 1 + 0.035 * kp);
     g.beginPath(); g.roundRect(-pw / 2, -ph / 2, pw, ph, ph / 2);
     const pg = g.createLinearGradient(-pw / 2, 0, pw / 2, 0);
-    pg.addColorStop(0, C.gold2); pg.addColorStop(0.5, '#FFE08A'); pg.addColorStop(1, C.gold2);
-    g.fillStyle = pg; g.shadowColor = 'rgba(255,200,87,0.6)'; g.shadowBlur = 40; g.fill(); g.shadowBlur = 0;
+    pg.addColorStop(0, C.gold2); pg.addColorStop(0.5, '#FBD8C8'); pg.addColorStop(1, C.gold2);
+    g.fillStyle = pg; g.shadowColor = 'rgba(244,191,166,0.6)'; g.shadowBlur = 40; g.fill(); g.shadowBlur = 0;
     g.clip();
     txt(g, 'COMING SOON', 0, 4, { size: 82, track: 6, color: '#120816' });
     const sx = -pw / 2 + ((t * 0.9) % 1) * (pw + 400) - 200;
@@ -472,7 +472,7 @@ function sceneFinal(g, t) {
     txt(g, COPY.tagline.slice(0, n), cx, 1195, { font: 'JBM', size: 38, track: 8, color: '#fff', alpha: 0.9 });
   }
   const hp = eOutExpo(prog(t, 15.5, 15.85));
-  txt(g, COPY.handle, cx, 1305 + (1 - hp) * 40, { size: 62, color: '#fff', alpha: hp, glow: 20, glowColor: 'rgba(255,45,120,0.7)' });
+  txt(g, COPY.handle, cx, 1305 + (1 - hp) * 40, { size: 62, color: '#fff', alpha: hp, glow: 20, glowColor: 'rgba(240,110,150,0.7)' });
   g.fillStyle = hexA(C.mag, hp); g.fillRect(cx - 260 * hp, 1352, 520 * hp, 4);
   txt(g, COPY.cta, cx, 1405, { font: 'JBM', size: 26, track: 6, color: '#fff', alpha: 0.65 * eOutExpo(prog(t, 15.8, 16.1)) });
   g.restore();
