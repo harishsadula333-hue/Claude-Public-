@@ -155,7 +155,7 @@ def slam(freq=55):
     t = tt(0.9)
     ph = 2 * np.pi * np.cumsum(freq + 90 * np.exp(-t / 0.05)) / SR
     sub = np.sin(ph) * np.exp(-t / 0.35)
-    crack = fft_filter(rng.standard_normal(len(t)), lo=1500) * np.exp(-t / 0.03) * 0.35
+    crack = fft_filter(rng.standard_normal(len(t)), lo=1500) * np.exp(-t / 0.03) * 0.6
     ring = sum(np.sin(2 * np.pi * freq * k * 4.01 * t) for k in (1, 1.5, 2.25)) * np.exp(-t / 0.25) * 0.06
     return np.tanh(1.8 * (sub + crack + ring)) * 0.85
 
@@ -219,7 +219,7 @@ def mtof(m):
     return 440 * 2 ** ((m - 69) / 12)
 
 
-# ---------------------------------------------------------------- elegant layer (bells, shimmer, plucks, ui sfx)
+# ---------------------------------------------------------------- sound-effect sources (sparkle, swoosh, clicks, beeps)
 def bell(freq, dur=1.6):
     """Glassy bell / music-box tone (inharmonic partials)."""
     t = tt(dur)
@@ -244,12 +244,6 @@ def shimmer(dur=1.2, lo=72, hi=100):
         out[i : i + len(b)] += b[: len(out) - i]
     return out * 0.5
 
-
-def pluck(freq, dur=0.6):
-    t = tt(dur)
-    sig = sum(a * np.sin(2 * np.pi * freq * k * t * (1 + d)) * np.exp(-t / (0.22 / k))
-              for k, a in ((1, 1.0), (2, 0.5), (3, 0.22), (4, 0.1)) for d in (-0.002, 0.002))
-    return sig * np.minimum(1, t / 0.002) * 0.35
 
 
 def swish(dur=0.4, up=True):
@@ -289,16 +283,6 @@ def add_st(pair, at, gain=1.0, verb=0.0):
     if verb:
         verb_send[i : i + m] += (sl[:m] + sr[:m]) * 0.5 * gain * verb
 
-
-lead_L = np.zeros(N)
-lead_R = np.zeros(N)
-
-
-def add_lead(sig, at, gain):
-    i = int(round(at * SR))
-    m = min(len(sig), N - i)
-    lead_L[i : i + m] += sig[:m] * gain
-    lead_R[i : i + m] += sig[:m] * gain
 
 
 # ---------------------------------------------------------------- arrangement
@@ -396,68 +380,27 @@ groove_bar(14.0, 0, intense=True, stabs=True)
 groove_bar(16.0, 1, intense=True, stabs=True)  # truncated by the final hit below
 add(pad([mtof(57), mtof(60), mtof(64), mtof(69)], 4.0, 800, 4000), 14.0, 0.2, verb=0.3)
 
-# ---------------------------------------------------------------- elegant layer arrangement
-# music-box notes on the intro words
-for at, m in ((0.0, 88), (1.0, 84), (2.0, 81), (3.0, 83), (3.5, 86)):
-    add(bell(mtof(m), 1.4), at, 0.35, pan=0.2, verb=0.6)
+# ---------------------------------------------------------------- sound effects (no extra music)
+# Only the original beat is music; these are short effects that follow the visuals.
 for at in (1.0, 2.0, 3.0, 3.5):
-    add_st(swish(0.3), at - 0.3, 0.35)
-
-# logo reveal sparkle + bell chord
-add(shimmer(1.4, 76, 100), 4.0, 0.55, pan=0.15, verb=0.7)
-for m in (69, 72, 76, 81):
-    add(bell(mtof(m), 2.2), 4.0, 0.22, verb=0.6)
-# typewriter "PRESENTS"
+    add_st(swish(0.3), at - 0.3, 0.3)                       # swoosh into each intro word
+add(shimmer(1.4, 76, 100), 4.0, 0.35, pan=0.15, verb=0.6)   # sparkle on logo reveal
 for k in range(12):
-    add(key_click(), 6.0 + k * 0.035, 0.5, pan=0.1)
-
-# lead hook (A minor, over Am-F-C-G), ping-pong delay applied below
-HOOK = [
-    {0: 76, 2: 79, 4: 81, 6: 79, 7: 76, 10: 74, 12: 76},
-    {0: 77, 2: 76, 4: 72, 6: 74, 9: 72, 10: 69},
-    {0: 76, 2: 79, 4: 84, 6: 83, 7: 79, 10: 76, 12: 79},
-    {0: 81, 2: 79, 4: 76, 6: 74, 8: 71, 10: 74, 12: 76},
-]
-for bar_start, bi, g in ((4.0, 0, 0.55), (6.0, 1, 0.55), (8.0, 2, 0.8), (10.0, 3, 0.8), (14.0, 0, 0.85), (16.0, 1, 0.85)):
-    for step, m in HOOK[bi].items():
-        add_lead(pluck(mtof(m)), bar_start + step * S16, g)
-        if g > 0.7:
-            add_lead(pluck(mtof(m + 12)) * 0.25, bar_start + step * S16, g)
-
-# transitions in the kinetic-type section
-add_st(swish(0.5), 7.5, 0.5)
+    add(key_click(), 6.0 + k * 0.035, 0.45, pan=0.1)        # typing "PRESENTS"
+add_st(swish(0.5), 7.5, 0.45)                               # zoom-out transition
 for at in (9.0, 9.5, 10.0):
-    add_st(swish(0.25, up=at != 9.5), at - 0.25, 0.45)
-for k, (at, m) in enumerate(((11.0, 81), (11.25, 84), (11.5, 88), (11.75, 93))):
-    add_st(swish(0.18), at - 0.18, 0.3)
-    add(bell(mtof(m), 0.8), at, 0.3, pan=(-0.3 if k % 2 else 0.3), verb=0.4)
-
-# countdown beeps
+    add_st(swish(0.25, up=at != 9.5), at - 0.25, 0.4)       # word cuts
+for at in (11.0, 11.25, 11.5, 11.75):
+    add_st(swish(0.18), at - 0.18, 0.28)
 for at, f in ((12.5, 1318.5), (13.0, 1318.5), (13.5, 1760.0)):
-    add(beep(f, 0.16), at, 0.55, verb=0.3)
-
-# final card: sparkle, pill reveal, typing, handle pop, notification ding
-add(shimmer(1.6, 76, 103), 14.0, 0.6, pan=-0.15, verb=0.7)
-add_st(swish(0.35), 14.5, 0.45)
-for m in (76, 81, 84, 88):
-    add(bell(mtof(m), 1.6), 14.5, 0.16, verb=0.5)
+    add(beep(f, 0.16), at, 0.45, verb=0.3)                  # countdown beeps
+add(shimmer(1.6, 76, 103), 14.0, 0.4, pan=-0.15, verb=0.6)  # sparkle on end card
+add_st(swish(0.35), 14.5, 0.4)                              # COMING SOON reveal
 for k in range(24):
-    add(key_click(), 15.0 + k * 0.028, 0.4, pan=0.1)
-add(pop(), 15.5, 0.6)
-add(bell(mtof(88), 0.9), 15.82, 0.4, verb=0.4)
-add(bell(mtof(93), 1.2), 15.95, 0.4, verb=0.4)
-
-# ping-pong delay on the lead (dotted 8th), then into the mix
-D = int(0.375 * SR)
-wetL, wetR = np.zeros(N), np.zeros(N)
-src = (lead_L + lead_R) * 0.5
-for k in range(1, 6):
-    sh = np.zeros(N)
-    sh[k * D :] = src[: N - k * D] * (0.45 ** k)
-    (wetL if k % 2 else wetR)[:] += sh
-L += lead_L + wetL * 0.8
-R += lead_R + wetR * 0.8
-verb_send += src * 0.35
+    add(key_click(), 15.0 + k * 0.028, 0.35, pan=0.1)       # typing tagline
+add(pop(), 15.5, 0.55)                                      # handle pops in
+add(bell(mtof(88), 0.9), 15.82, 0.3, verb=0.4)              # notification "ding-ding"
+add(bell(mtof(93), 1.2), 15.95, 0.3, verb=0.4)
 
 # --- FINAL hit at 17.0: hard cut everything before it, then ring-out
 cut = int(17.0 * SR)
@@ -469,13 +412,11 @@ add(impact(1.0), 17.0, 1.0, verb=0.9)
 add(braam(55, 1.0), 17.0, 0.7, verb=0.8)
 add(slam(55), 17.0, 0.6)
 events["impacts"].append(17.0)
-add(shimmer(2.0, 72, 100), 17.0, 0.6, verb=0.9)
-for m in (57, 69, 72, 76, 81):
-    add(bell(mtof(m), 2.5), 17.0, 0.2, verb=0.8)
+add(shimmer(2.0, 72, 100), 17.0, 0.35, verb=0.8)
 
 # ---------------------------------------------------------------- mix
 # side-chain duck everything except the kick itself (approximation: whole bus, gentle)
-duck = 1 - 0.35 * duck_src
+duck = 1 - 0.45 * duck_src
 L *= duck
 R *= duck
 

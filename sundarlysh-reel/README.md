@@ -10,7 +10,7 @@
 | 1–2 s | **BIG** slams in gold | heartbeat + hit |
 | 2–3 s | "IS COMING" letter-by-letter | clock ticks, riser starts |
 | 3–4 s | GET → READY zoom, speed lines, white-out | snare roll, reverse cymbal, ½-beat silence |
-| 4 s | **DROP**: logo bursts in with shockwave + sparks | impact + 808 groove |
+| 4 s | **DROP**: logo bursts in with shockwave + sparks | impact + 808 groove + sparkle |
 | 4–8 s | SUNDARLYSH / EVENTS / PRESENTS | groove |
 | 8–12 s | GET READY · FOR · THE · WORKSHOP · LEARN/CREATE/CONNECT/SHINE | harder groove + stabs |
 | 12–14 s | ARE YOU READY? → 3 · 2 · 1 | braams, riser, silence |
@@ -24,4 +24,4 @@ Replace it (logo.png / logo.jpg) and run `./build.sh` to change it.
 ## Change the words
 Edit the `COPY` block at the top of `reel.html` (brand, handle, the four words, tagline), then `./build.sh`.
 
-Requires python3 + numpy, node + playwright (Chromium), ffmpeg. The music (beat, piano-pluck hook with echo, music-box bells, sparkle shimmers, silk swooshes, countdown beeps, typing clicks, notification ding) is synthesised from scratch in `audio.py` (no samples, no copyright issues).
+Requires python3 + numpy, node + playwright (Chromium), ffmpeg. The beat and the sound effects (sparkle shimmers, swooshes, countdown beeps, typing clicks, notification ding) is synthesised from scratch in `audio.py` (no samples, no copyright issues).
