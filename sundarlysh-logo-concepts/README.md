@@ -1,5 +1,11 @@
 # Sundarlysh: Logo Concepts
 
+> **FINAL LOGO: [final-logo/](final-logo/).** A heart-thread mark with the S·A
+> monogram, joined to the original wordmark. Includes stacked, horizontal and
+> icon versions on light, dark and transparent backgrounds.
+>
+> ![Final logo](final-logo/sundarlysh-final-logo-sheet.png)
+
 > **Latest (v3): [Logo + text as one mark](v3-merged-lockups/).** In these
 > lockups (Crowned A, Jhumka A, Heart Thread) the emblem is merged into the
 > wordmark itself.
