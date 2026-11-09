@@ -1,6 +1,12 @@
 # Sundarlysh: Logo Concepts
 
-> **New (v2): [Letter-linked emblems](v2-letter-linked/).** These four emblems
+> **Latest (v3): [Logo + text as one mark](v3-merged-lockups/).** In these
+> lockups (Crowned A, Jhumka A, Heart Thread) the emblem is merged into the
+> wordmark itself.
+>
+> ![v3 board](v3-merged-lockups/sundarlysh-v3-board.png)
+
+> **v2: [Letter-linked emblems](v2-letter-linked/).** These four emblems
 > (Crown of A, Jhumka A, S·A Monogram, Heart of Two S) are built from the
 > letters of SUNDAR and set above the client's exact original wordmark.
 >
