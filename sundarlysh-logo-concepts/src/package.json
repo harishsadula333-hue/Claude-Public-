@@ -1,0 +1,23 @@
+{
+  "name": "sundarlysh-logo-concepts",
+  "private": true,
+  "description": "Generator for the Sundarlysh logo concepts (SVG + PNG).",
+  "scripts": {
+    "build": "node build.js",
+    "render": "node render.js out 2 out/*.svg",
+    "board": "node board.js board.png 1"
+  },
+  "dependencies": {
+    "opentype.js": "1.3.4",
+    "playwright": "*",
+    "@fontsource/abril-fatface": "*",
+    "@fontsource/bodoni-moda": "*",
+    "@fontsource/cinzel": "*",
+    "@fontsource/cinzel-decorative": "*",
+    "@fontsource/cormorant-garamond": "*",
+    "@fontsource/great-vibes": "*",
+    "@fontsource/italiana": "*",
+    "@fontsource/marcellus": "*",
+    "@fontsource/pinyon-script": "*"
+  }
+}
