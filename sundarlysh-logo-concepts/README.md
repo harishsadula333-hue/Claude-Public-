@@ -1,5 +1,15 @@
 # Sundarlysh: Logo Concepts
 
+> **New (v2): [Letter-linked emblems](v2-letter-linked/).** These four emblems
+> (Crown of A, Jhumka A, S·A Monogram, Heart of Two S) are built from the
+> letters of SUNDAR and set above the client's exact original wordmark.
+>
+> ![v2 board](v2-letter-linked/sundarlysh-v2-board.png)
+
+---
+
+## v1 concepts
+
 Five profile-logo concepts for **Sundarlysh: Care With Style**, based on the
 original mark (wine "SUNDAR", gold script "lysh", a star-topped **A** with a
 pink heart on its crossbar, and a golden thread swoosh). The Instagram
