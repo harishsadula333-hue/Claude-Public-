@@ -1,5 +1,10 @@
 # Sundarlysh: Logo Concepts
 
+> **NEWEST (v4): [Simple luxury](v4-simple-luxury/).** Three clean,
+> fashion-house directions: Maison S·A, Arch and Ring.
+>
+> ![v4 board](v4-simple-luxury/sundarlysh-v4-board.png)
+
 > **FINAL LOGO: [final-logo/](final-logo/).** A heart-thread mark with the S·A
 > monogram, joined to the original wordmark. Includes stacked, horizontal and
 > icon versions on light, dark and transparent backgrounds.
