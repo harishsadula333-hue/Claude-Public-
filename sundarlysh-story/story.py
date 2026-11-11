@@ -63,16 +63,16 @@ def kb_frame(stem, u, focus=(0.5, 0.5), z=(1.0, 1.10), pan=(0.0, 0.0)):
 B = 0.75  # one beat at 80 bpm
 SHOTS = [
     # 1. Hook
-    (0.0, 3.0, "33195531", dict(focus=(0.5, 0.45), z=(1.12, 1.0), xf=0)),
-    (3.0, 6.0, "19733687", dict(focus=(0.5, 0.40), z=(1.0, 1.10), xf=0.5)),
+    (0.0, 3.0, "ai_hook1", dict(focus=(0.5, 0.45), z=(1.10, 1.0), xf=0)),
+    (3.0, 6.0, "ai_hook2", dict(focus=(0.5, 0.42), z=(1.0, 1.10), xf=0.5)),
     # 2. Problem montage (hard cuts on the beat)
     (6.0, 6.75, "19905189", dict(focus=(0.5, 0.5), z=(1.05, 1.12), xf=0.25)),
-    (6.75, 7.5, "12912123", dict(focus=(0.5, 0.35), z=(1.05, 1.12))),
-    (7.5, 8.25, "7034454", dict(focus=(0.5, 0.40), z=(1.05, 1.12))),
-    (8.25, 12.0, "7320600", dict(focus=(0.55, 0.5), z=(1.0, 1.16), fx="drain")),
+    (6.75, 7.5, "ai_stress2", dict(focus=(0.5, 0.40), z=(1.05, 1.12))),
+    (7.5, 8.25, "28845664", dict(focus=(0.5, 0.5), z=(1.05, 1.12))),
+    (8.25, 12.0, "ai_stress1", dict(focus=(0.5, 0.45), z=(1.0, 1.14), fx="drain")),
     # 3. Turn - brand card (rendered separately), shots resume at 15.0
     # 4. Reasons
-    (15.0, 17.25, "6685153", dict(focus=(0.5, 0.42), z=(1.0, 1.08), xf=0.4)),
+    (15.0, 17.25, "ai_r1", dict(focus=(0.5, 0.42), z=(1.0, 1.08), xf=0.4)),
     (17.25, 19.5, "31307957", dict(focus=(0.5, 0.5), z=(1.10, 1.0), xf=0.35)),
     (19.5, 21.0, "34079355", dict(focus=(0.5, 0.5), z=(1.0, 1.08), xf=0.35)),
     (21.0, 22.5, "17023110", dict(focus=(0.5, 0.5), z=(1.08, 1.0), xf=0.3)),
@@ -81,13 +81,13 @@ SHOTS = [
     (25.5, 27.0, "28976228", dict(focus=(0.5, 0.55), z=(1.08, 1.0), xf=0.3)),
     (27.0, 28.5, "7162699", dict(focus=(0.42, 0.45), z=(1.0, 1.08), xf=0.3)),
     (28.5, 30.0, "5038739", dict(focus=(0.5, 0.5), z=(1.0, 1.08), xf=0.35)),
-    (30.0, 31.5, "28589007", dict(focus=(0.5, 0.45), z=(1.08, 1.0), xf=0.3)),
-    (31.5, 33.0, "17262009", dict(focus=(0.5, 0.5), z=(1.0, 1.08), xf=0.3)),
-    (33.0, 34.5, "39797458", dict(focus=(0.5, 0.5), z=(1.0, 1.08), xf=0.35)),
-    (34.5, 36.0, "169198", dict(focus=(0.5, 0.5), z=(1.08, 1.0), xf=0.3)),
-    (36.0, 37.5, "30655516", dict(focus=(0.45, 0.5), z=(1.0, 1.08), xf=0.3)),
+    (30.0, 31.5, "ai_dance", dict(focus=(0.5, 0.45), z=(1.08, 1.0), xf=0.3)),
+    (31.5, 33.0, "ai_petals", dict(focus=(0.5, 0.5), z=(1.0, 1.08), xf=0.3)),
+    (33.0, 34.5, "33485973", dict(focus=(0.5, 0.5), z=(1.0, 1.08), xf=0.35)),
+    (34.5, 36.0, "38302968", dict(focus=(0.5, 0.5), z=(1.08, 1.0), xf=0.3)),
+    (36.0, 37.5, "39797460", dict(focus=(0.5, 0.5), z=(1.0, 1.08), xf=0.3)),
     # 5. Payoff
-    (37.5, 40.9, "33608797", dict(focus=(0.5, 0.42), z=(1.0, 1.10), xf=0.4)),
+    (37.5, 40.9, "ai_payoff", dict(focus=(0.5, 0.42), z=(1.0, 1.10), xf=0.4)),
 ]
 BRAND_T = (12.0, 15.0)
 END_T = (40.5, DUR)
@@ -136,7 +136,7 @@ REASONS = [
     (19.5, 24.0, "02", "BREATHTAKING DÉCOR", ["Mandaps, florals & lighting", "that wow every guest"]),
     (24.0, 28.5, "03", "TRUSTED VENDORS", ["Venue · Catering · Décor · Invitations", "all handled for you"]),
     (28.5, 33.0, "04", "SEAMLESS EXECUTION", ["Event flow & guest management,", "so you never have to worry"]),
-    (33.0, 37.5, "05", "DESTINATION WEDDINGS", ["Bengaluru · Chennai · Hyderabad", "Kerala · Mahabalipuram · Sri Lanka"]),
+    (33.0, 37.5, "05", "LOCAL EXPERTISE", ["Trusted venues & teams across", "Bengaluru & Hyderabad"]),
 ]
 for t0, t1, num, title, sub in REASONS:
     add(t0 + 0.15, t1, sprite([(num, SCRIPT(150), BLUSH, 0, 0)]), 1270, anim="fade")
@@ -175,7 +175,7 @@ LOGO_END = logo_block(900)
 
 END_LINES = [
     (sprite([("Care with Style", SCRIPT(104), ROSE, 0, 0)], shadow=False), 1270, 0.5),
-    (sprite([("WEDDING PLANNING  ·  DÉCOR  ·  DESTINATION WEDDINGS", SANS(25), INK, 4, 0)], shadow=False), 1385, 0.8),
+    (sprite([("WEDDING PLANNING  ·  DÉCOR  ·  BENGALURU & HYDERABAD", SANS(25), INK, 4, 0)], shadow=False), 1385, 0.8),
 ]
 def button():
     t = sprite([("DM US TO PLAN YOUR DREAM WEDDING", SANS(30), WHITE, 5, 0)], shadow=False, pad=0)
