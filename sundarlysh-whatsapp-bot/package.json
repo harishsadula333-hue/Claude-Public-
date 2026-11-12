@@ -1,0 +1,13 @@
+{
+  "name": "sundarlysh-whatsapp-bot",
+  "version": "1.0.0",
+  "description": "WhatsApp Cloud API booking bot for Sundarlysh Events",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=22.9" },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning src/server.js",
+    "simulate": "node --disable-warning=ExperimentalWarning simulate.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/*.test.js"
+  }
+}
