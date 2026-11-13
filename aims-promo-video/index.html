@@ -50,8 +50,8 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
 #s2{background:var(--dark)}
 #s2 .photo{left:0;top:0;width:1080px;height:1080px;clip-path:polygon(0 0,100% 0,82% 100%,0 100%)}
 #s2 .edge{left:0;top:0;width:1110px;height:1080px;background:linear-gradient(180deg,var(--orange),var(--red));clip-path:polygon(97.3% 0,100% 0,82.6% 100%,79.9% 100%)}
-#s2 .txt{left:1100px;top:140px;width:760px}
-#s2 .h1{font-size:78px;margin:26px 0 30px}
+#s2 .txt{left:1100px;top:120px;width:760px}
+#s2 .h1{font-size:70px;margin:24px 0 28px}
 #s2 p{font-size:31px;line-height:1.5;color:#e9dcdc;font-weight:500}
 #s2 .stats{left:1100px;top:700px;display:flex;gap:22px}
 .stat{width:238px;height:220px;border-radius:24px;background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.03));border:1.5px solid rgba(255,255,255,.14);padding:26px 24px}
@@ -109,12 +109,18 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
 #s6 .head .kicker{justify-content:center}
 #s6 .head .kicker::after{content:"";width:56px;height:5px;background:var(--red);border-radius:3px}
 #s6 .h1{font-size:84px;margin-top:16px}
-.award{position:absolute;top:340px;width:410px;height:500px;border-radius:28px;background:linear-gradient(170deg,rgba(255,255,255,.13),rgba(255,255,255,.04));border:1.5px solid rgba(255,255,255,.18);padding:40px 34px;text-align:center}
-.award svg{width:84px;height:84px;fill:none;stroke:var(--amber);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.award .y{font-weight:900;font-size:92px;line-height:1;margin:10px 0 18px;background:linear-gradient(180deg,#FFD58A,var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
-.award .t{font-weight:800;font-size:29px;line-height:1.28}
-.award .by{position:absolute;left:30px;right:30px;bottom:38px;font-size:21px;font-weight:600;color:#e3c9c9;letter-spacing:.5px}
-#s6 .foot{left:0;width:1920px;top:910px;text-align:center;font-size:27px;font-weight:600;color:#f5dede}
+.feat{width:680px;height:580px;left:100px;top:290px;border-radius:28px;overflow:hidden;background:linear-gradient(170deg,rgba(255,255,255,.15),rgba(255,255,255,.05));border:1.5px solid rgba(255,255,255,.22);box-shadow:0 30px 70px rgba(0,0,0,.45)}
+.feat .ph{height:360px;overflow:hidden}
+.feat .ph img{width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.feat .badge{position:absolute;left:24px;top:24px;background:linear-gradient(90deg,var(--orange),var(--red));font-weight:900;font-size:18px;letter-spacing:3px;padding:10px 16px;border-radius:10px}
+.feat .t{padding:26px 34px 0;font-weight:900;font-size:40px;line-height:1.12}
+.feat .by{padding:12px 34px 0;font-size:26px;font-weight:700;color:var(--amber)}
+.yc{position:absolute;width:500px;height:270px;border-radius:24px;background:linear-gradient(170deg,rgba(255,255,255,.13),rgba(255,255,255,.04));border:1.5px solid rgba(255,255,255,.18);padding:26px 30px}
+.yc svg{position:absolute;right:26px;top:26px;width:64px;height:64px;fill:none;stroke:var(--amber);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.yc .y{font-weight:900;font-size:70px;line-height:1;background:linear-gradient(180deg,#FFD58A,var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.yc .t{margin-top:12px;font-weight:800;font-size:26px;line-height:1.25;padding-right:10px}
+.yc .by{position:absolute;left:30px;right:30px;bottom:22px;font-size:19px;font-weight:600;color:#e3c9c9}
+#s6 .foot{left:0;width:1920px;top:925px;text-align:center;font-size:27px;font-weight:600;color:#f5dede}
 #s6 .foot b{color:var(--amber)}
 
 /* ---------- S7 placements ---------- */
@@ -136,15 +142,22 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
 
 /* ---------- S8 CTA ---------- */
 #s8{background:#fff;color:var(--ink)}
-#s8 .circ{left:150px;top:200px;width:680px;height:680px;border-radius:50%;padding:22px;background:#fff;box-shadow:0 30px 80px rgba(160,20,30,.25);outline:2px solid rgba(227,30,36,.5);outline-offset:14px}
+#s8 .seal{left:600px;top:600px;width:200px;height:200px;border-radius:50%;background:conic-gradient(from 0deg,#FFD58A,#F7931E,#FFD58A,#F7931E,#FFD58A);padding:8px;box-shadow:0 14px 34px rgba(0,0,0,.3)}
+#s8 .seal div{width:100%;height:100%;border-radius:50%;background:linear-gradient(160deg,var(--red),var(--red2));border:2px dashed rgba(255,255,255,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-align:center}
+#s8 .seal small{font-weight:800;font-size:15px;letter-spacing:2px}
+#s8 .seal b{font-weight:900;font-size:50px;line-height:1.05;color:#FFE1A6}
+#s8 .circ{left:170px;top:220px;width:600px;height:600px;border-radius:50%;padding:20px;background:#fff;box-shadow:0 30px 80px rgba(160,20,30,.25);outline:2px solid rgba(227,30,36,.5);outline-offset:14px}
 #s8 .circ div{width:100%;height:100%;border-radius:50%;overflow:hidden}
 #s8 .circ img{width:100%;height:100%;object-fit:cover}
 #s8 .right{left:960px;top:100px;width:900px}
 #s8 .logo{width:250px}
-#s8 .tag{font-family:'Great Vibes',cursive;font-size:84px;line-height:1.05;color:var(--ink);margin:14px 0 26px;white-space:nowrap}
+#s8 .tag{font-family:'Great Vibes',cursive;font-size:74px;line-height:1.05;color:var(--ink);margin:18px 0 14px;white-space:nowrap}
 #s8 .tag b{color:var(--red)}
+#s8 .row{display:flex;align-items:center;gap:22px;margin-top:22px}
+#s8 .sch{font-weight:800;font-size:26px;color:var(--orange)}
 #s8 .cta{display:inline-block;background:linear-gradient(90deg,var(--orange),var(--red));color:#fff;font-weight:900;font-size:28px;letter-spacing:6px;padding:16px 30px;border-radius:14px}
-#s8 .ph{font-weight:900;font-size:58px;line-height:1.2;margin-top:24px;letter-spacing:.5px}
+#s8 .ph{font-weight:900;font-size:58px;line-height:1.2;margin-top:6px;letter-spacing:.5px}
+#s8 .cl{display:block;font-size:22px;letter-spacing:5px;color:var(--red);font-weight:800}
 #s8 .web{font-weight:800;font-size:40px;color:var(--red);margin-top:18px}
 #s8 .addr{font-size:26px;font-weight:600;color:var(--muted);margin-top:10px}
 </style>
@@ -164,6 +177,7 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
   </svg>
   <div class="abs card" data-a="pop 0.25 0.8"><img src="img/logo.png"></div>
   <div class="abs tag" style="top:640px" data-a="blur 1.1 0.8">Choose <b>AIMS</b>… Chase <b>Dreams</b>…</div>
+  <div class="abs" style="left:0;width:1920px;top:790px;text-align:center" data-a="pop 2.4 0.6"><span style="display:inline-block;background:#fff;color:var(--red);font-weight:900;font-size:30px;letter-spacing:6px;padding:12px 30px;border-radius:40px;box-shadow:0 10px 30px rgba(0,0,0,.35)">ADMISSIONS OPEN</span></div>
   <div class="abs sub1" data-a="fadeUp 1.9 0.7">Hyderabad <span>•</span> Affiliated to Osmania University</div>
 </section>
 
@@ -173,8 +187,8 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
   <div class="abs" style="left:0;top:0;width:1110px;height:1080px" data-a="wipeU 4.2 0.7"><div class="abs edge"></div></div>
   <div class="abs txt">
     <div class="kicker" data-a="fadeLeft 4.35 0.6">About AIMS</div>
-    <div class="h1" data-words="4.5 0.07">Shaping Future <span class="orange">Hoteliers</span> Since 2011</div>
-    <p data-a="fadeUp 5.2 0.7">A premier college of Hotel Management &amp; Catering Technology at L.B. Nagar, Hyderabad, affiliated to Osmania University.</p>
+    <div class="h1" data-words="4.5 0.06">A Premier College to Study <span class="orange">Hotel Management</span> in Hyderabad</div>
+    <p data-a="fadeUp 5.3 0.7">Affiliated to Osmania University, at L.B. Nagar, Hyderabad — shaping future hoteliers since 2011.</p>
   </div>
   <div class="abs stats">
     <div class="stat" data-a="pop 5.8 0.6"><div class="n" data-count="1990 2011 5.8 1.2">2011</div><div class="l">Year Established</div></div>
@@ -221,7 +235,7 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
     <div class="ab">PGDHM</div><div class="pill">PG DIPLOMA</div>
     <div class="nm">Post Graduate Diploma in Hotel Management</div>
     <div class="chips">
-      <div class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Duration: <b>12 Months</b></span></div>
+      <div class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Duration: <b>18 Months</b></span></div>
       <div class="chip"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg><span>Eligibility: <b>Any Degree</b></span></div>
     </div>
   </div>
@@ -235,7 +249,7 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
 </section>
 
 <!-- ===================== S5 WHY AIMS 28.5–34 ===================== -->
-<section class="scene" id="s5" data-vis="28.5 34">
+<section class="scene" id="s5" data-vis="28.5 33.5">
   <div class="abs head">
     <div class="kicker" data-a="fadeLeft 28.7 0.6">Why AIMS?</div>
     <div class="h1" data-words="28.85 0.07">More Than a<br><span class="red">Classroom</span></div>
@@ -245,15 +259,21 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
 </section>
 
 <!-- ===================== S6 AWARDS 34–39 ===================== -->
-<section class="scene" id="s6" data-vis="34 39">
-  <img class="blurbg" src="img/p24_00.jpg" data-kb="34 39 1.0 1.08 0 0 0 0">
+<section class="scene" id="s6" data-vis="33.5 39">
+  <img class="blurbg" src="img/p24_00.jpg" data-kb="33.5 39 1.0 1.08 0 0 0 0">
   <div class="glow"></div>
   <div class="abs head">
-    <div class="kicker" data-a="fadeDown 34.2 0.6">Recognition</div>
-    <div class="h1" data-words="34.35 0.08">Award-Winning <span class="orange">Institution</span></div>
+    <div class="kicker" data-a="fadeDown 33.7 0.6">Recognition</div>
+    <div class="h1" data-words="33.85 0.08">Award-Winning <span class="orange">Institution</span></div>
+  </div>
+  <div class="abs feat" data-a="fadeLeft 34.2 0.7">
+    <div class="ph"><img src="img/cvraman_award.jpg" data-kb="33.5 39 1.12 1.0 0 0 0 0"></div>
+    <div class="badge">FEATURED AWARD</div>
+    <div class="t">Best Hotel Management College in Telangana</div>
+    <div class="by">Sir C.V. Raman Academy</div>
   </div>
   <div id="awards"></div>
-  <div class="abs foot" data-a="fadeUp 37.0 0.7">Also <b>Runner-Up</b> in the Hyderabad Inter-Degree Colleges Cricket Tournament (NITHM) — <b>2019 &amp; 2022</b></div>
+  <div class="abs foot" data-a="fadeUp 36.7 0.7">Also <b>Runner-Up</b> in the Hyderabad Inter-Degree Colleges Cricket Tournament (NITHM) — <b>2019 &amp; 2022</b></div>
 </section>
 
 <!-- ===================== S7 PLACEMENTS 39–45 ===================== -->
@@ -287,12 +307,13 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
       <path d="M1920,800 L1920,765 C1810,895 1680,995 1450,1080 L1500,1080 C1700,1010 1820,920 1920,800 Z" fill="#F7931E"/>
     </g>
   </svg>
-  <div class="abs circ" data-a="zoomOut 45.2 0.9"><div><img src="img/team_circle.jpg" data-kb="45 50 1.08 1.0 0 0 0 0"></div></div>
+  <div class="abs circ" data-a="zoomOut 45.2 0.9"><div><img src="img/director_award.jpg" data-kb="45 50 1.06 1.0 0 0 0 0"></div></div>
+  <div class="abs seal" data-a="pop 45.9 0.6"><div><small>AWARD WINNER</small><b>2022</b><small>MERIT AWARDS</small></div></div>
   <div class="abs right">
     <img class="logo" src="img/logo.png" data-a="pop 45.4 0.7">
-    <div class="tag" data-a="blur 45.8 0.8">Choose <b>AIMS</b>… Chase <b>Dreams</b>…</div>
-    <div class="cta" data-a="fadeLeft 46.4 0.6" data-pulse="47.2">CALL TO ENQUIRE</div>
-    <div class="ph" data-a="fadeUp 46.6 0.6">+91 888 55 29279<br>+91 8712 279 279</div>
+    <div class="row" data-a="fadeLeft 45.7 0.6"><div class="cta" data-pulse="47.2">ADMISSIONS OPEN</div><div class="sch">★ Scholarships Available</div></div>
+    <div class="tag" data-a="blur 46.0 0.8">Join <b>AIMS</b>… <b>AIM</b> your <b>Dreams</b>…</div>
+    <div class="ph" data-a="fadeUp 46.6 0.6"><span class="cl">CALL NOW</span>+91 888 55 29279<br>+91 8712 279 279</div>
     <div class="web" data-a="fadeUp 46.9 0.6">www.aimshyd.com</div>
     <div class="addr" data-a="fadeUp 47.1 0.6">L.B. Nagar, Mansoorabad Road, Hyderabad – 500074</div>
   </div>
@@ -304,7 +325,7 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
 </div>
 
 <script>
-const DURATION = 50, CUTS = [4, 9.5, 19.5, 28.5, 34, 39, 45];
+const DURATION = 50, CUTS = [4, 9.5, 19.5, 28.5, 33.5, 39, 45];
 const PIN = '<svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
 const TROPHY = '<svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a4 4 0 0 1-4 4M7 5H4v2a4 4 0 0 0 4 4"/></svg>';
 const MEDAL = '<svg viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M8.5 10L6 2h4l2 5 2-5h4l-2.5 8"/><path d="M12 12.5l.9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3z"/></svg>';
@@ -315,8 +336,8 @@ const LABS = [
   ['img/p12_00.jpg','Model Restaurant &amp; Bar','F&amp;B service &amp; mixology practicals in a real restaurant setting','50% 40%'],
   ['img/p19_01.jpg','Front Office Lab','Reception, reservations, billing &amp; guest relations','50% 45%'],
   ['img/p21_00.jpg','Housekeeping &amp; Model Guest Room','Room care, linen art &amp; guest comfort — five-star style','50% 50%'],
-  ['img/p28_00.jpg','3 Training Kitchens','Basic, Quantity &amp; Advanced — Thai, Italian, Chinese, Mexican &amp; more','50% 45%'],
-  ['img/p03_03.jpg','Bakery &amp; Confectionery','Cakes, cookies &amp; desserts under a master chef','50% 50%'],
+  ['img/p28_00.jpg','3 Training Kitchens','Basic, Quantity &amp; Advanced — Indian, Tandoori, Chinese, Thai, Italian, Mexican &amp; more','50% 45%'],
+  ['img/p03_03.jpg','Bakery &amp; Confectionery','Desserts, Cakes &amp; Cookies — taught by a master chef','50% 50%'],
 ];
 const s4 = document.getElementById('s4'), prog = document.getElementById('prog');
 LABS.forEach(([src, name, desc, pos], i) => {
@@ -340,7 +361,7 @@ document.getElementById('why').innerHTML = WHY.map((w,i)=>`<li data-a="fadeLeft 
 const TILES = [['p32_00','Food Festival'],['p35_00','Sports'],['p36_00','Cultural Fest'],['p29_00','Cake Mixing'],['p33_00','Ingredient Display'],['p34_04','Project Work']];
 document.getElementById('tiles').innerHTML = TILES.map(([f,l],i)=>{
   const x = 1000 + (i%2)*430, y = 120 + Math.floor(i/2)*282;
-  return `<div class="tile" style="left:${x}px;top:${y}px" data-a="pop ${29.0+i*0.22} 0.6"><img src="img/${f}.jpg" data-kb="28.5 34 1.12 1.0 0 0 0 0"><span>${l}</span></div>`;
+  return `<div class="tile" style="left:${x}px;top:${y}px" data-a="pop ${29.0+i*0.22} 0.6"><img src="img/${f}.jpg" data-kb="28.5 33.5 1.12 1.0 0 0 0 0"><span>${l}</span></div>`;
 }).join('');
 
 /* ---------- S6 ---------- */
@@ -350,8 +371,10 @@ const AW = [
   ['2019','Top 10 Emerging Colleges in India','CEO Insights Magazine',STAR],
   ['2022','Best Hospitality Management Institute in Hyderabad','National Award · Merit Awards, New Delhi',TROPHY],
 ];
-document.getElementById('awards').innerHTML = AW.map(([y,t,b,ic],i)=>`
-  <div class="award" style="left:${100+i*440}px" data-a="fadeUp ${34.6+i*0.4} 0.7">${ic}<div class="y" data-count="${+y-12} ${y} ${34.6+i*0.4} 0.9">${y}</div><div class="t">${t}</div><div class="by">${b}</div></div>`).join('');
+document.getElementById('awards').innerHTML = AW.map(([y,t,b,ic],i)=>{
+  const st = 34.6 + i*0.35, x = 800 + (i%2)*520, yy = 290 + Math.floor(i/2)*310;
+  return `<div class="yc" style="left:${x}px;top:${yy}px" data-a="pop ${st} 0.6">${ic}<div class="y" data-count="${+y-12} ${y} ${st} 0.9">${y}</div><div class="t">${t}</div><div class="by">${b}</div></div>`;
+}).join('');
 
 /* ---------- S7 ---------- */
 const HEADS = [0,2,3,4,5,6,10,11,14,16,17,24];

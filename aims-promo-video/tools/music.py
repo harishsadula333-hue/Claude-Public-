@@ -57,7 +57,7 @@ def hat(open_=False):
 prog = [(57,[57,60,64]), (53,[53,57,60]), (48,[48,52,55,60]), (55,[55,59,62])]
 bars = int(np.ceil(DUR/BAR))
 end_t = DUR - 5.0   # final hit time
-CUTS = [9.5, 19.5, 28.5, 34.0, 39.0]
+CUTS = [9.5, 19.5, 28.5, 33.5, 39.0]
 for b in range(bars):
     t0 = b*BAR
     if t0 >= end_t: break
