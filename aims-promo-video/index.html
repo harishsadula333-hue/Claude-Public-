@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AIMS Promo Video</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+:root{
+  --red:#E31E24; --red2:#B3121B; --red3:#7A0D12; --orange:#F7931E; --amber:#FFB547;
+  --dark:#140A0B; --ink:#1E1416; --cream:#FFF6F0; --muted:#6E5E5F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#000}
+body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:var(--dark)}
+.scene,.sub{position:absolute;inset:0;overflow:hidden}
+.abs{position:absolute}
+.cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.frame{position:absolute;overflow:hidden}
+.frame img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:50% 50%}
+.kicker{font-weight:800;font-size:26px;letter-spacing:8px;color:var(--orange);text-transform:uppercase;display:flex;align-items:center;gap:18px}
+.kicker::before{content:"";width:56px;height:5px;background:var(--red);border-radius:3px}
+.h1{font-weight:900;line-height:1.02;letter-spacing:-1px}
+.w{display:inline-block;white-space:pre}
+.red{color:var(--red)} .orange{color:var(--orange)}
+
+/* ---------- wipe transition ---------- */
+#wipe{position:absolute;top:-200px;left:0;height:1480px;width:2900px;z-index:50;transform:translateX(-4000px) skewX(-16deg);display:flex;pointer-events:none}
+#wipe i{display:block;height:100%}
+#wipe .o{width:150px;background:var(--orange)}
+#wipe .r{width:2500px;background:linear-gradient(90deg,var(--red),var(--red2))}
+#wipe .d{width:250px;background:var(--red3)}
+#wipe .logo{position:absolute;left:1180px;top:540px;width:260px;transform:skewX(16deg);opacity:.95}
+
+/* ---------- watermark ---------- */
+#wm{position:absolute;right:40px;top:34px;z-index:40;background:#fff;border-radius:16px;padding:10px 18px 10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+#wm img{height:46px}
+#wm b{font-weight:900;font-size:34px;color:var(--red);letter-spacing:1px;font-family:Georgia,'DejaVu Serif',serif}
+
+/* ---------- S1 intro ---------- */
+#s1 .shade{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(20,10,11,.55) 0%,rgba(20,10,11,.86) 70%),linear-gradient(0deg,rgba(122,13,18,.55),transparent 60%)}
+#s1 .card{left:710px;top:110px;width:500px;height:470px;background:#fff;border-radius:34px;box-shadow:0 30px 80px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+#s1 .card img{width:410px}
+#s1 .tag{left:0;width:1920px;text-align:center;font-family:'Great Vibes',cursive;font-size:104px;line-height:1;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.6)}
+#s1 .tag b,#s8 .tag b{font-family:'Montserrat',sans-serif;font-weight:900;font-size:.62em;letter-spacing:1px;color:var(--orange);vertical-align:.12em}
+#s1 .sub1{left:0;width:1920px;top:900px;text-align:center;font-weight:600;font-size:30px;letter-spacing:7px;text-transform:uppercase;color:#ffe9dc}
+#s1 .sub1 span{color:var(--orange)}
+
+/* ---------- S2 about ---------- */
+#s2{background:var(--dark)}
+#s2 .photo{left:0;top:0;width:1080px;height:1080px;clip-path:polygon(0 0,100% 0,82% 100%,0 100%)}
+#s2 .edge{left:0;top:0;width:1110px;height:1080px;background:linear-gradient(180deg,var(--orange),var(--red));clip-path:polygon(97.3% 0,100% 0,82.6% 100%,79.9% 100%)}
+#s2 .txt{left:1100px;top:140px;width:760px}
+#s2 .h1{font-size:78px;margin:26px 0 30px}
+#s2 p{font-size:31px;line-height:1.5;color:#e9dcdc;font-weight:500}
+#s2 .stats{left:1100px;top:700px;display:flex;gap:22px}
+.stat{width:238px;height:220px;border-radius:24px;background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.03));border:1.5px solid rgba(255,255,255,.14);padding:26px 24px}
+.stat .n{font-weight:900;font-size:68px;line-height:1;background:linear-gradient(90deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .l{margin-top:16px;font-size:23px;font-weight:600;line-height:1.3;color:#f3e7e7}
+
+/* ---------- S3 courses ---------- */
+#s3{background:var(--cream)}
+#s3 .bgword{left:60px;top:840px;font-weight:900;font-size:300px;color:transparent;-webkit-text-stroke:2px rgba(227,30,36,.10);letter-spacing:-6px;line-height:1}
+#s3 .chef{left:1330px;top:0;width:590px;height:1080px;clip-path:polygon(16% 0,100% 0,100% 100%,0 100%)}
+#s3 .chefedge{left:1310px;top:0;width:110px;height:1080px;background:linear-gradient(180deg,var(--orange),var(--red));clip-path:polygon(85% 0,100% 0,18% 100%,3% 100%)}
+#s3 .head{left:100px;top:62px}
+#s3 .head .kicker{color:var(--red)}
+#s3 .head .h1{font-size:86px;color:var(--ink);margin-top:14px}
+.card{position:absolute;width:580px;height:350px;background:#fff;border-radius:26px;box-shadow:0 18px 50px rgba(120,20,25,.14);padding:34px 36px 30px 46px;overflow:hidden}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:12px;background:linear-gradient(180deg,var(--orange),var(--red))}
+.card .ab{font-weight:900;font-size:64px;line-height:1;color:var(--red);letter-spacing:-1px}
+.card .pill{position:absolute;right:30px;top:38px;font-weight:800;font-size:17px;letter-spacing:2px;color:#fff;background:var(--ink);padding:9px 16px;border-radius:30px}
+.card .nm{margin-top:16px;font-weight:700;font-size:27px;line-height:1.3;color:var(--ink);height:72px}
+.card .chips{position:absolute;left:46px;right:30px;bottom:30px;display:flex;flex-direction:column;gap:12px}
+.chip{display:flex;align-items:center;gap:14px;font-size:25px;font-weight:600;color:var(--muted)}
+.chip svg{width:36px;height:36px;flex:none;padding:7px;border-radius:50%;background:#FDE7E3;stroke:var(--red);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.chip b{color:var(--ink);font-weight:800}
+
+/* ---------- S4 labs ---------- */
+#s4{background:var(--dark)}
+#s4 .blurbg{position:absolute;inset:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(28px) brightness(.32) saturate(1.2)}
+#s4 .vign{position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,10,11,.92) 0%,rgba(20,10,11,.55) 45%,rgba(20,10,11,.15) 100%)}
+#s4 .lframe{left:800px;top:170px;width:1020px;height:740px;border-radius:28px;box-shadow:0 40px 90px rgba(0,0,0,.6);outline:6px solid rgba(255,255,255,.95);outline-offset:-1px}
+#s4 .num{left:100px;top:300px;font-weight:900;font-size:150px;line-height:1;color:transparent;-webkit-text-stroke:3px var(--orange)}
+#s4 .lname{left:100px;top:480px;width:660px;font-weight:900;font-size:70px;line-height:1.05}
+#s4 .bar{left:100px;top:0;width:150px;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--orange),var(--red));transform-origin:0 50%}
+#s4 .ldesc{left:100px;width:640px;font-size:32px;line-height:1.45;font-weight:500;color:#eadede}
+#s4 .top{left:100px;top:70px;z-index:5}
+#s4 .prog{left:100px;top:132px;display:flex;gap:10px;z-index:5}
+#s4 .prog i{display:block;width:70px;height:6px;border-radius:3px;background:rgba(255,255,255,.18);overflow:hidden}
+#s4 .prog i b{display:block;height:100%;width:100%;background:var(--orange);transform-origin:0 50%}
+
+/* ---------- S5 why ---------- */
+#s5{background:#fff;color:var(--ink)}
+#s5 .head{left:100px;top:70px}
+#s5 .head .kicker{color:var(--red)}
+#s5 .h1{font-size:78px;margin-top:14px}
+#s5 ul{list-style:none;position:absolute;left:100px;top:370px;width:840px}
+#s5 li{display:flex;align-items:center;gap:24px;font-size:31px;font-weight:600;height:96px;border-bottom:1.5px solid #f1e3e1}
+#s5 li .k{flex:none;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--red));color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center}
+.tile{position:absolute;width:410px;height:262px;border-radius:20px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.18)}
+.tile img{width:100%;height:100%;object-fit:cover}
+.tile span{position:absolute;left:14px;bottom:14px;background:var(--red);color:#fff;font-weight:800;font-size:20px;letter-spacing:1px;padding:8px 14px;border-radius:10px;text-transform:uppercase}
+
+/* ---------- S6 awards ---------- */
+#s6 .blurbg{position:absolute;inset:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(24px) brightness(.28)}
+#s6 .glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(227,30,36,.55),transparent 60%),radial-gradient(ellipse at 50% 120%,rgba(247,147,30,.25),transparent 55%)}
+#s6 .head{left:0;width:1920px;top:96px;text-align:center}
+#s6 .head .kicker{justify-content:center}
+#s6 .head .kicker::after{content:"";width:56px;height:5px;background:var(--red);border-radius:3px}
+#s6 .h1{font-size:84px;margin-top:16px}
+.award{position:absolute;top:340px;width:410px;height:500px;border-radius:28px;background:linear-gradient(170deg,rgba(255,255,255,.13),rgba(255,255,255,.04));border:1.5px solid rgba(255,255,255,.18);padding:40px 34px;text-align:center}
+.award svg{width:84px;height:84px;fill:none;stroke:var(--amber);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.award .y{font-weight:900;font-size:92px;line-height:1;margin:10px 0 18px;background:linear-gradient(180deg,#FFD58A,var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+.award .t{font-weight:800;font-size:29px;line-height:1.28}
+.award .by{position:absolute;left:30px;right:30px;bottom:38px;font-size:21px;font-weight:600;color:#e3c9c9;letter-spacing:.5px}
+#s6 .foot{left:0;width:1920px;top:910px;text-align:center;font-size:27px;font-weight:600;color:#f5dede}
+#s6 .foot b{color:var(--amber)}
+
+/* ---------- S7 placements ---------- */
+#s7{background:radial-gradient(ellipse at 20% 0%,#9A1219 0%,#4A0A0E 45%,var(--dark) 85%)}
+#s7 .rings{position:absolute;right:-300px;top:-250px;width:1300px;height:1300px;border-radius:50%;border:2px solid rgba(255,255,255,.06);box-shadow:0 0 0 120px rgba(255,255,255,.02),0 0 0 260px rgba(255,255,255,.015)}
+#s7 .head{left:100px;top:96px;width:1060px}
+#s7 .h1{font-size:76px;margin-top:16px}
+.head-shot{position:absolute;width:152px;height:152px;border-radius:50%;overflow:hidden;border:5px solid var(--amber);box-shadow:0 10px 30px rgba(0,0,0,.4);background:#fff}
+.head-shot img{width:100%;height:100%;object-fit:cover}
+#s7 .right{left:1200px;top:110px;width:640px}
+#s7 .lab{font-weight:800;font-size:22px;letter-spacing:5px;color:var(--amber);text-transform:uppercase;margin-bottom:20px}
+#s7 .chips{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:44px}
+#s7 .dest{background:#fff;color:var(--red2);font-weight:800;font-size:28px;padding:12px 22px;border-radius:40px;display:flex;align-items:center;gap:8px}
+#s7 .dest svg{width:24px;height:24px;fill:var(--red)}
+#s7 .brands{font-size:28px;line-height:1.6;font-weight:600;color:#fbe9e9}
+#s7 .band{left:0;top:920px;width:1920px;height:160px;background:linear-gradient(90deg,var(--orange),var(--red) 45%,var(--red2));display:flex;align-items:center;padding-left:100px;gap:30px}
+#s7 .band b{font-weight:900;font-size:26px;letter-spacing:6px;background:#fff;color:var(--red);padding:10px 18px;border-radius:10px}
+#s7 .band span{font-weight:800;font-size:34px}
+
+/* ---------- S8 CTA ---------- */
+#s8{background:#fff;color:var(--ink)}
+#s8 .circ{left:150px;top:200px;width:680px;height:680px;border-radius:50%;padding:22px;background:#fff;box-shadow:0 30px 80px rgba(160,20,30,.25);outline:2px solid rgba(227,30,36,.5);outline-offset:14px}
+#s8 .circ div{width:100%;height:100%;border-radius:50%;overflow:hidden}
+#s8 .circ img{width:100%;height:100%;object-fit:cover}
+#s8 .right{left:960px;top:100px;width:900px}
+#s8 .logo{width:250px}
+#s8 .tag{font-family:'Great Vibes',cursive;font-size:84px;line-height:1.05;color:var(--ink);margin:14px 0 26px;white-space:nowrap}
+#s8 .tag b{color:var(--red)}
+#s8 .cta{display:inline-block;background:linear-gradient(90deg,var(--orange),var(--red));color:#fff;font-weight:900;font-size:28px;letter-spacing:6px;padding:16px 30px;border-radius:14px}
+#s8 .ph{font-weight:900;font-size:58px;line-height:1.2;margin-top:24px;letter-spacing:.5px}
+#s8 .web{font-weight:800;font-size:40px;color:var(--red);margin-top:18px}
+#s8 .addr{font-size:26px;font-weight:600;color:var(--muted);margin-top:10px}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- ===================== S1 INTRO 0–4 ===================== -->
+<section class="scene" id="s1" data-vis="0 4">
+  <img class="cover" src="img/p08_00.jpg" data-kb="0 4 1.22 1.06 0 0 2 0">
+  <div class="shade"></div>
+  <svg class="abs" style="left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <g data-a="wipeR 0.1 1.0">
+      <path d="M0,1080 L0,880 C420,980 900,1000 1920,760 L1920,1080 Z" fill="#E31E24" opacity=".92"/>
+      <path d="M0,880 C420,980 900,1000 1920,760 L1920,735 C900,975 420,955 0,852 Z" fill="#F7931E"/>
+    </g>
+  </svg>
+  <div class="abs card" data-a="pop 0.25 0.8"><img src="img/logo.png"></div>
+  <div class="abs tag" style="top:640px" data-a="blur 1.1 0.8">Choose <b>AIMS</b>… Chase <b>Dreams</b>…</div>
+  <div class="abs sub1" data-a="fadeUp 1.9 0.7">Hyderabad <span>•</span> Affiliated to Osmania University</div>
+</section>
+
+<!-- ===================== S2 ABOUT 4–9.5 ===================== -->
+<section class="scene" id="s2" data-vis="4 9.5">
+  <div class="frame photo"><img src="img/p20_04.jpg" style="object-position:40% 50%" data-kb="4 9.5 1.16 1.04 -2 1 0 0"></div>
+  <div class="abs" style="left:0;top:0;width:1110px;height:1080px" data-a="wipeU 4.2 0.7"><div class="abs edge"></div></div>
+  <div class="abs txt">
+    <div class="kicker" data-a="fadeLeft 4.35 0.6">About AIMS</div>
+    <div class="h1" data-words="4.5 0.07">Shaping Future <span class="orange">Hoteliers</span> Since 2011</div>
+    <p data-a="fadeUp 5.2 0.7">A premier college of Hotel Management &amp; Catering Technology at L.B. Nagar, Hyderabad, affiliated to Osmania University.</p>
+  </div>
+  <div class="abs stats">
+    <div class="stat" data-a="pop 5.8 0.6"><div class="n" data-count="1990 2011 5.8 1.2">2011</div><div class="l">Year Established</div></div>
+    <div class="stat" data-a="pop 6.05 0.6"><div class="n"><span data-count="1 20 6.05 1.0">20</span>:1</div><div class="l">Student–Teacher Ratio</div></div>
+    <div class="stat" data-a="pop 6.3 0.6"><div class="n" data-count="0 3 6.3 0.8">3</div><div class="l">Fully-Equipped Kitchen Labs</div></div>
+  </div>
+</section>
+
+<!-- ===================== S3 COURSES 9.5–19.5 ===================== -->
+<section class="scene" id="s3" data-vis="9.5 19.5">
+  <div class="abs bgword" data-a="fadeRight 9.7 1.2">COURSES</div>
+  <div class="frame chef" data-a="fadeRight 9.6 0.8"><img src="img/chef_tall.jpg" style="object-position:50% 30%" data-kb="9.5 19.5 1.12 1.0 0 0 0 0"></div>
+  <div class="abs" style="left:1310px;top:0;width:110px;height:1080px" data-a="wipeU 9.75 0.7"><div class="abs chefedge" style="left:0"></div></div>
+  <div class="abs head">
+    <div class="kicker" data-a="fadeLeft 9.75 0.6">Programs at AIMS</div>
+    <div class="h1" data-words="9.9 0.08">Courses Offered</div>
+  </div>
+
+  <div class="card" style="left:100px;top:265px" data-a="fadeUp 10.5 0.7">
+    <div class="ab">BHM&amp;CT</div><div class="pill">DEGREE</div>
+    <div class="nm">Bachelor's in Hotel Management &amp; Catering Technology</div>
+    <div class="chips">
+      <div class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Duration: <b>3 Years</b></span></div>
+      <div class="chip"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg><span>Eligibility: <b>Intermediate / Equivalent</b></span></div>
+    </div>
+  </div>
+  <div class="card" style="left:720px;top:265px" data-a="fadeUp 12.3 0.7">
+    <div class="ab">DHM</div><div class="pill">DIPLOMA</div>
+    <div class="nm">Diploma in<br>Hotel Management</div>
+    <div class="chips">
+      <div class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Duration: <b>18 Months</b></span></div>
+      <div class="chip"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg><span>Eligibility: <b>SSC</b></span></div>
+    </div>
+  </div>
+  <div class="card" style="left:100px;top:655px" data-a="fadeUp 14.1 0.7">
+    <div class="ab">ADHM</div><div class="pill">ADV. DIPLOMA</div>
+    <div class="nm">Advanced Diploma in<br>Hotel Management</div>
+    <div class="chips">
+      <div class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Duration: <b>18 Months</b></span></div>
+      <div class="chip"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg><span>Eligibility: <b>Intermediate</b></span></div>
+    </div>
+  </div>
+  <div class="card" style="left:720px;top:655px" data-a="fadeUp 15.9 0.7">
+    <div class="ab">PGDHM</div><div class="pill">PG DIPLOMA</div>
+    <div class="nm">Post Graduate Diploma in Hotel Management</div>
+    <div class="chips">
+      <div class="chip"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Duration: <b>12 Months</b></span></div>
+      <div class="chip"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg><span>Eligibility: <b>Any Degree</b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== S4 LABS 19.5–28.5 ===================== -->
+<section class="scene" id="s4" data-vis="19.5 28.5">
+  <!-- sub-slides generated by JS from LABS -->
+  <div class="abs top" data-a="fadeLeft 19.8 0.6"><div class="kicker">Hands-On Training Labs</div></div>
+  <div class="abs prog" data-a="fade 19.8 0.6" id="prog"></div>
+</section>
+
+<!-- ===================== S5 WHY AIMS 28.5–34 ===================== -->
+<section class="scene" id="s5" data-vis="28.5 34">
+  <div class="abs head">
+    <div class="kicker" data-a="fadeLeft 28.7 0.6">Why AIMS?</div>
+    <div class="h1" data-words="28.85 0.07">More Than a<br><span class="red">Classroom</span></div>
+  </div>
+  <ul id="why"></ul>
+  <div id="tiles"></div>
+</section>
+
+<!-- ===================== S6 AWARDS 34–39 ===================== -->
+<section class="scene" id="s6" data-vis="34 39">
+  <img class="blurbg" src="img/p24_00.jpg" data-kb="34 39 1.0 1.08 0 0 0 0">
+  <div class="glow"></div>
+  <div class="abs head">
+    <div class="kicker" data-a="fadeDown 34.2 0.6">Recognition</div>
+    <div class="h1" data-words="34.35 0.08">Award-Winning <span class="orange">Institution</span></div>
+  </div>
+  <div id="awards"></div>
+  <div class="abs foot" data-a="fadeUp 37.0 0.7">Also <b>Runner-Up</b> in the Hyderabad Inter-Degree Colleges Cricket Tournament (NITHM) — <b>2019 &amp; 2022</b></div>
+</section>
+
+<!-- ===================== S7 PLACEMENTS 39–45 ===================== -->
+<section class="scene" id="s7" data-vis="39 45">
+  <div class="rings"></div>
+  <div class="abs head">
+    <div class="kicker" data-a="fadeLeft 39.2 0.6">Placements</div>
+    <div class="h1" data-words="39.35 0.07">Our Students Work <span class="orange">Across the Globe</span></div>
+  </div>
+  <div id="heads"></div>
+  <div class="abs right">
+    <div class="lab" data-a="fade 40.1 0.5">Placed in</div>
+    <div class="chips" id="dests"></div>
+    <div class="lab" data-a="fade 41.7 0.5">At hotels like</div>
+    <div class="brands" data-a="fadeUp 41.85 0.7">Rotana • Hilton • DoubleTree by Hilton • Kempinski • Steigenberger • Mövenpick • Four Points by Sheraton</div>
+  </div>
+  <div class="abs band" data-a="wipeR 42.6 0.8">
+    <b>CAREERS</b><span>Hotels &amp; Resorts &nbsp;•&nbsp; Airlines &nbsp;•&nbsp; Railways &nbsp;•&nbsp; Travel &amp; Tourism &nbsp;•&nbsp; Entrepreneurship</span>
+  </div>
+</section>
+
+<!-- ===================== S8 CTA 45–50 ===================== -->
+<section class="scene" id="s8" data-vis="45 50">
+  <svg class="abs" style="left:0;top:0" width="1920" height="1080" viewBox="0 0 1920 1080">
+    <g data-a="wipeR 45.05 0.9">
+      <path d="M0,0 L820,0 C660,160 380,300 0,360 Z" fill="#E31E24"/>
+      <path d="M820,0 L870,0 C700,190 400,335 0,400 L0,360 C380,300 660,160 820,0 Z" fill="#F7931E"/>
+    </g>
+    <g data-a="wipeL 45.15 0.9">
+      <path d="M1920,1080 L1920,800 C1820,920 1700,1010 1500,1080 Z" fill="#E31E24"/>
+      <path d="M1920,800 L1920,765 C1810,895 1680,995 1450,1080 L1500,1080 C1700,1010 1820,920 1920,800 Z" fill="#F7931E"/>
+    </g>
+  </svg>
+  <div class="abs circ" data-a="zoomOut 45.2 0.9"><div><img src="img/team_circle.jpg" data-kb="45 50 1.08 1.0 0 0 0 0"></div></div>
+  <div class="abs right">
+    <img class="logo" src="img/logo.png" data-a="pop 45.4 0.7">
+    <div class="tag" data-a="blur 45.8 0.8">Choose <b>AIMS</b>… Chase <b>Dreams</b>…</div>
+    <div class="cta" data-a="fadeLeft 46.4 0.6" data-pulse="47.2">CALL TO ENQUIRE</div>
+    <div class="ph" data-a="fadeUp 46.6 0.6">+91 888 55 29279<br>+91 8712 279 279</div>
+    <div class="web" data-a="fadeUp 46.9 0.6">www.aimshyd.com</div>
+    <div class="addr" data-a="fadeUp 47.1 0.6">L.B. Nagar, Mansoorabad Road, Hyderabad – 500074</div>
+  </div>
+</section>
+
+<!-- watermark & wipe -->
+<div id="wm" data-vis="4 45" data-a="fadeDown 4.4 0.5"><img src="img/logo_mark.png"><b>AIMS</b></div>
+<div id="wipe"><i class="o"></i><i class="r"></i><i class="d"></i></div>
+</div>
+
+<script>
+const DURATION = 50, CUTS = [4, 9.5, 19.5, 28.5, 34, 39, 45];
+const PIN = '<svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+const TROPHY = '<svg viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a4 4 0 0 1-4 4M7 5H4v2a4 4 0 0 0 4 4"/></svg>';
+const MEDAL = '<svg viewBox="0 0 24 24"><circle cx="12" cy="15" r="6"/><path d="M8.5 10L6 2h4l2 5 2-5h4l-2.5 8"/><path d="M12 12.5l.9 1.8 2 .3-1.4 1.4.3 2-1.8-.9-1.8.9.3-2-1.4-1.4 2-.3z"/></svg>';
+const STAR = '<svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .9-5.1 4.8 1.3 7L12 17.8 5.8 21.2l1.3-7L2 9.4l7-.9z"/></svg>';
+
+/* ---------- build S4 lab slides ---------- */
+const LABS = [
+  ['img/p12_00.jpg','Model Restaurant &amp; Bar','F&amp;B service &amp; mixology practicals in a real restaurant setting','50% 40%'],
+  ['img/p19_01.jpg','Front Office Lab','Reception, reservations, billing &amp; guest relations','50% 45%'],
+  ['img/p21_00.jpg','Housekeeping &amp; Model Guest Room','Room care, linen art &amp; guest comfort — five-star style','50% 50%'],
+  ['img/p28_00.jpg','3 Training Kitchens','Basic, Quantity &amp; Advanced — Thai, Italian, Chinese, Mexican &amp; more','50% 45%'],
+  ['img/p03_03.jpg','Bakery &amp; Confectionery','Cakes, cookies &amp; desserts under a master chef','50% 50%'],
+];
+const s4 = document.getElementById('s4'), prog = document.getElementById('prog');
+LABS.forEach(([src, name, desc, pos], i) => {
+  const s = 19.5 + i*1.8, e = s + 1.8, first = i === 0;
+  const d = document.createElement('div'); d.className = 'sub';
+  d.dataset.vis = `${s} ${e}`;
+  d.innerHTML = `
+    <img class="blurbg" src="${src}" data-a="fade ${s} 0.4">
+    <div class="vign"></div>
+    <div class="frame lframe" data-a="slideInR ${s + (first?0.25:0.05)} 0.7"><img src="${src}" style="object-position:${pos}" data-kb="${s} ${e+0.3} 1.14 1.02 ${i%2?-2:2} 0 0 0"></div>
+    <div class="abs num" data-a="fadeLeft ${s+0.15} 0.5">0${i+1}</div>
+    <div class="abs lname" data-a="fadeUp ${s+0.25} 0.55">${name}</div>
+    <div class="abs ldesc" data-lname>${desc}</div>`;
+  s4.prepend(d);
+  const seg = document.createElement('i'); seg.innerHTML = `<b data-a="grow ${s} 1.8 lin"></b>`; prog.appendChild(seg);
+});
+
+/* ---------- S5 ---------- */
+const WHY = ['Personal attention to every student','Special focus on personality development','Guest lectures by industry professionals','Paid internships in foreign countries','Industrial tours &amp; outdoor catering in star hotels','Workshops &amp; food festivals'];
+document.getElementById('why').innerHTML = WHY.map((w,i)=>`<li data-a="fadeLeft ${29.3+i*0.32} 0.55"><span class="k">0${i+1}</span>${w}</li>`).join('');
+const TILES = [['p32_00','Food Festival'],['p35_00','Sports'],['p36_00','Cultural Fest'],['p29_00','Cake Mixing'],['p33_00','Ingredient Display'],['p34_04','Project Work']];
+document.getElementById('tiles').innerHTML = TILES.map(([f,l],i)=>{
+  const x = 1000 + (i%2)*430, y = 120 + Math.floor(i/2)*282;
+  return `<div class="tile" style="left:${x}px;top:${y}px" data-a="pop ${29.0+i*0.22} 0.6"><img src="img/${f}.jpg" data-kb="28.5 34 1.12 1.0 0 0 0 0"><span>${l}</span></div>`;
+}).join('');
+
+/* ---------- S6 ---------- */
+const AW = [
+  ['2017','Most Promising Hotel Management College in Hyderabad','National Award · Merit Awards, New Delhi',TROPHY],
+  ['2018','Best Upcoming Hotel Management College in Telangana','ITAP Awards',MEDAL],
+  ['2019','Top 10 Emerging Colleges in India','CEO Insights Magazine',STAR],
+  ['2022','Best Hospitality Management Institute in Hyderabad','National Award · Merit Awards, New Delhi',TROPHY],
+];
+document.getElementById('awards').innerHTML = AW.map(([y,t,b,ic],i)=>`
+  <div class="award" style="left:${100+i*440}px" data-a="fadeUp ${34.6+i*0.4} 0.7">${ic}<div class="y" data-count="${+y-12} ${y} ${34.6+i*0.4} 0.9">${y}</div><div class="t">${t}</div><div class="by">${b}</div></div>`).join('');
+
+/* ---------- S7 ---------- */
+const HEADS = [0,2,3,4,5,6,10,11,14,16,17,24];
+document.getElementById('heads').innerHTML = HEADS.map((h,i)=>{
+  const x = 100 + (i%6)*172, y = 420 + Math.floor(i/6)*200;
+  return `<div class="head-shot" style="left:${x}px;top:${y}px" data-a="pop ${39.6+i*0.07} 0.55"><img src="img/head${String(h).padStart(2,'0')}.jpg"></div>`;
+}).join('');
+const DESTS = ['Dubai','Abu Dhabi','Sharjah','Fujairah','Doha, Qatar','Kuwait','USA (J1)','Goa','Hyderabad'];
+document.getElementById('dests').innerHTML = DESTS.map((d,i)=>`<div class="dest" data-a="pop ${40.2+i*0.13} 0.5">${PIN}${d}</div>`).join('');
+
+/* ---------- word splitting ---------- */
+document.querySelectorAll('[data-words]').forEach(el => {
+  const [st, gap] = el.dataset.words.split(' ').map(Number); let k = 0;
+  const walk = node => {
+    [...node.childNodes].forEach(c => {
+      if (c.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        c.textContent.split(/(\s+)/).forEach(tok => {
+          if (!tok) return;
+          if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(' ')); return; }
+          const s = document.createElement('span'); s.className = 'w'; s.textContent = tok;
+          s.dataset.a = `fadeUp ${(st + k*gap).toFixed(3)} 0.6`; k++; frag.appendChild(s);
+        });
+        c.replaceWith(frag);
+      } else if (c.nodeType === 1) walk(c);
+    });
+  };
+  walk(el);
+});
+// lab descriptions sit below name: position after layout
+function layoutLabs(){ document.querySelectorAll('.sub').forEach(sub => {
+  const nm = sub.querySelector('.lname'), ds = sub.querySelector('.ldesc');
+  const s = parseFloat(sub.dataset.vis);
+  const bar = document.createElement('div'); bar.className = 'abs bar';
+  bar.dataset.a = `grow ${s+0.4} 0.6`; sub.appendChild(bar);
+  const top = 480 + nm.offsetHeight + 26;
+  bar.style.top = top + 'px'; ds.style.top = (top + 34) + 'px';
+  ds.dataset.a = `fadeUp ${s+0.45} 0.55`;
+}); }
+
+/* ---------- engine ---------- */
+const EASE = {
+  lin: t => t,
+  out: t => 1 - Math.pow(1 - t, 3),
+  io: t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2,
+  back: t => { const c1 = 1.5, c3 = c1 + 1; return 1 + c3*Math.pow(t - 1, 3) + c1*Math.pow(t - 1, 2); },
+};
+const FX = {
+  fade:(p,s)=>{s.o*=p},
+  fadeUp:(p,s)=>{s.o*=Math.min(1,p*1.4); s.ty+=(1-p)*60},
+  fadeDown:(p,s)=>{s.o*=Math.min(1,p*1.4); s.ty-=(1-p)*60},
+  fadeLeft:(p,s)=>{s.o*=Math.min(1,p*1.4); s.tx-=(1-p)*90},
+  fadeRight:(p,s)=>{s.o*=Math.min(1,p*1.4); s.tx+=(1-p)*90},
+  pop:(p,s)=>{s.o*=Math.min(1,p*2.5); s.sc*=.55+.45*p},
+  zoomOut:(p,s)=>{s.o*=Math.min(1,p*1.5); s.sc*=1+.25*(1-p)},
+  blur:(p,s)=>{s.o*=p; s.bl+=(1-p)*24; s.sc*=1+.06*(1-p)},
+  wipeR:(p,s)=>{s.clip=`inset(-5% ${(1-p)*105}% -5% -5%)`},
+  wipeL:(p,s)=>{s.clip=`inset(-5% -5% -5% ${(1-p)*105}%)`},
+  wipeU:(p,s)=>{s.clip=`inset(${(1-p)*100}% 0 0 0)`},
+  slideInR:(p,s)=>{s.o*=Math.min(1,p*3); s.tx+=(1-p)*900; s.sc*=.92+.08*p},
+  grow:(p,s)=>{s.sx*=p},
+};
+const DEF_EASE = {pop:'back', wipeR:'io', wipeL:'io', wipeU:'io', grow:'out'};
+const anims = [], kbs = [], vis = [], counts = [], pulses = [];
+function collect(){
+document.querySelectorAll('[data-a]').forEach(el => {
+  const list = el.dataset.a.split('|').map(x => { const [n, s, d, e] = x.trim().split(/\s+/); return {n, s:+s, d:+d, e: e || DEF_EASE[n] || 'out'}; });
+  anims.push({el, list});
+});
+document.querySelectorAll('[data-kb]').forEach(el => { const v = el.dataset.kb.split(' ').map(Number); kbs.push({el, v}); });
+document.querySelectorAll('[data-vis]').forEach(el => { const [s, e] = el.dataset.vis.split(' ').map(Number); vis.push({el, s, e}); });
+document.querySelectorAll('[data-count]').forEach(el => { const [a, b, s, d] = el.dataset.count.split(' ').map(Number); counts.push({el, a, b, s, d}); });
+document.querySelectorAll('[data-pulse]').forEach(el => pulses.push({el, s:+el.dataset.pulse}));
+}
+const clamp = x => Math.max(0, Math.min(1, x));
+const wipe = document.getElementById('wipe');
+
+window.seek = function (t) {
+  for (const v of vis) v.el.style.visibility = (t >= v.s && t < v.e) ? 'visible' : 'hidden';
+  for (const {el, list} of anims) {
+    const s = {o:1, tx:0, ty:0, sc:1, sx:1, bl:0, clip:null};
+    for (const a of list) { const p = EASE[a.e](clamp((t - a.s) / a.d)); FX[a.n](p, s); }
+    for (const pu of pulses) if (pu.el === el && t > pu.s) s.sc *= 1 + 0.035*Math.max(0, Math.sin((t - pu.s) * Math.PI * 2 / 1.0));
+    el.style.opacity = s.o;
+    let tr = '';
+    if (s.tx || s.ty) tr += `translate(${s.tx}px,${s.ty}px) `;
+    if (s.sc !== 1) tr += `scale(${s.sc}) `;
+    if (s.sx !== 1) tr += `scaleX(${s.sx}) `;
+    el.style.transform = tr;
+    el.style.filter = s.bl > 0.05 ? `blur(${s.bl}px)` : '';
+    el.style.clipPath = s.clip || '';
+  }
+  for (const {el, v:[s, e, s0, s1, x0, x1, y0, y1]} of kbs) {
+    const p = clamp((t - s) / (e - s));
+    const sc = s0 + (s1 - s0)*p, x = x0 + (x1 - x0)*p, y = y0 + (y1 - y0)*p;
+    el.style.transform = `translate(${x}%,${y}%) scale(${sc})`;
+  }
+  for (const c of counts) {
+    const p = EASE.out(clamp((t - c.s) / c.d));
+    c.el.textContent = Math.round(c.a + (c.b - c.a)*p);
+  }
+  // swoosh wipe across each cut (red band centre crosses screen centre exactly at the cut)
+  let x = null, dir = 1;
+  CUTS.forEach((c, i) => {
+    const D = 0.9;
+    if (t > c - D/2 && t < c + D/2) { x = -3400 + EASE.io((t - (c - D/2)) / D) * 5920; dir = i % 2 ? -1 : 1; }
+  });
+  if (x === null) wipe.style.transform = 'translateX(-5000px)';
+  else if (dir === 1) wipe.style.transform = `translateX(${x}px) skewX(-16deg)`;
+  else wipe.style.transform = `translateX(${1920 - x - 2900}px) scaleX(-1) skewX(-16deg)`;
+};
+window.ready = (async () => {
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
+  layoutLabs(); collect(); seek(0); return true;
+})();
+// preview mode: ?t=12.3 shows a frame; ?play plays in real time
+const q = new URLSearchParams(location.search);
+if (q.has('t')) window.ready.then(() => seek(+q.get('t')));
+if (q.has('play')) window.ready.then(() => { const t0 = performance.now(); const f = () => { const t = (performance.now() - t0)/1000 % DURATION; seek(t); requestAnimationFrame(f); }; f(); });
+</script>
+</body>
+</html>
