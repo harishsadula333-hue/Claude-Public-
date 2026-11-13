@@ -34,7 +34,7 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
 
 /* ---------- watermark ---------- */
 #wm{position:absolute;right:40px;top:34px;z-index:40;background:#fff;border-radius:16px;padding:10px 18px 10px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,.25)}
-#wm img{height:46px}
+#wm img{height:50px;display:block}
 #wm b{font-weight:900;font-size:34px;color:var(--red);letter-spacing:1px;font-family:Georgia,'DejaVu Serif',serif}
 
 /* ---------- S1 intro ---------- */
@@ -191,7 +191,7 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
     <p data-a="fadeUp 5.3 0.7">Affiliated to Osmania University, at L.B. Nagar, Hyderabad — shaping future hoteliers since 2011.</p>
   </div>
   <div class="abs stats">
-    <div class="stat" data-a="pop 5.8 0.6"><div class="n" data-count="1990 2011 5.8 1.2">2011</div><div class="l">Year Established</div></div>
+    <div class="stat" data-a="pop 5.8 0.6"><div class="n">2011</div><div class="l">Year Established</div></div>
     <div class="stat" data-a="pop 6.05 0.6"><div class="n"><span data-count="1 20 6.05 1.0">20</span>:1</div><div class="l">Student–Teacher Ratio</div></div>
     <div class="stat" data-a="pop 6.3 0.6"><div class="n" data-count="0 3 6.3 0.8">3</div><div class="l">Fully-Equipped Kitchen Labs</div></div>
   </div>
@@ -307,7 +307,7 @@ body{font-family:'Montserrat',sans-serif;color:#fff;-webkit-font-smoothing:antia
       <path d="M1920,800 L1920,765 C1810,895 1680,995 1450,1080 L1500,1080 C1700,1010 1820,920 1920,800 Z" fill="#F7931E"/>
     </g>
   </svg>
-  <div class="abs circ" data-a="zoomOut 45.2 0.9"><div><img src="img/director_award.jpg" data-kb="45 50 1.06 1.0 0 0 0 0"></div></div>
+  <div class="abs circ" data-a="zoomOut 45.2 0.9"><div><img src="img/director_award.jpg" style="object-position:50% 40%" data-kb="45 50 1.06 1.0 0 0 0 0"></div></div>
   <div class="abs seal" data-a="pop 45.9 0.6"><div><small>AWARD WINNER</small><b>2022</b><small>MERIT AWARDS</small></div></div>
   <div class="abs right">
     <img class="logo" src="img/logo.png" data-a="pop 45.4 0.7">
@@ -373,7 +373,7 @@ const AW = [
 ];
 document.getElementById('awards').innerHTML = AW.map(([y,t,b,ic],i)=>{
   const st = 34.6 + i*0.35, x = 800 + (i%2)*520, yy = 290 + Math.floor(i/2)*310;
-  return `<div class="yc" style="left:${x}px;top:${yy}px" data-a="pop ${st} 0.6">${ic}<div class="y" data-count="${+y-12} ${y} ${st} 0.9">${y}</div><div class="t">${t}</div><div class="by">${b}</div></div>`;
+  return `<div class="yc" style="left:${x}px;top:${yy}px" data-a="pop ${st} 0.6">${ic}<div class="y">${y}</div><div class="t">${t}</div><div class="by">${b}</div></div>`;
 }).join('');
 
 /* ---------- S7 ---------- */
