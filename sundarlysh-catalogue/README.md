@@ -7,7 +7,7 @@ Design: deep-rose (burgundy) pages with gold-foil lettering alternate with cream
 
 | Page | Content |
 |---|---|
-| 1 · Cover | 7-photo mosaic, logo in a gold-ringed badge, gold "55+ Experiences" seal, *Experience Bars & Creative Workshops* in gold foil, occasions, Bengaluru · Hyderabad, @sundarlyshevents |
+| 1 · Cover | Grand gold-framed arch window with a 3-panel photo triptych (bridal mehendi · ubtan celebration · Christmas cake painting), watercolour peonies at the arch base, logo crowned above in a gold ring, gold "55+ Experiences" seal, *Experience Bars & Creative Workshops* in gold foil, occasions, Bengaluru · Hyderabad, @sundarlyshevents |
 | 2 · Signature Experiences | Magazine layout of the 9 top activities (numbered 01–09): Ubtan Bar (hero), Kundan Mehendi & Glitter Bar, Decoden, Sand Candle, Bedazzle, 3D Art for cafés, and a green "Christmas Specials" band (Cake & Paint, Mini Canvas Tree Lighting, Pipe-Cleaner Trees) |
 | 3 · Wedding Activities | Burgundy "menu card": three arch photos, all 19 wedding bars, Beauty & DIY and Food & Culinary workshops, Perfect for Haldi · Mehendi · Sangeet · Reception · Pre-wedding parties |
 | 4 · Creative Workshops | Floral garland header, three arch-topped cards (Art & Painting · Home Décor & Lifestyle · And Many More, kids' items badged), how-it-works timeline, burgundy booking band with logo, Instagram handle and QR code |

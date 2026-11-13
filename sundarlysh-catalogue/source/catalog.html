@@ -179,6 +179,44 @@ body { font-family: "Montserrat", sans-serif; color: var(--ink); -webkit-print-c
 .bk .qr .q { width: 29mm; height: 29mm; background: var(--cream); padding: 2mm; border-radius: 2.4mm; box-shadow: 0 0 0 .35mm var(--gold); }
 .bk .qr .q img { width: 100%; height: 100%; display: block; }
 .bk .qr .l { margin-top: 1.8mm; font-size: 5.4pt; letter-spacing: .26em; font-weight: 700; color: var(--gold-l); text-transform: uppercase; }
+
+/* =================== COVER v3 : grand arch window =================== */
+.cv { background: radial-gradient(90% 60% at 50% 38%, #8A3A48 0%, var(--wine) 45%, #2A0B13 100%); color: #F7E8E1; }
+.cv .silk { position: absolute; width: 150%; left: -25%; opacity: .15; mix-blend-mode: screen; filter: saturate(.5);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%); mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%); }
+.cv .glow { position: absolute; left: 50%; top: 150mm; width: 190mm; height: 150mm; transform: translate(-50%, -50%); border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 214, 170, .28), rgba(255, 214, 170, 0)); z-index: 1; }
+.cv .tab { position: absolute; top: 12.5mm; left: 0; right: 0; text-align: center; color: var(--gold-l); z-index: 6; }
+.cv .logo { position: absolute; top: 19mm; left: 50%; transform: translateX(-50%); width: 50mm; height: 50mm; border-radius: 50%; overflow: hidden; z-index: 7;
+  background: var(--cream); box-shadow: 0 0 0 1mm #3a1019, 0 0 0 1.45mm var(--gold), 0 3mm 9mm rgba(0, 0, 0, .45); }
+.cv .logo img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
+.cv .lring { position: absolute; top: 15.6mm; left: 50%; transform: translateX(-50%); width: 56.8mm; height: 56.8mm; border-radius: 50%; border: .3mm solid var(--gold); z-index: 6; }
+.cv .window { position: absolute; left: 50%; top: 58mm; transform: translateX(-50%); width: 122mm; height: 142mm; z-index: 4;
+  display: grid; grid-template-columns: 1fr 1.95fr 1fr; gap: 1.3mm; background: var(--gold);
+  border-radius: 61mm 61mm 1mm 1mm; overflow: hidden; box-shadow: 0 0 0 1.4mm #3a1019, 0 0 0 1.85mm var(--gold), 0 6mm 16mm rgba(0, 0, 0, .55); }
+.cv .window img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.cv .arch-out { position: absolute; left: 50%; top: 52.6mm; transform: translateX(-50%); width: 132.6mm; height: 150mm; border: .3mm solid var(--gold); border-radius: 67mm 67mm 1.6mm 1.6mm; z-index: 3; }
+.cv .arch-out::after { content: ""; position: absolute; inset: 2mm; border: .15mm solid rgba(234, 211, 157, .55); border-radius: 66mm 66mm 1mm 1mm; }
+.cv .sill { position: absolute; left: 50%; top: 200.4mm; transform: translateX(-50%); width: 146mm; height: 2.4mm; background: var(--foil); border-radius: 1mm; z-index: 5; box-shadow: 0 1.5mm 4mm rgba(0, 0, 0, .4); }
+.cv .flo { position: absolute; width: 64mm; top: 160mm; z-index: 6; filter: drop-shadow(0 2mm 4mm rgba(0, 0, 0, .4)); }
+.cv .flo.l { left: 9mm; transform: rotate(-12deg); }
+.cv .flo.r { right: 9mm; transform: scaleX(-1) rotate(-12deg); }
+.cv .star { position: absolute; z-index: 5; opacity: .9; }
+.cv .seal { position: absolute; top: 70mm; right: 27mm; width: 30mm; height: 30mm; border-radius: 50%; background: var(--foil); z-index: 8; transform: rotate(10deg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2mm 6mm rgba(0, 0, 0, .45); }
+.cv .seal::before { content: ""; position: absolute; inset: 1.6mm; border-radius: 50%; border: .35mm dashed rgba(92, 31, 44, .55); }
+.cv .seal b { font-family: "Playfair"; font-weight: 800; font-size: 20pt; color: var(--wine-d); line-height: 1; }
+.cv .seal span { font-size: 4.9pt; font-weight: 700; letter-spacing: .25em; color: var(--wine-d); margin-top: .8mm; text-transform: uppercase; }
+.cv .ttl { position: absolute; top: 227mm; left: 0; right: 0; text-align: center; z-index: 7; }
+.cv .ttl .pinyon { font-size: 36pt; color: var(--gold-l); }
+.cv .ttl .cinzel { font-size: 19.5pt; margin-top: 1.2mm; }
+.cv .ttl .it { font-size: 12pt; color: #EBD3CB; margin-top: 2mm; }
+.cv .ttl .div { display: flex; align-items: center; justify-content: center; gap: 1mm; margin-top: 3mm; }
+.cv .ttl .div i { width: 22mm; height: .25mm; background: linear-gradient(90deg, transparent, var(--gold)); }
+.cv .ttl .div i:last-child { background: linear-gradient(270deg, transparent, var(--gold)); }
+.cv .ttl .occ { margin-top: 2.6mm; font-size: 6.2pt; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--gold-l); }
+.cv .ttl .loc { margin-top: 3mm; font-size: 6.5pt; letter-spacing: .32em; text-transform: uppercase; color: #E9CFC6; }
+.cv .ttl .loc b { color: #fff; letter-spacing: .06em; text-transform: none; font-size: 8pt; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -191,25 +229,36 @@ body { font-family: "Montserrat", sans-serif; color: var(--ink); -webkit-print-c
 </svg>
 
 <!-- ============================== PAGE 1 · COVER ============================== -->
-<section class="page cover">
-  <div class="mosaic">
-    <img class="a" src="assets/m_a.jpg" alt=""><img class="b" src="assets/m_b.jpg" alt=""><img class="c" src="assets/m_c.jpg" alt="">
-    <img class="d" src="assets/m_d.jpg" alt=""><img class="e" src="assets/m_e.jpg" alt=""><img class="f" src="assets/m_f.jpg" alt=""><img class="g" src="assets/m_g.jpg" alt="">
+<section class="page cv">
+  <img class="silk" src="assets/silk_top.jpg" alt="" style="top:40mm">
+  <img class="silk" src="assets/silk_bottom.jpg" alt="" style="bottom:-6mm">
+  <div class="glow"></div>
+  <div class="kicker tab">The 2026 – 27 Catalogue</div>
+  <div class="lring"></div>
+  <div class="logo"><img src="assets/logo.png" alt="Sundarlysh Events"></div>
+  <div class="arch-out"></div>
+  <div class="window">
+    <img src="assets/t_left.jpg" alt=""><img src="assets/t_mid.jpg" alt=""><img src="assets/t_right.jpg" alt="">
   </div>
-  <div class="fade"></div>
-  <div class="panel"><img class="silk" src="assets/silk_top.jpg" alt=""></div>
-  <div class="tab kicker">The 2026 – 27 Catalogue</div>
+  <div class="sill"></div>
+  <svg class="star" style="left:30mm;top:84mm;width:5mm;height:5mm"><use href="#sp"/></svg>
+  <svg class="star" style="left:42mm;top:72mm;width:3mm;height:3mm"><use href="#sp"/></svg>
+  <svg class="star" style="right:31mm;top:96mm;width:4mm;height:4mm"><use href="#sp"/></svg>
+  <svg class="star" style="right:22mm;top:122mm;width:2.6mm;height:2.6mm"><use href="#sp"/></svg>
+  <svg class="star" style="left:21mm;top:132mm;width:2.6mm;height:2.6mm"><use href="#sp"/></svg>
+  <img class="flo l" src="assets/floral_cover.png" alt="">
+  <img class="flo r" src="assets/floral_cover.png" alt="">
   <div class="seal"><b>55+</b><span>Experiences</span></div>
-  <div class="ring"></div>
-  <div class="badge"><img src="assets/logo.png" alt="Sundarlysh Events"></div>
-  <div class="ctext">
+  <div class="ttl">
     <div class="pinyon">Experience Bars</div>
     <div class="cinzel foil">&amp; Creative Workshops</div>
     <div class="it">for weddings, parties, cafés &amp; festive celebrations</div>
+    <div class="div"><i></i><svg class="sp"><use href="#sp"/></svg><i></i></div>
     <div class="occ">Weddings<svg class="sp"><use href="#sp"/></svg>Haldi &amp; Mehendi<svg class="sp"><use href="#sp"/></svg>Parties<svg class="sp"><use href="#sp"/></svg>Cafés<svg class="sp"><use href="#sp"/></svg>Kids<svg class="sp"><use href="#sp"/></svg>Christmas</div>
     <div class="loc">Bengaluru · Hyderabad &nbsp;&nbsp;|&nbsp;&nbsp; <b>@sundarlyshevents</b></div>
   </div>
-  <svg class="corner c-bl" style="z-index:8"><use href="#cr"/></svg><svg class="corner c-br" style="z-index:8"><use href="#cr"/></svg>
+  <div class="frame"></div>
+  <svg class="corner c-tl"><use href="#cr"/></svg><svg class="corner c-tr"><use href="#cr"/></svg><svg class="corner c-bl"><use href="#cr"/></svg><svg class="corner c-br"><use href="#cr"/></svg>
   <div class="grain"></div>
 </section>
 
