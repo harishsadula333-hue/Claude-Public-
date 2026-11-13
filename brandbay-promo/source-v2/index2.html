@@ -1,0 +1,518 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Brand Bay Promo</title>
+<link rel="stylesheet" href="fonts/local.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#05071a}
+#stage{position:absolute;inset:0;overflow:hidden;font-family:'Montserrat',sans-serif;color:#fff}
+canvas{position:absolute;inset:0}
+.a{position:absolute;left:540px;top:960px;transform-origin:50% 50%;white-space:nowrap;will-change:transform,opacity}
+.grad{background:linear-gradient(90deg,#ff7a1a,#ff3d8b 50%,#3d6bff);}
+.gtext{-webkit-background-clip:text;background-clip:text;color:transparent}
+.pill{border-radius:999px;padding:22px 60px;font-weight:800;letter-spacing:.16em;box-shadow:0 20px 60px rgba(255,61,139,.35)}
+.lam{display:inline-block;height:.7em;width:.74em;vertical-align:0}
+.wm{font-weight:700;letter-spacing:.07em}
+.wm span{display:inline-block}
+.sub{font-family:'Poppins';font-weight:500}
+.card{width:860px;height:980px;border-radius:52px;background:linear-gradient(160deg,rgba(255,255,255,.13),rgba(255,255,255,.03));border:2px solid rgba(255,255,255,.16);box-shadow:0 50px 140px rgba(0,0,0,.55);white-space:normal}
+.card .num{position:absolute;left:56px;top:40px;font-size:120px;font-weight:900;color:transparent;-webkit-text-stroke:2.5px rgba(255,255,255,.35)}
+.card .of{position:absolute;right:60px;top:70px;font-size:34px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:.1em}
+.card .ic{position:absolute;left:50%;top:330px;width:320px;height:320px;margin:-160px 0 0 -160px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.card .ic svg{width:170px;height:170px}
+.card .tt{position:absolute;left:0;right:0;top:560px;text-align:center;font-size:64px;font-weight:800;line-height:1.12;letter-spacing:.02em}
+.card .ds{position:absolute;left:0;right:0;top:770px;text-align:center;font-family:'Poppins';font-weight:500;font-size:38px;color:rgba(255,255,255,.78)}
+.card .bar{position:absolute;left:50%;bottom:56px;transform:translateX(-50%);display:flex;gap:10px}
+.card .bar i{display:block;width:56px;height:8px;border-radius:4px;background:rgba(255,255,255,.18)}
+.tile{width:300px;height:300px;border-radius:34px;background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.03));border:2px solid rgba(255,255,255,.14);white-space:normal;text-align:center}
+.tile .ic{width:120px;height:120px;border-radius:50%;margin:34px auto 22px;display:flex;align-items:center;justify-content:center}
+.tile .ic svg{width:66px;height:66px}
+.tile .nm{font-size:24px;font-weight:700;line-height:1.2;padding:0 18px;letter-spacing:.02em}
+.portrait{width:640px;height:680px;border-radius:48px;padding:9px}
+.portrait .in{width:100%;height:100%;border-radius:40px;overflow:hidden;background:#fff;position:relative}
+.portrait img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:50% 0;transform-origin:50% 30%}
+.row{display:flex;align-items:center;gap:28px;font-family:'Poppins';font-weight:500;font-size:40px}
+.row .dot{width:84px;height:84px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.row .dot svg{width:44px;height:44px}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 45%,rgba(0,0,0,.6) 100%);pointer-events:none}
+#grain{position:absolute;inset:-200px;opacity:.07;pointer-events:none;mix-blend-mode:overlay}
+.outline{color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.08);font-weight:900}
+</style></head>
+<body>
+<div id="stage">
+  <canvas id="bg" width="1080" height="1920"></canvas>
+  <div id="world" class="a" style="left:0;top:0;width:1080px;height:1920px;transform-origin:540px 960px">
+  </div>
+  <div id="wipe" class="a" style="width:2400px;height:2600px;opacity:0"></div>
+  <div id="flash"></div>
+  <div id="vig"></div>
+  <div id="grain"></div>
+</div>
+<script src="kicks.js"></script>
+<script>
+const W=1080,H=1920;
+const $=s=>document.querySelector(s);
+const world=$('#world');
+function mk(html,cls='a',style=''){const d=document.createElement('div');d.className=cls;d.style.cssText=style;d.innerHTML=html;world.appendChild(d);return d}
+const clamp=(x,a=0,b=1)=>Math.min(b,Math.max(a,x));
+const P=(t,a,b)=>clamp((t-a)/(b-a));
+const E={
+ lin:x=>x,
+ oC:x=>1-Math.pow(1-x,3), iC:x=>x*x*x, ioC:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,
+ oE:x=>x>=1?1:1-Math.pow(2,-10*x), iE:x=>x<=0?0:Math.pow(2,10*x-10),
+ oB:x=>{const c1=1.9,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)},
+ oQ:x=>1-Math.pow(1-x,5),
+};
+const lerp=(a,b,k)=>a+(b-a)*k;
+function S(el,o){const{op=1,x=0,y=0,s=1,sx,sy,r=0,b=0,top}=o;
+ if(top!==undefined)el.style.top=top+'px';
+ el.style.opacity=op;
+ el.style.visibility=op<=0.002?'hidden':'visible';
+ if(op<=0.002)return;
+ el.style.transform=`translate(-50%,-50%) translate(${x}px,${y}px) rotate(${r}deg) scale(${sx??s},${sy??s})`;
+ el.style.filter=b>0.15?`blur(${b.toFixed(1)}px)`:'none';
+}
+// mulberry32
+function rnd(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+// ---------- palette ----------
+const ACC=[['#ff5a36','#ffa21f'],['#ff3d8b','#ff7a59'],['#a63cf0','#ff3d8b'],['#3d5bff','#2fb4ff']];
+const gradOf=(a,deg=135)=>`linear-gradient(${deg}deg,${a[0]},${a[1]})`;
+
+// ---------- SVG pieces ----------
+const WING_PATHS=[
+ {d:'M5,300 C40,190 120,125 225,82 C330,40 362,30 402,5 C392,58 372,108 318,128 C230,150 130,180 60,248 C35,272 15,290 5,300 Z',g:['#ff3b3b','#ff7a1a','#ff9d1f']},
+ {d:'M5,358 C45,276 130,222 230,196 C290,181 322,172 346,160 C336,198 318,238 288,246 C220,258 142,272 86,302 C50,322 22,340 5,358 Z',g:['#8a3ee6','#d23ca8','#f23d86']},
+ {d:'M6,398 C46,330 130,300 210,292 C250,288 270,283 290,280 C281,312 262,342 230,346 C190,344 140,338 100,346 C60,356 30,374 6,398 Z',g:['#3a44e0','#3264ec','#2f8cf0']},
+];
+let wingCount=0;
+function wingSVG(){const id='w'+(wingCount++);
+ let defs='',body='';
+ WING_PATHS.forEach((p,i)=>{
+  defs+=`<linearGradient id="${id}g${i}" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="${p.g[0]}"/><stop offset=".55" stop-color="${p.g[1]}"/><stop offset="1" stop-color="${p.g[2]}"/></linearGradient>
+  <clipPath id="${id}c${i}"><rect class="clip${i}" x="-10" y="-10" width="0" height="430"/></clipPath>`;
+  body+=`<g class="st${i}" clip-path="url(#${id}c${i})"><path d="${p.d}" fill="url(#${id}g${i})"/></g>`;
+ });
+ return `<svg viewBox="-5 -5 415 415" width="100%" height="100%" style="overflow:visible;filter:drop-shadow(0 0 28px rgba(255,90,140,.45))"><defs>${defs}</defs>${body}</svg>`;
+}
+function setWing(el,t,starts,dur=0.55){
+ starts.forEach((s,i)=>{const k=E.oC(P(t,s,s+dur));
+  el.querySelector('.clip'+i).setAttribute('width',k*440);
+  const g=el.querySelector('.st'+i);
+  g.setAttribute('transform',`translate(${(1-k)*-50},${(1-k)*30})`);
+  g.style.opacity=clamp(k*3);
+ });
+}
+const LAM=(dot)=>`<svg class="lam" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,100 L41,0 L59,0 L100,100 L82,100 L50,21 L18,100 Z" fill="currentColor"/>${dot?'<circle cx="50" cy="74" r="9" fill="#ff3d8b"/>':''}</svg>`;
+function wordmark(size){
+ const L=[['B','#fff'],['R','#fff'],[LAM(1),'#fff'],['N','#fff'],['D','#fff'],['&nbsp;','#fff'],['B','#ff8a1a'],[LAM(0),'#ff3d8b'],['Y','#3d7bff']];
+ return `<div class="wm" style="font-size:${size}px">`+L.map(([c,col])=>`<span style="color:${col}">${c}</span>`).join('')+`</div>`;
+}
+function animWordmark(el,t,s0,stagger=0.035){
+ el.querySelectorAll('.wm span').forEach((sp,i)=>{const k=P(t,s0+i*stagger,s0+i*stagger+0.32);const e=E.oE(k);
+  sp.style.opacity=clamp(k*2.5);
+  sp.style.transform=`scale(${lerp(2.6,1,e)}) translateY(${lerp(-40,0,e)}px)`;
+  sp.style.filter=k<1?`blur(${(1-e)*14}px)`:'none';
+ });
+}
+const ICONS={
+ web:'<rect x="2" y="4" width="20" height="16" rx="2.5"/><path d="M2 8.5h20"/><circle cx="5" cy="6.3" r=".5"/><circle cx="7" cy="6.3" r=".5"/><path d="M9.5 12l-2 2 2 2M14.5 12l2 2-2 2M12.8 11.2l-1.6 5.6"/>',
+ seo:'<circle cx="10.5" cy="10.5" r="7"/><path d="M15.6 15.6L21 21M7.8 13v-1.6M10.5 13V9.6M13.2 13V7.8"/>',
+ brand:'<path d="M12 2.5l6 6.5-3.5 9.5h-5L6 9z"/><circle cx="12" cy="11" r="1.6"/><path d="M12 2.5v6.9M8.5 21.5h7"/>',
+ social:'<path d="M4 4h16a2 2 0 012 2v9.5a2 2 0 01-2 2h-9l-5 4v-4H4a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M12 14.6s-3.6-2.2-3.6-4.6a1.9 1.9 0 013.6-.8 1.9 1.9 0 013.6.8c0 2.4-3.6 4.6-3.6 4.6z"/>',
+ flyer:'<rect x="4.5" y="2" width="15" height="20" rx="2"/><path d="M4.5 14.5l4-4 4 4 2-2 5 5"/><circle cx="14.8" cy="6.8" r="1.6"/>',
+ ads:'<path d="M3 10v4a1 1 0 001 1h3l7 4.5v-15L7 9H4a1 1 0 00-1 1z"/><path d="M17.5 9a4.5 4.5 0 010 6M20 6.5a8 8 0 010 11"/><path d="M7 15l1.5 5h2.5l-1.3-4.3"/>',
+ content:'<path d="M13.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h5.5"/><path d="M13.5 2l6 6v3.5M13.5 2v6h6M8 12.5h7M8 16.5h3.5"/><path d="M20 14.2l2 2-6.2 6.3H13.8v-2z"/>',
+ host:'<rect x="2.5" y="3" width="15" height="6" rx="1.6"/><rect x="2.5" y="11" width="15" height="6" rx="1.6"/><path d="M6 6h.01M6 14h.01M9 6h5M9 14h3"/><circle cx="18" cy="18" r="4"/><path d="M14 18h8M18 14c1.6 2.4 1.6 5.6 0 8M18 14c-1.6 2.4-1.6 5.6 0 8"/>',
+ cro:'<path d="M4 21V16M9 21v-6M14 21v-4M19 21v-9"/><path d="M3 12l5.5-5 4 3L20 3"/><path d="M15 3h5v5"/>',
+ globe:'<circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c3 3.3 3 15.7 0 19M12 2.5c-3 3.3-3 15.7 0 19"/>',
+ mail:'<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 6.5l9 6.5 9-6.5"/>',
+ pin:'<path d="M12 22s7-6.4 7-12a7 7 0 00-14 0c0 5.6 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/>',
+ phone:'<path d="M21 16.5v3a2 2 0 01-2.2 2 19.5 19.5 0 01-8.5-3 19.2 19.2 0 01-6-6 19.5 19.5 0 01-3-8.6A2 2 0 013.3 1.8h3a2 2 0 012 1.7c.1 1 .4 1.9.7 2.8a2 2 0 01-.5 2.1L7.3 9.6a16 16 0 006 6l1.3-1.3a2 2 0 012.1-.4c.9.3 1.8.6 2.8.7a2 2 0 011.7 2z"/>',
+};
+const ico=(k,color='#fff',sw=1.7)=>`<svg viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="${sw}" stroke-linecap="round" stroke-linejoin="round">${ICONS[k]}</svg>`;
+
+const SERVICES=[
+ ['web',['WEBSITE DESIGN','&amp; DEVELOPMENT'],'Fast, modern, mobile-first websites'],
+ ['seo',['SEO','SERVICES'],'Rank higher. Get found first.'],
+ ['brand',['BRANDING &amp;','LOGO DESIGN'],'Identities people remember'],
+ ['social',['SOCIAL MEDIA','MANAGEMENT'],'Grow a loyal community'],
+ ['flyer',['FLYER &amp; POSTER','DESIGNING'],'Designs that stop the scroll'],
+ ['ads',['GOOGLE ADS','&amp; META ADS'],'Ads that convert, ROI you can measure'],
+ ['content',['CONTENT','CREATION'],'Stories that sell your brand'],
+ ['host',['HOSTING &amp;','DOMAIN SERVICES'],'Secure, fast &amp; reliable'],
+ ['cro',['CONVERSION RATE','OPTIMIZATION'],'Turn visitors into customers'],
+];
+const FOUNDERS=[
+ {img:'assets/maruthi.png',name:'K. MARUTHI GUPTA',role:'Managing Director',ph:'99660 61444',acc:ACC[0],bg:'MARUTHI'},
+ {img:'assets/vooka.png',name:'VOOKA SATISH GUPTA',role:'Director',ph:'90595 66227',acc:ACC[1],bg:'SATISH'},
+ {img:'assets/sridhar.png',name:'KONDURU SRIDHAR',role:'Director',ph:'96400 29764',acc:ACC[3],bg:'SRIDHAR'},
+];
+
+
+document.head.insertAdjacentHTML('beforeend',`<style>
+.gl{position:absolute;left:0;top:0;mix-blend-mode:screen}
+#scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0 2px,transparent 2px 6px);pointer-events:none;opacity:0}
+.node{width:116px;height:116px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.node svg{width:60px;height:60px}
+.chip{display:flex;align-items:center;gap:14px;padding:16px 26px 16px 16px;border-radius:999px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.18);font-size:38px;font-weight:800;letter-spacing:.04em}
+.chip .up{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+</style>`);
+$('#stage').insertBefore(Object.assign(document.createElement('div'),{id:'scan'}),$('#flash'));
+const hash=n=>{const x=Math.sin(n*12.9898+78.233)*43758.5453;return x-Math.floor(x)};
+
+// glitch text: main + red/cyan split + displaced slice
+function gtxt(text,mainStyle,size){
+ const base=`font-size:${size}px;${mainStyle}`;
+ const solid=`font-size:${size}px;font-weight:900;`;
+ const el=mk(`<div style="position:relative">
+  <div class="gl r" style="${solid}color:#ff2a6a">${text}</div>
+  <div class="gl c" style="${solid}color:#22d3ff">${text}</div>
+  <div class="m" style="position:relative;${base}">${text}</div>
+  <div class="gl sl" style="${base}">${text}</div></div>`);
+ return {el,r:el.querySelector('.r'),c:el.querySelector('.c'),m:el.querySelector('.m'),sl:el.querySelector('.sl')};
+}
+function setGlitch(g,t,amt){
+ const f=Math.floor(t*30);
+ const a=amt*(0.5+hash(f));
+ g.r.style.transform=`translate(${(hash(f+1)-0.5)*44*a+ -6*a}px,${(hash(f+2)-0.5)*14*a}px)`;
+ g.c.style.transform=`translate(${(hash(f+3)-0.5)*44*a+6*a}px,${(hash(f+4)-0.5)*14*a}px)`;
+ g.r.style.opacity=g.c.style.opacity=clamp(amt*1.5);
+ if(amt>0.1){const y0=hash(f+5)*80;g.sl.style.clipPath=`inset(${y0}% 0 ${Math.max(0,100-y0-12-hash(f+6)*18)}% 0)`;g.sl.style.transform=`translateX(${(hash(f+7)-0.5)*90*amt}px)`;g.sl.style.opacity=1}
+ else g.sl.style.opacity=0;
+}
+const gwin=(t,wins)=>wins.reduce((m,[a,b])=>Math.max(m,t>=a&&t<b?1-(t-a)/(b-a)*0.6:0),0);
+
+// ================= BUILD =================
+// HOOK
+const h1a=mk('<div class="sub" style="font-size:60px;font-weight:600;color:rgba(255,255,255,.85)">Is your business</div>');
+const h1b=gtxt('INVISIBLE','font-weight:900;color:transparent;-webkit-text-stroke:3px #fff;letter-spacing:.02em',150);
+const h1fill=mk('<div style="font-size:150px;font-weight:900;letter-spacing:.02em;color:#fff">INVISIBLE</div>');
+const h1c=mk('<div class="sub" style="font-size:72px;font-weight:600">online<span style="color:#ff3d8b">?</span></div>');
+const h2a=mk('<div class="sub" style="font-size:60px;font-weight:600;color:rgba(255,255,255,.85)">Struggling to get</div>');
+const h2b=gtxt('MORE','font-weight:900;letter-spacing:.02em;background:linear-gradient(90deg,#ff7a1a,#ff3d8b);-webkit-background-clip:text;background-clip:text;color:transparent',190);
+const h2c=gtxt('CUSTOMERS?','font-weight:900;color:#fff;letter-spacing:.01em',124);
+const gotYou=mk('<div class="sub" style="font-size:56px;font-weight:600">We\'ve got you <span class="gtext grad" style="font-weight:700">covered.</span></div>');
+const flare=mk('','a','width:1400px;height:6px;border-radius:3px;background:linear-gradient(90deg,transparent,#fff 45%,#ffb36b 50%,#fff 55%,transparent);box-shadow:0 0 40px 10px rgba(255,140,80,.6)');
+const wing=mk(wingSVG(),'a','width:440px;height:440px');
+// LOGO
+const wm1=mk(wordmark(128));
+const tag1=mk(`<div style="font-size:34px;font-weight:700;letter-spacing:.42em"><span style="color:#ff8a1a">DEFINE</span> <span>•</span> <span style="color:#ff3d8b">DESIGN</span> <span>•</span> <span style="color:#3d7bff">DELIVER</span></div>`);
+const tagParts=[...tag1.querySelectorAll('span')];
+const div1=mk('<div class="sub" style="font-size:34px;color:rgba(255,255,255,.8)">A Division of <b style="font-weight:600;color:#fff">Jaya Maruthi Technologies</b></div>');
+const line1=mk('','a grad','width:520px;height:5px;border-radius:3px');
+// ONE STOP
+const os=[
+ [mk('<div style="font-size:92px;font-weight:800;letter-spacing:.06em">YOUR</div>'),700],
+ [mk('<div class="gtext grad" style="font-size:178px;font-weight:900;filter:drop-shadow(0 10px 40px rgba(255,61,139,.5))">ONE-STOP</div>'),850],
+ [mk('<div style="font-size:150px;font-weight:900">SOLUTION</div>'),1000],
+ [mk('<div class="pill grad" style="font-size:50px;padding:20px 48px;letter-spacing:.1em">FOR DIGITAL MARKETING</div>'),1150],
+];
+const HUB={x:540,y:1200,R:370};
+const hubSvg=mk(`<svg width="1080" height="1920" viewBox="0 0 1080 1920" style="overflow:visible"><defs><linearGradient id="hl" x1="0" x2="1"><stop offset="0" stop-color="#ff7a1a"/><stop offset=".5" stop-color="#ff3d8b"/><stop offset="1" stop-color="#3d6bff"/></linearGradient></defs>
+ <circle class="orb" cx="${HUB.x}" cy="${HUB.y}" r="${HUB.R}" fill="none" stroke="rgba(255,255,255,.18)" stroke-width="2" stroke-dasharray="3 14"/>
+ ${SERVICES.map((_,i)=>`<line class="hl" x1="${HUB.x}" y1="${HUB.y}" x2="${HUB.x}" y2="${HUB.y}" stroke="url(#hl)" stroke-width="3" opacity=".7"/><circle class="hp" r="7" fill="#fff" opacity="0"/>`).join('')}
+</svg>`,'a','width:1080px;height:1920px');
+const hubLines=[...hubSvg.querySelectorAll('.hl')],hubPulses=[...hubSvg.querySelectorAll('.hp')];
+const hubCore=mk(`<div style="width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,#1a1d45,#0b0d28);border:4px solid rgba(255,255,255,.2);box-shadow:0 0 0 14px rgba(255,61,139,.12),0 0 80px rgba(255,61,139,.55);display:flex;align-items:center;justify-content:center"><div style="width:150px;height:150px">${wingSVG()}</div></div>`);
+setWing(hubCore,99,[0,0,0]);
+const nodes=SERVICES.map(([ic],i)=>{const acc=ACC[i%4];return mk(`<div class="node" style="background:${gradOf(acc)};box-shadow:0 0 0 10px ${acc[0]}22,0 16px 50px ${acc[0]}88">${ico(ic,'#fff',1.7)}</div>`)});
+const hubTxt=mk('<div class="sub" style="font-size:44px;font-weight:600;text-align:center">All your marketing needs.<br><span class="gtext grad" style="font-weight:700">Under one roof.</span></div>');
+// D D D
+const colorBg=mk('','a','width:1300px;height:2200px');
+const WORDS=[['DEFINE','clarity in vision.',ACC[0]],['DESIGN','creativity in action.',ACC[2]],['DELIVER','excellence in execution.',ACC[3]]];
+const dw=WORDS.map(([w,s,acc])=>({w:mk(`<div style="font-size:210px;font-weight:900;color:#fff;text-shadow:0 14px 50px rgba(0,0,0,.35)">${w}</div>`),s:mk(`<div class="sub" style="font-size:62px;font-weight:600;color:#fff">${s}</div>`),acc}));
+const dLabel=mk('<div style="font-size:36px;font-weight:800;letter-spacing:.38em;color:rgba(255,255,255,.9)">AT BRAND BAY, WE</div>');
+// SERVICES
+const svTop=mk('<div style="font-size:30px;font-weight:700;letter-spacing:.5em;color:rgba(255,255,255,.7)">WHAT WE DO</div>');
+const svPill=mk('<div class="pill grad" style="font-size:66px">OUR SERVICES</div>');
+const cards=SERVICES.map(([ic,tt,ds],i)=>{const acc=ACC[i%4];
+ const el=mk(`<div class="card">
+  <div class="num">0${i+1}</div><div class="of">/ 09</div>
+  <div class="ic" style="background:${gradOf(acc)};box-shadow:0 0 0 18px ${acc[0]}22,0 0 0 38px ${acc[0]}11,0 30px 90px ${acc[0]}88">${ico(ic,'#fff',1.6)}</div>
+  <div class="tt">${tt.join('<br>')}</div><div class="ds">${ds}</div>
+  <div class="bar">${SERVICES.map((_,j)=>`<i style="${j<=i?`background:${gradOf(acc,90)}`:''}"></i>`).join('')}</div>
+  <div style="position:absolute;left:60px;right:60px;top:0;height:4px;border-radius:2px;background:${gradOf(acc,90)}"></div>
+ </div>`);
+ return {el,ic:el.querySelector('.ic'),tt:el.querySelector('.tt'),ds:el.querySelector('.ds')};
+});
+const streaks=Array.from({length:14},(_,i)=>mk('','a',`width:${300+hash(i)*500}px;height:${3+hash(i+9)*5}px;border-radius:4px;background:linear-gradient(90deg,transparent,${ACC[i%4][1]},transparent);opacity:0`));
+// GROW
+const gw1=mk('<div class="gtext grad" style="font-size:250px;font-weight:900;letter-spacing:.02em;filter:drop-shadow(0 12px 50px rgba(255,61,139,.45))">GROW</div>');
+const gw2=mk('<div style="font-size:98px;font-weight:900;letter-spacing:.04em">YOUR BRAND</div>');
+const BARS=[0.2,0.3,0.36,0.5,0.6,0.76,0.94];
+const CW=880,CH2=600;
+const pts=BARS.map((h,i)=>[70+i*((CW-140)/6),CH2-40-h*(CH2-110)]);
+const chart=mk(`<svg width="${CW}" height="${CH2}" viewBox="0 0 ${CW} ${CH2}" style="overflow:visible">
+ <defs><linearGradient id="bg1" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#3d5bff" stop-opacity=".25"/><stop offset="1" stop-color="#ff3d8b" stop-opacity=".9"/></linearGradient>
+ <linearGradient id="ln1" x1="0" x2="1"><stop offset="0" stop-color="#ff7a1a"/><stop offset="1" stop-color="#ffd25a"/></linearGradient>
+ <filter id="gl1"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+ ${[0,1,2,3,4].map(k=>`<line x1="0" x2="${CW}" y1="${CH2-40-k*((CH2-110)/4)}" y2="${CH2-40-k*((CH2-110)/4)}" stroke="rgba(255,255,255,.08)" stroke-width="2"/>`).join('')}
+ ${BARS.map((h,i)=>`<rect class="gb" x="${pts[i][0]-38}" width="76" rx="14" y="${CH2-40}" height="0" fill="url(#bg1)"/>`).join('')}
+ <polyline class="gline" points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="url(#ln1)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" filter="url(#gl1)"/>
+ ${pts.map(p=>`<circle class="gd" cx="${p[0]}" cy="${p[1]}" r="0" fill="#fff"/>`).join('')}
+ <g class="arrow" transform="translate(${pts[6][0]},${pts[6][1]})"><path d="M-34,6 L0,-30 L34,6 L12,6 L12,40 L-12,40 L-12,6 Z" fill="#ffd25a" filter="url(#gl1)"/></g>
+</svg>`);
+const gBars=[...chart.querySelectorAll('.gb')],gLine=chart.querySelector('.gline'),gDots=[...chart.querySelectorAll('.gd')],gArrow=chart.querySelector('.arrow');
+const lineLen=pts.reduce((s,p,i)=>i?s+Math.hypot(p[0]-pts[i-1][0],p[1]-pts[i-1][1]):0,0);
+gLine.style.strokeDasharray=lineLen;
+const UP='<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V5M5 11l7-7 7 7"/></svg>';
+const chips=[['MORE REACH',ACC[0]],['MORE LEADS',ACC[2]],['MORE SALES',ACC[3]]].map(([t,a])=>mk(`<div class="chip"><span class="up" style="background:${gradOf(a)}">${UP}</span>${t}</div>`));
+const gwTxt=mk('<div class="sub" style="font-size:42px;font-weight:500;color:rgba(255,255,255,.88)">with <b style="font-weight:700;color:#fff">result-driven</b> digital marketing</div>');
+// FOUNDERS
+const fPill=mk('<div class="pill grad" style="font-size:48px;padding:18px 48px">MEET OUR FOUNDERS</div>');
+const fsl=FOUNDERS.map((f,i)=>({
+ bg:mk(`<div class="outline" style="font-size:300px;-webkit-text-stroke:2px ${f.acc[1]}22">${f.bg} ${f.bg} ${f.bg}</div>`),
+ glow:mk('','a',`width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,${f.acc[0]}66,transparent 65%)`),
+ ring:mk(`<svg viewBox="0 0 800 800" width="800" height="800"><circle cx="400" cy="400" r="390" fill="none" stroke="${f.acc[1]}" stroke-width="3" stroke-dasharray="4 18" stroke-linecap="round" opacity=".8"/><circle cx="400" cy="400" r="360" fill="none" stroke="url(#rg${i})" stroke-width="5" stroke-dasharray="320 1940"/><defs><linearGradient id="rg${i}"><stop offset="0" stop-color="${f.acc[0]}"/><stop offset="1" stop-color="${f.acc[1]}"/></linearGradient></defs></svg>`),
+ card:mk(`<div class="portrait" style="background:${gradOf(f.acc)};box-shadow:0 40px 120px ${f.acc[0]}77"><div class="in"><img src="${f.img}"></div></div>`),
+ name:mk(`<div class="pill" style="background:${gradOf(f.acc,90)};font-size:54px;padding:20px 54px;letter-spacing:.06em;box-shadow:0 20px 60px ${f.acc[0]}66">${f.name}</div>`),
+ role:mk(`<div class="sub" style="font-size:44px;font-weight:600;color:rgba(255,255,255,.9);letter-spacing:.04em">${f.role}</div>`),
+ ph:mk(`<div style="display:flex;align-items:center;gap:18px;background:#fff;border-radius:999px;padding:16px 40px 16px 20px;color:${f.acc[0]};font-size:44px;font-weight:800;letter-spacing:.04em;box-shadow:0 16px 50px rgba(0,0,0,.35)"><span style="width:64px;height:64px;border-radius:50%;background:${gradOf(f.acc)};display:flex;align-items:center;justify-content:center"><span style="width:34px;height:34px;display:block">${ico('phone','#fff',2)}</span></span>${f.ph}</div>`),
+}));
+fsl.forEach(f=>f.img=f.card.querySelector('img'));
+// CTA
+const cta=[
+ mk('<div style="font-size:112px;font-weight:800">READY TO</div>'),
+ mk('<div style="font-size:112px;font-weight:800">GROW YOUR</div>'),
+ mk('<div class="gtext grad" style="font-size:190px;font-weight:900;filter:drop-shadow(0 10px 50px rgba(255,61,139,.5))">BRAND?</div>'),
+ mk('<div class="sub" style="font-size:50px;color:rgba(255,255,255,.88)">Let\'s make it happen <b style="color:#fff;font-weight:700">together.</b></div>'),
+];
+// END CARD
+const wing2=mk(wingSVG(),'a','width:260px;height:260px');
+const wm2=mk(wordmark(116));
+const tag2=mk(`<div style="font-size:30px;font-weight:700;letter-spacing:.42em"><span style="color:#ff8a1a">DEFINE</span> <span>•</span> <span style="color:#ff3d8b">DESIGN</span> <span>•</span> <span style="color:#3d7bff">DELIVER</span></div>`);
+const badge=mk('<div style="border:2px solid rgba(255,255,255,.3);border-radius:999px;padding:14px 34px;font-size:28px;font-weight:800;letter-spacing:.12em;background:rgba(255,255,255,.06)"><span class="gtext grad">ONE-STOP</span> DIGITAL MARKETING SOLUTION</div>');
+const web=mk(`<div class="pill grad" style="display:flex;align-items:center;gap:22px;font-size:60px;letter-spacing:.02em;padding:24px 56px 24px 30px"><span style="width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center"><span style="width:50px;height:50px;display:block">${ico('globe','#fff',1.8)}</span></span>smsbrandbay.com</div>`);
+const rows=[
+ ['phone',ACC[2],'<b style="font-weight:700">Call:</b> +91 99660 61444'],
+ ['mail',ACC[0],'info.brandbay3@gmail.com'],
+ ['pin',ACC[3],'7-35 Madhurapuri Colony, Dilsukhnagar,<br>Hyderabad - 500060'],
+].map(([ic,acc,txt])=>mk(`<div class="row" style="width:900px;${ic==='pin'?'font-size:36px;line-height:1.35':''}"><span class="dot" style="background:${gradOf(acc)};box-shadow:0 12px 36px ${acc[0]}66">${ico(ic,'#fff',1.9)}</span><span>${txt}</span></div>`));
+const endLine=mk('<div style="font-size:44px;font-weight:900;letter-spacing:.06em">GROW YOUR BRAND <span class="gtext grad">WITH US</span></div>');
+const divEnd=mk('<div class="sub" style="font-size:28px;color:rgba(255,255,255,.6);letter-spacing:.05em">A Division of Jaya Maruthi Technologies</div>');
+const bug=mk(`<div style="display:flex;align-items:center;gap:14px"><span style="width:52px;height:52px;display:block">${wingSVG()}</span>${wordmark(34)}</div>`);
+setWing(bug,99,[0,0,0]);
+const wipe=$('#wipe');
+wipe.innerHTML='<div style="position:absolute;inset:0;display:flex"><div style="flex:1;background:#ff7a1a"></div><div style="flex:1;background:#ff3d8b"></div><div style="flex:6;background:linear-gradient(90deg,#a63cf0,#3d5bff)"></div><div style="flex:1;background:#2fb4ff"></div></div>';
+(function(){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d');const id=x.createImageData(256,256);const r=rnd(3);for(let i=0;i<id.data.length;i+=4){const v=r()*255;id.data[i]=id.data[i+1]=id.data[i+2]=v;id.data[i+3]=255}x.putImageData(id,0,0);$('#grain').style.backgroundImage=`url(${c.toDataURL()})`})();
+
+// ================= BACKGROUND =================
+const bg=$('#bg').getContext('2d');
+const R=rnd(11);
+const parts=Array.from({length:110},()=>({x:R()*W,y:R()*H,r:0.8+R()*2.8,v:20+R()*70,ph:R()*6.28,c:['255,150,70','255,70,150','90,130,255','255,255,255'][Math.floor(R()*4)]}));
+const KT=window.KICKT||[];
+function beatPulse(t){let last=-9;for(const k of KT){if(k<=t)last=k;else break}const d=t-last;return d<0.5?Math.exp(-d/0.12):0}
+const IMPACTS=[[0,.5],[6,1],[14,.8],[24,.9],[28,.45],[36,1],[39,.5],[8,.25],[8.5,.25],[9,.25],[9.5,.3],[12,.4],[12.667,.4],[13.333,.4]];
+const FLASH=[[6,.9],[14,.85],[24,.85],[28,.4],[36,.9]];
+function drawBG(t){
+ bg.fillStyle='#05071a';bg.fillRect(0,0,W,H);
+ const intro=t<4?0.45+0.1*Math.sin(t*20)*gwin(t,[[0,.3],[.5,.7],[2,.3+2],[2.5,2.7]]):(t<6?lerp(0.45,1,P(t,4,6)):1);
+ const pulse=beatPulse(t);
+ const blobs=[
+  ['255,110,40',300+220*Math.sin(t*.45),520+160*Math.cos(t*.33),780],
+  ['235,45,140',820+160*Math.cos(t*.38),1050+200*Math.sin(t*.29),720],
+  ['60,90,255',380+200*Math.sin(t*.31+2),1550+140*Math.cos(t*.42),820],
+ ];
+ bg.globalCompositeOperation='lighter';
+ for(const[c,x,y,r]of blobs){const a=(0.22+pulse*0.08)*intro;const g=bg.createRadialGradient(x,y,0,x,y,r*(1+pulse*0.05));g.addColorStop(0,`rgba(${c},${a})`);g.addColorStop(1,`rgba(${c},0)`);bg.fillStyle=g;bg.fillRect(0,0,W,H)}
+ bg.globalCompositeOperation='source-over';
+ const off=(t*18)%60;
+ bg.fillStyle=`rgba(255,255,255,${0.055*intro})`;
+ for(let y=-off;y<H+60;y+=60)for(let x=30;x<W;x+=60)bg.fillRect(x-1.2,y-1.2,2.4,2.4);
+ let warp=0;
+ if(t>=4.9&&t<6)warp=E.iC(P(t,4.9,6.0));else if(t>=6)warp=Math.exp(-(t-6)*6);
+ if(t>=35&&t<36)warp=Math.max(warp,E.iC(P(t,35,36))*0.8);else if(t>=36)warp=Math.max(warp,Math.exp(-(t-36)*6)*0.8);
+ bg.lineCap='round';
+ for(const p of parts){
+  const y=((p.y-p.v*t)%H+H)%H, x=p.x+Math.sin(t*0.6+p.ph)*20;
+  const a=(0.35+0.45*(0.5+0.5*Math.sin(t*2.2+p.ph)))*intro*(0.7+pulse*0.3);
+  if(warp>0.02){const vx=x-540,vy=y-960,s1=1+warp*0.6,s2=s1+warp*0.9*(p.r/3);
+   bg.strokeStyle=`rgba(${p.c},${a})`;bg.lineWidth=p.r;bg.beginPath();bg.moveTo(540+vx*s1,960+vy*s1);bg.lineTo(540+vx*s2,960+vy*s2);bg.stroke();
+  }else{bg.fillStyle=`rgba(${p.c},${a})`;bg.beginPath();bg.arc(x,y,p.r,0,6.283);bg.fill()}
+ }
+}
+const off=(...els)=>els.flat(3).forEach(e=>S(e,{op:0}));
+const offG=g=>S(g.el,{op:0});
+
+// ================= RENDER =================
+function render(t){
+ drawBG(t);
+ let sx=0,sy=0,fl=0;
+ for(const[ti,a]of IMPACTS){const d=t-ti;if(d>=0&&d<0.8){const k=Math.exp(-d*7)*a;sx+=Math.sin(d*83)*26*k;sy+=Math.cos(d*71)*20*k}}
+ for(const[ti,a]of FLASH){const d=t-ti;if(d>=0)fl=Math.max(fl,Math.exp(-d*7)*a);const pre=ti-t;if(pre>0&&pre<0.06)fl=Math.max(fl,(0.06-pre)/0.06*0.4)}
+ $('#flash').style.opacity=fl;
+ world.style.transform=`translate(${sx}px,${sy}px) scale(${1+beatPulse(t)*0.007})`;
+ $('#grain').style.transform=`translate(${(Math.sin(t*91)*100)|0}px,${(Math.cos(t*77)*100)|0}px)`;
+ $('#scan').style.opacity=t<4?0.55:clamp(0.55*(1-P(t,4,4.6)));
+ let wv=0;
+ for(const wc of[7.95,23.75]){const k=P(t,wc-0.3,wc+0.3);if(k>0&&k<1){wv=1;S(wipe,{op:1,top:960,x:lerp(-2600,2600,E.ioC(k)),r:18})}}
+ if(!wv)S(wipe,{op:0});
+
+ // ---------- HOOK 0-4 ----------
+ if(t<2.05){
+  const gA=gwin(t,[[0,.3],[.5,.65],[1.25,1.35],[1.8,2.05]]);
+  const out=E.iC(P(t,1.85,2.02));
+  const k1=E.oE(P(t,0,0.3)),k3=E.oC(P(t,0.45,0.75));
+  S(h1a,{op:k1*(1-out),top:800,y:lerp(-30,0,k1),sy:1-out*0.8});
+  S(h1b.el,{op:(1-out),top:960,s:lerp(1.3,1,k1),sy:(1-out*0.9)*lerp(1.3,1,k1),b:(1-k1)*10});
+  setGlitch(h1b,t,gA);
+  // INVISIBLE fill flickers in and out (invisible!)
+  const fk=hash(Math.floor(t*15))>0.55?1:0;
+  S(h1fill,{op:(t>0.3?fk*0.85:0)*(1-out),top:960,sy:1-out*0.9});
+  S(h1c,{op:k3*(1-out),top:1120,y:lerp(40,0,k3),sy:1-out*0.8});
+ }else off(h1a,h1fill,h1c,h1b.el);
+ if(t>=1.95&&t<4.05){
+  const gA=gwin(t,[[2,.3+2],[2.5,2.65],[3.2,3.3],[3.8,4.05]]);
+  const out=E.iC(P(t,3.85,4.02));
+  const k1=E.oE(P(t,2.0,2.3)),k2=E.oE(P(t,2.5,2.8));
+  S(h2a,{op:k1*(1-out),top:800,y:lerp(-30,0,k1),sy:1-out*0.8});
+  S(h2b.el,{op:clamp(k1*3)*(1-out),top:960,s:lerp(1.5,1,k1)*(1+0.05*P(t,2.3,3.85)),sy:(1-out*0.9)});setGlitch(h2b,t,gA);
+  S(h2c.el,{op:clamp(k2*3)*(1-out),top:1110,s:lerp(1.5,1,k2),sy:(1-out*0.9)});setGlitch(h2c,t,gA);
+ }else off(h2a,h2b.el,h2c.el);
+ // ---------- REVEAL 4-8 ----------
+ {const k=P(t,4.0,4.9);S(flare,{op:k>0&&k<1?Math.sin(k*Math.PI):0,top:880,x:lerp(-900,900,E.ioC(k))});}
+ if(t>=4&&t<8){
+  setWing(wing,t,[4.15,4.5,4.85],0.45);
+  let top=880,s=lerp(0.92,1,P(t,4,5)),b=0,op=1;
+  if(t>=5.0&&t<6)s=lerp(1,1.4,E.iC(P(t,5.0,6)));
+  if(t>=5.85&&t<6)b=12*P(t,5.85,6);
+  if(t>=6){const k=E.oE(P(t,6,6.5));top=lerp(880,720,k);s=lerp(1.6,0.8,k)}
+  if(t>=7.6){const k=E.iC(P(t,7.6,7.95));op=1-k;s*=1+k*0.6;b=k*20}
+  S(wing,{op,top,s,b,r:Math.sin(t*1.3)*1.5});
+  const kg=E.oC(P(t,4.4,4.75)),og=E.iC(P(t,5.4,5.7));
+  S(gotYou,{op:kg*(1-og),top:1240,y:lerp(40,0,kg),b:og*12});
+ }else off(wing,gotYou);
+ if(t>=5.9&&t<8){
+  const out=E.iC(P(t,7.6,7.95));
+  animWordmark(wm1,t,5.96);
+  S(wm1,{op:1-out,top:1040,s:1+out*0.4+0.03*P(t,6.5,7.6),b:out*20});
+  tagParts.forEach((sp,i)=>{const st=[6.5,6.62,6.75,6.87,7.0][i];const k=P(t,st-0.02,st+0.22);sp.style.opacity=clamp(k*3);sp.style.display='inline-block';sp.style.transform=`translateY(${lerp(30,0,E.oB(k))}px) scale(${lerp(.6,1,E.oB(k))})`});
+  S(tag1,{op:1-out,top:1165,b:out*16});
+  const k=P(t,7.05,7.4);
+  S(div1,{op:E.oC(k)*(1-out),top:1280,y:lerp(30,0,E.oC(k))});
+  S(line1,{op:1-out,top:1345,sx:E.oE(P(t,7.0,7.5)),sy:1});
+ }else off(wm1,tag1,div1,line1);
+ // ---------- ONE-STOP 8-12 ----------
+ if(t>=7.9&&t<12.05){
+  const mv=E.ioC(P(t,9.9,10.35)),out=E.iC(P(t,11.7,12.0));
+  os.forEach(([el,top0],i)=>{const st=8+i*0.5,k=P(t,st,st+0.3),e=E.oE(k);
+   const top=lerp(top0,330+(top0-925)*0.58,mv);
+   S(el,{op:clamp(k*3)*(1-out),top,s:lerp(i===3?0.4:1.8,1,i===3?E.oB(k):e)*lerp(1,0.58,mv)*(1+out*0.5),b:(1-e)*(i===3?0:18)+out*14,y:-out*200});
+  });
+  const hk=P(t,10.0,10.5);
+  S(hubSvg,{op:E.oC(hk)*(1-out),top:960,s:1+out*1.5});
+  S(hubCore,{op:E.oB(P(t,9.95,10.35))>0?clamp(hk*3)*(1-out):0,top:HUB.y,s:lerp(0.2,1,E.oB(P(t,9.95,10.35)))*(1+0.04*beatPulse(t))*(1+out*2)});
+  const rot=(t-10)*14;
+  nodes.forEach((el,i)=>{const st=10.0+i*0.1,k=P(t,st,st+0.45),e=E.oB(k);
+   const ang=(i/9*360-90+rot)*Math.PI/180,r=lerp(900,HUB.R,E.oE(k))*(1+out*1.6);
+   const x=Math.cos(ang)*r,y=Math.sin(ang)*r;
+   S(el,{op:clamp(k*3)*(1-out),top:HUB.y,x,y,s:lerp(0.3,1,e)});
+   const L=hubLines[i];const lk=E.oC(P(t,st+0.15,st+0.5));
+   L.setAttribute('x2',HUB.x+x*lk);L.setAttribute('y2',HUB.y+y*lk);
+   const pp=((t-st)*1.3)%1;const pu=hubPulses[i];
+   if(t>st+0.5){pu.setAttribute('cx',HUB.x+x*pp);pu.setAttribute('cy',HUB.y+y*pp);pu.setAttribute('opacity',Math.sin(pp*Math.PI))}else pu.setAttribute('opacity',0);
+  });
+  hubSvg.querySelector('.orb').setAttribute('transform',`rotate(${rot} ${HUB.x} ${HUB.y})`);
+  const kt=E.oC(P(t,10.8,11.15));S(hubTxt,{op:kt*(1-out),top:1700,y:lerp(40,0,kt)});
+ }else{os.forEach(([el])=>S(el,{op:0}));off(hubSvg,hubCore,nodes,hubTxt)}
+ // ---------- DEFINE/DESIGN/DELIVER 12-14 ----------
+ if(t>=11.95&&t<14.02){
+  const i=clamp(Math.floor((t-12)/0.6667),0,2),s=12+i*0.6667;
+  const acc=dw[i].acc,k=E.oE(P(t,s,s+0.18));
+  colorBg.style.background=`linear-gradient(150deg,${acc[0]},${acc[1]})`;
+  const dir=i%2?1:-1;
+  S(colorBg,{op:t<12?P(t,11.95,12):1,top:960,x:lerp(dir*1300,0,k),r:lerp(dir*-8,0,k)});
+  dw.forEach((d,j)=>{if(j!==i){off(d.w,d.s);return}
+   const kw=E.oE(P(t,s+0.03,s+0.25)),ks=E.oC(P(t,s+0.12,s+0.35));
+   S(d.w,{op:clamp(kw*3),top:900,s:lerp(1.8,1,kw)*(1+0.05*P(t,s+0.25,s+0.67)),b:(1-kw)*16});
+   S(d.s,{op:ks,top:1075,y:lerp(40,0,ks)});
+  });
+  S(dLabel,{op:1,top:720});
+ }else off(colorBg,dLabel,dw.map(d=>[d.w,d.s]));
+ // ---------- SERVICES 14-24 ----------
+ if(t>=13.98&&t<23.8){
+  const ki=P(t,14.0,14.25),mv=E.ioC(P(t,14.2,14.5)),out=E.iC(P(t,23.5,23.7));
+  const top=lerp(960,250,mv);
+  S(svPill,{op:clamp(ki*3)*(1-out),top,s:lerp(2.2,1,E.oE(ki))*lerp(1,0.8,mv),b:(1-E.oE(ki))*16});
+  S(svTop,{op:E.oC(P(t,14.05,14.2))*(1-mv),top:top-110});
+ }else off(svPill,svTop);
+ cards.forEach((c,i)=>{const s=14.5+i;
+  if(t<s-0.1||t>s+1.1){S(c.el,{op:0});return}
+  const ki=P(t,s-0.08,s+0.3),ko=P(t,s+0.84,s+1.04);const e=E.oE(ki),eo=E.iC(ko);
+  const dir=i%2?-1:1;
+  S(c.el,{op:clamp(ki*4)*(1-eo),top:1070,x:lerp(760*dir,0,e)+eo*-760*dir,y:lerp(260,0,e)-eo*120,r:lerp(14*dir,0,e)-eo*12*dir,s:lerp(.8,1,e)*(1+0.03*P(t,s+0.3,s+0.85)),b:eo*10});
+  const kc=P(t,s+0.02,s+0.4);c.ic.style.transform=`scale(${lerp(0.3,1,E.oB(kc))}) rotate(${lerp(-40,0,E.oB(kc))}deg)`;
+  const kt=E.oC(P(t,s+0.1,s+0.38));c.tt.style.transform=`translateY(${lerp(50,0,kt)}px)`;c.tt.style.opacity=kt;
+  const kd=E.oC(P(t,s+0.2,s+0.48));c.ds.style.transform=`translateY(${lerp(40,0,kd)}px)`;c.ds.style.opacity=kd;
+ });
+ streaks.forEach((el,i)=>{
+  if(t<14.4||t>23.6){S(el,{op:0});return}
+  const sp=1800+hash(i+3)*1400,ph=hash(i+5)*3;const x=((t*sp/1000+ph)%2.4)*1000-1200;
+  S(el,{op:0.25+0.35*hash(i+11),top:300+hash(i+1)*1450,x:(i%2?-1:1)*x,r:-12});
+ });
+ // ---------- GROW 24-28 ----------
+ if(t>=23.9&&t<28.05){
+  const out=E.iC(P(t,27.7,27.98));
+  const k1=E.oE(P(t,24.0,24.3)),k2=E.oE(P(t,24.2,24.5));
+  S(gw1,{op:clamp(k1*3)*(1-out),top:400,s:lerp(2,1,k1)*(1+0.05*P(t,24.3,27.7)),b:(1-k1)*18+out*16});
+  S(gw2,{op:clamp(k2*3)*(1-out),top:585,y:lerp(60,0,k2),b:out*16});
+  S(chart,{op:(1-out),top:1010,s:1+out*0.3});
+  gBars.forEach((r,i)=>{const k=E.oB(P(t,24.35+i*0.1,24.75+i*0.1));const h=BARS[i]*(CH2-110)*Math.max(0,k);
+   r.setAttribute('y',CH2-40-h);r.setAttribute('height',Math.max(0,h));});
+  const lk=E.ioC(P(t,24.7,25.5));gLine.style.strokeDashoffset=lineLen*(1-lk);
+  gDots.forEach((d,i)=>{const kk=E.oB(P(t,24.7+i*0.12,24.95+i*0.12));d.setAttribute('r',Math.max(0,9*kk))});
+  const ka=E.oB(P(t,25.45,25.75));gArrow.setAttribute('transform',`translate(${pts[6][0]},${pts[6][1]-20-Math.sin(t*6)*4}) scale(${Math.max(0,ka)})`);
+  chips.forEach((el,i)=>{const st=25.5+i*0.5,k=E.oB(P(t,st,st+0.35));
+   S(el,{op:clamp(P(t,st,st+0.35)*3)*(1-out),top:1440+i*0,x:[-0,0,0][i],y:0,s:lerp(0.4,1,k),top:[1410,1525,1640][i]});
+  });
+  const kt=E.oC(P(t,27.0,27.3));S(gwTxt,{op:kt*(1-out),top:1760,y:lerp(30,0,kt)});
+ }else off(gw1,gw2,chart,chips,gwTxt);
+ // ---------- FOUNDERS 28-34 ----------
+ if(t>=27.85&&t<34.05){
+  const ki=E.oE(P(t,27.9,28.3)),out=E.iC(P(t,33.75,33.98));
+  S(fPill,{op:clamp(P(t,27.9,28.3)*3)*(1-out),top:lerp(120,230,ki),s:lerp(1.4,1,ki)});
+ }else off(fPill);
+ fsl.forEach((f,i)=>{const s=28+2*i;
+  const els=[f.bg,f.glow,f.ring,f.card,f.name,f.role,f.ph];
+  if(t<s-0.2||t>s+2.05){off(els);return}
+  const ki=P(t,s-0.18,s+0.4),ko=P(t,s+1.75,s+2.0),e=E.oE(ki),eo=E.iC(ko);
+  const X=lerp(900,0,e)-eo*900;
+  S(f.bg,{op:clamp(ki*2)*(1-eo),top:820,x:-(t-s)*220+250});
+  S(f.glow,{op:e*(1-eo),top:840,x:X*0.6,s:1+0.05*Math.sin(t*4)});
+  S(f.ring,{op:e*(1-eo),top:840,x:X*0.8,r:t*40,s:lerp(0.6,1,e)});
+  S(f.card,{op:clamp(ki*3)*(1-eo),top:840,x:X,r:lerp(10,0,e)-eo*8,s:lerp(0.85,1,e),b:eo*12});
+  f.img.style.transform=`scale(${lerp(1.18,1.04,E.oC(P(t,s-0.2,s+2)))})`;
+  const kn=E.oB(P(t,s+0.2,s+0.55));S(f.name,{op:clamp(kn*2)*(1-eo),top:1305,sx:kn,sy:1,x:-eo*700});
+  const kr=E.oC(P(t,s+0.38,s+0.7));S(f.role,{op:kr*(1-eo),top:1410,y:lerp(30,0,kr),x:-eo*700});
+  const kp=E.oB(P(t,s+0.52,s+0.85));S(f.ph,{op:clamp(kp*2)*(1-eo),top:1530,s:lerp(0.5,1,kp),x:-eo*700});
+ });
+ // ---------- CTA 34-36 ----------
+ if(t>=33.95&&t<36.02){
+  const zoom=1+0.12*E.iC(P(t,35.0,35.9)),dim=1-0.85*P(t,35.75,35.95);
+  const sts=[34.05,34.45,34.95,35.3],tops=[760,890,1050,1215];
+  cta.forEach((el,i)=>{const k=P(t,sts[i],sts[i]+0.35);const e=i===3?E.oC(k):E.oE(k);
+   S(el,{op:clamp(k*3)*dim,top:960+(tops[i]-960)*zoom,s:(i===3?1:lerp(1.8,1,e))*zoom,y:i===3?lerp(30,0,e):0,b:i===3?0:(1-e)*18});
+  });
+ }else off(cta);
+ // ---------- END 36-40 ----------
+ if(t>=35.98){
+  setWing(wing2,t,[36.0,36.1,36.2],0.4);
+  const kw=E.oE(P(t,36.0,36.5));
+  S(wing2,{op:1,top:330,s:lerp(1.4,1,kw)*(1+0.015*Math.sin(t*3))});
+  animWordmark(wm2,t,36.03,0.03);
+  S(wm2,{op:1,top:575});
+  const kt=E.oC(P(t,36.4,36.7));S(tag2,{op:kt,top:672,y:lerp(20,0,kt)});
+  const kb=E.oB(P(t,36.6,36.95));S(badge,{op:clamp(kb*2),top:775,s:lerp(0.6,1,kb)});
+  const kw2=E.oB(P(t,36.9,37.25));S(web,{op:clamp(kw2*2),top:940,s:lerp(0.5,1,kw2)*(1+0.012*Math.sin(t*5))});
+  rows.forEach((el,i)=>{const st=37.15+i*0.22,k=E.oC(P(t,st,st+0.35));S(el,{op:k,top:[1110,1220,1350][i],x:lerp(-80,0,k)+40});});
+  const ke=E.oB(P(t,37.9,38.25));S(endLine,{op:clamp(ke*2),top:1540,s:lerp(0.6,1,ke)});
+  const kd=E.oC(P(t,38.2,38.5));S(divEnd,{op:kd,top:1700});
+ }else off(wing2,wm2,tag2,badge,web,rows,endLine,divEnd);
+ {const on=(t>=8.3&&t<11.7)||(t>=14.5&&t<23.5)||(t>=24.3&&t<27.7)||(t>=28.3&&t<33.75);S(bug,{op:on?0.85:0,top:1850});}
+}
+window.render=render;
+window.ready=Promise.all([document.fonts.ready,...[...document.images].map(i=>i.complete?1:new Promise(r=>{i.onload=r;i.onerror=r}))]);
+render(0);
+</script>
+</body></html>
