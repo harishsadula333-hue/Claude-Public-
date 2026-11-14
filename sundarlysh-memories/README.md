@@ -34,3 +34,15 @@ What was improved:
 | `svg/` | Vector versions of everything |
 
 Square PNGs are 2160×2160.
+
+---
+
+## More styles
+
+![Styles board](sundarlysh-memories-styles-2-board.png)
+
+| File | Style |
+|------|-------|
+| `png/memories-wax-seal.png` | **Wax Seal:** "Sundarlysh" in flowing script under a wine wax seal stamped with a gold S and star, like a luxury event invitation. |
+| `png/memories-polaroid.png` | **Polaroid:** a tilted instant photo holding a gold S, with "memories ♥" handwritten on the caption strip and a strip of washi tape; the name is in Bodoni capitals below. |
+| `png/memories-heritage-stamp.png` / `-dark.png` | **Heritage Stamp:** a round seal with SUNDARLYSH and the services curving around the ring and "Memories" in script at the centre, in wine on ivory or gold on black. |
