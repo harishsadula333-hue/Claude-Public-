@@ -6,7 +6,8 @@ const { chromium } = require('playwright');
 const A = require('./answers.js');
 const Qs = require('./questions.js');
 
-const PAGE_W = 210, MARGIN_X = 4, TOP = 5, COLS = 5, ROWS = 5, ROW_H = 39;
+const PAGE_W = 210, MARGIN_X = 4, TOP = 5, COLS = 5, ROWS = 5, ROW_H = +(process.env.ROW_H || 39);
+const SUFFIX = process.env.SUFFIX || '';
 const COL_W = (PAGE_W - 2 * MARGIN_X) / COLS;            // 40.4 mm
 const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V'];
 
@@ -53,7 +54,7 @@ async function fit(p) {
     document.querySelectorAll('.h').forEach(h => {
       const c = h.querySelector('.c');
       const avail = h.clientHeight - 2;            // minus padding slack
-      let lo = 1.8, hi = 6.5;
+      let lo = 1.2, hi = 6.5;
       while (hi - lo > 0.05) {
         const mid = (lo + hi) / 2;
         c.style.fontSize = mid + 'pt';
@@ -71,13 +72,13 @@ async function fit(p) {
   const b = await chromium.launch();
   const report = {};
   for (const [name, cols] of [['Front', [1, 3, 5, 7, 9]], ['Back', [10, 8, 6, 4, 2]]]) {
-    const file = path.join(outDir, `MSF_CutSheet_${name}.html`);
+    const file = path.join(outDir, `MSF_CutSheet_${name}${SUFFIX}.html`);
     fs.writeFileSync(file, page(cols, `MSF ${name}`));
     const p = await b.newPage();
     await p.goto('file://' + file);
     report[name] = await fit(p);
     fs.writeFileSync(file, await p.content());          // keep fitted version
-    await p.pdf({ path: path.join(outDir, `MSF_CutSheet_${name}.pdf`), preferCSSPageSize: true, printBackground: true });
+    await p.pdf({ path: path.join(outDir, `MSF_CutSheet_${name}${SUFFIX}.pdf`), preferCSSPageSize: true, printBackground: true });
   }
   await b.close();
   for (const k in report) console.log(k, report[k].map(([t, s]) => `${t}:${s}`).join('  '));
