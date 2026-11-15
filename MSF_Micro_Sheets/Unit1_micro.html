@@ -1,0 +1,45 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Unit 1 Micro</title>
+<style>
+@page{size:A4 landscape;margin:4mm}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DejaVu Sans Condensed","Arial Narrow",Arial,sans-serif;font-size:5.6pt;line-height:1.18;color:#000}
+.wrap{column-count:5;column-gap:1.2mm;column-fill:balance}
+.b{break-inside:avoid;border:0.3pt solid #000;padding:0.8mm 1mm;margin-bottom:1.2mm}
+.t{font-weight:bold;background:#000;color:#fff;padding:0 2px;margin-right:2px}
+b{font-weight:bold}
+.c{columns:2;column-gap:2mm}
+</style></head><body><div class="wrap">
+
+<div class="b"><span class="t">1a</span>858=1×728+130; 728=5×130+78; 130=1×78+52; 78=1×52+26; 52=2×26+0 ⇒ gcd(858,728)=26.<br>325=12×26+13; 26=2×13+0 ⇒ gcd(26,325)=13.<br><b>∴ gcd(858,728,325)=13</b></div>
+
+<div class="b"><span class="t">1b</span>256=116×2+24; 116=24×4+20; 24=20×1+4; 20=4×5+0 ⇒ gcd=4.<br>4=24−20×1 =24−(116−4×24) =5×24−1×116 =5(256−2×116)−116 =5×256−11×116.<br><b>∴ x=5, y=−11</b></div>
+
+<div class="b"><span class="t">2a</span>Formulas: n=p₁^α₁p₂^α₂… ; No. of divisors τ=(α₁+1)(α₂+1)…; Sum σ=Π(p^(α+1)−1)/(p−1).<br><b>(i)</b> 3625=5³×29¹. τ=(3+1)(1+1)=<b>8</b>. σ=(5⁴−1)/4 · (29²−1)/28 =156×30=<b>4680</b>.<br><b>(ii)</b> 18375=3×5³×7². τ=2×4×3=<b>24</b>. σ=(3²−1)/2·(5⁴−1)/4·(7³−1)/6 =4×156×57=<b>35568</b>.</div>
+
+<div class="b"><span class="t">2b</span>Let gcd(a,b)=d₁, gcd(b,r)=d₂. d₁|a & d₁|b ⇒ d₁|(a−bq) ⇒ d₁|r [r=a−bq]. So d₁ common divisor of b,r ⇒ d₁|d₂ …(1). Similarly d₂|b, d₂|r ⇒ d₂|(bq+r)=a ⇒ d₂|d₁ …(2). From (1),(2), d₁,d₂>0 ⇒ d₁=d₂. <b>∴ gcd(a,b)=gcd(b,r)</b></div>
+
+<div class="b"><span class="t">3a</span>126=45×2+36; 45=36×1+9; 36=9×4+0 ⇒ <b>gcd=9</b>.<br>9=45−36 =45−(126−2×45) =3×45−1×126. <b>∴ x=3, y=−1</b></div>
+
+<div class="b"><span class="t">3b</span><b>(i)</b> 2560=2×1280=2²×640=…=2⁹×5 ⇒ <b>2⁹×5¹</b> (p₁=2,p₂=5; α₁=9,α₂=1)<br><b>(ii)</b> 4116=2²×1029=2²×3×343 ⇒ <b>2²×3¹×7³</b><br><b>(iii)</b> 29645=5×5929=5×7×847=5×7²×121 ⇒ <b>5¹×7²×11²</b></div>
+
+<div class="b"><span class="t">4a</span><b>(i)</b> 1274=2×7²×13; 3087=3×7³; 1085=5×7×31.<br>gcd=7^min(2,3,1)=<b>7</b>. LCM=2×3×5×7³×13×31=<b>4146870</b>.<br><b>(ii)</b> 81=3⁴; 100=2²×5²; 289=17². No common factor ⇒ <b>gcd=1</b>. LCM=2²×3⁴×5²×17²=<b>2340900</b>.</div>
+
+<div class="b"><span class="t">4b</span><b>(i)</b> 72=1×56+16; 56=3×16+8; 16=2×8 ⇒ gcd=8. 8=56−3×16=56−3(72−56)=4×56−3×72 ⇒ <b>m=4, n=−3</b>.<br><b>(ii)</b> 3587=1×1819+1768; 1819=1×1768+51; 1768=34×51+34; 51=1×34+17; 34=2×17 ⇒ gcd=17.<br>17=51−34 =51−(1768−34×51)=35×51−1768 =35(1819−1768)−1768 =35×1819−36×1768 =35×1819−36(3587−1819) =71×1819−36×3587 ⇒ <b>m=71, n=−36</b>.</div>
+
+<div class="b"><span class="t">5</span><b>Statement:</b> If a,b∈Z, b>0, ∃ unique q,r: <b>a=bq+r, 0≤r&lt;b</b>.<br><b>Proof:</b> Multiples of b: 0,±b,±2b,…<br>Case(i) a multiple of b ⇒ a=bq, r=0.<br>Case(ii) else a lies between bq &amp; b(q+1): bq&lt;a&lt;bq+b ⇒ 0&lt;a−bq&lt;b ⇒ r=a−bq, 0&lt;r&lt;b (existence).<br>Case(iii) Uniqueness: let a=bq+r=bq₁+r₁ ⇒ b(q−q₁)=r₁−r …(1) ⇒ b|(r₁−r); but |r₁−r|&lt;b ⇒ r₁−r=0 ⇒ <b>r₁=r</b>. In (1): b(q−q₁)=0, b≠0 ⇒ <b>q=q₁</b>. Hence proved.</div>
+
+<div class="b"><span class="t">6a</span><b>Prime:</b> integer p&gt;1 whose only +ve divisors are 1 &amp; p. Ex: 13, 17.<br><b>Composite:</b> n&gt;1 not prime, n=a·b with 1&lt;a,b&lt;n. Ex: 8, 12.</div>
+
+<div class="b"><span class="t">6b</span>14039=9×1529+278; 1529=5×278+139; 278=2×139+0.<br>Last non-zero remainder ⇒ <b>gcd(1529,14039)=139</b></div>
+
+<div class="b"><span class="t">7a</span>Check primes ≤ √47≈6.86 → 2,3,5. 47 odd ⇒ not ÷2; 4+7=11 ⇒ not ÷3; last digit not 0/5 ⇒ not ÷5. No prime divisor ⇒ <b>47 is prime</b>.</div>
+
+<div class="b"><span class="t">7b</span>1479=5×272+119; 272=2×119+34; 119=3×34+17; 34=2×17+0 ⇒ <b>gcd(272,1479)=17</b></div>
+
+<div class="b"><span class="t">8</span><b>Statement:</b> Every integer n&gt;1 can be written as a product of primes, uniquely except for order.<br><b>Existence:</b> If n prime, done. If composite, n=a×b, 1&lt;a,b&lt;n; factor a,b further; process ends ⇒ product of primes.<br><b>Uniqueness:</b> Suppose n=p₁p₂…p_k=q₁q₂…q_m. By Euclid's lemma (prime dividing a product divides a factor) p₁=some q_j; cancel. Repeat ⇒ same primes, same multiplicities, only order differs. Hence proved.</div>
+
+<div class="b"><span class="t">9</span>1890=2×826+238; 826=3×238+112; 238=2×112+14; 112=8×14+0 ⇒ <b>d=14</b>.<br>14=238−2×112 =238−2(826−3×238) =7×238−2×826 =7(1890−2×826)−2×826 =7×1890−16×826.<br><b>∴ 14=(−16)·826+7·1890</b></div>
+
+<div class="b"><span class="t">10</span>6540=2²×3×5×109; 1206=2×3²×67.<br>gcd=2^min(2,1)×3^min(1,2)=<b>6</b>.<br>LCM=2²×3²×5×67×109=<b>1314540</b>.<br>Verify: gcd·lcm=6×1314540=7887240; a·b=6540×1206=7887240. LHS=RHS ✓</div>
+
+</div></body></html>
