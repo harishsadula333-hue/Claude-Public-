@@ -4,21 +4,23 @@
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const A = require('./answers.js');
+const Qs = require('./questions.js');
 
 const PAGE_W = 210, MARGIN_X = 4, TOP = 5, COLS = 5, ROWS = 5, ROW_H = 39;
 const COL_W = (PAGE_W - 2 * MARGIN_X) / COLS;            // 40.4 mm
 const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V'];
 
 function cell(unit, q, x, y) {
-  const a = A[unit][q];
+  const a = A[unit][q], qq = Qs[unit][q];
+  const qn = (t) => `<div class="q">Q. ${t}</div><b>Ans:</b> `;
   const tag = (s) => `<span class="tg">U${ROMAN[unit]}·${s}</span>`;
   let inner;
   if (a.full) {
-    inner = `<div class="h" style="top:0;height:${ROW_H}mm"><div class="c">${tag(q)}${a.full}</div></div>`;
+    inner = `<div class="h" style="top:0;height:${ROW_H}mm"><div class="c">${tag(q)}${qn(qq.full)}${a.full}</div></div>`;
   } else {
     const h = ROW_H / 2;
-    inner = `<div class="h" style="top:0;height:${h}mm"><div class="c">${tag(q + 'a')}${a.a}</div></div>` +
-            `<div class="h split" style="top:${h}mm;height:${h}mm"><div class="c">${tag(q + 'b')}${a.b}</div></div>`;
+    inner = `<div class="h" style="top:0;height:${h}mm"><div class="c">${tag(q + 'a')}${qn(qq.a)}${a.a}</div></div>` +
+            `<div class="h split" style="top:${h}mm;height:${h}mm"><div class="c">${tag(q + 'b')}${qn(qq.b)}${a.b}</div></div>`;
   }
   return `<div class="blk" style="left:${x}mm;top:${y}mm;width:${COL_W}mm;height:${ROW_H}mm">${inner}</div>`;
 }
@@ -35,6 +37,8 @@ body{width:210mm;height:297mm;position:relative;font-family:"Liberation Sans",Ar
 .h{position:absolute;left:0;width:100%;overflow:hidden;padding:0.45mm 0.6mm}
 .split{border-top:0.25pt dashed #000}
 .c{line-height:1.13;letter-spacing:-0.01em;word-break:break-word}
+.q{display:inline;font-weight:bold;font-style:italic;background:#e8e8e8}
+.q+b{margin-left:0.3mm}
 .tg{display:inline-block;background:#000;color:#fff;font-weight:bold;padding:0 0.4mm;margin-right:0.6mm;border-radius:0.4mm;font-size:0.95em}
 table{border-collapse:collapse;margin:0.2mm 0;width:100%;table-layout:fixed}
 td{border:0.25pt solid #000;text-align:center;padding:0 0.1mm;font-size:0.92em}
