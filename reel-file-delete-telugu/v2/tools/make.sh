@@ -10,4 +10,4 @@ node tools/render.js 0 500    "$SEG/s0.mp4" & node tools/render.js 500 1000 "$SE
 python3 tools/audio.py
 printf "file '%s'\n" "$PWD/$SEG/s0.mp4" "$PWD/$SEG/s1.mp4" "$PWD/$SEG/s2.mp4" > "$SEG/list.txt"
 ffmpeg -y -v error -f concat -safe 0 -i "$SEG/list.txt" -i build/mix.wav -map 0:v -map 1:a -c:v copy \
-  -af "loudnorm=I=-14:TP=-1.5:LRA=11" -c:a aac -b:a 192k -ar 48000 -movflags +faststart -shortest output/file-delete-telugu-reel-v2.mp4
+  -af "loudnorm=I=-14:TP=-1.5:LRA=11" -c:a aac -b:a 192k -ar 48000 -movflags +faststart -shortest output/file-delete-telugu-reel-v3.mp4

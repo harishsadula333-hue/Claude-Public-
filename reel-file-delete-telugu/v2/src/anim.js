@@ -61,16 +61,17 @@ const ICON = { photo: svgPhoto, video: svgVideo, music: svgMusic };
 const COL = { photo: '#38BDF8', video: '#A78BFA', music: '#34D399', free: '#34D399', orange: '#FB923C' };
 
 // ---------------------------------------------------------------- background
-const blobs = [['#22D3EE', 180, 380], ['#A78BFA', 900, 950], ['#F472B6', 260, 1600]].map(([c, x, y]) => {
-  const b = mk('blob', bg); b.style.background = `radial-gradient(circle, ${hexA(c, 0.2)} 0%, ${hexA(c, 0)} 66%)`; return { b, x, y };
+const blobs = [['#3B82F6', 180, 380], ['#7C3AED', 900, 950], ['#0EA5E9', 260, 1600]].map(([c, x, y]) => {
+  const b = mk('blob', bg); b.style.background = `radial-gradient(circle, ${hexA(c, 0.12)} 0%, ${hexA(c, 0)} 66%)`; return { b, x, y };
 });
-const dots = mk('dots', bg);
-const bits = []; { const R = rng(11); for (let i = 0; i < 34; i++) { const e = mk('bit', bg, R() > 0.5 ? '1' : '0'); e.style.fontSize = (22 + R() * 34) + 'px'; bits.push({ e, x: R() * 1060, y: R() * 2000, v: 16 + R() * 40, o: 0.05 + R() * 0.11, ph: R() * 6 }); } }
+// film grain: a few pre-baked noise frames, picked and offset per frame (deterministic)
+const grainCv = $('#grain'), gctx = grainCv.getContext('2d');
+const GRAIN = []; { const R = rng(99); for (let k = 0; k < 6; k++) { const im = gctx.createImageData(540, 960); for (let i = 0; i < im.data.length; i += 4) { const v = 128 + (R() + R() + R() - 1.5) * 120; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } GRAIN.push(im); } }
 const flash = mk('layer', $('#stage')); flash.style.background = '#fff'; flash.style.pointerEvents = 'none';
 function renderBg(t) {
   blobs.forEach((b, i) => tf(b.b, b.x - 450 + Math.sin(t * 0.3 + i * 2) * 120, b.y - 450 + Math.cos(t * 0.23 + i) * 110));
-  dots.style.transform = `translateY(${((t * 14) % 54).toFixed(2)}px)`;
-  bits.forEach(b => { const y = ((b.y - t * b.v) % 2000 + 2000) % 2000 - 60; tf(b.e, b.x, y, 1, 0, b.o * (0.6 + 0.4 * Math.sin(t * 1.3 + b.ph))); });
+  const f = Math.round(t * 30); gctx.putImageData(GRAIN[f % 6], 0, 0);
+  grainCv.style.transform = `translate(${((f * 37) % 9) - 4}px, ${((f * 53) % 9) - 4}px)`;
 }
 
 // ---------------------------------------------------------------- header chips
@@ -92,7 +93,7 @@ function renderChips(t) {
   chips.forEach(c => {
     const w = c.w || (c.w = c.e.offsetWidth);
     const i = E.back(P(t, c.a, 0.5)), o = E.io(P(t, c.b, 0.28));
-    tf(c.e, -w / 2 + (1 - i) * 0, (1 - i) * -40 - o * 30, lerp(0.75, 1, i), 0, P(t, c.a, 0.2) * (1 - o));
+    tf(c.e, -w / 2, (1 - i) * -40 - o * 30, lerp(0.75, 1, i), -1.6 + (1 - i) * 6, P(t, c.a, 0.2) * (1 - o));
   });
 }
 chips.forEach((c, i) => { if (i > 0) sfx(c.a - 0.05, 'whoosh', 0.55); });
@@ -123,7 +124,7 @@ hookCards.forEach(c => sfx(c.a, 'pop', 0.9));
 sfx(0, 'impact', 0.8);
 sfx(T.dialog, 'whooshS', 0.7); sfx(T.dialog + 0.05, 'pop', 0.6);
 sfx(T.tap - 0.02, 'click', 1); sfx(T.poof, 'poof', 0.9);
-sfx(T.q, 'boing', 0.7);
+sfx(T.q, 'popLow', 0.6);
 sfx(T.no - 0.55, 'riser', 0.6); sfx(T.no, 'stamp', 1.0); sfx(T.no + 0.02, 'glitch', 0.45);
 
 function renderHook(t) {
@@ -542,7 +543,7 @@ function renderOutro(t) {
 
 // ---------------------------------------------------------------- CAPTIONS
 const caps = $('#caps');
-const EMPH = { 10: '#FB7185', 27: '#22D3EE', 28: '#22D3EE', 33: '#22D3EE', 34: '#22D3EE', 52: '#34D399', 53: '#34D399', 54: '#34D399', 59: '#FB923C', 61: '#34D399', 62: '#34D399', 72: '#22D3EE', 73: '#22D3EE', 78: '#FB7185', 84: '#FDE047', 86: '#FDE047', 100: '#22D3EE', 101: '#22D3EE', 106: '#22D3EE', 107: '#22D3EE', 113: '#F472B6' };
+const EMPH = { 10: '#FF5A6E', 52: '#7CF29A', 53: '#7CF29A', 54: '#7CF29A', 78: '#FF5A6E', 84: '#FFE14D', 86: '#FFE14D', 113: '#FFE14D' };
 const chunks = []; { let cur = [];
   words.forEach((w, i) => { cur.push(i); const txt = cur.map(j => words[j].text).join(' '); const nx = words[i + 1];
     if (w.end || !nx || nx.scene !== w.scene || cur.length >= 4 || txt.length >= 18 || (/,$/.test(w.text) && cur.length >= 2)) { chunks.push(cur); cur = []; } }); }
@@ -552,66 +553,92 @@ const capEls = chunks.map((idx, ci) => {
   const nextA = chunks[ci + 1] ? W[chunks[ci + 1][0]] - 0.1 : END;
   const lastEnd = WE[idx[idx.length - 1]];
   const b = Math.min(nextA, nextA - lastEnd > 0.6 ? lastEnd + 0.4 : nextA);
-  return { e, idx, spans: [...e.querySelectorAll('span')], a, b };
+  return { e, idx, spans: [...e.querySelectorAll('span')], a, b, cut: nextA - b < 0.15 };   // back-to-back lines hard-cut, like a human edit
 });
 function renderCaps(t) {
   capEls.forEach(c => {
-    if (t < c.a - 0.01 || t > c.b + 0.12) { c.e.style.visibility = 'hidden'; return; }
+    if (t < c.a - 0.01 || t > c.b + 0.12 || (c.cut && t >= c.b)) { c.e.style.visibility = 'hidden'; return; }
     const w = c.w || (c.w = c.e.offsetWidth);
     const fit = Math.min(1, 1000 / w);
-    const i = E.back(P(t, c.a, 0.2)), o = P(t, c.b, 0.1);
-    tf(c.e, -w / 2, 20 + (1 - i) * 26, lerp(0.82, 1, i) * fit * (1 - o * 0.06), 0, P(t, c.a, 0.08) * (1 - o));
+    const i = E.back(P(t, c.a, 0.2)), o = c.cut ? 0 : P(t, c.b, 0.1);
+    tf(c.e, -w / 2, 26 + (1 - i) * 22, lerp(0.86, 1, i) * fit * (1 - o * 0.06), 0, P(t, c.a, 0.06) * (1 - o));
     c.spans.forEach((s, k) => {
       const wi = c.idx[k];
       const active = t >= W[wi] - 0.03 && t < (W[wi + 1] ?? 1e9) - 0.03 && t < WE[wi] + 0.45;
       const said = t >= W[wi] - 0.03;
       const pop = E.out(P(t, W[wi] - 0.03, 0.12)) * (active ? 1 : 0);
-      s.style.color = active ? '#FDE047' : (EMPH[wi] || '#FFFFFF');
-      s.style.opacity = said ? 1 : 0.55;
-      s.style.transform = `scale(${(1 + 0.12 * pop).toFixed(3)}) translateY(${(-4 * pop).toFixed(1)}px)`;
+      s.style.color = active ? '#FFE14D' : (EMPH[wi] || '#FFFFFF');
+      s.style.opacity = said ? 1 : 0.6;
+      s.style.transform = `scale(${(1 + 0.07 * pop).toFixed(3)}) translateY(${(-4 * pop).toFixed(1)}px)`;
     });
   });
 }
 
-// ---------------------------------------------------------------- VOICE WAVEFORM (replaces the presenter)
-const env = TL.env;
-const envAt = t => { const f = t * 30; const i = Math.floor(f); const a = env[i] || 0, b = env[i + 1] || 0; return a + (b - a) * (f - i); };
-const wavePill = mk('wavepill', document.querySelector('#stage'), '<canvas width="640" height="110"></canvas>');
-const wctx = wavePill.querySelector('canvas').getContext('2d');
-const wgrad = wctx.createLinearGradient(0, 0, 640, 0); wgrad.addColorStop(0, '#22D3EE'); wgrad.addColorStop(0.5, '#A78BFA'); wgrad.addColorStop(1, '#F472B6');
-function renderWave(t) {
-  tf(wavePill, 0, (1 - E.out(P(t, 0.0, 0.6))) * 60, 1, 0, P(t, 0.0, 0.4));
-  wctx.clearRect(0, 0, 640, 110); wctx.fillStyle = wgrad;
-  const N = 48;
-  for (let k = 0; k < N; k++) {
-    const d = Math.abs(k - (N - 1) / 2) / ((N - 1) / 2);          // 0 centre .. 1 edge
-    const e = envAt(t - d * 0.45);                                  // ripple outward from the centre
-    const wob = 0.55 + 0.45 * Math.sin(t * 9 + k * 1.7) * Math.sin(t * 5.3 + k * 0.6);
-    const h = 6 + 92 * Math.pow(e, 0.8) * wob * (1 - 0.55 * d) + 3 * Math.sin(t * 2 + k);
-    const x = 14 + k * (612 / N);
-    wctx.globalAlpha = 0.55 + 0.45 * (1 - d);
-    const bh = Math.max(6, h), r = 4;
-    wctx.beginPath(); wctx.roundRect(x, 55 - bh / 2, 8, bh, r); wctx.fill();
-  }
-  wctx.globalAlpha = 1;
+// ---------------------------------------------------------------- HAND-DRAWN MARKER DOODLES
+const SVGNS = 'http://www.w3.org/2000/svg';
+const dsvg = document.createElementNS(SVGNS, 'svg'); dsvg.setAttribute('width', 1080); dsvg.setAttribute('height', 1920);
+dsvg.style.cssText = 'position:absolute;left:0;top:0;overflow:visible;pointer-events:none'; world.appendChild(dsvg);
+const pts2d = p => 'M' + p.map(q => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join(' L');
+function roughCircle(cx, cy, rx, ry, seed) {
+  const R = rng(seed), a0 = -2.3 + R() * 0.6, turns = 1.1 + R() * 0.08, N = 72, p = [];
+  for (let k = 0; k <= N; k++) { const u = k / N, a = a0 + turns * 2 * Math.PI * u, j = 1 + (R() - 0.5) * 0.035 + 0.05 * Math.sin(u * 7 + seed) + 0.06 * u;
+    p.push([cx + Math.cos(a) * rx * j, cy + Math.sin(a) * ry * j]); }
+  return pts2d(p);
+}
+function roughLine(x1, y1, x2, y2, seed, bow = 0) {
+  const R = rng(seed), N = 30, p = [], nx = -(y2 - y1), ny = x2 - x1, L = Math.hypot(nx, ny) || 1;
+  for (let k = 0; k <= N; k++) { const u = k / N, b = bow * Math.sin(Math.PI * u) + (R() - 0.5) * 2.5;
+    p.push([x1 + (x2 - x1) * u + nx / L * b, y1 + (y2 - y1) * u + ny / L * b]); }
+  return { d: pts2d(p), end: p[N], prev: p[N - 3] };
+}
+function roughArrow(x1, y1, x2, y2, seed, bow) {
+  const l = roughLine(x1, y1, x2, y2, seed, bow), ang = Math.atan2(l.end[1] - l.prev[1], l.end[0] - l.prev[0]), h = 34;
+  const hd = [-0.5, 0.5].map(s => `M${(l.end[0] - Math.cos(ang + s) * h).toFixed(1)},${(l.end[1] - Math.sin(ang + s) * h).toFixed(1)} L${l.end[0].toFixed(1)},${l.end[1].toFixed(1)}`).join(' ');
+  return l.d + ' ' + hd;
+}
+const DOODLES = [
+  { d: roughArrow(858, 905, 800, 425, 3, -70), col: '#FFE14D', a: V[20] + 0.75, b: S.delete - 0.12 },          // Address List -> blocks
+  { d: roughCircle(594, 371, 300, 62, 7), col: '#FFE14D', a: W[53] - 0.05, b: S.recover + 0.25 },           // "Data అక్కడే ఉంటుంది"
+  { d: roughCircle(548, 1047, 142, 54, 11), col: '#FFE14D', a: T.rec + 0.12, b: S.ssd - 0.15 },             // Recovered!
+  { d: roughLine(250, 1080, 830, 1074, 5, 6).d, col: '#FF5A6E', a: W[78] + 0.05, b: T.ssdOut },               // దాదాపు అసాధ్యం
+  { d: roughLine(492, 884, 905, 878, 9, -5).d, col: '#FF5A6E', a: W[88] + 0.05, b: T.cloudOut },              // Auto-Delete warning
+  { d: roughArrow(118, 905, 222, 700, 13, 40), col: '#FFE14D', a: T.follow + 0.3, b: T.ftap + 0.7 },         // Follow
+].map((o, k) => {
+  const g = document.createElementNS(SVGNS, 'g'); dsvg.appendChild(g);
+  const mkp = (w, op, dx) => { const p = document.createElementNS(SVGNS, 'path'); p.setAttribute('d', o.d); p.setAttribute('fill', 'none');
+    p.setAttribute('stroke', o.col); p.setAttribute('stroke-width', w); p.setAttribute('stroke-linecap', 'round'); p.setAttribute('stroke-linejoin', 'round');
+    p.setAttribute('opacity', op); p.setAttribute('pathLength', '1'); p.setAttribute('stroke-dasharray', '1 1'); p.setAttribute('transform', `translate(${dx} ${-dx})`); g.appendChild(p); return p; };
+  sfx(o.a, 'scribble', 0.5);
+  return Object.assign(o, { g, paths: [mkp(10, 0.95, 0), mkp(4, 0.55, 2.2)] });
+});
+function renderDoodles(t) {
+  DOODLES.forEach(o => {
+    const u = E.out(P(t, o.a, 0.42)), out = P(t, o.b, 0.22);
+    o.g.style.opacity = (t < o.a || out >= 1) ? 0 : 1 - out;
+    o.paths.forEach(p => p.setAttribute('stroke-dashoffset', (1 - u).toFixed(4)));
+  });
 }
 
 // ---------------------------------------------------------------- frame
-const prog = $('#progress i');
+const PUNCH = [[W[52], 0.05], [W[59], 0.035], [W[78], 0.05], [W[86], 0.035], [W[108], 0.04], [W[113], 0.04]];
 const SHAKES = [[V[8] - 0.02, 22], [T.freeTag, 6], [T.imp, 7]];
 world.style.transformOrigin = '540px 250px';
 window.render = function (t) {
   renderBg(t);
   let sx = 0, sy = 0; SHAKES.forEach(([a, amp]) => { const d = t - a; if (d > 0 && d < 0.45) { const k = amp * Math.exp(-d * 9); sx += Math.sin(d * 95) * k; sy += Math.cos(d * 77) * k; } });
-  const zoom = 1.04 + 0.014 * Math.sin(t * 0.33) + 0.008 * Math.sin(t * 0.71 + 1);
-  tf(world, sx + Math.sin(t * 0.27) * 4, sy + 34 + Math.cos(t * 0.21) * 5, zoom, 0, 1);
+  // handheld feel: layered slow wobble + editor punch-ins on key words
+  let zoom = 1.04 + 0.01 * Math.sin(t * 0.31);
+  PUNCH.forEach(([a, amt]) => { const d = t - a; if (d > 0) zoom += amt * (d < 0.08 ? d / 0.08 : Math.exp(-(d - 0.08) * 3.2)); });
+  const hx = 3.2 * Math.sin(t * 0.83 + 0.4) + 1.6 * Math.sin(t * 2.11 + 1.3) + 0.7 * Math.sin(t * 4.7 + 2.2);
+  const hy = 2.6 * Math.sin(t * 0.67 + 2.0) + 1.4 * Math.sin(t * 1.93 + 0.2) + 0.6 * Math.sin(t * 5.3 + 1.1);
+  const hr = 0.22 * Math.sin(t * 0.59 + 0.7) + 0.1 * Math.sin(t * 1.7);
+  tf(world, sx + hx, sy + 34 + hy, zoom, hr, 1);
   flash.style.opacity = (0.32 * Math.max(pulse(t, T.no - 0.02, 0.16), 0) + 0.15 * pulse(t, T.rec, 0.2)).toFixed(3);
   renderChips(t);
   renderHook(t); renderDisk(t); renderSSD(t); renderCloud(t); renderTips(t); renderOutro(t);
   if (!(t > S.outro)) { /* hook cursor handled in renderHook */ }
+  renderDoodles(t);
   renderCaps(t);
-  renderWave(t);
-  prog.style.transform = `scaleX(${(t / END).toFixed(4)})`;
 };
 window.setup = async function () {
   await Promise.all(['800 40px "Baloo Tammudu 2"', '600 40px "Baloo Tammudu 2"', '700 40px "Poppins"', '800 40px "Poppins"', '600 40px "Poppins"'].map(f => document.fonts.load(f, 'అఆ abc 0123')));

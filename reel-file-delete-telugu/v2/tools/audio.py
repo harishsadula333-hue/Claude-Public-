@@ -4,7 +4,7 @@ Output : build/mix.wav (48 kHz stereo)"""
 import json, os
 import numpy as np
 import scipy.io.wavfile as wf
-from scipy.signal import butter, sosfilt, fftconvolve
+from scipy.signal import butter, sosfilt, fftconvolve, lfilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 B = os.path.join(HERE, "..", "build")
@@ -224,16 +224,18 @@ def music(dur, sections):
         for s in range(16):
             ts = t0 + s * s16
             if ts >= dur: break
+            ts = ts + (s16 * 0.11 if s % 2 == 1 else 0.0) + float(np.clip(rng.normal(0, 0.0045), -0.012, 0.012))  # swing + human timing
+            vel = float(rng.uniform(0.84, 1.0))
             # drums
-            if s % 4 == 0 and active("kick", ts): place(drums, K * 0.9, ts); kick_times.append(ts)
-            if s in (4, 12) and active("clap", ts): place(drums, C * 0.55, ts)
-            if s % 4 == 2 and active("hat", ts): place(drums, (HO if s == 14 else H) * 0.22, ts)
-            if s % 2 == 1 and active("hat2", ts): place(drums, H * 0.1, ts)
+            if s % 4 == 0 and active("kick", ts): place(drums, K * 0.9 * (0.94 + 0.06 * vel), ts); kick_times.append(ts)
+            if s in (4, 12) and active("clap", ts): place(drums, C * 0.55 * vel, ts)
+            if s % 4 == 2 and active("hat", ts): place(drums, (HO if s == 14 else H) * 0.22 * vel, ts)
+            if s % 2 == 1 and active("hat2", ts): place(drums, H * 0.1 * vel * vel, ts)
             # bass: 8ths with octave pops
             if s % 2 == 0 and active("bass", ts):
                 m = root + (12 if s in (6, 14) else 0); tt = T(s16 * 2 * 0.95); f = mtof(m)
                 seg = (np.sin(2 * np.pi * f / 2 * tt) * 0.9 + lp(additive(f, tt, 8, 1.0), 900) * 0.45) * np.exp(-tt * 3.5)
-                place(bass, fade(seg, 0.003, 0.02) * 0.5, ts)
+                place(bass, fade(seg, 0.003, 0.02) * 0.5 * (0.9 + 0.1 * vel), ts)
             # pluck arp (16ths)
             if active("arp", ts):
                 pat = [0, 2, 1, 3, 2, 0, 3, 1]
@@ -241,7 +243,7 @@ def music(dur, sections):
                 tt = T(0.32); f = mtof(m)
                 pl = np.zeros_like(tt)
                 for k in range(1, 7): pl += np.sin(2 * np.pi * f * k * tt) / k * np.exp(-tt * (9 + k * 4))
-                place(arp, fade(pl, 0.002, 0.02) * (0.13 if s % 4 == 0 else 0.09), ts)
+                place(arp, fade(pl, 0.002, 0.02) * (0.13 if s % 4 == 0 else 0.09) * vel, ts)
     for a, b in sections.get("crash", []): place(drums, CR, a)
     # sidechain pump from kicks
     pump = np.ones(n)
@@ -313,6 +315,12 @@ def main():
         tt = T(1.6); place(end_hit, additive(mtof(m), tt, 8, 1.2) * np.exp(-tt * 2.2) * 0.12, dur - 1.45)
     mL = (mL * gate + end_hit); mR = (mR * gate + end_hit)
     pk = max(np.abs(mL).max(), np.abs(mR).max()); mL /= pk; mR /= pk
+    crackle = np.zeros(n); r2 = np.random.default_rng(7)
+    for ti in np.cumsum(r2.exponential(1 / 22, int(dur * 30))):
+        if ti >= dur - 0.01: break
+        i = int(ti * SR); m = 60; crackle[i:i + m] += r2.uniform(-1, 1) * r2.uniform(0.2, 1) * np.exp(-np.arange(m) / 8)
+    crackle = bp(crackle, 900, 7000) * 0.05 + lp(hp(noise(dur)[:n], 300), 7000) * 0.006
+    mL = lp(np.tanh(1.5 * (mL + crackle)) / np.tanh(1.5), 10500); mR = lp(np.tanh(1.5 * (mR + crackle)) / np.tanh(1.5), 10500)
     # duck under voice
     env = np.sqrt(np.convolve(voice ** 2, np.ones(2400) / 2400, mode="same"))
     env = env / env.max()
@@ -328,7 +336,11 @@ def main():
     fx *= 0.30
     fxr = reverb(fx, 1.2, 4.5, 3) * 0.35
     mus_rev_L = reverb(mL, 1.8, 2.8, 5) * 0.25; mus_rev_R = reverb(mR, 1.8, 2.8, 6) * 0.25
-    voice_rev = reverb(voice, 0.6, 9, 7) * 0.06
+    voice_rev = reverb(voice, 0.35, 15, 7) * 0.09
+    w = np.random.default_rng(11).standard_normal(n)
+    pink = lfilter([0.049922035, -0.095993537, 0.050612699, -0.004408786], [1, -2.494956002, 2.017265875, -0.522189400], w)
+    room = lp(hp(pink, 120), 6500); room = room / np.sqrt(np.mean(room ** 2)) * 10 ** (-56 / 20)
+    voice_rev = voice_rev + room
     L = voice + voice_rev + mL + mus_rev_L + fx + fxr
     R = voice + voice_rev + mR + mus_rev_R + fx + fxr * 0.9
     np.save(os.path.join(B, "stem_voice.npy"), (voice + voice_rev).astype(np.float32))
