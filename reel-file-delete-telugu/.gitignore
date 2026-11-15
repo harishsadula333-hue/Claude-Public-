@@ -1,3 +1,5 @@
 build/
 node_modules/
 __pycache__/
+v2/assets/
+v2/tools/commons.py

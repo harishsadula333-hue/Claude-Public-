@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="te">
+<head>
+<meta charset="utf-8">
+<title>File Delete Reel v2</title>
+<link rel="stylesheet" href="../../src/fonts/fonts.css">
+<style>
+  :root {
+    --blue: #38BDF8; --purple: #A78BFA; --green: #34D399; --yellow: #FDE047;
+    --red: #F43F5E; --orange: #FB923C; --cyan: #22D3EE; --pink: #F472B6;
+    --ink: #0A0F2C; --card: rgba(17, 24, 64, 0.88); --line: rgba(148, 163, 255, 0.22);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1080px; height: 1920px; overflow: hidden; background: #060A1E; }
+  body { font-family: 'Baloo Tammudu 2', 'Noto Sans Telugu', 'Poppins', sans-serif; color: #F8FAFC; }
+  #stage { position: absolute; inset: 0; overflow: hidden;
+    background: radial-gradient(120% 80% at 50% 25%, #1B2766 0%, #0C1238 48%, #050818 100%); }
+  .abs { position: absolute; left: 0; top: 0; transform-origin: 50% 50%; }
+  .layer { position: absolute; inset: 0; }
+  .blob { position: absolute; width: 900px; height: 900px; border-radius: 50%; }
+  .bit { position: absolute; font-family: 'Poppins', monospace; font-weight: 800; color: #7DD3FC; }
+  .dots { position: absolute; inset: -80px 0 0 0;
+    background-image: radial-gradient(rgba(148,163,255,0.16) 2px, transparent 2.5px); background-size: 54px 54px; }
+  .vignette { position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(130% 90% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%); }
+
+  /* top progress + header */
+  #progress { position: absolute; left: 0; top: 0; height: 9px; width: 1080px; background: rgba(255,255,255,0.08); }
+  #progress i { display: block; height: 100%; width: 100%; transform-origin: 0 50%;
+    background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink)); }
+  .chip { position: absolute; left: 540px; top: 150px; height: 92px; padding: 0 38px 0 18px; display: flex; align-items: center; gap: 18px;
+    white-space: nowrap; border-radius: 60px; background: linear-gradient(135deg, rgba(34,211,238,0.22), rgba(167,139,250,0.22));
+    border: 3px solid rgba(125, 211, 252, 0.55); box-shadow: 0 10px 40px rgba(34,211,238,0.25), inset 0 0 30px rgba(255,255,255,0.05);
+    font-size: 48px; font-weight: 800; transform-origin: 50% 50%; }
+  .chip .n { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; font-family: 'Poppins'; font-size: 36px;
+    background: linear-gradient(135deg, var(--yellow), var(--orange)); color: #1a1200; }
+  .chip .t { line-height: 1; padding-top: 10px; }
+
+  /* generic cards */
+  .card { position: absolute; border-radius: 34px; background: var(--card); border: 3px solid var(--line);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.08); }
+  .tag { position: absolute; white-space: nowrap; padding: 12px 26px 4px; border-radius: 22px; font-weight: 800; font-size: 40px; line-height: 1.25;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+
+  /* hook */
+  .fcard { position: absolute; width: 260px; height: 310px; border-radius: 34px; background: linear-gradient(160deg, #1F2A6E, #121A4A);
+    border: 3px solid rgba(255,255,255,0.14); box-shadow: 0 24px 50px rgba(0,0,0,0.5); display: flex; flex-direction: column; align-items: center; padding-top: 26px; }
+  .fcard svg { width: 190px; height: 190px; }
+  .fcard .nm { font-family: 'Poppins'; font-weight: 800; font-size: 34px; margin-top: 8px; }
+  .fcard .sz { font-family: 'Poppins'; font-weight: 600; font-size: 22px; opacity: 0.55; margin-top: -4px; }
+  .dialog { position: absolute; left: 140px; top: 820px; width: 800px; height: 290px; border-radius: 36px; background: #F8FAFC; color: #0F172A;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6); padding: 30px 40px; }
+  .dialog .q { font-size: 46px; font-weight: 800; display: flex; align-items: center; gap: 18px; }
+  .dialog .btns { position: absolute; right: 36px; bottom: 26px; display: flex; gap: 22px; }
+  .btn { padding: 14px 40px 6px; border-radius: 20px; font-size: 38px; font-weight: 800; font-family: 'Poppins'; }
+  .btn.cancel { background: #E2E8F0; color: #334155; }
+  .btn.del { background: #EF4444; color: white; box-shadow: 0 10px 24px rgba(239,68,68,0.45); }
+  .qmark { position: absolute; left: 340px; top: 360px; width: 400px; height: 520px; display: grid; place-items: center;
+    font-family: 'Poppins'; font-weight: 800; font-size: 460px; color: var(--yellow); text-shadow: 0 0 60px rgba(253,224,71,0.5), 0 16px 0 #8a6d00; }
+  .stamp { position: absolute; left: 190px; top: 450px; width: 700px; height: 330px; display: grid; place-items: center; border-radius: 40px;
+    border: 16px solid var(--red); color: var(--red); font-size: 230px; font-weight: 800; line-height: 1; padding-top: 50px;
+    background: rgba(244,63,94,0.1); text-shadow: 0 0 40px rgba(244,63,94,0.6); box-shadow: 0 0 80px rgba(244,63,94,0.45); }
+  .ghost { position: absolute; width: 260px; height: 310px; border-radius: 34px; border: 4px dashed rgba(148,163,255,0.4);
+    font-family: 'Poppins'; font-weight: 800; font-size: 30px; line-height: 1.35; color: rgba(125,211,252,0.65); padding: 26px; overflow: hidden; word-break: break-all; }
+
+  /* disk */
+  .disk { left: 70px; top: 255px; width: 940px; height: 510px; }
+  .disk .lbl { position: absolute; left: 40px; top: 20px; font-family: 'Poppins'; font-weight: 800; font-size: 34px; letter-spacing: 4px; display: flex; gap: 14px; align-items: center; }
+  .disk .sub { position: absolute; right: 40px; top: 28px; font-family: 'Poppins'; font-weight: 600; font-size: 22px; opacity: 0.6; }
+  .blk { position: absolute; width: 98px; height: 72px; border-radius: 14px; background: rgba(255,255,255,0.05); border: 3px solid rgba(255,255,255,0.12);
+    font-family: 'Poppins'; font-weight: 600; font-size: 15px; line-height: 1.1; color: rgba(255,255,255,0.22); padding: 7px 8px; overflow: hidden; }
+  .blk .no { position: absolute; right: 8px; bottom: 4px; font-size: 13px; opacity: 0.8; }
+  .blk .bits { letter-spacing: 1px; }
+  .index { width: 640px; height: 320px; padding: 26px 30px; }
+  .index .ttl { font-size: 38px; font-weight: 800; display: flex; align-items: center; gap: 14px; }
+  .row { position: absolute; left: 26px; width: 588px; height: 66px; border-radius: 18px; background: rgba(255,255,255,0.06); display: flex; align-items: center;
+    padding: 0 20px; gap: 16px; font-family: 'Poppins'; font-weight: 700; font-size: 30px; white-space: nowrap; }
+  .row .dot { width: 22px; height: 22px; border-radius: 6px; flex: none; }
+  .row .ar { opacity: 0.6; }
+  .row .bk { margin-left: auto; color: #CBD5E1; }
+  .strike { position: absolute; left: 14px; top: 31px; height: 6px; width: 560px; background: var(--red); border-radius: 3px; transform-origin: 0 50%; }
+  .bin { left: 745px; top: 790px; width: 265px; height: 320px; }
+  .bin svg { position: absolute; left: 32px; top: 22px; width: 200px; height: 230px; overflow: visible; }
+  .bin .cap { position: absolute; left: 0; right: 0; bottom: 18px; text-align: center; font-family: 'Poppins'; font-weight: 800; font-size: 30px; }
+  .keys { position: absolute; left: 140px; top: 400px; width: 800px; height: 200px; display: flex; align-items: center; justify-content: center; gap: 30px; }
+  .key { height: 150px; padding: 0 44px; border-radius: 28px; display: grid; place-items: center; font-family: 'Poppins'; font-weight: 800; font-size: 58px;
+    background: linear-gradient(180deg, #F1F5F9, #CBD5E1); color: #0F172A; box-shadow: 0 14px 0 #64748B, 0 30px 50px rgba(0,0,0,0.5); }
+  .plus { font-family: 'Poppins'; font-weight: 800; font-size: 80px; color: #fff; }
+  .lens { position: absolute; left: 0; top: 0; width: 200px; height: 200px; }
+  .window { left: 70px; top: 790px; width: 640px; height: 320px; overflow: hidden; }
+  .window .bar { height: 62px; background: rgba(255,255,255,0.08); display: flex; align-items: center; gap: 12px; padding: 0 24px; font-family: 'Poppins'; font-weight: 700; font-size: 26px; }
+  .window .bar i { width: 18px; height: 18px; border-radius: 50%; display: inline-block; }
+  .pbar { position: absolute; left: 32px; top: 160px; width: 576px; height: 34px; border-radius: 17px; background: rgba(255,255,255,0.1); overflow: hidden; }
+  .pbar i { display: block; height: 100%; width: 100%; transform-origin: 0 50%; background: linear-gradient(90deg, var(--cyan), var(--green)); }
+  .scanline { position: absolute; left: 100px; width: 880px; height: 10px; border-radius: 5px; background: var(--cyan); box-shadow: 0 0 30px 10px rgba(34,211,238,0.55); }
+  .newfile { left: 735px; top: 800px; width: 270px; height: 305px; border-radius: 30px; background: linear-gradient(160deg, #7C2D12, #431407); border: 3px solid var(--orange);
+    display: flex; flex-direction: column; align-items: center; padding-top: 20px; box-shadow: 0 0 50px rgba(251,146,60,0.35); }
+
+  /* ssd + cloud */
+  .panel { width: 455px; height: 495px; }
+  .panel h3 { position: absolute; left: 0; right: 0; top: 24px; text-align: center; font-family: 'Poppins'; font-weight: 800; font-size: 46px; }
+  .mini { position: absolute; width: 58px; height: 58px; border-radius: 12px; border: 3px solid rgba(255,255,255,0.2);
+    font-family: 'Poppins'; font-weight: 800; font-size: 26px; display: grid; place-items: center; }
+  .ptag { position: absolute; left: 16px; right: 16px; top: 332px; text-align: center; }
+  .ptag b { display: block; font-size: 42px; line-height: 1.2; font-family: 'Poppins'; font-weight: 800; }
+  .ptag span { display: block; font-size: 29px; font-weight: 600; opacity: 0.88; line-height: 1.35; }
+  .meter { left: 70px; top: 800px; width: 940px; height: 305px; padding: 30px 40px; }
+  .meter .lb { font-family: 'Poppins'; font-weight: 800; font-size: 38px; display: flex; justify-content: space-between; }
+  .meter .track { position: absolute; left: 40px; top: 110px; width: 860px; height: 64px; border-radius: 32px; background: rgba(255,255,255,0.08); overflow: hidden; }
+  .meter .track i { display: block; height: 100%; width: 100%; transform-origin: 0 50%; border-radius: 32px; }
+  .meter .big { position: absolute; left: 0; right: 0; top: 186px; text-align: center; font-size: 76px; font-weight: 800; color: var(--red); }
+  .cloudc { left: 70px; top: 265px; width: 940px; height: 380px; }
+  .countc { left: 70px; top: 675px; width: 940px; height: 435px; }
+  .ring { position: absolute; left: 40px; top: 42px; width: 350px; height: 350px; }
+  .ring .num { position: absolute; inset: 0; display: grid; place-items: center; font-family: 'Poppins'; font-weight: 800; font-size: 130px; padding-bottom: 40px; }
+  .ring .unit { position: absolute; left: 0; right: 0; top: 220px; text-align: center; font-size: 46px; font-weight: 800; color: var(--yellow); }
+  .ctext { position: absolute; left: 420px; top: 60px; width: 490px; }
+  .ctext div { font-weight: 800; line-height: 1.35; }
+
+  /* tips */
+  .tip { left: 70px; width: 940px; height: 262px; padding: 24px 40px 0 230px; }
+  .tip .ic { position: absolute; left: 34px; top: 38px; width: 170px; height: 170px; border-radius: 40px; display: grid; place-items: center; }
+  .tip .ic svg { width: 130px; height: 130px; overflow: visible; }
+  .tip .nb { position: absolute; left: 14px; top: 14px; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center;
+    font-family: 'Poppins'; font-weight: 800; font-size: 32px; background: #fff; color: #111; box-shadow: 0 6px 16px rgba(0,0,0,0.4); }
+  .tip h4 { font-size: 50px; font-weight: 800; line-height: 1.3; }
+  .tip p { font-size: 37px; font-weight: 600; line-height: 1.35; opacity: 0.92; }
+  .tip .ck { position: absolute; right: -16px; top: -18px; box-shadow: 0 8px 20px rgba(0,0,0,.45); width: 74px; height: 74px; border-radius: 50%; background: var(--green); display: grid; place-items: center; }
+
+  /* outro */
+  .otitle { left: 0; top: 330px; width: 1080px; text-align: center; font-size: 76px; font-weight: 800; line-height: 1.3; }
+  .follow { left: 200px; top: 560px; width: 560px; height: 170px; border-radius: 90px; display: flex; align-items: center; justify-content: center; gap: 26px;
+    font-family: 'Poppins'; font-weight: 800; font-size: 76px; background: linear-gradient(135deg, #F43F5E, #F97316); box-shadow: 0 24px 70px rgba(244,63,94,0.5); }
+  .social { left: 90px; top: 820px; width: 900px; height: 230px; display: flex; justify-content: space-around; }
+  .social .s { width: 250px; height: 230px; border-radius: 34px; background: var(--card); border: 3px solid var(--line); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+  .social .s span { font-size: 90px; line-height: 1; }
+  .social .s b { font-family: 'Poppins'; font-weight: 800; font-size: 38px; }
+
+  /* captions */
+  #caps { position: absolute; left: 0; top: 1290px; width: 1080px; height: 210px; }
+  .wavepill { position: absolute; left: 200px; top: 1478px; width: 680px; height: 130px; padding: 10px 20px; border-radius: 65px;
+    background: rgba(8, 12, 36, 0.55); border: 2px solid rgba(148,163,255,0.18); box-shadow: 0 16px 50px rgba(0,0,0,0.35), inset 0 0 40px rgba(34,211,238,0.06); }
+  .wavepill canvas { width: 640px; height: 110px; display: block; }
+  .cap { position: absolute; left: 50%; top: 0; transform-origin: 50% 50%; white-space: nowrap; text-align: center;
+    padding: 22px 40px 6px; border-radius: 34px; background: rgba(5, 8, 26, 0.72); border: 3px solid rgba(255,255,255,0.10);
+    font-size: 74px; font-weight: 800; line-height: 1.35; box-shadow: 0 16px 40px rgba(0,0,0,0.45); }
+  .cap span { display: inline-block; margin: 0 15px; transform-origin: 50% 70%;
+    text-shadow: 0 5px 0 rgba(0,0,0,0.85), 0 0 18px rgba(0,0,0,0.6); }
+
+  /* avatar */
+  #avatar { position: absolute; left: 0; top: 1290px; width: 430px; height: 690px; transform-origin: 50% 100%; }
+  #avatar svg { width: 430px; height: 690px; overflow: visible; }
+  .cursor { position: absolute; left: 0; top: 0; width: 110px; height: 130px; }
+  .confetti { position: absolute; width: 18px; height: 30px; border-radius: 4px; }
+  .particle { position: absolute; width: 26px; height: 26px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div class="layer" id="bg"></div>
+  <div class="layer" id="world"></div>
+  <div id="caps"></div>
+  <div id="progress"><i></i></div>
+  <div class="vignette"></div>
+</div>
+<script src="../build/timeline.js"></script>
+<script src="anim.js"></script>
+</body>
+</html>

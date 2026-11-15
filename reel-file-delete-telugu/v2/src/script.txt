@@ -1,0 +1,15 @@
+# Natural spoken script for Gemini TTS. Token = spoken|shown (underscore in shown = space). Plain token = same both.
+#hook
+మీ ఫోటోలు, వీడియోలు, పాటలు, Permanent గా Delete చేసేస్తే, నిజంగా పోయినట్టేనా? లేదు!
+#storage
+ప్రతి File, Storage లో, సున్నాలు,|0, ఒకట్ల|1_ల రూపంలో, చిన్న చిన్న Blocks లో Save అవుతుంది. అది ఎక్కడుందో, ఒక Address List చెబుతుంది.
+#delete
+Delete చేస్తే, ముందు Recycle Bin కి వెళ్తుంది. Permanent Delete చేస్తే, System ఆ Address ని మాత్రమే చెరిపేసి, ఆ చోటుని ఖాళీగా Mark చేస్తుంది. కానీ Data, అక్కడే ఉంటుంది!
+#recover
+కొత్త Files ఆ చోటుని Overwrite చేసేవరకు, Recovery Software తో తిరిగి తెచ్చుకోవచ్చు.
+#ssd
+కానీ SSD లు, కొత్త Phones లో, TRIM, Encryption వల్ల, తిరిగి తేవడం దాదాపు అసాధ్యం. Gallery, Cloud Trash లో మాత్రం, ముప్పై|30 నుంచి అరవై|60 రోజులు ఉంటాయి.
+#tips
+పొరపాటున Delete అయితే, వెంటనే Device వాడటం ఆపి, Recover చేయండి. పూర్తిగా చెరపాలంటే, Shredder Tools వాడండి. Phone అమ్మే ముందు, Factory Reset తప్పనిసరి!
+#outro
+మరిన్ని Tech Facts కోసం, Follow చేయండి!
