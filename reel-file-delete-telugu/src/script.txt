@@ -1,0 +1,16 @@
+# Format: one scene per "#" header. Token = spoken|shown (underscore in shown = space). Plain token = same both.
+# A single trailing comma is shown on screen but not spoken (keeps pace tight); ",," = spoken pause.
+#hook
+ఫోటోలు, వీడియోలు, పాటలు పర్మనెంట్‌గా|Permanent_గా డిలీట్|Delete చేస్తే,, నిజంగా పోతాయా? లేదు!
+#storage
+ప్రతి ఫైల్,|File, స్టోరేజ్‌లో|Storage_లో సున్నాలు,|0, ఒకట్ల|1_ల రూపంలో బ్లాక్స్‌లో|Blocks_లో ఉంటుంది. అది ఎక్కడుందో, ఒక అడ్రస్|Address లిస్ట్|List చెప్తుంది.
+#delete
+డిలీట్|Delete చేస్తే, ముందు రీసైకిల్|Recycle బిన్‌కి|Bin_కి వెళ్తుంది. పర్మనెంట్|Permanent డిలీట్|Delete చేస్తే,, సిస్టమ్|System అడ్రస్‌ని|Address_ని మాత్రమే చెరిపేసి, ఆ చోటుని ఖాళీగా మార్క్|Mark చేస్తుంది. కానీ డేటా|Data అక్కడే ఉంటుంది!
+#recover
+కొత్త ఫైల్స్|Files ఆ చోటుని ఓవర్‌రైట్|Overwrite చేసే వరకు,, రికవరీ|Recovery సాఫ్ట్‌వేర్‌తో|Software_తో తిరిగి తెచ్చుకోవచ్చు.
+#ssd
+కానీ ఎస్‌ఎస్‌డీలు,|SSD_లు, కొత్త ఫోన్లలో,|Phones_లో, ట్రిమ్,,|TRIM, ఎన్‌క్రిప్షన్|Encryption వల్ల, తిరిగి తేవడం దాదాపు అసాధ్యం. గ్యాలరీ,|Gallery, క్లౌడ్|Cloud ట్రాష్‌లో|Trash_లో మాత్రం ముప్పై|30 నుంచి అరవై|60 రోజులు ఉంటాయి.
+#tips
+పొరపాటున డిలీట్|Delete అయితే,, వెంటనే డివైస్|Device వాడటం ఆపి, రికవర్|Recover చేయండి. పూర్తిగా చెరపాలంటే, ష్రెడర్|Shredder టూల్స్.|Tools. ఫోన్|Phone అమ్మేముందు, ఫ్యాక్టరీ|Factory రీసెట్|Reset చేయండి!
+#outro
+మరిన్ని టెక్|Tech ఫ్యాక్ట్స్|Facts కోసం ఫాలో|Follow చేయండి!
