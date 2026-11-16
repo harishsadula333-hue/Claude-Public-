@@ -159,8 +159,7 @@ Variance = E(X²) − [E(X)]² = 17/3 − (7/3)² = 17/3 − 49/9 = (51 − 49)/
 2: { a: `Population size N = 4, sample size n = 2. Population: 2, 3, 4, 5<br>
 <b>(a) With replacement:</b> No. of samples of size 2 = Nⁿ = 4² = 16<br>(2,2) (2,3) (2,4) (2,5) (3,2) (3,3) (3,4) (3,5) (4,2) (4,3) (4,4) (4,5) (5,2) (5,3) (5,4) (5,5)<br>
 <b>Variance of samples:</b><br>(2,2) 1st sample → ½[(2−2)² + (2−2)²] = 0<br>(2,3) 2nd sample → ½[(2−2.5)² + (3−2.5)²] = 0.25<br>(2,4) 3rd sample → ½[(2−3)² + (4−3)²] = 1<br>(2,5) 4th sample → ½[(2−3.5)² + (5−3.5)²] = 2.25<br>⋮<br>(5,5) 16th sample → ½[(5−5)² + (5−5)²] = 0<br>
-Variance of 16 samples are:` + T([['0','0.25','1','2.25'],['0.25','0','0.25','1'],['1','0.25','0','0.25'],['2.25','1','0.25','0']]) + T([['s²','0','0.25','1','2.25'],['f','4','6','4','2']]) +
-`Mean of variance of samples = 1/16 [0 + 0.25 + 1 + 2.25 + 0.25 + 0 + 0.25 + 1 + 1 + 0.25 + 0 + 0.25 + 2.25 + 1 + 0.25 + 0] = 10/16 = <b>0.625</b><br>
+Variance of 16 samples are: [0, 0.25, 1, 2.25 | 0.25, 0, 0.25, 1 | 1, 0.25, 0, 0.25 | 2.25, 1, 0.25, 0];  s²: 0, 0.25, 1, 2.25 → f: 4, 6, 4, 2<br>Mean of variance of samples = 1/16 [0 + 0.25 + 1 + 2.25 + 0.25 + 0 + 0.25 + 1 + 1 + 0.25 + 0 + 0.25 + 2.25 + 1 + 0.25 + 0] = 10/16 = <b>0.625</b><br>
 Variance of standard deviation of variance: σ² = 1/16 [4(0−0.625)² + 6(0.25−0.625)² + 4(1−0.625)² + 2(2.25−0.625)²]<br>σ² = 0.5156 ⇒ <b>σ = 0.7180 = 0.72 (approx)</b>`,
      b: `<b>(b) Without replacement:</b> No. of samples of size 2 = ᴺCₙ = ⁴C₂ = 6<br>Samples are (2,3) (2,4) (2,5) (3,4) (3,5) (4,5)<br>
 <b>Variances of samples:</b><br>1st sample → ½[(2−2.5)² + (3−2.5)²] = 0.25<br>2nd sample → ½[(2−3)² + (4−3)²] = 1<br>3rd sample → ½[(2−3.5)² + (5−3.5)²] = 2.25<br>4th sample → ½[(3−3.5)² + (4−3.5)²] = 0.25<br>5th sample → ½[(3−4)² + (5−4)²] = 1<br>6th sample → ½[(4−4.5)² + (5−4.5)²] = 0.25<br>
@@ -248,9 +247,7 @@ Given n₁ = 100, x̄₁ = 210, s₁ = 10;  n₂ = 150, x̄₂ = 220, s₂ = 12;
 <b>Case I:</b> When the standard deviation σ of population is known. In this case, standard error of mean, S.E.(x̄) = σ/√n, where n = sample size, σ = s.d. of population. ∴ The test statistic is z = (x̄ − μ)/S.E.(x̄) = (x̄ − μ)/(σ/√n).<br>
 <b>Case II:</b> When the standard deviation σ of population is not known. In this case, we take s, the s.d. of sample, to compute the S.E. of mean: S.E.(x̄) = s/√n. Hence the test statistic is z = (x̄ − μ)/S.E.(x̄) = (x̄ − μ)/(s/√n).<br>
 5. Find the critical value z_α of z at the level of significance α from the normal table.<br>6. <b>Decision:</b> (a) If |z| &lt; z_α, we accept the Null Hypothesis H₀. (b) If |z| &gt; z_α, we reject the Null Hypothesis H₀.<br>
-The rejection rule for H₀: x̄ = μ (or μ = μ₀) is given below (Table: Critical values of z):` +
-T([['Level of significance α','1%','5%','10%'],['Critical region for μ≠μ₀','|z|&gt;2.58','|z|&gt;1.96','|z|&gt;1.645'],['Critical region for μ&gt;μ₀','z&gt;2.33','z&gt;1.645','z&gt;1.28'],['Critical region for μ&lt;μ₀','z&lt;−2.33','z&lt;−1.645','z&lt;−1.28']]) +
-`<b>Note:</b> 1. We reject Null Hypothesis H₀ when |z| &gt; 3 without mentioning any level of significance.`,
+The rejection rule for H₀: x̄ = μ (or μ = μ₀) — Table: Critical values of z (Level of significance α = 1% / 5% / 10%):<br>Critical region for μ≠μ₀: |z|&gt;2.58 / |z|&gt;1.96 / |z|&gt;1.645;  for μ&gt;μ₀: z&gt;2.33 / z&gt;1.645 / z&gt;1.28;  for μ&lt;μ₀: z&lt;−2.33 / z&lt;−1.645 / z&lt;−1.28<br><b>Note:</b> 1. We reject Null Hypothesis H₀ when |z| &gt; 3 without mentioning any level of significance.`,
      b: `<b>Solution:</b> Given n = 4, μ = 73.2, x̄ = mean of the sample = 76.7 and σ = S.D. of population = 8.6<br>
 1. <b>Null Hypothesis</b> H₀: μ = 73.2<br>2. <b>Alternative Hypothesis</b> H₁: μ &gt; 73.2 (Right-tailed test)<br>3. <b>Level of significance:</b> α = 99% (or probability is 0.01)<br>
 4. <b>The test statistic is</b> z = (x̄ − μ)/(σ/√n) = (76.7 − 73.2)/(8.6/√4) = 3.5/4.3 = <b>0.814</b><br>

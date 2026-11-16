@@ -8,7 +8,7 @@ const A = SHORT ? require('./short.js').A : require('./answers.js');
 const Qs = SHORT ? require('./short.js').Q : require('./questions.js');
 const BASE = SHORT ? 'MSF_Short_CutSheet' : 'MSF_CutSheet';
 
-const PAGE_W = 210, MARGIN_X = 6, TOP = 7, SAFE = 1.6, MARK = 3, COLS = 5, ROWS = 5, ROW_H = +(process.env.ROW_H || 39);
+const PAGE_W = 210, MARGIN_X = +(process.env.MX || 6), TOP = +(process.env.TOP || 7), SAFE = +(process.env.SAFE || 1.6), MARK = 3, COLS = 5, ROWS = 5, ROW_H = +(process.env.ROW_H || 39);
 const SUFFIX = process.env.SUFFIX || '';
 const COL_W = (PAGE_W - 2 * MARGIN_X) / COLS;            // 39.6 mm
 // Cut lines are a shared grid; content of every cell sits SAFE mm inside the cut lines.
@@ -49,15 +49,24 @@ function page(cols, title) {
     html += `<div class="hl" style="top:${TOP + r * ROW_H}mm;left:${MARGIN_X - MARK}mm;width:${GW + 2 * MARK}mm"></div>`;
   return `<!doctype html><html><head><meta charset="utf-8"><title>${title}</title><style>
 @page{size:210mm 297mm;margin:0}
+@font-face{font-family:RC;font-weight:300;font-style:normal;src:url(fonts/roboto-condensed-latin-300-normal.woff2),url(fonts/roboto-condensed-latin-ext-300-normal.woff2),url(fonts/roboto-condensed-greek-300-normal.woff2)}
+@font-face{font-family:RC;font-weight:400;font-style:normal;src:url(fonts/roboto-condensed-latin-400-normal.woff2)}
+@font-face{font-family:RC;font-weight:700;font-style:normal;src:url(fonts/roboto-condensed-latin-700-normal.woff2),url(fonts/roboto-condensed-greek-700-normal.woff2)}
+@font-face{font-family:RC;font-weight:300;font-style:italic;src:url(fonts/roboto-condensed-latin-300-italic.woff2)}
+@font-face{font-family:RC;font-weight:700;font-style:italic;src:url(fonts/roboto-condensed-latin-700-italic.woff2)}
+@font-face{font-family:RCg;font-weight:300;src:url(fonts/roboto-condensed-greek-300-normal.woff2)}
+@font-face{font-family:RCg;font-weight:700;src:url(fonts/roboto-condensed-greek-700-normal.woff2)}
+
 *{box-sizing:border-box;margin:0;padding:0}
-body{width:210mm;height:297mm;position:relative;font-family:"Liberation Sans",Arial,sans-serif;color:#000}
+body{width:210mm;height:297mm;position:relative;font-family:RC,RCg,"Liberation Sans",Arial,sans-serif;font-weight:300;color:#000}
+b,.tg{font-weight:700}
 .blk{position:absolute}
 .vl,.hl{position:absolute;background:#000}
 .vl{width:0.3pt;margin-left:-0.15pt}
 .hl{height:0.3pt;margin-top:-0.15pt}
 .h{position:absolute;left:0;width:100%;overflow:hidden;padding:0.2mm 0}
 .split2{border-top:0.4pt dashed #555;margin-top:0.4mm;padding-top:0.3mm}
-.c{line-height:1.1;letter-spacing:-0.015em;word-break:break-word}
+.c{line-height:1.06;letter-spacing:0;word-break:break-word}
 .sp{color:#888;font-weight:normal}
 .q{display:inline;font-weight:bold;font-style:italic;background:#e8e8e8}
 .q+b{margin-left:0.3mm}
@@ -98,6 +107,7 @@ async function fit(p) {
     fs.writeFileSync(file, page(cols, `MSF ${name}`));
     const p = await b.newPage();
     await p.goto('file://' + file);
+    await p.evaluate(() => document.fonts.ready);
     report[name] = await fit(p);
     rects[name] = await p.evaluate(() => Object.fromEntries([...document.querySelectorAll('.blk')].map(e => {
       const r = e.getBoundingClientRect(); return [e.dataset.q, [r.left, r.top, r.width, r.height]]; })));
