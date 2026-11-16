@@ -49,7 +49,7 @@ Now, we have to find m &amp; n such that m(1819) + n(3587) = 17. Start with the 
 <b>Case (i):</b> 'a' is multiple of 'b': a = bq (r = 0) [perfect multiple &amp; remainder is zero]<br>
 <b>Case (ii):</b> 'a' is not multiple of 'b', then 'a' lies b/w 2 consecutive nos. bq, b(q+1):<br>bq &lt; a &lt; b(q+1)<br>bq &lt; a &lt; bq + b<br>0 &lt; a − bq &lt; b<br>0 &lt; r &lt; b  (r = a − bq)<br>
 <b>Case (iii) Uniqueness:</b> Consider another two integers 'q₁' &amp; 'r₁':<br>a = bq + r<br>a = bq₁ + r₁<br>bq + r = bq₁ + r₁<br>bq − bq₁ = (r₁ − r)<br>b(q − q₁) = (r₁ − r)<br>r₁ − r = b(q − q₁) ——(1)<br>
-Since a = bq + r ⇒ b|a; we know that a = bq ⇒ b|a ⇒ b | r₁ − r<br>b&gt;0, 0≤r&lt;b ⇒ r₁ − r = 0 ⇒ <b>r₁ = r</b><br>
+Since a = bq + r ⇒ b|a; we know that a = bq ⇒ b|a ⇒ b|(r₁ − r)<br>b&gt;0, 0≤r&lt;b ⇒ r₁ − r = 0 ⇒ <b>r₁ = r</b><br>
 Sub r₁ − r = 0 in eqⁿ (1): 0 = b(q − q₁) ⇒ b(q − q₁) = 0<br>b≠0 (b&gt;0) ⇒ q − q₁ = 0 ⇒ <b>q = q₁</b>` },
 6: { a: `<b>Prime &amp; Composite Numbers:</b> A positive integer (p&gt;1) is said to be prime if and only if the +ve integers that divide it are '1' &amp; 'p'. If it is not prime then it is said to be composite.<br>
 → n&gt;1 is composite then n = ab where 1&lt;a&lt;n, 1&lt;b&lt;n.<br><b>Ex:</b> 13 &amp; 17 are prime numbers. 8 &amp; 12 are composite numbers.`,
@@ -159,7 +159,7 @@ Variance = E(X²) − [E(X)]² = 17/3 − (7/3)² = 17/3 − 49/9 = (51 − 49)/
 2: { a: `Population size N = 4, sample size n = 2. Population: 2, 3, 4, 5<br>
 <b>(a) With replacement:</b> No. of samples of size 2 = Nⁿ = 4² = 16<br>(2,2) (2,3) (2,4) (2,5) (3,2) (3,3) (3,4) (3,5) (4,2) (4,3) (4,4) (4,5) (5,2) (5,3) (5,4) (5,5)<br>
 <b>Variance of samples:</b><br>(2,2) 1st sample → ½[(2−2)² + (2−2)²] = 0<br>(2,3) 2nd sample → ½[(2−2.5)² + (3−2.5)²] = 0.25<br>(2,4) 3rd sample → ½[(2−3)² + (4−3)²] = 1<br>(2,5) 4th sample → ½[(2−3.5)² + (5−3.5)²] = 2.25<br>⋮<br>(5,5) 16th sample → ½[(5−5)² + (5−5)²] = 0<br>
-Variance of 16 samples are: [0, 0.25, 1, 2.25 | 0.25, 0, 0.25, 1 | 1, 0.25, 0, 0.25 | 2.25, 1, 0.25, 0];  s²: 0, 0.25, 1, 2.25 → f: 4, 6, 4, 2<br>Mean of variance of samples = 1/16 [0 + 0.25 + 1 + 2.25 + 0.25 + 0 + 0.25 + 1 + 1 + 0.25 + 0 + 0.25 + 2.25 + 1 + 0.25 + 0] = 10/16 = <b>0.625</b><br>
+Variance of 16 samples are: [0, 0.25, 1, 2.25 / 0.25, 0, 0.25, 1 / 1, 0.25, 0, 0.25 / 2.25, 1, 0.25, 0];  s²: 0, 0.25, 1, 2.25 → f: 4, 6, 4, 2<br>Mean of variance of samples = 1/16 [0 + 0.25 + 1 + 2.25 + 0.25 + 0 + 0.25 + 1 + 1 + 0.25 + 0 + 0.25 + 2.25 + 1 + 0.25 + 0] = 10/16 = <b>0.625</b><br>
 Variance of standard deviation of variance: σ² = 1/16 [4(0−0.625)² + 6(0.25−0.625)² + 4(1−0.625)² + 2(2.25−0.625)²]<br>σ² = 0.5156 ⇒ <b>σ = 0.7180 = 0.72 (approx)</b>`,
      b: `<b>(b) Without replacement:</b> No. of samples of size 2 = ᴺCₙ = ⁴C₂ = 6<br>Samples are (2,3) (2,4) (2,5) (3,4) (3,5) (4,5)<br>
 <b>Variances of samples:</b><br>1st sample → ½[(2−2.5)² + (3−2.5)²] = 0.25<br>2nd sample → ½[(2−3)² + (4−3)²] = 1<br>3rd sample → ½[(2−3.5)² + (5−3.5)²] = 2.25<br>4th sample → ½[(3−3.5)² + (4−3.5)²] = 0.25<br>5th sample → ½[(3−4)² + (5−4)²] = 1<br>6th sample → ½[(4−4.5)² + (5−4.5)²] = 0.25<br>
@@ -184,7 +184,7 @@ From eqⁿ (1): 35 = −1.48(10) + μ ⇒ 35 = −14.8 + μ ⇒ μ = 49.8<br><b>
 5: { full: `<b>(i) The mean of the population:</b> μ = Σxᵢ/N = (4+8+12+16+20+24)/6 = 84/6 = <b>14</b><br>
 <b>(ii) Variance:</b> σ² = (1/N) Σ(xᵢ − μ)² = 1/6 [(4−14)² + (8−14)² + (12−14)² + (16−14)² + (20−14)² + (24−14)²] = 1/6 [100+36+4+4+36+100] = 280/6<br>Variance σ² = 46.66;  <b>Standard deviation σ = 6.83</b><br>
 <b>(iii)</b> No. of possible samples without replacement = ⁶C₂ = 15 samples.<br>Sample distribution: {(4,8), (4,12), (4,16), (4,20), (4,24), (8,12), (8,16), (8,20), (8,24), (12,16), (12,20), (12,24), (16,20), (16,24), (20,24)}<br>
-Sample distribution of means: {6, 8, 10, 12, 14 | 10, 12, 14, 16 | 14, 16, 18 | 18, 20 | 22}<br>
+Sample distribution of means: {6, 8, 10, 12, 14 / 10, 12, 14, 16 / 14, 16, 18 / 18, 20 / 22}<br>
 The mean of the sampling distribution of means is μx̄ = 1/15 [6+8+10+12+14+10+12+14+16+14+16+18+18+20+22] = 210/15 = <b>14</b><br>
 <b>(iv) Variance of sampling distribution of means:</b> (σx̄)² = (1/N) Σ(xᵢ − x̄)² = 1/15 [(6−14)² + (8−14)² + … + (22−14)²] = 280/15 = 18.66 (variance)<br>
 σx̄ = √18.66 = <b>4.31</b>` },

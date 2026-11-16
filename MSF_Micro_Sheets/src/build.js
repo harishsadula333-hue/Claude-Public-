@@ -14,18 +14,25 @@ const COL_W = (PAGE_W - 2 * MARGIN_X) / COLS;            // 39.6 mm
 // Cut lines are a shared grid; content of every cell sits SAFE mm inside the cut lines.
 const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V'];
 
-// Run steps on with a thin separator; keep real line breaks only before headings/parts.
-function dense(h) {
-  return h.replace(/<br>\s*/g, (m, off, str) => {
-    const nxt = str.slice(off + m.length, off + m.length + 40);
-    return /^(<b>(\(|Case|Step|Proof|Statement|Mean|Mode|Median|Variance|Expect|Standard|Verify|Solution|Null|Alternative|Level|The test|Test|Decision|Conclusion|Properties|Applications|PROPERTIES|Note|Sum|No\.|P\(|[ivx]+\)|[0-9]\.)|<span class="nt">|[0-9]\. <b>|[ivx]+\) |\([ivx]+\)|•)/.test(nxt) ? '<br>' : ' <span class="sp">|</span> ';
+const FM = SHORT ? {} : require('./formulas.js');
+const SEP = ' <span class="sp">|</span> ';
+// Everything in one straight line: tables become inline rows, every line break becomes a bold "|".
+function inlineTables(h) {
+  return h.replace(/<table>([\s\S]*?)<\/table>/g, (m, body) => {
+    const rows = [...body.matchAll(/<tr>([\s\S]*?)<\/tr>/g)].map(r => [...r[1].matchAll(/<td>([\s\S]*?)<\/td>/g)].map(c => c[1]).filter(c => c !== '').join(', '));
+    return SEP + '[' + rows.join(' ; ') + ']' + SEP;
   });
+}
+function dense(h) {
+  return inlineTables(h).replace(/(\s*<br>\s*)+/g, SEP).replace(/(\s*<span class="sp">\|<\/span>\s*){2,}/g, SEP)
+    .replace(/^\s*<span class="sp">\|<\/span>\s*/, '').replace(/\s*<span class="sp">\|<\/span>\s*$/, '');
 }
 function cell(unit, q, x, y) {
   const a0 = A[unit][q], qq = Qs[unit][q];
-  const a = Object.fromEntries(Object.entries(a0).map(([k, v]) => [k, dense(v)]));
-  const qn = (t) => `<div class="q">Q. ${t}</div><b>Ans:</b> `;
-  const tag = (s) => `<span class="tg">U${ROMAN[unit]}·${s}</span>`;
+  const fm = (FM[unit] || {})[q] || {};
+  const a = Object.fromEntries(Object.entries(a0).map(([k, v]) => [k, (fm[k] ? `<b>Formula:</b> ${fm[k]}` + SEP : '') + dense(v)]));
+  const qn = (t) => `<span class="q">Q. ${t}</span>` + SEP + `<b>Ans:</b> `;
+  const tag = (s) => `<span class="tg">[U${ROMAN[unit]}·${s}]</span> `;
   let inner;
   const IH = ROW_H - 2 * SAFE;
   if (a.full) {
@@ -58,23 +65,23 @@ function page(cols, title) {
 @font-face{font-family:RCg;font-weight:700;src:url(fonts/roboto-condensed-greek-700-normal.woff2)}
 
 *{box-sizing:border-box;margin:0;padding:0}
-body{width:210mm;height:297mm;position:relative;font-family:RC,RCg,"Liberation Sans",Arial,sans-serif;font-weight:300;color:#000}
+body{width:210mm;height:297mm;position:relative;font-family:RC,RCg,"Liberation Sans","DejaVu Sans",sans-serif;font-weight:400;font-synthesis:none;color:#000;-webkit-print-color-adjust:exact}
 b,.tg{font-weight:700}
 .blk{position:absolute}
 .vl,.hl{position:absolute;background:#000}
-.vl{width:0.3pt;margin-left:-0.15pt}
-.hl{height:0.3pt;margin-top:-0.15pt}
+.vl{width:0.5pt;margin-left:-0.25pt}
+.hl{height:0.5pt;margin-top:-0.25pt}
 .h{position:absolute;left:0;width:100%;overflow:hidden;padding:0.2mm 0}
-.split2{border-top:0.4pt dashed #555;margin-top:0.4mm;padding-top:0.3mm}
+.split2{border-top:0.5pt dashed #000;margin-top:0.4mm;padding-top:0.3mm}
 .c{line-height:1.06;letter-spacing:0;word-break:break-word}
-.sp{color:#888;font-weight:normal}
-.q{display:inline;font-weight:bold;font-style:italic;background:#e8e8e8}
+.sp{color:#000;font-weight:700;font-family:"Liberation Sans",Arial,sans-serif;padding:0 0.05em}
+.q{display:inline;font-weight:700;font-style:italic}
 .q+b{margin-left:0.3mm}
-.tg{display:inline-block;background:#000;color:#fff;font-weight:bold;padding:0 0.4mm;margin-right:0.6mm;border-radius:0.4mm;font-size:0.95em}
+.tg{font-weight:700;color:#000}
 table{border-collapse:collapse;margin:0.2mm 0;width:100%;table-layout:fixed}
 td{border:0.25pt solid #000;text-align:center;padding:0 0.1mm;font-size:0.92em}
-i{font-style:italic;color:#333}
-.nt{display:inline;font-style:italic;border:0.3pt solid #000;padding:0 0.3mm;background:#f2f2f2}
+i{font-style:italic;color:#000}
+.nt{display:inline;font-style:italic;border:0.4pt solid #000;padding:0 0.3mm}
 </style></head><body>${html}</body></html>`;
 }
 
