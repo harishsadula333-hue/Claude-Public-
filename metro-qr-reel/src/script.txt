@@ -1,0 +1,25 @@
+# Token = spoken|shown (underscore in shown = space). Plain token = same both.
+#intro
+Hyderabad Metro లో, QR Ticket Scan చేయగానే, Gate ఎలా Open అవుతుందో ఎప్పుడైనా ఆలోచించారా? రండి, లోపల ఏం జరుగుతుందో కలిసి చూద్దాం!
+#q1
+మీ QR Ticket లో, Ticket Number, ఎక్కే Station, దిగే Station, Fare, Date, Time లాంటి వివరాలు ఉంటాయి. ఇవన్నీ Encrypt చేసి ఉంటాయి, అందుకే Fake Ticket చేయడం కుదరదు.
+#q2
+Gate దగ్గర Scan చేయగానే, Scanner ఆ Code ని చదివి, Metro System తో Check చేస్తుంది. Ticket అసలైనదా, ఈ Station దేనా, ఇంతకుముందు వాడారా, అని చూసి, మీ Entry ని Record చేస్తుంది.
+#q3
+Smart Card లోపల, ఒక చిన్న Chip, Antenna ఉంటాయి. Scanner దగ్గర పెట్టగానే, Radio Waves తోనే Card కి Power వచ్చి, క్షణంలో Data పంపిస్తుంది. దీన్నే Contactless Technology అంటారు.
+#q4
+App లో Payment పూర్తవ్వగానే, Server మీ Ticket ని Activate చేసి, ఒక Unique QR పంపిస్తుంది. అది మీ Route కి, ఆ రోజుకి మాత్రమే Valid.
+#q5
+ఇక Fare విషయానికొస్తే, మీరు ఎక్కే Station నుంచి దిగే Station వరకు, ఎంత దూరమో చూసి, Fare Table నుంచి ధర లెక్కిస్తుంది.
+#q6
+Gate దగ్గర Red Light వచ్చిందా? అంటే Ticket ఇప్పటికే వాడేశారు, లేదా Expire అయ్యింది, లేదా Card లో Balance తక్కువ, లేదా Station తప్పు.
+#q7
+Ticket సరైనదైతే, Controller వెంటనే Motor కి Signal ఇస్తుంది. Flaps తెరుచుకుంటాయి, మీరు దాటగానే మళ్ళీ మూసుకుంటాయి.
+#q14
+మరి మీరు దాటారని Gate కి ఎలా తెలుస్తుంది? లోపల Infrared Sensors వరుసగా ఉంటాయి. మీరు నడుస్తుంటే, ఆ Beams ఒకదాని తర్వాత ఒకటి Block అవుతాయి. ఆ Pattern తో, ఒక్కరే దాటారని Gate గుర్తిస్తుంది.
+#q15
+ఒకే Ticket తో ఇద్దరు దూరాలని చూస్తే, Sensors వెంటనే పట్టేస్తాయి. Flaps మూసుకుపోయి, Alarm మోగుతుంది!
+#q16
+దిగేటప్పుడు మళ్ళీ Scan చేస్తేనే, మీ Journey పూర్తవుతుంది. Card నుంచి సరైన Fare కట్ అవుతుంది, QR Ticket మళ్ళీ వాడకుండా Close అవుతుంది.
+#outro
+ఇలాంటి Interesting విషయాల కోసం, Beyond the Screen ని Follow అవ్వండి!
