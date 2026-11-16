@@ -155,7 +155,7 @@ Variance = E(X²) − [E(X)]² = 17/3 − (7/3)² = 17/3 − 49/9 = (51 − 49)/
 <b>(i) X&gt;0,</b> z = (X−μ)/σ = (X−1)/0.6<br>P(X&gt;0) = P[(X−μ)/σ &gt; −μ/σ] = P[(X−1)/0.6 &gt; −1/0.6] = P[(X−1)/0.6 &gt; −1.66] = P(Z &gt; −1.66)<br>
 = 0.5 − P(0&lt;Z&lt;1.66) = 0.5 − 0.4515 = <b>0.0485</b> (sheet)<br>` + N(`P(Z&gt;−1.66) = 0.5 + P(0&lt;Z&lt;1.66) = 0.5 + 0.4515 = <b>0.9515</b> (0.0485 is P(X&lt;0)).`) + `<br>
 <b>(ii)</b> P(−1.8 ≤ X ≤ 2.0) = P[(−1.8−μ)/σ ≤ (X−μ)/σ ≤ (2.0−μ)/σ] = P[(−1.8−1)/0.6 ≤ (X−1)/0.6 ≤ (2.0−1)/0.6]<br>
-= P(−4.66 ≤ Z ≤ 1.66) = P(0 ≤ Z ≤ 4.66) + P(0 ≤ Z ≤ 1.66) = A(4.66) + 0.4515 = 0.5 + 0.4515 = <b>0.9515</b>` },
+= P(−4.66 ≤ Z ≤ 1.66) {{D:u3q1}} = P(0 ≤ Z ≤ 4.66) + P(0 ≤ Z ≤ 1.66) = A(4.66) + 0.4515 = 0.5 + 0.4515 = <b>0.9515</b>` },
 2: { a: `Population size N = 4, sample size n = 2. Population: 2, 3, 4, 5<br>
 <b>(a) With replacement:</b> No. of samples of size 2 = Nⁿ = 4² = 16<br>(2,2) (2,3) (2,4) (2,5) (3,2) (3,3) (3,4) (3,5) (4,2) (4,3) (4,4) (4,5) (5,2) (5,3) (5,4) (5,5)<br>
 <b>Variance of samples:</b><br>(2,2) 1st sample → ½[(2−2)² + (2−2)²] = 0<br>(2,3) 2nd sample → ½[(2−2.5)² + (3−2.5)²] = 0.25<br>(2,4) 3rd sample → ½[(2−3)² + (4−3)²] = 1<br>(2,5) 4th sample → ½[(2−3.5)² + (5−3.5)²] = 2.25<br>⋮<br>(5,5) 16th sample → ½[(5−5)² + (5−5)²] = 0<br>
@@ -177,7 +177,7 @@ T([['Sample','(2,2)','(2,4)','(2,6)','(4,2)','(4,4)','(4,6)','(6,2)','(6,4)','(6
 `These sample means form the sampling distribution of the mean.<br>
 <b>(ii)</b> Given μ = 30 &amp; σ = 5. Formula: z = (X − μ)/σ<br>Lower limit z₁ = (26 − 30)/5 = −0.8;  Upper limit z₂ = (40 − 30)/5 = 2<br>
 ⇒ P(26 ≤ X ≤ 40) = P(−0.8 ≤ Z ≤ 2) = P(Z ≤ 2) − P(Z ≤ −0.8) = 0.9772 − 0.2119 ⇒ <b>P = 0.7653</b>` },
-4: { full: `P(X&lt;35) = 0.07;  P(X&lt;63) = 0.89 ⇒ P(X≥63) = 1 − 0.89 = 0.11<br>
+4: { full: `P(X&lt;35) = 0.07;  P(X&lt;63) = 0.89 ⇒ P(X≥63) = 1 − 0.89 = 0.11 {{D:u3q4}}<br>
 → X = 35: z = (X−μ)/σ ⇒ (35−μ)/σ = −z₁. From the figure, P(−z₁ ≤ Z ≤ 0) = 0.43 ⇒ (35−μ)/σ = −1.48 ⇒ 35 = −1.48σ + μ ——(1)<br>
 → X = 63: (63−μ)/σ = z₂. From the figure, P(0 ≤ Z ≤ z₂) = 0.39 ⇒ (63−μ)/σ = 1.23 ⇒ 63 = 1.23σ + μ ——(2)<br>
 Sub (1) &amp; (2):  μ − 1.48σ = 35;  μ + 1.23σ = 63 ⇒ 2.71σ = 28<br>S.D. (σ) = 28/2.71 ⇒ σ = 10.332 ≈ <b>10</b><br>
@@ -189,7 +189,7 @@ Sample distribution of means: {6, 8, 10, 12, 14 / 10, 12, 14, 16 / 14, 16, 18 / 
 The mean of the sampling distribution of means is μx̄ = 1/15 [6+8+10+12+14+10+12+14+16+14+16+18+18+20+22] = 210/15 = <b>14</b><br>
 <b>(iv) Variance of sampling distribution of means:</b> (σx̄)² = (1/N) Σ(xᵢ − x̄)² = 1/15 [(6−14)² + (8−14)² + … + (22−14)²] = 280/15 = 18.66 (variance)<br>
 σx̄ = √18.66 = <b>4.31</b>` },
-6: { full: `Let 'μ' be the mean, 'σ' be the standard deviation of the normal distribution.<br>P(X&lt;30) = 0.4 &amp; P(X≥60) = 0.15<br>
+6: { full: `Let 'μ' be the mean, 'σ' be the standard deviation of the normal distribution.<br>P(X&lt;30) = 0.4 &amp; P(X≥60) = 0.15 {{D:u3q6}}<br>
 When X = 30, z = (X−μ)/σ = (30−μ)/σ = −z₁ ——(1)<br>When X = 60, z = (X−μ)/σ = (60−μ)/σ = z₂ ——(2)<br>
 ∴ P(0&lt;Z&lt;z₂) = 0.5 − 0.15 = 0.35<br>P(0&lt;Z&lt;z₁) = P(−z₁&lt;Z&lt;0) = 0.5 − 0.4 = 0.1<br>
 From normal tables, z₁ = 0.25 &amp; z₂ = 1.04<br>(30−μ)/σ = −0.25 or (μ−30)/σ = 0.25 ——(3)<br>(60−μ)/σ = 1.04 ——(4)<br>
@@ -199,22 +199,22 @@ P(12&lt;X&lt;15) = P(−0.8&lt;Z&lt;0.4) = A(0.4) + A(−0.8) = A(0.4) + A(0.8) 
 <b>ii)</b> When X = 18, z = (X−μ)/σ = (18−14)/2.5 = 1.6<br>P(X&gt;18) = P(Z&gt;1.6) = 0.5 − A(1.6) = 0.5 − 0.4452 ⇒ P(X&gt;18) = 0.0548<br>No. of students score above 18 = 1000×0.0548 = 54.8 = <b>55 (approximately)</b><br>
 <b>iii)</b> P(X&lt;18) = P(Z&lt;1.6) = 0.5 + A(1.6) = 0.5 + 0.4452 ⇒ P(X&lt;18) = 0.9452<br>No. of students score below 18 = 1000×0.9452 = <b>945</b>` },
 8: { full: `Let 'μ' be the mean &amp; 'σ' be the standard deviation. μ = 68 kgs, σ = 3 kgs; X → denotes masses of students<br>
-<b>(i)</b> When X = 72: z = (X−μ)/σ = (72−68)/3 = 1.33<br>P(X&gt;72) = P(Z&gt;1.33) = 0.5 − A(1.33) = 0.5 − 0.4082 ⇒ P(X&gt;72) = 0.0918<br>No. of students with more than 72 kgs = 300×0.0918 = <b>28 (approximately)</b><br>
-<b>(ii)</b> When X = 64: z = (X−μ)/σ = (64−68)/3 = −1.33<br>∴ P(X≤64) = P(Z≤−1.33) = 0.5 − A(1.33) = 0.5 − 0.4082 ⇒ P(X≤64) = 0.0918<br>No. of students have masses less than or equal to 64 kg = 300×0.0918 = <b>28 (approximately)</b><br>
+<b>(i)</b> When X = 72: z = (X−μ)/σ = (72−68)/3 = 1.33<br>P(X&gt;72) = P(Z&gt;1.33) = 0.5 − A(1.33) = 0.5 − 0.4082 ⇒ P(X&gt;72) = 0.0918 {{D:u3q8a}}<br>No. of students with more than 72 kgs = 300×0.0918 = <b>28 (approximately)</b><br>
+<b>(ii)</b> When X = 64: z = (X−μ)/σ = (64−68)/3 = −1.33<br>∴ P(X≤64) = P(Z≤−1.33) = 0.5 − A(1.33) = 0.5 − 0.4082 ⇒ P(X≤64) = 0.0918 {{D:u3q8b}}<br>No. of students have masses less than or equal to 64 kg = 300×0.0918 = <b>28 (approximately)</b><br>
 <b>(iii)</b> When X = 65, z = (X−μ)/σ = (65−68)/3 = −1 = z₁;  When X = 71, z = (71−68)/3 = 1 = z₂<br>
-P(65≤X≤71) = P(−1≤Z≤1) = A(z₂) + A(z₁) = A(1) + A(−1) = A(1) + A(1) = 2·A(1) = 2(0.3413) = 0.6826<br>No. of students = 300×0.6826 = <b>205 (approximately)</b>` },
+P(65≤X≤71) = P(−1≤Z≤1) = A(z₂) + A(z₁) = A(1) + A(−1) = A(1) + A(1) = 2·A(1) = 2(0.3413) = 0.6826 {{D:u3q8c}}<br>No. of students = 300×0.6826 = <b>205 (approximately)</b>` },
 9: { full: `Here, μ = 35 &amp; σ = 5;  z = (X−μ)/σ = (X−35)/5<br>
 <b>(i)</b> X₁ = 25 then z = (25−35)/5 = −10/5 = −2;  When X₂ = 40, then z = (40−35)/5 = 5/5 = 1<br>
-∴ Probability of students whose marks lie b/w 25 &amp; 40 = P(25≤X≤40) = P(−2≤Z≤1) = P(−2≤Z≤0) + P(0≤Z≤1) = P(0≤Z≤2) + P(0≤Z≤1) = 0.4772 + 0.3413 = 0.8185<br>
+∴ Probability of students whose marks lie b/w 25 &amp; 40 = P(25≤X≤40) = P(−2≤Z≤1) = P(−2≤Z≤0) + P(0≤Z≤1) = P(0≤Z≤2) + P(0≤Z≤1) = 0.4772 + 0.3413 = 0.8185 {{D:u3q9a}}<br>
 No. of students whose marks lie b/w 25 &amp; 40 = 1000×0.8185 = <b>819 (approx)</b><br>
-<b>(ii)</b> When X = 40, then z = (40−35)/5 = 5/5 = 1<br>P(X&gt;40) = P(Z&gt;1) = 0.5 − P(Z≤1) = 0.5 − 0.3413 = 0.1587<br>No. of students whose marks are greater than 40 = 1000×0.1587 = <b>159 students</b><br>
-<b>(iii)</b> When X = 20, then z = (20−35)/5 = −15/5 = −3<br>P(X&lt;20) = P(Z&lt;−3) = 0.5 − P(−3≤Z≤0) = 0.5 − P(0≤Z≤3) = 0.5 − 0.499 = 0.001<br>No. of students whose marks are less than 20 = 1000×0.001 = <b>1 student</b><br>
-<b>(iv)</b> When X = 50: z = (50−35)/5 = 15/5 = 3<br>P(X&gt;50) = P(Z&gt;3) = 0.5 − P(0≤Z≤3) = 0.5 − 0.499 = 0.001<br>No. of students whose marks are greater than 50 = 1000×0.001 = <b>1 student</b>` },
+<b>(ii)</b> When X = 40, then z = (40−35)/5 = 5/5 = 1<br>P(X&gt;40) = P(Z&gt;1) = 0.5 − P(Z≤1) = 0.5 − 0.3413 = 0.1587 {{D:u3q9b}}<br>No. of students whose marks are greater than 40 = 1000×0.1587 = <b>159 students</b><br>
+<b>(iii)</b> When X = 20, then z = (20−35)/5 = −15/5 = −3<br>P(X&lt;20) = P(Z&lt;−3) = 0.5 − P(−3≤Z≤0) = 0.5 − P(0≤Z≤3) = 0.5 − 0.499 = 0.001 {{D:u3q9c}}<br>No. of students whose marks are less than 20 = 1000×0.001 = <b>1 student</b><br>
+<b>(iv)</b> When X = 50: z = (50−35)/5 = 15/5 = 3<br>P(X&gt;50) = P(Z&gt;3) = 0.5 − P(0≤Z≤3) = 0.5 − 0.499 = 0.001 {{D:u3q9d}}<br>No. of students whose marks are greater than 50 = 1000×0.001 = <b>1 student</b>` },
 10: { full: `Given, mean (μ) = 0.78;  S.D. (σ) = 0.11<br>
 <b>(i)</b> X = 0.9, z = (X−μ)/σ = (0.9−0.78)/0.11 = 0.12/0.11 = 1.09 = z₁<br>The no. of students with marks more than 90%: P(Z&gt;1.09) = 0.5 − 0.3621 [A(1.09)] = 0.1379<br>No. of students = N×P(X&gt;90) = 0.1379×1000 = 137.9 ≈ <b>138</b><br>
-<b>(ii)</b> From figure: 0.4 = 0.5 − 0.1 = 0.5 − Area from 0 to z₁ ∴ z₁ = −1.28<br>Thus, −1.28 = (X−μ)/σ = (X−0.78)/0.11<br>X = 0.78 − 1.28(0.11) = 0.78 − 0.1408 = 0.6392<br>
+<b>(ii)</b> From figure {{D:u3q10b}}: 0.4 = 0.5 − 0.1 = 0.5 − Area from 0 to z₁ ∴ z₁ = −1.28<br>Thus, −1.28 = (X−μ)/σ = (X−0.78)/0.11<br>X = 0.78 − 1.28(0.11) = 0.78 − 0.1408 = 0.6392<br>
 Hence, the highest mark obtained by the lowest 10% of students = 0.6392×100 = <b>63.92% ≈ 64%</b><br>
-<b>(iii)</b> Middle 90% corresponds to 0.9 area, leaving 0.05 area on both sides. Then the corresponding z's are ±1.64.<br>
+<b>(iii)</b> Middle 90% corresponds to 0.9 area, leaving 0.05 area on both sides {{D:u3q10c}}. Then the corresponding z's are ±1.64.<br>
 ∴ −1.64 = z₁ = (X₁−μ)/σ = (X₁−0.78)/0.11 ⇒ X₁ = 0.78 − 1.64(0.11) = 0.5996 or 59.96%<br>&amp; 1.64 = z₂ = (X₂−μ)/σ = (X₂−0.78)/0.11 ⇒ X₂ = 1.64(0.11) + 0.78 = 0.9604 or 96.04%<br>
 <b>Thus, the middle 90% have marks in b/w 60 to 96.</b>` },
 },

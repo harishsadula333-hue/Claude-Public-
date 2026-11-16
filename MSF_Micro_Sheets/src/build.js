@@ -25,7 +25,9 @@ function inlineTables(h) {
     return SEP + '[' + rows.join(' ; ') + ']' + SEP;
   });
 }
+const DG = require('./diagrams.js');
 function dense(h) {
+  h = h.replace(/\{\{D:(\w+)\}\}/g, (m, k) => DG[k] || '');
   return h.replace(/(\s*<br>\s*)+/g, SEP).replace(/(\s*<span class="sp">\|<\/span>\s*){2,}/g, SEP)
     .replace(/<span class="sp">\|<\/span>\s*(<table>)/g, '$1').replace(/(<\/table>)\s*<span class="sp">\|<\/span>/g, '$1')
     .replace(/<span class="sp">\|<\/span>\s*(<span class="nt">)/g, '$1').replace(/(<span class="nt">[^]*?<\/span>)\s*<span class="sp">\|<\/span>/g, '$1')
@@ -86,6 +88,8 @@ b,.tg{font-weight:700}
 table{border-collapse:collapse;margin:0.5mm 0;width:100%;table-layout:auto;line-height:1.02}
 td{border:0.5pt solid #000;text-align:center;padding:0 0.5mm;font-size:0.93em}
 i{font-style:italic;color:#000}
+.dg{display:inline-block;width:8.5em;height:3.4em;vertical-align:middle;margin:0.2em 0.3em}
+.dg text{font-family:RC,'Liberation Sans',sans-serif}
 .nt{display:block;font-style:italic;border:0.8pt solid #000;padding:0.3mm 0.8mm;margin:0.6mm 0}
 </style></head><body><div id="root">${html}</div></body></html>`;
 }
