@@ -3,8 +3,9 @@ const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const A = require('./answers.js'), Q = require('./questions.js'), FM = require('./formulas.js');
 const DG = require('./diagrams.js');
-const dg = (h) => h.replace(/\{\{D:(\w+)\}\}/g, (m, k) => DG[k] || '');
-const fx = (u, q, k) => { const f = ((FM[u] || {})[q] || {})[k]; return f ? `<div class="fm"><b>Formula:</b> ${f}</div>` : ''; };
+const SUP = require('./sup.js');
+const dg = (h) => SUP(h).replace(/\{\{D:(\w+)\}\}/g, (m, k) => DG[k] || '');
+const fx = (u, q, k) => { const f = ((FM[u] || {})[q] || {})[k]; return f ? `<div class="fm"><b>Formula:</b> ${SUP(f)}</div>` : ''; };
 let body = `<div class="cover"><h1>MSF – LONG QUESTIONS WITH ANSWERS</h1><p>Units 1–5 · 10 long questions per unit</p><p class="s">Answers transcribed step-by-step from the uploaded solution PDFs. Boxed <span class="nt">NOTE</span> lines mark where a sheet has an error, is missing, or uses different data from the question bank.</p></div>`;
 for (let u = 1; u <= 5; u++) {
   body += `<h2>UNIT – ${u}</h2>`;

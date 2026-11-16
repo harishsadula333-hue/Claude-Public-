@@ -26,7 +26,9 @@ function inlineTables(h) {
   });
 }
 const DG = require('./diagrams.js');
+const SUP = require('./sup.js');
 function dense(h) {
+  h = SUP(h);
   h = h.replace(/\{\{D:(\w+)\}\}/g, (m, k) => DG[k] || '');
   return h.replace(/(\s*<br>\s*)+/g, SEP).replace(/(\s*<span class="sp">\|<\/span>\s*){2,}/g, SEP)
     .replace(/<span class="sp">\|<\/span>\s*(<table>)/g, '$1').replace(/(<\/table>)\s*<span class="sp">\|<\/span>/g, '$1')
@@ -36,8 +38,8 @@ function dense(h) {
 function cell(unit, q, x, y) {
   const a0 = A[unit][q], qq = Qs[unit][q];
   const fm = (FM[unit] || {})[q] || {};
-  const a = Object.fromEntries(Object.entries(a0).map(([k, v]) => [k, (fm[k] ? `<b>Formula:</b> ${fm[k]}` + SEP : '') + dense(v)]));
-  const qn = (t) => `<span class="q">Q. ${t}</span>` + SEP + `<b>Ans:</b> `;
+  const a = Object.fromEntries(Object.entries(a0).map(([k, v]) => [k, (fm[k] ? `<b>Formula:</b> ${SUP(fm[k])}` + SEP : '') + dense(v)]));
+  const qn = (t) => `<span class="q">Q. ${SUP(t)}</span>` + SEP + `<b>Ans:</b> `;
   const tag = (s) => `<span class="tg">[U${ROMAN[unit]}·${s}]</span> `;
   let inner;
   const IH = ROW_H - 2 * SAFE;
@@ -80,7 +82,7 @@ b,.tg{font-weight:700}
 .hl{height:1pt;margin-top:-0.5pt}
 .h{position:absolute;left:0;width:100%;overflow:hidden;padding:0.4mm 0}
 .split2{border-top:1pt dashed #000;margin-top:0.8mm;padding-top:0.6mm}
-.c{line-height:1.06;letter-spacing:0;word-break:break-word}
+.c{line-height:1.1;letter-spacing:0;word-break:break-word}
 .sp{color:#000;font-weight:700;font-family:"Liberation Sans",Arial,sans-serif;padding:0 0.05em}
 .q{display:inline;font-weight:700;font-style:italic}
 .q+b{margin-left:0.6mm}
@@ -88,6 +90,8 @@ b,.tg{font-weight:700}
 table{border-collapse:collapse;margin:0.5mm 0;width:100%;table-layout:auto;line-height:1.02}
 td{border:0.5pt solid #000;text-align:center;padding:0 0.5mm;font-size:0.93em}
 i{font-style:italic;color:#000}
+sup{font-size:0.72em;line-height:0;vertical-align:0.38em}
+sub{font-size:0.72em;line-height:0;vertical-align:-0.2em}
 .dg{display:inline-block;width:8.5em;height:3.4em;vertical-align:middle;margin:0.2em 0.3em}
 .dg text{font-family:RC,'Liberation Sans',sans-serif}
 .nt{display:block;font-style:italic;border:0.8pt solid #000;padding:0.3mm 0.8mm;margin:0.6mm 0}
