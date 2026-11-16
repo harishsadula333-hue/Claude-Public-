@@ -1,6 +1,6 @@
 # AIMS 50-second promo video — source
 
-Rendered output: `../AIMS_Promo_50s_1080p_v4.mp4` (latest; earlier: v3, v2, v1) (1920×1080, 30 fps, H.264 + AAC, 50 s).
+Rendered output: `../AIMS_Promo_50s_1080p_v5.mp4` (latest; earlier: v4, v3, v2, v1) (1920×1080, 30 fps, H.264 + AAC, 50 s).
 All photos, course details, awards, placements and contact details come from the AIMS brochure PDF,
 plus client feedback (v2): PGDHM 18 months, Indian & Tandoori cuisines, Sir C.V. Raman Academy award,
 director award photo, "Admissions Open" and the "Join AIMS… AIM your Dreams…" tagline.
@@ -15,7 +15,7 @@ director award photo, "Admissions Open" and the "Join AIMS… AIM your Dreams…
 | 28.5–33.5 s | Why AIMS — 6 highlights + campus-life photo mosaic |
 | 33.5–39 s | Awards — Sir C.V. Raman Academy (featured), 2017, 2018, 2019, 2022 + cricket runner-up |
 | 39–45 s | Placements — student photos, destinations, hotel brands, careers |
-| 45–50 s | Director with 2022 award · Admissions Open · Scholarships · phone, website, address |
+| 45–50 s | College name banner → director photo → courses offered → Admissions Open, phone, website, address |
 
 ## Edit & re-render
 Text lives in `index.html` (scene markup plus the `LABS`, `WHY`, `AW`, `DESTS` arrays).
@@ -26,6 +26,6 @@ cd aims-promo-video
 python3 tools/music.py music.wav 50          # original synthesized music (royalty-free)
 node tools/capture.js index.html - 30 | ffmpeg -y -f image2pipe -framerate 30 -c:v mjpeg -i - \
   -i music.wav -map 0:v -map 1:a -c:v libx264 -crf 18 -pix_fmt yuv420p -c:a aac -b:a 192k \
-  -movflags +faststart -shortest ../AIMS_Promo_50s_1080p_v4.mp4
+  -movflags +faststart -shortest ../AIMS_Promo_50s_1080p_v5.mp4
 ```
 Needs Node + Playwright (Chromium), Python 3 + NumPy, and ffmpeg.
