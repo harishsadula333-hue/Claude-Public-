@@ -95,13 +95,14 @@ i{font-style:italic;color:#000}
 }
 
 async function fit(p) {
+  const MAXF = +(process.env.MAXF || 6.5);
   // Largest font (pt, step 0.05) that lets each half-cell's content fit without overflow.
-  return p.evaluate(() => {
+  return p.evaluate((maxf) => {
     const out = [];
     document.querySelectorAll('.h').forEach(h => {
       const c = h.querySelector('.c');
       const avail = h.clientHeight - 2;            // minus padding slack
-      let lo = 2.4, hi = 13;
+      let lo = 2.4, hi = maxf * 2;
       while (hi - lo > 0.05) {
         const mid = (lo + hi) / 2;
         c.style.fontSize = mid + 'pt';
@@ -111,7 +112,7 @@ async function fit(p) {
       out.push([h.querySelector('.tg').textContent, +(lo / 2).toFixed(2)]);
     });
     return out;
-  });
+  }, MAXF);
 }
 
 (async () => {
