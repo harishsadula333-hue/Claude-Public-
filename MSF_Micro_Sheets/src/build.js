@@ -4,9 +4,10 @@
 const fs = require('fs'), path = require('path');
 const { chromium } = require('playwright');
 const SHORT = process.env.SET === 'short';
-const A = SHORT ? require('./short.js').A : require('./answers.js');
+const TEN = process.env.SET === 'ten';
+const A = SHORT ? require('./short.js').A : TEN ? require('./answers_ten.js') : require('./answers.js');
 const Qs = SHORT ? require('./short.js').Q : require('./questions.js');
-const BASE = SHORT ? 'MSF_Short_CutSheet' : 'MSF_CutSheet';
+const BASE = SHORT ? 'MSF_Short_CutSheet' : TEN ? 'MSF_Long10Marks_CutSheet' : 'MSF_CutSheet';
 
 const PAGE_W = 210, MARGIN_X = +(process.env.MX || 6), TOP = +(process.env.TOP || 7), SAFE = +(process.env.SAFE || 1.6), MARK = 3, COLS = 5, ROWS = 5, ROW_H = +(process.env.ROW_H || 39);
 const SUFFIX = process.env.SUFFIX || '';
@@ -17,7 +18,7 @@ const COL_W = (PAGE_W - 2 * MARGIN_X) / COLS;            // 39.6 mm
 const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V'];
 
 const FM = SHORT ? {} : require('./formulas.js');
-const SEP = ' <span class="sp">|</span> ';
+const SEP = ' <span class="sp">★</span> ';
 // Everything in one straight line: tables become inline rows, every line break becomes a bold "|".
 function inlineTables(h) {
   return h.replace(/<table>([\s\S]*?)<\/table>/g, (m, body) => {
@@ -30,10 +31,10 @@ const SUP = require('./sup.js');
 function dense(h) {
   h = SUP(h);
   h = h.replace(/\{\{D:(\w+)\}\}/g, (m, k) => DG[k] || '');
-  return h.replace(/(\s*<br>\s*)+/g, SEP).replace(/(\s*<span class="sp">\|<\/span>\s*){2,}/g, SEP)
-    .replace(/<span class="sp">\|<\/span>\s*(<table>)/g, '$1').replace(/(<\/table>)\s*<span class="sp">\|<\/span>/g, '$1')
-    .replace(/<span class="sp">\|<\/span>\s*(<span class="nt">)/g, '$1').replace(/(<span class="nt">[^]*?<\/span>)\s*<span class="sp">\|<\/span>/g, '$1')
-    .replace(/^\s*<span class="sp">\|<\/span>\s*/, '').replace(/\s*<span class="sp">\|<\/span>\s*$/, '');
+  return h.replace(/(\s*<br>\s*)+/g, SEP).replace(/(\s*<span class="sp">★<\/span>\s*){2,}/g, SEP)
+    .replace(/<span class="sp">★<\/span>\s*(<table>)/g, '$1').replace(/(<\/table>)\s*<span class="sp">★<\/span>/g, '$1')
+    .replace(/<span class="sp">★<\/span>\s*(<span class="nt">)/g, '$1').replace(/(<span class="nt">[^]*?<\/span>)\s*<span class="sp">★<\/span>/g, '$1')
+    .replace(/^\s*<span class="sp">★<\/span>\s*/, '').replace(/\s*<span class="sp">★<\/span>\s*$/, '');
 }
 function cell(unit, q, x, y) {
   const a0 = A[unit][q], qq = Qs[unit][q];
@@ -83,7 +84,7 @@ b,.tg{font-weight:700}
 .h{position:absolute;left:0;width:100%;overflow:hidden;padding:0.4mm 0}
 .split2{border-top:1pt dashed #000;margin-top:0.8mm;padding-top:0.6mm}
 .c{line-height:1.1;letter-spacing:0;word-break:break-word}
-.sp{color:#000;font-weight:700;font-family:"Liberation Sans",Arial,sans-serif;padding:0 0.05em}
+.sp{color:#000;font-weight:700;font-family:"DejaVu Sans",sans-serif;font-size:1.25em;line-height:0;padding:0 0.12em}
 .q{display:inline;font-weight:700;font-style:italic}
 .q+b{margin-left:0.6mm}
 .tg{font-weight:700;color:#000}
