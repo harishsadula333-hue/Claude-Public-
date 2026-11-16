@@ -14,8 +14,16 @@ const COL_W = (PAGE_W - 2 * MARGIN_X) / COLS;            // 39.6 mm
 // Cut lines are a shared grid; content of every cell sits SAFE mm inside the cut lines.
 const ROMAN = ['', 'I', 'II', 'III', 'IV', 'V'];
 
+// Run steps on with a thin separator; keep real line breaks only before headings/parts.
+function dense(h) {
+  return h.replace(/<br>\s*/g, (m, off, str) => {
+    const nxt = str.slice(off + m.length, off + m.length + 40);
+    return /^(<b>(\(|Case|Step|Proof|Statement|Mean|Mode|Median|Variance|Expect|Standard|Verify|Solution|Null|Alternative|Level|The test|Test|Decision|Conclusion|Properties|Applications|PROPERTIES|Note|Sum|No\.|P\(|[ivx]+\)|[0-9]\.)|<span class="nt">|[0-9]\. <b>|[ivx]+\) |\([ivx]+\)|•)/.test(nxt) ? '<br>' : ' <span class="sp">|</span> ';
+  });
+}
 function cell(unit, q, x, y) {
-  const a = A[unit][q], qq = Qs[unit][q];
+  const a0 = A[unit][q], qq = Qs[unit][q];
+  const a = Object.fromEntries(Object.entries(a0).map(([k, v]) => [k, dense(v)]));
   const qn = (t) => `<div class="q">Q. ${t}</div><b>Ans:</b> `;
   const tag = (s) => `<span class="tg">U${ROMAN[unit]}·${s}</span>`;
   let inner;
@@ -23,9 +31,9 @@ function cell(unit, q, x, y) {
   if (a.full) {
     inner = `<div class="h" style="top:0;height:${IH}mm"><div class="c">${tag(q)}${qn(qq.full)}${a.full}</div></div>`;
   } else {
-    const h = IH / 2;
-    inner = `<div class="h" style="top:0;height:${h}mm"><div class="c">${tag(q + 'a')}${qn(qq.a)}${a.a}</div></div>` +
-            `<div class="h split" style="top:${h}mm;height:${h}mm"><div class="c">${tag(q + 'b')}${qn(qq.b)}${a.b}</div></div>`;
+    // a and b share one flowing box; the dashed divider moves to wherever the content needs it (it is not a cut line)
+    inner = `<div class="h" style="top:0;height:${IH}mm"><div class="c"><div>${tag(q + 'a')}${qn(qq.a)}${a.a}</div>` +
+            `<div class="split2">${tag(q + 'b')}${qn(qq.b)}${a.b}</div></div></div>`;
   }
   return `<div class="blk" data-q="${unit}-${q}" style="left:${x + SAFE}mm;top:${y + SAFE}mm;width:${COL_W - 2 * SAFE}mm;height:${ROW_H - 2 * SAFE}mm">${inner}</div>`;
 }
@@ -48,14 +56,16 @@ body{width:210mm;height:297mm;position:relative;font-family:"Liberation Sans",Ar
 .vl{width:0.3pt;margin-left:-0.15pt}
 .hl{height:0.3pt;margin-top:-0.15pt}
 .h{position:absolute;left:0;width:100%;overflow:hidden;padding:0.2mm 0}
-.split{border-top:0.25pt dashed #777}
-.c{line-height:1.13;letter-spacing:-0.01em;word-break:break-word}
+.split2{border-top:0.4pt dashed #555;margin-top:0.4mm;padding-top:0.3mm}
+.c{line-height:1.1;letter-spacing:-0.015em;word-break:break-word}
+.sp{color:#888;font-weight:normal}
 .q{display:inline;font-weight:bold;font-style:italic;background:#e8e8e8}
 .q+b{margin-left:0.3mm}
 .tg{display:inline-block;background:#000;color:#fff;font-weight:bold;padding:0 0.4mm;margin-right:0.6mm;border-radius:0.4mm;font-size:0.95em}
 table{border-collapse:collapse;margin:0.2mm 0;width:100%;table-layout:fixed}
 td{border:0.25pt solid #000;text-align:center;padding:0 0.1mm;font-size:0.92em}
 i{font-style:italic;color:#333}
+.nt{display:inline;font-style:italic;border:0.3pt solid #000;padding:0 0.3mm;background:#f2f2f2}
 </style></head><body>${html}</body></html>`;
 }
 
