@@ -1,6 +1,6 @@
 {
  "music": "Vadodora.mp3",
- "music_start": 0.0,
+ "music_start": 2.449,
  "bpm": 97.0,
  "fonts": "fonts/",
  "logo": "logo.jpg",
@@ -185,5 +185,6 @@
    "type": "end",
    "dur": 4.9485
   }
- ]
+ ],
+ "fade_in": 0.03
 }

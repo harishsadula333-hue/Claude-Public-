@@ -232,7 +232,7 @@ if PREVIEW:
 n = int(round(DUR * FPS)); M = EDL["music"]
 ff = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-y", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}", "-r", str(FPS), "-i", "-",
     "-ss", str(EDL.get("music_start", 0)), "-t", f"{DUR:.3f}", "-i", M, "-map", "0:v", "-map", "1:a",
-    "-af", f"afade=t=in:d=0.4,afade=t=out:st={DUR - 2.0:.3f}:d=2.0,loudnorm=I=-14:TP=-1.5:LRA=11",
+    "-af", f"afade=t=in:d={EDL.get('fade_in', 0.03)},afade=t=out:st={DUR - 2.0:.3f}:d=2.0,loudnorm=I=-14:TP=-1.5:LRA=11",
     "-c:v", "libx264", "-preset", "slow", "-crf", "20", "-maxrate", "9M", "-bufsize", "18M", "-pix_fmt", "yuv420p", "-profile:v", "high",
     "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", "-t", f"{DUR:.3f}", OUT], stdin=subprocess.PIPE)
 for i in range(n):
