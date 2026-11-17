@@ -1,0 +1,189 @@
+{
+ "music": "Vadodora.mp3",
+ "music_start": 0.0,
+ "bpm": 97.0,
+ "fonts": "fonts/",
+ "logo": "logo.jpg",
+ "segments": [
+  {
+   "type": "video",
+   "src": "clip1.mp4",
+   "in": 0.0,
+   "dur": 3.7113,
+   "speed": 0.85,
+   "hook": true
+  },
+  {
+   "type": "photo",
+   "src": "b0b0799c-image.jpg",
+   "dur": 2.4742,
+   "focus": [
+    0.5,
+    0.33
+   ],
+   "zoom": [
+    1.0,
+    1.12
+   ],
+   "cap": "Floral Entrance Arch",
+   "kicker": "The welcome"
+  },
+  {
+   "type": "video",
+   "src": "clip2.mp4",
+   "in": 0.4,
+   "dur": 2.4742,
+   "speed": 0.9,
+   "cap": "Floral Entrance Arch",
+   "kicker": "The welcome"
+  },
+  {
+   "type": "video",
+   "src": "clip2.mp4",
+   "in": 3.3,
+   "dur": 1.8557,
+   "speed": 1.0,
+   "cap": "Step Inside",
+   "kicker": "Shaadi wala ghar"
+  },
+  {
+   "type": "video",
+   "src": "clip3.mp4",
+   "in": 0.3,
+   "dur": 2.4742,
+   "speed": 0.85,
+   "cap": "Ceiling Florals & Hangings",
+   "kicker": "Living room"
+  },
+  {
+   "type": "video",
+   "src": "clip4.mp4",
+   "in": 8.5,
+   "dur": 2.4742,
+   "speed": 0.85,
+   "cap": "Ceiling Florals & Hangings",
+   "kicker": "Living room"
+  },
+  {
+   "type": "video",
+   "src": "clip2.mp4",
+   "in": 7.0,
+   "dur": 2.4742,
+   "speed": 0.85,
+   "cap": "Ceiling Florals & Hangings",
+   "kicker": "Living room"
+  },
+  {
+   "type": "photo",
+   "src": "09ffdc9b-image.jpg",
+   "dur": 2.4742,
+   "focus": [
+    0.42,
+    0.45
+   ],
+   "zoom": [
+    1.0,
+    1.12
+   ],
+   "cap": "Ceiling Florals & Hangings",
+   "kicker": "Living room"
+  },
+  {
+   "type": "video",
+   "src": "clip3.mp4",
+   "in": 6.0,
+   "dur": 2.4742,
+   "speed": 0.85,
+   "cap": "Dining Table Florals",
+   "kicker": "Every corner"
+  },
+  {
+   "type": "photo",
+   "src": "843cc8c9-image.jpg",
+   "dur": 2.4742,
+   "focus": [
+    0.55,
+    0.42
+   ],
+   "zoom": [
+    1.0,
+    1.12
+   ],
+   "cap": "Marigold Door Garlands",
+   "kicker": "Traditional touch"
+  },
+  {
+   "type": "video",
+   "src": "clip3.mp4",
+   "in": 11.2,
+   "dur": 2.4742,
+   "speed": 0.9,
+   "cap": "Marigold Door Garlands",
+   "kicker": "Traditional touch"
+  },
+  {
+   "type": "video",
+   "src": "clip4.mp4",
+   "in": 24.2,
+   "dur": 2.4742,
+   "speed": 0.85,
+   "cap": "Marigold Door Garlands",
+   "kicker": "Traditional touch"
+  },
+  {
+   "type": "video",
+   "src": "clip3.mp4",
+   "in": 20.0,
+   "dur": 1.8557,
+   "speed": 0.8,
+   "cap": "Marigold Door Garlands",
+   "kicker": "Traditional touch"
+  },
+  {
+   "type": "video",
+   "src": "clip4.mp4",
+   "in": 31.0,
+   "dur": 2.4742,
+   "speed": 0.85,
+   "cap": "Balcony D\u00e9cor",
+   "kicker": "Outdoors too"
+  },
+  {
+   "type": "video",
+   "src": "clip3.mp4",
+   "in": 25.0,
+   "dur": 2.4742,
+   "speed": 0.85,
+   "cap": "Pooja Mandir D\u00e9cor",
+   "kicker": "The sacred space"
+  },
+  {
+   "type": "photo",
+   "src": "b46d5b40-image.jpg",
+   "dur": 2.4742,
+   "focus": [
+    0.5,
+    0.45
+   ],
+   "zoom": [
+    1.0,
+    1.12
+   ],
+   "cap": "Pooja Mandir D\u00e9cor",
+   "kicker": "The sacred space"
+  },
+  {
+   "type": "video",
+   "src": "clip4.mp4",
+   "in": 37.0,
+   "dur": 2.4742,
+   "speed": 0.85,
+   "cap": "Pooja Mandir D\u00e9cor",
+   "kicker": "The sacred space"
+  },
+  {
+   "type": "end",
+   "dur": 4.9485
+  }
+ ]
+}
