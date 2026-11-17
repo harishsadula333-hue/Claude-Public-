@@ -1,4 +1,4 @@
-"""Sundarlysh Events - real-footage home décor reel (1080x1920, 30 fps).
+"""Sundarlysh Memories - real-footage home décor reel (1080x1920, 30 fps).
 
 usage: home_reel.py <edl.json> <out.mp4> [--preview t1,t2,...]
 
@@ -125,7 +125,7 @@ def vgrad(a0, a1, y0, y1, col=(20, 6, 10)):
     g = np.zeros((H, W, 4), np.uint8); g[..., :3] = col; g[..., 3] = np.repeat((a0 + (a1 - a0) * k) * 255, W, 1).astype(np.uint8)
     return Image.fromarray(g, "RGBA")
 GRAD_B = vgrad(0, .78, 1150, 1920); GRAD_T = vgrad(.45, 0, 0, 330)
-MARK = text_img("Sundarlysh Events", PINYON(70), (255, 245, 235), shadow=.7)
+MARK = text_img("Sundarlysh Memories", PINYON(70), (255, 245, 235), shadow=.7)
 def gold_line(w):
     im = Image.new("RGBA", (w, 4), (0, 0, 0, 0)); d = ImageDraw.Draw(im); d.rectangle((0, 0, w, 3), fill=GOLD + (255,)); return im
 
@@ -145,11 +145,15 @@ def badge(size):
     out = Image.new("RGBA", (size + 60, size + 60), (0, 0, 0, 0)); d = ImageDraw.Draw(out)
     d.ellipse((4, 4, size + 56, size + 56), outline=GOLD + (255,), width=4); d.ellipse((18, 18, size + 42, size + 42), fill=GOLD + (255,))
     out.alpha_composite(lg, (30, 30)); return out
-BADGE = badge(420); BADGE_S = badge(150)
+def logo_block(size):
+    lg = LOGO.resize((size, size), Image.LANCZOS).convert("RGBA")
+    y, x = np.mgrid[0:size, 0:size].astype(np.float32); r = np.sqrt((x - size / 2) ** 2 + (y - size / 2) ** 2) / (size / 2)
+    lg.putalpha(Image.fromarray((np.clip((1.0 - r) / 0.12, 0, 1) * 255).astype(np.uint8))); return lg
+BADGE = logo_block(660)
 
 def wine_bg():
-    y, x = np.mgrid[0:H, 0:W].astype(np.float32); r = np.sqrt(((x - W / 2) / W) ** 2 + ((y - H * .42) / H) ** 2)[..., None]
-    k = np.clip(r * 1.7, 0, 1); g = np.array((138, 58, 72)) * (1 - k) + np.array(WINE_D) * k
+    y, x = np.mgrid[0:H, 0:W].astype(np.float32); r = np.sqrt(((x - W / 2) / W) ** 2 + ((y - 500) / H) ** 2)[..., None]
+    k = np.clip((r - .28) * 1.6, 0, 1); g = np.array((69, 1, 40)) * (1 - k) + np.array((34, 0, 18)) * k
     return Image.fromarray(g.astype(np.uint8)).convert("RGBA")
 WINEBG = wine_bg()
 
@@ -159,7 +163,6 @@ HOOK = [text_img("Shaadi wala ghar?", PINYON(150), GOLD_L, shadow=.9),
 END = dict(
     s1=text_img("Your home, dressed for", ITAL(64), (243, 222, 214)),
     s2=text_img("the celebration", PINYON(130), GOLD_L),
-    s3=text_img("HOME DÉCOR FOR", SANS(30), GOLD_L, tr=9),
     s4=text_img("HALDI · MEHENDI · WEDDING FUNCTIONS", SANS(34), (255, 255, 255), tr=5),
     s5=text_img("DM TO BOOK", CINZEL(70), (255, 255, 255), tr=10, grad=True),
     s6=text_img("@sundarlyshevents", SANS(50), (255, 255, 255), tr=1),
@@ -197,11 +200,11 @@ def overlay(fr, s, t):
 def end_card(t, s):
     u = t - s["t0"]; fr = WINEBG.copy()
     sc = .7 + .3 * eout(u / .6); b = BADGE.resize((int(BADGE.width * sc), int(BADGE.height * sc)), Image.BILINEAR)
-    paste(fr, b, (W - b.width) / 2, 520 - b.height / 2, ease(u / .3))
-    y = 820
-    for key, gap, d0 in (("s1", -10, .4), ("s2", 30, .55), ("s3", 4, .9), ("s4", 50, 1.0), ("s5", 10, 1.3), ("s6", 10, 1.5), ("s7", 0, 1.65)):
+    paste(fr, b, (W - b.width) / 2, 500 - b.height / 2, ease(u / .3))
+    y = 860
+    for key, gap, d0 in (("s1", -10, .4), ("s2", 34, .55), ("s4", 56, .9), ("s5", 10, 1.3), ("s6", 10, 1.5), ("s7", 0, 1.65)):
         sp = END[key]; paste(fr, sp, (W - sp.width) / 2, y + (1 - eout((u - d0) / .4)) * 30, ease((u - d0) / .3)); y += sp.height + gap
-    lw = 300; paste(fr, gold_line(lw), (W - lw) / 2, 1215, ease((u - .8) / .3))
+    pass
     if t > DUR - .5: fr = Image.blend(fr, Image.new("RGBA", (W, H), (0, 0, 0, 255)), ease((t - (DUR - .5)) / .5))
     return fr
 
