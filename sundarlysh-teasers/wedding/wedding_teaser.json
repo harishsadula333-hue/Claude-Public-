@@ -1,0 +1,239 @@
+{
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/music/vadodora.mp3",
+ "music_start": 2.449,
+ "bpm": 97.0,
+ "fonts": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/assets/fonts",
+ "logo": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v7/logo.jpg",
+ "segments": [
+  {
+   "kind": "card",
+   "beats": 6,
+   "lines": [
+    [
+     "kick",
+     "PLANNING A WEDDING?",
+     36
+    ],
+    [
+     "script",
+     "Leave everything",
+     92
+    ],
+    [
+     "script",
+     "to family",
+     92
+    ]
+   ]
+  },
+  {
+   "kind": "video",
+   "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip1.mp4",
+   "in": 0.0,
+   "speed": 0.85,
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "BUDGET-FRIENDLY"
+    ],
+    [
+     "cap",
+     "BEAUTIFUL D\u00c9COR",
+     76
+    ]
+   ]
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/wed_up/w_anchor.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "ENTERTAINMENT"
+    ],
+    [
+     "cap",
+     "ANCHORS & ARTISTS",
+     76
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/wed_up/w_mandap.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "SOLID"
+    ],
+    [
+     "cap",
+     "EVENT MANAGEMENT",
+     76
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/ubtan.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "INNOVATIVE"
+    ],
+    [
+     "cap",
+     "GUEST WORKSHOPS",
+     76
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/wed_up/w_food.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "DELICIOUS"
+    ],
+    [
+     "cap",
+     "FOOD, BEAUTIFULLY SERVED",
+     64
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/wed_up/w_photo.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "EVERY MOMENT"
+    ],
+    [
+     "cap",
+     "PHOTOGRAPHY",
+     76
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/wed_up/w_invite.jpg",
+   "beats": 2,
+   "lines": [
+    [
+     "cap",
+     "INVITES",
+     76
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/wed_up/k_fx.jpg",
+   "beats": 2,
+   "lines": [
+    [
+     "cap",
+     "SPECIAL EFFECTS",
+     76
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/wed_up/w_choreo.jpg",
+   "beats": 2,
+   "lines": [
+    [
+     "cap",
+     "CHOREOGRAPHY",
+     76
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/wed_up/w_mehendi.jpg",
+   "beats": 2,
+   "lines": [
+    [
+     "cap",
+     "MEHENDI & MORE",
+     76
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "card",
+   "beats": 6,
+   "lines": [
+    [
+     "script",
+     "Sundarlysh Memories",
+     84
+    ],
+    [
+     "kick",
+     "YOUR ONE-STOP",
+     36
+    ],
+    [
+     "cap",
+     "FAMILY EVENT PLANNERS",
+     70
+    ],
+    [
+     "white",
+     "Not just a business, family.",
+     54
+    ]
+   ]
+  },
+  {
+   "kind": "card",
+   "beats": 8,
+   "logo": 560,
+   "logo_y": 560,
+   "lines": [
+    [
+     "white",
+     "Your family celebration, our family care",
+     46
+    ],
+    [
+     "cap",
+     "DM TO PLAN",
+     86
+    ],
+    [
+     "sans",
+     "@sundarlyshmemories",
+     52
+    ],
+    [
+     "kick",
+     "HYDERABAD \u00b7 BENGALURU",
+     30
+    ]
+   ]
+  }
+ ]
+}

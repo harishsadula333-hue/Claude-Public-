@@ -1,0 +1,29 @@
+# Sundarlysh Memories – teasers & caricature video (from the 18 Nov meeting)
+
+All files are 1080×1920 vertical, made for Reels, Stories and WhatsApp status. **Drafts: post only after Prachi approves.**
+
+| File | Length | What it is |
+|---|---|---|
+| `Sundarlysh_Memories_Christmas_Workshop_Teaser.mp4` | 23 s | Short version of the advent reel: 24 hook → title + FIRST TIME EVER → "One surprise a day" → date card → DM to book |
+| `Sundarlysh_Memories_Advent_Caricature.mp4` | 37 s | 3D caricature short: Riya & Meera speech-bubble chat ("What are you doing this weekend?" … "Ever made your own advent calendar?") → making, families, opening daily → details card → "See you there!" → DM to book |
+| `Sundarlysh_Memories_Workshops_Teaser.mp4` | 28 s | General workshops: Ubtan bar, Kundan mehendi, Glitter, Decoden, Bedazzle, Sand candles, Cake & paint, 3D art, Tree lighting → "for kitty parties, cafés, birthdays, celebrations" |
+| `wedding/Sundarlysh_Memories_Wedding_Teaser.mp4` | 28 s | Combined wedding teaser: "Planning a wedding? Leave everything to family" → budget-friendly décor (real footage) · anchors & artists · event management · guest workshops · food · photography · invites · special effects · choreography · mehendi → "Your one-stop family event planners. Not just a business, family." |
+| `wedding/Sundarlysh_Memories_Wedding_outfit.mp4` | 14 s | "Which outfit to choose?" |
+| `wedding/Sundarlysh_Memories_Wedding_varmala.mp4` | 14 s | "Which varmala to choose?" |
+| `wedding/Sundarlysh_Memories_Wedding_special_effects.mp4` | 14 s | Cold pyro, fog & confetti |
+| `wedding/Sundarlysh_Memories_Wedding_bride_family.mp4` | 14 s | Make the bride's family feel special |
+| `wedding/Sundarlysh_Memories_Wedding_groom_family.mp4` | 14 s | Make the groom's family feel special |
+
+Notes:
+- People and scenes are AI-generated (except the floral-arch clip in the wedding teaser, which is Sundarlysh's own footage). Turn on Instagram's **AI info** label. Swap in real wedding photos when Prachi sends them on Friday, using the same file names in `wedding-images/`.
+- The realistic "AI face + Prachi's voice" video needs her voice recording first. The script is in `../sundarlysh-marketing-kit/README.md` (section 4).
+
+## Music credits (add the one used to the caption)
+All by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0 License, http://creativecommons.org/licenses/by/4.0/
+- Christmas teaser: "We Wish You a Merry Christmas"
+- Caricature video: "Christmas Rap"
+- Workshops teaser: "Life of Riley"
+- Wedding teasers: "Vadodora"
+
+## Re-render
+`teaser.py <spec.json> out.mp4`. Each `.json` lists the shots, captions and beat lengths. Edit the text there.
