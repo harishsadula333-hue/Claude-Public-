@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Christmas Advent Calendar Workshop · Sundarlysh Memories</title>
+<meta name="description" content="Hyderabad's first Christmas Advent Calendar Workshop. Create 24 little surprises yourself. Sunday 29 November, 5–7 PM, Van Lavino Café & Patisserie, Financial District.">
+<meta property="og:title" content="The Christmas Advent Calendar Workshop · Sundarlysh Memories">
+<meta property="og:description" content="First time ever in Hyderabad · Sunday 29 Nov · 5–7 PM · Van Lavino Café & Patisserie, Financial District">
+<meta property="og:image" content="img/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Montserrat:wght@500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,800&display=swap" rel="stylesheet">
+<script>
+/* =====================  SETTINGS: edit before going live  ===================== */
+window.EVENT = {
+  // Google Apps Script web-app URL that saves registrations to a Google Sheet (see README). Leave "" to skip.
+  SHEET_ENDPOINT: "",
+  // Razorpay Payment Page / Payment Link URL created in the Razorpay dashboard. Leave "" until approved.
+  PAYMENT_URL: "",
+  // Shown on the page. Set PRICE to "" to hide the price.
+  PRICE: "₹1,400",
+  PRICE_NOTE: "per person · includes a ₹500 food voucher at the café",
+  INSTAGRAM: "https://www.instagram.com/sundarlyshmemories/",
+  WHATSAPP: ""   // e.g. "https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20book%20the%20Advent%20Calendar%20Workshop"
+};
+</script>
+<style>
+:root { --plum:#45012A; --plum-d:#22000F; --plum-l:#7A1E50; --gold:#C9A55E; --gold-l:#F0D8A0; --cream:#FBF6F1; --ink:#2E1A22;
+  --green:#104A32; --green-d:#06221A;
+  --foil:linear-gradient(115deg,#96702E 0%,#F6E1A6 22%,#C49A4C 42%,#FFF3CD 60%,#B68B3E 80%,#ECD392 100%); }
+* { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body { font-family:"Montserrat",system-ui,sans-serif; color:#fff; background:var(--plum-d); line-height:1.5; }
+img { max-width:100%; display:block; }
+a { color:inherit; }
+.wrap { max-width:1080px; margin:0 auto; padding:0 16px; }
+.foil { background:var(--foil); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.kicker { font-size:12px; font-weight:800; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-l); }
+.it { font-family:"Playfair Display",serif; font-style:italic; font-weight:800; }
+.cz { font-family:"Cinzel",serif; font-weight:800; letter-spacing:.05em; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:15px 28px; border-radius:40px; border:0; cursor:pointer;
+  background:var(--foil); color:var(--plum-d); font:800 15px/1 "Montserrat",sans-serif; letter-spacing:.12em; text-transform:uppercase; text-decoration:none;
+  box-shadow:0 8px 24px rgba(0,0,0,.35); }
+.btn.ghost { background:transparent; color:var(--gold-l); border:2px solid var(--gold); box-shadow:none; }
+.pill { display:inline-block; background:var(--foil); color:var(--plum-d); font-weight:800; font-size:12px; letter-spacing:.2em; padding:8px 16px; border-radius:30px; }
+
+/* hero */
+.hero { position:relative; min-height:100vh; display:grid; align-items:end; background:var(--plum-d); overflow:hidden; }
+.hero .bg { position:absolute; inset:0; background:url(img/hero.jpg) center/cover; opacity:.55; }
+.hero::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(34,0,15,.55) 0%,rgba(34,0,15,.2) 35%,rgba(34,0,15,.92) 75%,var(--plum-d) 100%); }
+.hero .in { position:relative; z-index:2; text-align:center; padding:28px 16px 110px; }
+.hero .logo { width:120px; height:120px; border-radius:50%; margin:0 auto 18px; box-shadow:0 0 0 3px var(--gold),0 10px 30px rgba(0,0,0,.5); }
+.hero h1 { margin:14px 0 6px; line-height:1.05; }
+.hero h1 .it { display:block; font-size:clamp(34px,7vw,58px); color:var(--gold-l); }
+.hero h1 .cz { display:block; font-size:clamp(30px,6.4vw,62px); }
+.hero .sub { font-size:clamp(16px,2.6vw,20px); color:#F4E4DA; max-width:620px; margin:10px auto 22px; }
+.facts { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:0 auto 26px; max-width:760px; }
+.facts span { background:rgba(34,0,15,.7); border:1px solid rgba(201,165,94,.7); border-radius:30px; padding:9px 16px; font-weight:800; font-size:14px; }
+.facts b { color:var(--gold-l); }
+.cta { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+
+section { padding:64px 0; }
+.h2 { text-align:center; margin-bottom:34px; }
+.h2 .it { font-size:clamp(28px,5vw,42px); color:var(--gold-l); display:block; line-height:1.1; }
+.h2 p { color:#EBD6CD; max-width:640px; margin:10px auto 0; }
+
+/* steps */
+.steps { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+.card { background:linear-gradient(180deg,rgba(122,30,80,.35),rgba(34,0,15,.7)); border:1px solid rgba(201,165,94,.6); border-radius:16px; overflow:hidden; }
+.card img { aspect-ratio:1/1; object-fit:cover; width:100%; }
+.card .b { padding:16px 18px 20px; }
+.card .n { font-family:"Playfair Display",serif; font-style:italic; font-weight:800; color:var(--gold-l); font-size:22px; }
+.card h3 { font-family:"Cinzel",serif; font-weight:800; font-size:18px; margin:2px 0 6px; letter-spacing:.03em; }
+.card p { font-size:14px; color:#EBD6CD; }
+
+/* why */
+.why { background:radial-gradient(120% 120% at 50% 0%,#1E6B48 0%,var(--green) 45%,var(--green-d) 100%); }
+.why .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; }
+.why .t { background:rgba(6,34,26,.55); border:1px solid rgba(201,165,94,.6); border-radius:14px; padding:18px; text-align:center; }
+.why .t b { display:block; font-family:"Cinzel",serif; font-weight:800; font-size:26px; }
+.why .t span { font-size:14px; color:#E3EFE7; }
+
+/* details + form */
+.book { display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:start; }
+@media (max-width:820px) { .book { grid-template-columns:1fr; } }
+.det { border:2px solid var(--gold); border-radius:18px; padding:26px; text-align:center; background:linear-gradient(180deg,rgba(122,30,80,.35),rgba(34,0,15,.85)); }
+.det .date { font-size:clamp(30px,5vw,44px); line-height:1.05; margin:6px 0; }
+.det .time { font-size:22px; font-weight:800; }
+.det .ven { font-size:22px; color:var(--gold-l); margin-top:14px; }
+.det .loc { font-weight:800; }
+.det hr { border:0; height:2px; width:90px; background:var(--gold); margin:16px auto; }
+.det .price { font-size:30px; font-weight:800; color:var(--gold-l); }
+.det .note { font-size:13px; color:#EBD6CD; }
+.det .eb { margin-top:16px; background:rgba(6,34,26,.7); border:1px dashed var(--gold); border-radius:12px; padding:12px; font-size:14px; }
+.det .eb b { color:var(--gold-l); letter-spacing:.12em; }
+form { background:var(--cream); color:var(--ink); border-radius:18px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.35); }
+form h3 { font-family:"Cinzel",serif; font-weight:800; font-size:22px; color:var(--plum); }
+form p.s { font-size:14px; color:#6c5560; margin:4px 0 16px; }
+label { display:block; font-size:12px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--plum); margin:12px 0 6px; }
+input, select { width:100%; padding:13px 14px; border:1.5px solid #d9c6cc; border-radius:10px; font:600 16px "Montserrat",sans-serif; color:var(--ink); background:#fff; }
+input:focus, select:focus { outline:2px solid var(--gold); border-color:var(--gold); }
+.row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+form .btn { width:100%; margin-top:20px; }
+.msg { margin-top:14px; font-size:14px; font-weight:600; display:none; }
+.msg.show { display:block; }
+.consent { font-size:12px; color:#6c5560; margin-top:10px; }
+
+/* faq */
+details { border:1px solid rgba(201,165,94,.6); border-radius:12px; padding:14px 18px; margin-bottom:10px; background:rgba(122,30,80,.25); }
+summary { font-weight:800; cursor:pointer; }
+details p { color:#EBD6CD; margin-top:8px; font-size:15px; }
+
+footer { text-align:center; padding:40px 16px 90px; border-top:1px solid rgba(201,165,94,.35); color:#D8C2B9; font-size:14px; }
+footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box-shadow:0 0 0 2px var(--gold); }
+.sticky { position:fixed; left:0; right:0; bottom:0; z-index:50; padding:10px 16px calc(10px + env(safe-area-inset-bottom)); background:rgba(34,0,15,.94);
+  border-top:1px solid var(--gold); display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.sticky .t { font-size:13px; font-weight:700; } .sticky .t b { color:var(--gold-l); }
+.sticky .btn { padding:12px 18px; font-size:13px; white-space:nowrap; flex:none; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="bg" role="img" aria-label="Handmade advent calendar of 24 kraft pouches"></div>
+  <div class="in wrap">
+    <img class="logo" src="img/logo.jpg" alt="Sundarlysh Memories">
+    <span class="pill">FIRST TIME EVER IN HYDERABAD</span>
+    <h1><span class="it">The Christmas</span><span class="cz foil">ADVENT CALENDAR WORKSHOP</span></h1>
+    <p class="sub">24 little surprises, one to open every day till Christmas, and you make every one of them yourself.</p>
+    <div class="facts">
+      <span><b>SUN</b> · 29 November</span><span><b>5 PM – 7 PM</b></span><span>Van Lavino Café &amp; Patisserie · <b>Financial District, Hyderabad</b></span>
+    </div>
+    <div class="cta"><a class="btn" href="#book">Book my seat</a><a class="btn ghost" href="#how">How it works</a></div>
+  </div>
+</header>
+
+<section id="how"><div class="wrap">
+  <div class="h2"><span class="kicker">How it works</span><span class="it">Create your own advent calendar</span>
+    <p>No pre-packed gifts. You choose, decorate and fill everything, so every surprise is truly yours.</p></div>
+  <div class="steps">
+    <div class="card"><img src="img/props.jpg" alt="Table of mini Christmas gifts and props" loading="lazy"><div class="b"><div class="n">01</div><h3>24 kinds of props &amp; gifts</h3><p>Pick from candies, mini ornaments, ribbons, stickers, tags and little treats.</p></div></div>
+    <div class="card"><img src="img/fill.jpg" alt="Filling a kraft gift bag" loading="lazy"><div class="b"><div class="n">02</div><h3>Fill your surprises</h3><p>Choose what goes inside each of your 24 bags, for yourself or someone special.</p></div></div>
+    <div class="card"><img src="img/decor.jpg" alt="Decorating gift bags" loading="lazy"><div class="b"><div class="n">03</div><h3>Decorate &amp; customise</h3><p>Style your gift bags or goodies box with stamps, stickers, tags and ribbons.</p></div></div>
+    <div class="card"><img src="img/box.jpg" alt="Finished goodies box" loading="lazy"><div class="b"><div class="n">04</div><h3>Take it home</h3><p>Open one surprise every day in December, all the way to Christmas.</p></div></div>
+  </div>
+</div></section>
+
+<section class="why"><div class="wrap">
+  <div class="h2"><span class="kicker">Why you'll love it</span><span class="it">A cosy evening, made by you</span></div>
+  <div class="grid">
+    <div class="t"><b class="foil">24</b><span>little surprises you make yourself</span></div>
+    <div class="t"><b class="foil">2 hrs</b><span>of crafting, chatting and Christmas cheer</span></div>
+    <div class="t"><b class="foil">All ages</b><span>perfect for friends, families and kids</span></div>
+    <div class="t"><b class="foil">1st</b><span>workshop of its kind in Hyderabad</span></div>
+  </div>
+</div></section>
+
+<section id="book"><div class="wrap">
+  <div class="h2"><span class="kicker">Save the date</span><span class="it">Book your seat</span><p>One session only · limited seats.</p></div>
+  <div class="book">
+    <div class="det">
+      <div class="kicker">Sunday</div>
+      <div class="date cz foil">29 NOVEMBER</div>
+      <div class="time">5 PM – 7 PM</div>
+      <div class="ven it">Van Lavino Café &amp; Patisserie</div>
+      <div class="loc">Financial District, Hyderabad</div>
+      <div id="priceBlock"><hr><div class="price" id="price"></div><div class="note" id="priceNote"></div></div>
+      <div class="eb"><b>EARLY BIRD OFFER</b><br>The first 5 bookings get <b>10% off</b> any Sundarlysh Memories workshop in December.</div>
+    </div>
+    <form id="regForm" novalidate>
+      <h3>Register</h3>
+      <p class="s" id="formSub">Fill in your details and we'll confirm your seat.</p>
+      <label for="name">Full name</label><input id="name" name="name" autocomplete="name" required>
+      <div class="row2">
+        <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile" required></div>
+        <div><label for="seats">Seats</label><select id="seats" name="seats"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+      </div>
+      <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="kids">Bringing kids?</label><select id="kids" name="kids"><option value="No">No</option><option value="Yes">Yes</option></select>
+      <button class="btn" type="submit" id="submitBtn">Continue to payment</button>
+      <p class="consent">By registering you agree to be contacted on WhatsApp about this workshop.</p>
+      <p class="msg" id="msg"></p>
+    </form>
+  </div>
+</div></section>
+
+<section><div class="wrap" style="max-width:760px">
+  <div class="h2"><span class="kicker">FAQ</span><span class="it">Good to know</span></div>
+  <details><summary>What is an advent calendar?</summary><p>A Christmas countdown: one small surprise to open every day in December until Christmas. At this workshop you create the whole calendar yourself.</p></details>
+  <details><summary>Do I need any craft experience?</summary><p>Not at all. Everything is set up for you and our team guides you through each step.</p></details>
+  <details><summary>Can I bring my kids?</summary><p>Yes, the workshop is fun for all ages. Please book a seat for each participant.</p></details>
+  <details><summary>What do I take home?</summary><p>Your own handmade advent calendar: decorated gift bags or a goodies box filled with surprises you chose.</p></details>
+  <details><summary>How do I get my booking confirmed?</summary><p>After registering and paying you'll receive a confirmation on WhatsApp. Questions? DM us on Instagram.</p></details>
+</div></section>
+
+<footer>
+  <img src="img/logo.jpg" alt="Sundarlysh Memories">
+  <div class="cz" style="color:var(--gold-l);letter-spacing:.2em">SUNDARLYSH MEMORIES</div>
+  <p>Experience bars, workshops &amp; celebrations · Hyderabad · Bengaluru</p>
+  <p style="margin-top:8px"><a id="igLink" href="#">@sundarlyshmemories</a></p>
+  <p style="margin-top:14px;font-size:12px;opacity:.7">Images are for illustration only.</p>
+</footer>
+
+<div class="sticky"><div class="t"><b>Sun 29 Nov · 5–7 PM</b><br>Van Lavino Café, Financial District</div><a class="btn" href="#book">Book now</a></div>
+
+<script>
+(function () {
+  var E = window.EVENT;
+  var $ = function (id) { return document.getElementById(id); };
+  $("igLink").href = E.INSTAGRAM;
+  if (E.PRICE) { $("price").textContent = E.PRICE; $("priceNote").textContent = E.PRICE_NOTE; } else { $("priceBlock").style.display = "none"; }
+  var live = !!E.PAYMENT_URL;
+  if (!live) {
+    $("submitBtn").textContent = E.SHEET_ENDPOINT ? "Register interest" : "DM us to book";
+    $("formSub").textContent = "Online payments open soon. Leave your details or DM us on Instagram to reserve your seat.";
+  }
+  function show(t, ok) { var m = $("msg"); m.textContent = t; m.style.color = ok ? "#1E6B48" : "#A3263A"; m.className = "msg show"; }
+
+  $("regForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var f = e.target, name = f.name.value.trim(), phone = f.phone.value.replace(/\D/g, ""), email = f.email.value.trim();
+    if (name.length < 2) return show("Please enter your name.");
+    if (phone.length < 10) return show("Please enter a valid 10-digit WhatsApp number.");
+    if (!/^\S+@\S+\.\S+$/.test(email)) return show("Please enter a valid email.");
+    if (!E.SHEET_ENDPOINT && !live) { window.open(E.WHATSAPP || E.INSTAGRAM, "_blank"); return; }
+    var data = { name: name, phone: phone, email: email, seats: f.seats.value, kids: f.kids.value,
+                 event: "Advent Calendar Workshop 29 Nov", ts: new Date().toISOString() };
+    $("submitBtn").disabled = true; $("submitBtn").textContent = "Please wait…";
+    var save = E.SHEET_ENDPOINT
+      ? fetch(E.SHEET_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) })
+      : Promise.resolve();
+    save.catch(function () {}).then(function () {
+      if (live) {
+        var u = new URL(E.PAYMENT_URL);
+        u.searchParams.set("name", name); u.searchParams.set("email", email); u.searchParams.set("phone", phone);
+        window.location.href = u.toString();
+      } else {
+        show("Thank you! We've received your details and will contact you on WhatsApp to confirm your seat.", true);
+        $("submitBtn").textContent = "Registered ✓"; f.reset();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
