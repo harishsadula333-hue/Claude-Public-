@@ -19,7 +19,7 @@ BLUE = Font(name=F, size=10, color="0000FF")
 wb = Workbook()
 ws = wb.active; ws.title = "Calendar"
 ws.sheet_view.showGridLines = False
-ws["A1"] = "Sundarlysh Memories – 12-day plan to fill the Christmas Advent Calendar Workshop"; ws["A1"].font = Font(name=F, bold=True, size=15, color=PLUM)
+ws["A1"] = "Sundarlysh Memories – 11-day plan to fill the Christmas Advent Calendar Workshop"; ws["A1"].font = Font(name=F, bold=True, size=15, color=PLUM)
 ws["A2"] = "Sun 29 Nov · 5–7 PM · Van Lavino Café & Patisserie, Financial District · ₹1,399 per person (includes ₹500 food voucher) · Early bird: first 5 get 10% off any December workshop"
 ws["A2"].font = Font(name=F, italic=True, size=10, color="7C6661")
 
@@ -42,18 +42,14 @@ for c, h in enumerate(H, 1):
 ws.row_dimensions[HR].height = 42
 
 P = [
- (date(2026,11,18), "Set-up", "Get everything ready & approved",
-  "—", "—", "Create WhatsApp Business on the spare number: logo as photo, name 'Sundarlysh Memories', city only (no address).",
-  "Shortlist top 15 leads from the Leads workbook (High priority). Remove exact map location from Instagram/Google.",
-  "Final approval of reel, teasers, flyer & price. Print 20 flyers + 2 standing counter cards for Van Lavino.",
-  "Set up the ad account & audience (Hyderabad, 10 km around Financial District, women 22–45, interests: crafts, cafés, parenting). Don't start yet.",
-  "Main reel, flyer, booking page", "Marketing", 0.0),
- (date(2026,11,19), "Tease", "Create curiosity",
-  "Post Christmas Workshop TEASER (23 s): 'Something magical is coming to Hyderabad ✨'", "Countdown sticker to 29 Nov · poll: 'Ever made an advent calendar?'",
-  "Message A 'Save our number' to all existing contacts and leads.",
-  "Join: Hyderabad Mommies, Moms of India Hyderabad, Telugu Moms Network, Anything Art in Hyderabad (Meetup), letsmeet.in.",
-  "Place counter flyer at Van Lavino. Ask Van Lavino to Collab-post the launch reel tomorrow.",
-  "—", "Christmas Workshop Teaser (23 s)", "Marketing", 0.0),
+ (date(2026,11,19), "Set-up + Tease", "Get ready (morning) & create curiosity (evening)",
+  "Evening: post the Christmas Workshop TEASER (23 s): 'Something magical is coming to Hyderabad'",
+  "Countdown sticker to 29 Nov · poll: 'Ever made an advent calendar?'",
+  "Morning: set up WhatsApp Business on the spare number (logo as photo, name 'Sundarlysh Memories', city only). Evening: Message A 'Save our number' to all existing contacts and leads.",
+  "Join: Hyderabad Mommies, Moms of India Hyderabad, Telugu Moms Network, Anything Art in Hyderabad (Meetup), letsmeet.in. Remove exact map location from Instagram/Google; shortlist top 15 High-priority leads.",
+  "Final approval of reel, teasers, flyer & price. Print 20 flyers + 2 counter standees; place at Van Lavino. Ask Van Lavino to Collab-post the launch reel tomorrow.",
+  "Set up the ad account & audience (Hyderabad, 10 km around Financial District, women 22–45; crafts, cafés, parenting). Start tomorrow.",
+  "Christmas Workshop Teaser (23 s), flyer, booking page", "Founder + Marketing", 0.0),
  (date(2026,11,20), "Launch", "Open bookings – early bird",
   "Post the MAIN REEL (60 s) as a Collab with Van Lavino. Caption: date, venue, ₹1,399 incl. ₹500 food voucher, 'DM to book'.",
   "Share reel · 'Early bird: first 5 bookings' sticker · link sticker to booking page/DM",
