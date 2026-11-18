@@ -14,7 +14,9 @@ W, H, FPS = 1080, 1920, 30
 B = 60 / 115.02; M_START = 46.277
 PLUM, PLUM_D, GOLD, GOLD_L, CREAM = (69, 1, 40), (30, 0, 16), (201, 165, 94), (240, 216, 160), (251, 244, 238)
 DATE_L1, DATE_L2, TIME_L = "SUNDAY", "29 NOVEMBER", "5 PM – 7 PM"
-VENUE_L1, VENUE_L2 = "Van Leo Franco Bakery Café", "Financial District, Hyderabad"
+VENUE_L1, VENUE_L2 = "Van Lavino Café & Patisserie", "Financial District, Hyderabad"
+PRICE_L1, PRICE_L2 = "₹1,400 per person", "includes a ₹500 food voucher"
+GREEN, GREEN_D = (16, 74, 50), (6, 34, 22)
 HANDLE = "@sundarlyshmemories"
 
 def F(n, s, w=None):
@@ -27,6 +29,8 @@ CINZEL = lambda s, w=600: F("Cinzel-VF.ttf", s, w)
 PINYON = lambda s: F("PinyonScript-Regular.ttf", s)
 SANS = lambda s, w=600: F("Montserrat-VF.ttf", s, w)
 ITAL = lambda s: F("CormorantGaramond-Italic-VF.ttf", s, 500)
+PLAYI = lambda s, w=700: F("Playfair-Italic-VF.ttf", s, w)
+PLAY = lambda s, w=800: F("Playfair-VF.ttf", s, w)
 def ease(x): x = min(max(x, 0.0), 1.0); return x * x * (3 - 2 * x)
 def eout(x): x = min(max(x, 0.0), 1.0); return 1 - (1 - x) ** 3
 def back(x): x = min(max(x, 0.0), 1.0); c = 1.6; return 1 + (c + 1) * (x - 1) ** 3 + c * (x - 1) ** 2
@@ -63,10 +67,10 @@ def scaled(spr, s): return spr.resize((max(1, int(spr.width * s)), max(1, int(sp
 def line(w, col=GOLD, h=4): im = Image.new("RGBA", (max(w, 1), h), col + (255,)); return im
 
 # line styles for photo captions
-def S_script(t, size=118): return text_img(t, fit(t, PINYON, size, W - 120), GOLD_L, shadow=.95)
-def S_cap(t, size=78): return text_img(t, fit(t, CINZEL, size, W - 150, 6), (255, 255, 255), tr=6, shadow=.85, gold=True)
-def S_white(t, size=64): return text_img(t, fit(t, ITAL, size, W - 140), (255, 246, 238), shadow=.9)
-def S_kick(t, size=32): return text_img(t, fit(t, SANS, size, W - 160, 8), GOLD_L, tr=8, shadow=.85)
+def S_script(t, size=118): sz = int(size * .62); return text_img(t, fit(t, PLAYI, sz, W - 200), GOLD_L, shadow=.6)
+def S_cap(t, size=78): return text_img(t, fit(t, lambda z: CINZEL(z, 800), size, W - 200, 6), (255, 255, 255), tr=6, shadow=.6, gold=True)
+def S_white(t, size=64): sz = int(size * .78); return text_img(t, fit(t, lambda z: PLAYI(z, 600), sz, W - 200), (255, 246, 238), shadow=.6)
+def S_kick(t, size=32): return text_img(t, fit(t, lambda z: SANS(z, 800), size, W - 200, 8), GOLD_L, tr=8, shadow=.6)
 
 # ---------------------------------------------------------------- images
 _c = {}
@@ -127,7 +131,22 @@ def logo_block(size):
     y, x = np.mgrid[0:size, 0:size].astype(np.float32); r = np.sqrt((x - size / 2) ** 2 + (y - size / 2) ** 2) / (size / 2)
     lg.putalpha(Image.fromarray((np.clip((1.0 - r) / .14, 0, 1) * 255).astype(np.uint8))); return lg
 LOGO_L, LOGO_M = logo_block(680), logo_block(440)
-MARK = text_img("Sundarlysh Memories", PINYON(66), (255, 244, 236), shadow=.75)
+def _mark():
+    t_ = text_img("SUNDARLYSH MEMORIES", CINZEL(34, 800), (255, 255, 255), tr=7, pad=0, gold=True)
+    w, h = t_.width + 70, t_.height + 34
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    d.rounded_rectangle((0, 0, w - 1, h - 1), h // 2, fill=PLUM_D + (215,), outline=GOLD + (255,), width=3)
+    im.alpha_composite(t_, ((w - t_.width) // 2, (h - t_.height) // 2 - 2)); return im
+MARK = _mark()
+def badge_pill(txt, size=34):
+    t_ = text_img(txt, SANS(size, 800), PLUM_D, tr=6, pad=0); w, h = t_.width + 80, t_.height + 40
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); im.paste(foil(w, h), (0, 0), Image.new("L", (w, h), 0))
+    m = Image.new("L", (w, h), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, w - 1, h - 1), h // 2, fill=255)
+    im = Image.merge("RGBA", (*foil(w, h).split(), m)); im.alpha_composite(t_, ((w - t_.width) // 2, (h - t_.height) // 2 - 3))
+    sh = Image.new("RGBA", (w + 40, h + 40), (0, 0, 0, 0)); sm = Image.new("L", (w + 40, h + 40), 0)
+    ImageDraw.Draw(sm).rounded_rectangle((20, 26, w + 20, h + 26), h // 2, fill=140); sh.putalpha(sm.filter(ImageFilter.GaussianBlur(10)))
+    sh.alpha_composite(im, (20, 20)); return sh
+FIRST = badge_pill("FIRST TIME EVER IN HYDERABAD", 34)
 
 # ---------------------------------------------------------------- timeline (beats)
 SEG = []
@@ -146,22 +165,33 @@ add(8, "photo", img="a_family", lines=[S_kick("PERFECT FOR"), S_cap("FRIENDS · 
 add(8, "photo", img="a_board", lines=[S_script("One surprise a day", 118), S_white("all the way to Christmas")])
 add(6, "photo", img="a_cafe", lines=[S_kick("HYDERABAD'S"), S_cap("FIRST", 110), S_white("advent calendar workshop")], zin=False)
 add(12, "details")
-add(8, "photo", img="a_group", lines=[S_kick("LIMITED SEATS"), S_cap("BOOK ON INSTAGRAM", 74)])
+add(10, "photo", img="a_group", lines=[S_kick("LIMITED SEATS"), S_cap("BOOK ON INSTAGRAM", 74), S_white("Early bird: first 5 get 10% off"), S_white("any December workshop", 56)])
 add(10, "end")
 DUR = SEG[-1]["t1"]
 XF = .22
 
 # ---------------------------------------------------------------- scene renderers
 HOOK_N = text_img("24", CINZEL(430, 700), (255, 255, 255), shadow=.9, gold=True, pad=40)
-HOOK_A = S_kick("DAYS · 24 LITTLE SURPRISES", 34)
-HOOK_B = S_script("that you make yourself", 104)
+HOOK_A = text_img("DAYS · 24 LITTLE SURPRISES", SANS(40, 800), (255, 255, 255), tr=6, shadow=.5)
+HOOK_B = text_img("that you make yourself", PLAYI(78, 800), GOLD_L, shadow=.5)
+def green_bg():
+    y, x = np.mgrid[0:H, 0:W].astype(np.float32); r = np.sqrt(((x - W / 2) / W) ** 2 + ((y - H * .45) / H) ** 2)[..., None]
+    k = np.clip((r - .1) * 1.4, 0, 1); g = np.array((30, 110, 74)) * (1 - k) + np.array(GREEN_D) * k
+    a = np.full((H, W, 1), 222, np.float32)
+    return Image.fromarray(np.concatenate([g, a], -1).astype(np.uint8), "RGBA")
+GREENBG = green_bg()
 def hook(t, s):
     u = t - s["t0"]; fr = kb(s["img"], u, s["t1"] - s["t0"]).convert("RGBA")
-    fr.alpha_composite(GRAD_MID); snow(fr, t); sparkles(fr, t, .8)
+    fr.alpha_composite(GREENBG); snow(fr, t); sparkles(fr, t, .9)
+    d = ImageDraw.Draw(fr); k = eout(u / .6); m = int(70 + (1 - k) * 40)
+    d.rounded_rectangle((m, 420, W - m, 1420), 30, outline=GOLD + (int(255 * k),), width=5)
+    d.rounded_rectangle((m + 18, 438, W - m - 18, 1402), 22, outline=GOLD_L + (int(140 * k),), width=2)
     sc = .6 + .4 * back(u / .5); n = scaled(HOOK_N, sc)
-    paste(fr, n, (W - n.width) / 2, 760 - n.height / 2, ease(u / .25))
-    paste(fr, HOOK_A, (W - HOOK_A.width) / 2, 1010 + (1 - eout((u - .6) / .4)) * 26, ease((u - .6) / .3))
-    paste(fr, HOOK_B, (W - HOOK_B.width) / 2, 1080 + (1 - eout((u - 1.6) / .5)) * 30, ease((u - 1.6) / .4))
+    paste(fr, n, (W - n.width) / 2, 820 - n.height / 2, ease(u / .25))
+    paste(fr, HOOK_A, (W - HOOK_A.width) / 2, 1065 + (1 - eout((u - .5) / .4)) * 26, ease((u - .5) / .3))
+    paste(fr, HOOK_B, (W - HOOK_B.width) / 2, 1150 + (1 - eout((u - 1.2) / .5)) * 30, ease((u - 1.2) / .4))
+    fb = scaled(FIRST, .7 + .3 * back((u - 1.9) / .4)); paste(fr, fb, (W - fb.width) / 2, 1560 - fb.height / 2, ease((u - 1.9) / .2))
+    paste(fr, MARK, (W - MARK.width) / 2, 60, .97)
     return fr
 
 def photo_scene(t, s):
@@ -170,55 +200,65 @@ def photo_scene(t, s):
     fr.alpha_composite(GRAD_B); fr.alpha_composite(GRAD_T); snow(fr, t, .7)
     lines = s["lines"]; total = sum(l.height for l in lines) - 34 * (len(lines) - 1)
     y = 1700 - total; out = ease((s["t1"] - t) / .18)
+    pw = max(l.width for l in lines) + 40; pa = ease((u - .05) / .25) * out
+    if pa > .01:
+        pan = Image.new("RGBA", (W, H), (0, 0, 0, 0)); pd = ImageDraw.Draw(pan)
+        x0, x1, y0, y1 = (W - pw) / 2, (W + pw) / 2, y - 6, 1760
+        pd.rounded_rectangle((x0, y0, x1, y1), 30, fill=PLUM_D + (int(205 * pa),), outline=GOLD + (int(230 * pa),), width=3)
+        fr.alpha_composite(pan)
     for i, sp in enumerate(lines):
         d0 = .12 + i * .28
         paste(fr, sp, (W - sp.width) / 2, y + (1 - eout((u - d0) / .4)) * 34, ease((u - d0) / .3) * out); y += sp.height - 34
-    lw = int(240 * eout((u - .3) / .5)); paste(fr, line(lw), (W - lw) / 2, 1722, out)
-    paste(fr, MARK, (W - MARK.width) / 2, 46, .92)
+    lw = int(240 * eout((u - .3) / .5)); paste(fr, line(lw), (W - lw) / 2, 1726, out)
+    paste(fr, MARK, (W - MARK.width) / 2, 60, .97)
     return fr
 
 T_K = S_kick("SUNDARLYSH MEMORIES PRESENTS", 30)
-T_1 = text_img("The Christmas", PINYON(140), GOLD_L, shadow=.6)
-T_2 = text_img("ADVENT CALENDAR", CINZEL(88), (255, 255, 255), tr=6, shadow=.6, gold=True)
-T_3 = text_img("WORKSHOP", CINZEL(112), (255, 255, 255), tr=14, shadow=.6, gold=True)
+T_1 = text_img("The Christmas", PLAYI(96, 800), GOLD_L, shadow=.6)
+T_2 = text_img("ADVENT CALENDAR", CINZEL(88, 800), (255, 255, 255), tr=6, shadow=.6, gold=True)
+T_3 = text_img("WORKSHOP", CINZEL(112, 800), (255, 255, 255), tr=14, shadow=.6, gold=True)
+T_K = text_img("SUNDARLYSH MEMORIES PRESENTS", SANS(32, 800), GOLD_L, tr=7)
 def title(t, s):
     u = t - s["t0"]; fr = PLUMBG.copy(); snow(fr, t, .85); sparkles(fr, t)
-    lg = scaled(LOGO_M, .85 + .15 * back(u / .5)); paste(fr, lg, (W - lg.width) / 2, 520 - lg.height / 2, ease(u / .25))
-    y = 800
+    lg = scaled(LOGO_M, .85 + .15 * back(u / .5)); paste(fr, lg, (W - lg.width) / 2, 470 - lg.height / 2, ease(u / .25))
+    y = 730
     for i, (sp, gap) in enumerate(((T_K, -10), (T_1, -30), (T_2, -26), (T_3, 0))):
         d0 = .25 + i * .22; paste(fr, sp, (W - sp.width) / 2, y + (1 - eout((u - d0) / .45)) * 40, ease((u - d0) / .3)); y += sp.height + gap
-    lw = int(320 * eout((u - 1.1) / .5)); paste(fr, line(lw), (W - lw) / 2, y + 20)
+    fb = scaled(FIRST, .7 + .3 * back((u - 1.2) / .4)); paste(fr, fb, (W - fb.width) / 2, y + 70, ease((u - 1.2) / .2))
     return fr
 
-D_K = S_kick("SAVE THE DATE", 34)
-D_1 = text_img(DATE_L1, CINZEL(58), (255, 240, 230), tr=12)
-D_2 = text_img(DATE_L2, CINZEL(100, 700), (255, 255, 255), tr=6, gold=True)
-D_3 = text_img(TIME_L, SANS(54, 600), (255, 255, 255), tr=4)
-D_4 = text_img(VENUE_L1, fit(VENUE_L1, PINYON, 96, W - 260), GOLD_L)
-D_5 = text_img(VENUE_L2, SANS(38, 500), (240, 220, 212), tr=2)
-D_6 = S_kick("ONE SESSION ONLY", 30)
+D_K = text_img("SAVE THE DATE", SANS(34, 800), GOLD_L, tr=8)
+D_1 = text_img(DATE_L1, CINZEL(56, 800), (255, 240, 230), tr=12)
+D_2 = text_img(DATE_L2, CINZEL(90, 800), (255, 255, 255), tr=6, gold=True)
+D_3 = text_img(TIME_L, SANS(62, 800), (255, 255, 255), tr=4)
+D_4 = text_img(VENUE_L1, fit(VENUE_L1, lambda z: PLAYI(z, 800), 70, W - 280), GOLD_L)
+D_5 = text_img(VENUE_L2, fit(VENUE_L2, lambda z: SANS(z, 800), 44, W - 280, 2), (255, 255, 255), tr=2)
+D_P1 = text_img(PRICE_L1, SANS(50, 800), GOLD_L, tr=2)
+D_P2 = text_img(PRICE_L2, PLAYI(40, 600), (245, 228, 220))
+D_6 = text_img("ONE SESSION ONLY", SANS(30, 800), GOLD_L, tr=8)
 def details(t, s):
     u = t - s["t0"]
     bg = kb("a_cocoa", u, s["t1"] - s["t0"]).filter(ImageFilter.GaussianBlur(10)).convert("RGBA")
-    bg.alpha_composite(Image.new("RGBA", (W, H), PLUM + (190,))); fr = bg; snow(fr, t, .8); sparkles(fr, t, .7)
+    bg.alpha_composite(Image.new("RGBA", (W, H), PLUM_D + (228,))); fr = bg; snow(fr, t, .8); sparkles(fr, t, .7)
     # gold double frame
     d = ImageDraw.Draw(fr); k = eout(u / .6)
-    m = int(80 + (1 - k) * 40); d.rounded_rectangle((m, 330, W - m, 1590), 28, outline=GOLD + (int(255 * k),), width=4)
-    d.rounded_rectangle((m + 16, 346, W - m - 16, 1574), 20, outline=GOLD_L + (int(150 * k),), width=2)
-    y = 420
-    for i, (sp, gap) in enumerate(((D_K, 30), (D_1, -14), (D_2, 24), (D_3, 70), (D_4, -20), (D_5, 60), (D_6, 0))):
-        d0 = .2 + i * .2; paste(fr, sp, (W - sp.width) / 2, y + (1 - eout((u - d0) / .4)) * 30, ease((u - d0) / .3)); y += sp.height + gap
-        if i == 3:
-            lw = int(260 * eout((u - d0 - .1) / .4)); paste(fr, line(lw), (W - lw) / 2, y - 40)
-    paste(fr, MARK, (W - MARK.width) / 2, 46, .92)
+    m = int(70 + (1 - k) * 40); d.rounded_rectangle((m, 250, W - m, 1700), 28, outline=GOLD + (int(255 * k),), width=5)
+    d.rounded_rectangle((m + 16, 266, W - m - 16, 1684), 20, outline=GOLD_L + (int(150 * k),), width=2)
+    y = 300
+    for i, (sp, gap) in enumerate(((D_K, 10), (D_1, -26), (D_2, 0), (D_3, 50), (D_4, -30), (D_5, 50), (D_P1, -34), (D_P2, 30), (D_6, 0))):
+        d0 = .15 + i * .16; paste(fr, sp, (W - sp.width) / 2, y + (1 - eout((u - d0) / .4)) * 30, ease((u - d0) / .3)); y += sp.height + gap
+        if i in (3, 5):
+            lw = int(260 * eout((u - d0 - .1) / .4)); paste(fr, line(lw), (W - lw) / 2, y - 28)
+    paste(fr, MARK, (W - MARK.width) / 2, 60, .97)
     return fr
 
-E_1 = text_img("Make Christmas", ITAL(66), (243, 222, 214))
-E_2 = text_img("unforgettable", PINYON(130), GOLD_L)
-E_3 = text_img("DM TO BOOK", CINZEL(84), (255, 255, 255), tr=12, gold=True)
-E_4 = text_img(HANDLE, SANS(54, 600), (255, 255, 255), tr=1)
-E_5 = text_img("29 NOV · 5–7 PM · VAN LEO FRANCO BAKERY CAFÉ", SANS(28, 600), (233, 207, 198), tr=4)
-E_6 = text_img("FINANCIAL DISTRICT, HYDERABAD", SANS(28, 600), (233, 207, 198), tr=4)
+E_1 = text_img("Make Christmas", PLAYI(60, 600), (243, 222, 214))
+E_2 = text_img("unforgettable", PLAYI(96, 800), GOLD_L)
+E_3 = text_img("DM TO BOOK", CINZEL(86, 800), (255, 255, 255), tr=12, gold=True)
+E_4 = text_img(HANDLE, SANS(56, 800), (255, 255, 255), tr=1)
+_e5 = "29 NOV · 5–7 PM · " + VENUE_L1.upper()
+E_5 = text_img(_e5, fit(_e5, lambda z: SANS(z, 800), 30, W - 120, 3), (245, 228, 220), tr=3)
+E_6 = text_img("FINANCIAL DISTRICT, HYDERABAD", SANS(30, 800), (245, 228, 220), tr=4)
 def end(t, s):
     u = t - s["t0"]; fr = PLUMBG.copy(); snow(fr, t, .8); sparkles(fr, t, .8)
     lg = scaled(LOGO_L, .8 + .2 * eout(u / .6)); paste(fr, lg, (W - lg.width) / 2, 520 - lg.height / 2, ease(u / .3))
