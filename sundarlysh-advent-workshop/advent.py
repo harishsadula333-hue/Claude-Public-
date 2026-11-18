@@ -14,7 +14,7 @@ W, H, FPS = 1080, 1920, 30
 B = 60 / 115.02; M_START = 46.277
 PLUM, PLUM_D, GOLD, GOLD_L, CREAM = (69, 1, 40), (30, 0, 16), (201, 165, 94), (240, 216, 160), (251, 244, 238)
 DATE_L1, DATE_L2, TIME_L = "SUNDAY", "29 NOVEMBER", "5 PM – 7 PM"
-VENUE_L1, VENUE_L2 = "Bakery Café", "Financial District, Hyderabad"
+VENUE_L1, VENUE_L2 = "Van Leo Franco Bakery Café", "Financial District, Hyderabad"
 HANDLE = "@sundarlyshmemories"
 
 def F(n, s, w=None):
@@ -194,7 +194,7 @@ D_K = S_kick("SAVE THE DATE", 34)
 D_1 = text_img(DATE_L1, CINZEL(58), (255, 240, 230), tr=12)
 D_2 = text_img(DATE_L2, CINZEL(100, 700), (255, 255, 255), tr=6, gold=True)
 D_3 = text_img(TIME_L, SANS(54, 600), (255, 255, 255), tr=4)
-D_4 = text_img(VENUE_L1, PINYON(96), GOLD_L)
+D_4 = text_img(VENUE_L1, fit(VENUE_L1, PINYON, 96, W - 260), GOLD_L)
 D_5 = text_img(VENUE_L2, SANS(38, 500), (240, 220, 212), tr=2)
 D_6 = S_kick("ONE SESSION ONLY", 30)
 def details(t, s):
@@ -217,12 +217,13 @@ E_1 = text_img("Make Christmas", ITAL(66), (243, 222, 214))
 E_2 = text_img("unforgettable", PINYON(130), GOLD_L)
 E_3 = text_img("DM TO BOOK", CINZEL(84), (255, 255, 255), tr=12, gold=True)
 E_4 = text_img(HANDLE, SANS(54, 600), (255, 255, 255), tr=1)
-E_5 = text_img("29 NOV · 5–7 PM · FINANCIAL DISTRICT, HYDERABAD", SANS(28, 600), (233, 207, 198), tr=4)
+E_5 = text_img("29 NOV · 5–7 PM · VAN LEO FRANCO BAKERY CAFÉ", SANS(28, 600), (233, 207, 198), tr=4)
+E_6 = text_img("FINANCIAL DISTRICT, HYDERABAD", SANS(28, 600), (233, 207, 198), tr=4)
 def end(t, s):
     u = t - s["t0"]; fr = PLUMBG.copy(); snow(fr, t, .8); sparkles(fr, t, .8)
     lg = scaled(LOGO_L, .8 + .2 * eout(u / .6)); paste(fr, lg, (W - lg.width) / 2, 520 - lg.height / 2, ease(u / .3))
     y = 900
-    for i, (sp, gap) in enumerate(((E_1, -20), (E_2, 60), (E_3, 20), (E_4, 50), (E_5, 0))):
+    for i, (sp, gap) in enumerate(((E_1, -20), (E_2, 60), (E_3, 20), (E_4, 50), (E_5, -30), (E_6, 0))):
         d0 = .35 + i * .22; paste(fr, sp, (W - sp.width) / 2, y + (1 - eout((u - d0) / .4)) * 30, ease((u - d0) / .3)); y += sp.height + gap
         if i == 1:
             lw = int(300 * eout((u - .9) / .4)); paste(fr, line(lw), (W - lw) / 2, y - 34)
