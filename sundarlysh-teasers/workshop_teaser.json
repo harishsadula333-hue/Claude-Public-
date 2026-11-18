@@ -1,0 +1,229 @@
+{
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/music/Life_of_Riley.mp3",
+ "music_start": 0.57,
+ "bpm": 102.0,
+ "fonts": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/assets/fonts",
+ "logo": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v7/logo.jpg",
+ "segments": [
+  {
+   "kind": "card",
+   "beats": 6,
+   "lines": [
+    [
+     "kick",
+     "BORED OF THE SAME OLD WEEKEND?",
+     34
+    ],
+    [
+     "script",
+     "Let's make something",
+     92
+    ],
+    [
+     "script",
+     "beautiful together",
+     92
+    ]
+   ]
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/ubtan.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "WEDDINGS & PARTIES"
+    ],
+    [
+     "cap",
+     "THE UBTAN BAR",
+     80
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/kundan.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "FOR THE LADIES"
+    ],
+    [
+     "cap",
+     "KUNDAN MEHENDI",
+     80
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/glitter.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "cap",
+     "GLITTER & FRECKLES",
+     80
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/decoden.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "TRENDING"
+    ],
+    [
+     "cap",
+     "DECODEN BAR",
+     80
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/bedazzle.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "ALL AGES"
+    ],
+    [
+     "cap",
+     "BEDAZZLE",
+     80
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/candle.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "ALL AGES"
+    ],
+    [
+     "cap",
+     "SAND CANDLES",
+     80
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/cakepaint.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "cap",
+     "CAKE & PAINT",
+     80
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/art3d.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "PERFECT FOR CAF\u00c9S"
+    ],
+    [
+     "cap",
+     "3D ART",
+     80
+    ]
+   ],
+   "zin": false
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v3/photos/canvastree.jpg",
+   "beats": 3,
+   "lines": [
+    [
+     "kick",
+     "CHRISTMAS SPECIAL"
+    ],
+    [
+     "cap",
+     "TREE LIGHTING",
+     80
+    ]
+   ],
+   "zin": true
+  },
+  {
+   "kind": "card",
+   "beats": 6,
+   "lines": [
+    [
+     "kick",
+     "CREATIVE WORKSHOPS FOR",
+     34
+    ],
+    [
+     "cap",
+     "KITTY PARTIES",
+     86
+    ],
+    [
+     "cap",
+     "CAF\u00c9S \u00b7 BIRTHDAYS",
+     80
+    ],
+    [
+     "cap",
+     "CELEBRATIONS",
+     86
+    ]
+   ]
+  },
+  {
+   "kind": "card",
+   "beats": 8,
+   "logo": 560,
+   "logo_y": 560,
+   "lines": [
+    [
+     "white",
+     "Create \u00b7 Craft \u00b7 Celebrate",
+     56
+    ],
+    [
+     "cap",
+     "DM TO BOOK",
+     86
+    ],
+    [
+     "sans",
+     "@sundarlyshmemories",
+     52
+    ],
+    [
+     "kick",
+     "HYDERABAD \u00b7 BENGALURU",
+     30
+    ]
+   ]
+  }
+ ]
+}
