@@ -242,12 +242,12 @@ def details(t, s):
     bg.alpha_composite(Image.new("RGBA", (W, H), PLUM_D + (228,))); fr = bg; snow(fr, t, .8); sparkles(fr, t, .7)
     # gold double frame
     d = ImageDraw.Draw(fr); k = eout(u / .6)
-    m = int(70 + (1 - k) * 40); d.rounded_rectangle((m, 250, W - m, 1700), 28, outline=GOLD + (int(255 * k),), width=5)
-    d.rounded_rectangle((m + 16, 266, W - m - 16, 1684), 20, outline=GOLD_L + (int(150 * k),), width=2)
-    y = 300
-    for i, (sp, gap) in enumerate(((D_K, 10), (D_1, -26), (D_2, 0), (D_3, 50), (D_4, -30), (D_5, 50), (D_P1, -34), (D_P2, 30), (D_6, 0))):
+    m = int(70 + (1 - k) * 40); d.rounded_rectangle((m, 320, W - m, 1610), 28, outline=GOLD + (int(255 * k),), width=5)
+    d.rounded_rectangle((m + 16, 336, W - m - 16, 1594), 20, outline=GOLD_L + (int(150 * k),), width=2)
+    y = 400
+    for i, (sp, gap) in enumerate(((D_K, 30), (D_1, -16), (D_2, 20), (D_3, 80), (D_4, -24), (D_5, 90), (D_6, 0))):
         d0 = .15 + i * .16; paste(fr, sp, (W - sp.width) / 2, y + (1 - eout((u - d0) / .4)) * 30, ease((u - d0) / .3)); y += sp.height + gap
-        if i in (3, 5):
+        if i == 3:
             lw = int(260 * eout((u - d0 - .1) / .4)); paste(fr, line(lw), (W - lw) / 2, y - 28)
     paste(fr, MARK, (W - MARK.width) / 2, 60, .97)
     return fr

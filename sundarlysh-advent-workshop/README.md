@@ -12,7 +12,7 @@ The brief comes from the 17 Nov client meeting. The workshop is on 29 Nov, 5–7
 | 12.5–29 s | 24 kinds of props & little gifts → Step 1 Pick what goes inside → Step 2 Decorate your gift bags → Step 3 …or a goodies box |
 | 29–37.5 s | No pre-packed gifts. **JUST YOURS** · Perfect for **Friends · Families · Kids** |
 | 37.5–45 s | *One surprise a day, all the way to Christmas* · Hyderabad's **FIRST** advent calendar workshop |
-| 45–51 s | Save the date: **SUNDAY 29 NOVEMBER · 5 PM – 7 PM** · Van Lavino Café & Patisserie, Financial District, Hyderabad · ₹1,400 per person (includes a ₹500 food voucher) · One session only |
+| 45–51 s | Save the date: **SUNDAY 29 NOVEMBER · 5 PM – 7 PM** · Van Lavino Café & Patisserie, Financial District, Hyderabad · One session only |
 | 51–55 s | Limited seats · **BOOK ON INSTAGRAM** |
 | 55–61.5 s | Logo · *Make Christmas unforgettable* · **DM TO BOOK** · @sundarlyshmemories |
 
@@ -29,4 +29,4 @@ Cuts land on the beat (115 bpm), with snowfall, gold sparkles and plum + gold br
 (This needs Python 3 with Pillow and NumPy, plus ffmpeg. Fonts: Cinzel, Pinyon Script, Montserrat, Cormorant Garamond.)
 
 ## Revision 18 Nov (client meeting)
-All captions sit on dark plum panels with gold borders and use bold type. The watermark is now a gold-on-plum pill. The hook is green and gold. A FIRST TIME EVER badge was added. The venue is corrected to Van Lavino Café & Patisserie. Financial District, Hyderabad and 5–7 PM are bold. Price, food voucher and early-bird offer were added.
+All captions sit on dark plum panels with gold borders and use bold type. The watermark is now a gold-on-plum pill. The hook is green and gold. A FIRST TIME EVER badge was added. The venue is corrected to Van Lavino Café & Patisserie. Financial District, Hyderabad and 5–7 PM are bold. The early-bird offer was added (price and food voucher removed at the client's request).
