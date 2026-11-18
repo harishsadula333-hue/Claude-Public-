@@ -10,7 +10,7 @@ const COA = process.env.SET === 'coa' || COA10;
 const COAD = COA ? JSON.parse(fs.readFileSync(process.env.COA_JSON, 'utf8')) : null;
 const coaA = {}, coaQ = {};
 if (COA) for (const e of COAD) { (coaA[e.u] = coaA[e.u] || {})[e.q] = { full: e.parts.join('<br>') }; (coaQ[e.u] = coaQ[e.u] || {})[e.q] = { full: e.question }; }
-if (COA10) { const C10 = require(path.resolve(process.env.COA10_JS)); for (const u in C10) for (const q in C10[u]) coaA[u][q] = { full: C10[u][q].replace('{{FIG}}', `<img class="fig10" src="fig10/U${u}Q${q}.png">`) }; }
+if (COA10) { const C10 = require(path.resolve(process.env.COA10_JS)); const FSZ = JSON.parse(fs.readFileSync(path.resolve(path.dirname(process.env.COA10_JS), '../fig10/sizes.json'), 'utf8')); for (const u in C10) for (const q in C10[u]) coaA[u][q] = { full: C10[u][q].replace('{{FIG}}', () => { const sz = FSZ[`U${u}Q${q}`]; const wide = sz && sz[0] / sz[1] > 2.1; return `<img class="${wide ? 'fig10w' : 'fig10'}" src="fig10/U${u}Q${q}.png">`; }) }; }
 const A = COA ? coaA : SHORT ? require('./short.js').A : TEN ? require('./answers_ten.js') : require('./answers.js');
 const Qs = COA ? coaQ : SHORT ? require('./short.js').Q : require('./questions.js');
 const BASE = COA10 ? 'COA_10Marks' : COA ? 'COA_Grid' : SHORT ? 'MSF_Short_CutSheet' : TEN ? 'MSF_Long10Marks_CutSheet' : 'MSF_CutSheet';
@@ -97,7 +97,8 @@ b,.tg{font-weight:700}
 table{border-collapse:collapse;margin:0.5mm 0;width:100%;table-layout:auto;line-height:1.02}
 td{border:0.5pt solid #000;text-align:center;padding:0 0.5mm;font-size:0.93em}
 i{font-style:italic;color:#000}
-.fig10{float:right;width:46%;height:auto;margin:0 0 0.2em 0.35em;border:0.5pt solid #000}
+.fig10{float:right;width:56%;height:auto;margin:0.1em 0 0.2em 0.4em}
+.fig10w{display:block;width:100%;height:auto;margin:0.15em 0 0.25em 0}
 .fig{display:block;max-width:100%;height:auto;margin:0.4mm auto;image-rendering:auto}
 code{font-family:inherit;font-weight:inherit}
 sup{font-size:0.72em;line-height:0;vertical-align:0.38em}

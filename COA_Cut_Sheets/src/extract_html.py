@@ -83,7 +83,20 @@ figno = 0
 def figure_png(page, rect, key):
     global figno; figno += 1
     name = f"{key}_f{figno}.png"
-    pix = page.get_pixmap(clip=rect, dpi=330, colorspace=pymupdf.csGRAY)
+    # drop the "Figure x – ..." caption lines at the bottom of the figure box
+    r = pymupdf.Rect(rect)
+    caps = []
+    for b in page.get_text("dict", clip=r)["blocks"]:
+        for l in b.get("lines", []):
+            t = "".join(s_["text"] for s_ in l["spans"]).strip()
+            if re.match(r"^(Figure|Fig\.|Figures)\s*[0-9]", t) and l["bbox"][1] > r.y0 + r.height * 0.45: caps.append(l["bbox"][1])
+    if caps: r.y1 = min(caps) - 1
+    # raster diagram inside: its own baked-in italic caption sits in the bottom ~9% of the image
+    for im in page.get_image_info():
+        ib = pymupdf.Rect(im["bbox"])
+        if r.contains(ib) and ib.height > 40: r.y1 = min(r.y1, ib.y1 - ib.height * 0.085)
+    rect = r
+    pix = page.get_pixmap(clip=rect, dpi=600, colorspace=pymupdf.csGRAY)
     pix.save(os.path.join(IMG, name))
     return f'<img class="fig" src="fig/{name}" style="width:{rect.width / 10.5:.2f}em">'
 
