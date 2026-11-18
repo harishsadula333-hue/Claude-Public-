@@ -1,0 +1,841 @@
+[
+{
+"u": 1,
+"q": 1,
+"question": "Explain binary codes. Describe BCD, Excess-3, Gray code and ASCII with examples, and convert a given decimal number into each code.",
+"parts": [
+"1. Binary Codes Overview: Digital systems operate strictly on binary symbols <code>0</code> and <code>1</code> . A binary code is a group of n bits that assigns a unique bit pattern to each discrete element of information. A group of n bits provides <code>2</code><sup><code>n</code></sup> distinct combinations; encoding m elements requires <code>n ≥ ⌈log</code><sub><code>2</code></sub><code> m⌉</code> bits.",
+"Binary-Coded Decimal (BCD / 8421 Code): Encodes each decimal digit (0–9) individually into its 4-bit binary equivalent with positional weights <code>8, 4, 2, 1</code> . Bit combinations <code>1010</code> (10) through <code>1111</code> (15) are unused (invalid). In BCD addition, if a 4-bit sum exceeds 9 or produces a carry, <code>0110</code> (6) is added to skip the 6 invalid states.",
+"Excess-3 Code: An unweighted, self-complementing 4-bit decimal code obtained by adding <code>0011</code> (3) to the BCD code of each digit. Because the 1's complement of the Excess-3 code of digit d equals the Excess-3 code of <code>(9 − d)</code> , it simplifies 9's-complement decimal subtraction.",
+"Gray Code (Reflected Binary Code): An unweighted code in which only one bit changes between any two consecutive numbers. This prevents switching glitches in rotary shaft encoders, A/D converters, and K-maps.",
+"Conversion Rules: Binary → Gray: <code>g</code><sub><code>n-1</code></sub><code> = b</code><sub><code>n-1</code></sub> , and <code>g</code><sub><code>i</code></sub><code> = b</code><sub><code>i+1</code></sub><code> ⊕ b</code><sub><code>i</code></sub> . Gray → Binary: <code>b</code><sub><code>n-1</code></sub><code> = </code> <code>g</code><sub><code>n-1</code></sub> , and <code>b</code><sub><code>i</code></sub><code> = b</code><sub><code>i+1</code></sub><code> ⊕ g</code><sub><code>i</code></sub> .",
+"ASCII (American Standard Code for Information Interchange): A 7-bit alphanumeric code representing <code>2</code><sup><code>7</code></sup><code> = 128</code> characters (94 printable characters such as <code>'0'–'9'</code> , <code>'A'–'Z'</code> , <code>'a'–'z'</code> , and 34 control characters like CR, LF, ESC). Stored in an 8-bit byte with 1 parity bit.",
+"2. Comparison &amp; Conversion Example — Convert Decimal <b><code>(49)</code></b><sub><b><code>10</code></b></sub> into Each Code:",
+"<table><tr><td><b>Code Type</b></td><td><b>Conversion Steps for Decimal 49</b></td><td><b>Encoded Result</b></td><td><b></b></td><td><b></b></td></tr><tr><td>Pure Binary</td><td>49 = 32 + 16 + 1 = 1100012</td><td>110001 (6 bits)</td><td></td><td></td></tr><tr><td>BCD (8421)</td><td>Digit 4 → 0100 ; Digit 9 → 1001</td><td>0100 1001 (8 bits)</td><td></td><td></td></tr><tr><td>Excess-3</td><td>Digit 4 + 3 = 7 → 0111 ; Digit 9 + 3 = 12 → 1100</td><td>0111 1100 (8 bits)</td><td></td><td></td></tr><tr><td>Gray Code</td><td>From pure binary b5..b0 = 110001 : g5=1, g4=1⊕1=0, g3=1⊕0=1, g2=0⊕0=0, g1=0⊕0=0, g0=0⊕1=1</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td>101001</td><td>(6 bits)</td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>g3=1⊕0=1, g2=0⊕0=0, g1=0⊕0=0, g0=0⊕1=1</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td>ASCII (7- bit)</td><td>Char '4' = 3416 = 0110100 ; Char '9' = 3916 = 0111001</td><td>0110100 0111001 (14 bits)</td><td></td><td></td></tr></table>"
+]
+},
+{
+"u": 1,
+"q": 2,
+"question": "Explain binary storage and registers. Describe how a register stores binary information using flip-flops, and show data transfer between registers with a block diagram.",
+"parts": [
+"1. Binary Storage &amp; Binary Cells: A digital system must store binary information before and after processing. A binary cell is an electronic or magnetic device that possesses two stable states— representing binary <code>0</code> and <code>1</code> —and is capable of storing a single bit of information. It can be set to either state by an input signal and retains that state until changed. In hardware, binary cells are implemented as electronic flip-flops (in CPU registers and SRAM), charged capacitors (in DRAM chips), or magnetic domains (on magnetic disks and tapes).",
+"<img class=\"fig\" src=\"fig/U1Q2_f1.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q2_f2.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q2_f3.png\" style=\"width:48.00em\">",
+"2. Registers &amp; How Flip-Flops Store Binary Information: A register is a group of n flip-flops wired together with a common clock and control gates. Because each flip-flop stores 1 bit, an n- bit register can store any one of <code>2</code><sup><code>n</code></sup> distinct binary combinations (an n-bit word). The binary bit pattern held in the flip-flops at any instant is called the content of the register. Importantly, the register hardware itself is agnostic to the meaning of the stored bits—the same 16-bit register holding <code>1100 0011 1100 1001</code> ( <code>C3C9</code><sub><code>16</code></sub> ) can be interpreted by a program as:",
+"Unsigned binary integer: <code>50,121</code><sub><code>10</code></sub>",
+"Signed 2's-complement integer: <code>−15,415</code><sub><code>10</code></sub>",
+"Four hexadecimal digits / BCD groups: <code>C 3 C 9</code>",
+"Two 8-bit alphanumeric characters: <code>\"C\"</code> ( <code>C3</code><sub><code>16</code></sub> ) and <code>\"I\"</code> ( <code>C9</code><sub><code>16</code></sub> ) in EBCDIC, or 16 independent control flags.",
+"3. Data Transfer Between Registers &amp; Binary Information Processing: Information is moved between registers in parallel under the control of a common Clock and a Load control signal. In Register Transfer Notation, <b><code>R2 ← R1</code></b> means all bits of source register <code>R1</code> are copied into destination register <code>R2</code> on the next active clock edge while <code>Load = 1</code> (leaving <code>R1</code> unchanged and overwriting the old contents of <code>R2</code> ). When combinational logic is placed between registers, data is processed during transfer—for example, <b><code>R3 ← R1 + R2</code></b> feeds the outputs of <code>R1</code> and <code>R2</code> through a combinational binary adder circuit and loads the sum into <code>R3</code> :",
+"<img class=\"fig\" src=\"fig/U1Q2_f4.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 1,
+"q": 3,
+"question": "Define binary logic. Explain the basic operations AND, OR and NOT with truth tables, and state the postulates and theorems of Boolean algebra with proofs.",
+"parts": [
+"1. Binary Logic &amp; Basic Operations: Binary logic deals with binary variables ( <code>A, B, C, x, y, z</code> ) that take two discrete states ( <code>0</code> and <code>1</code> , represented physically by LOW and HIGH voltage ranges) and logical operations. Operator precedence is: (1) Parentheses, (2) NOT, (3) AND, (4) OR.",
+"<img class=\"fig\" src=\"fig/U1Q3_f5.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q3_f6.png\" style=\"width:48.00em\">",
+"AND ( <b><code>z = x · y</code></b> ): Logical product; output is <code>1</code> only if both <code>x = 1</code> and <code>y = 1</code> (equivalent to two switches in series).",
+"OR ( <b><code>z = x + y</code></b> ): Logical sum; output is <code>1</code> if either <code>x = 1</code> or <code>y = 1</code> or both (equivalent to two switches in parallel).",
+"NOT ( <b><code>z = x'</code></b> ): Complement/inversion; output is <code>1</code> when <code>x = 0</code> , and <code>0</code> when <code>x = 1</code> .",
+"<table><tr><td><b>x</b></td><td><b>y</b></td><td><b>AND (x · y)</b></td><td><b>OR (x + y)</b></td><td><b>NOT (x')</b></td><td><b>(x + y)'</b></td><td><b>x' · y'</b></td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr></table>",
+"2. Postulates and Theorems of Boolean Algebra (with Duality): Every Boolean identity has a dual obtained by interchanging <code>+ ↔ ·</code> and <code>0 ↔ 1</code> :",
+"<table><tr><td><b>Law / Theorem Name</b></td><td><b>OR Form (Form 1)</b></td><td><b>AND Form (Dual)</b></td></tr><tr><td>Identity</td><td>x + 0 = x</td><td>x · 1 = x</td></tr><tr><td>Null / Dominance</td><td>x + 1 = 1</td><td>x · 0 = 0</td></tr><tr><td>Idempotent</td><td>x + x = x</td><td>x · x = x</td></tr><tr><td>Complement</td><td>x + x' = 1</td><td>x · x' = 0</td></tr><tr><td>Involution</td><td>(x')' = x</td><td>(x')' = x</td></tr><tr><td>Commutative</td><td>x + y = y + x</td><td>x · y = y · x</td></tr><tr><td>Associative</td><td>x + (y + z) = (x + y) + z</td><td>x(yz) = (xy)z</td></tr><tr><td>Distributive</td><td>x(y + z) = xy + xz</td><td>x + yz = (x + y)(x + z)</td></tr><tr><td>Absorption</td><td>x + xy = x</td><td>x(x + y) = x</td></tr><tr><td>De Morgan's Theorem</td><td>(x + y)' = x' · y'</td><td>(x · y)' = x' + y'</td></tr></table>",
+"3. Algebraic &amp; Truth-Table Proofs:",
+"Absorption Law Proof: <code>x + xy = x · 1 + xy = x(1 + y) = x · 1 = x</code> (using Identity, Distributive, and Null laws).",
+"Idempotent Law Proof: <code>x + x = (x + x) · 1 = (x + x)(x + x') = x + xx' = x + 0 = x</code> . De Morgan's Theorem Proof: Verified directly by the last two columns of the truth table above: for all 4 input combinations of <code>(x, y)</code> , the column <code>(x + y)'</code> is identical to <code>x' · y'</code> ( <code>1, 0, 0, 0</code> )."
+]
+},
+{
+"u": 1,
+"q": 4,
+"question": "Explain the digital logic gates (AND, OR, NOT, NAND, NOR, XOR, XNOR) with symbols and truth tables. Show how NAND and NOR act as universal gates.",
+"parts": [
+"1. Digital Logic Gates: Logic gates are electronic circuits that manipulate binary signals to implement Boolean operations. A small circle (bubble) at a gate output denotes logical inversion.",
+"<img class=\"fig\" src=\"fig/U1Q4_f7.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q4_f8.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q4_f9.png\" style=\"width:48.00em\">",
+"<table><tr><td><b>Gate Name</b></td><td><b>Boolean Expression</b></td><td><b></b></td><td><b>Symbolic Representation</b></td><td><b></b></td><td><b></b></td><td><b>Truth Table (AB = 00, 01, 10, 11)</b></td></tr><tr><td>AND</td><td>F = A · B</td><td></td><td>A, B → [AND] → F</td><td></td><td></td><td>0, 0, 0, 1 (1 only if both 1)</td></tr><tr><td>OR</td><td>F = A + B</td><td></td><td>A, B → [OR] → F</td><td></td><td></td><td>0, 1, 1, 1 (1 if any input 1)</td></tr><tr><td>NOT (Inverter)</td><td>F = A'</td><td></td><td>A → [▸o] → F</td><td></td><td></td><td>For A = 0, 1 → F = 1, 0</td></tr><tr><td>NAND</td><td>F = (A · B)'</td><td></td><td>A, B → [ANDo] → F</td><td></td><td></td><td>1, 1, 1, 0 (Complement of AND)</td></tr><tr><td>NOR</td><td>F = (A + B)'</td><td></td><td>A, B → [ORo] → F</td><td></td><td></td><td>1, 0, 0, 0 (Complement of OR)</td></tr><tr><td>XOR (Ex-OR)</td><td>F = A ⊕ B = A'B</td><td></td><td>A, B → [)OR] → F</td><td></td><td></td><td>0, 1, 1, 0 (1 when inputs differ)</td></tr><tr><td></td><td></td><td>F = A ⊕ B = A'B</td><td></td><td>A,</td><td>, B → [)OR] → F</td><td></td></tr><tr><td></td><td>+ AB'</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>XNOR (Ex- NOR)</td><td>F = (A ⊕ B)' = AB + A'B'</td><td></td><td>A, B → [)ORo] → F</td><td></td><td></td><td>1, 0, 0, 1 (1 when inputs equal)</td></tr></table>",
+"2. NAND and NOR as Universal Gates: Any Boolean function can be implemented using only {NOT, AND, OR}. Therefore, proving that NAND alone (and NOR alone) can build NOT, AND, and OR proves universality:",
+"<img class=\"fig\" src=\"fig/U1Q4_f10.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 1,
+"q": 5,
+"question": "Explain the data types used in computers. Describe r's complement and (r-1)'s complement, and perform subtraction using 1's and 2's complement on given numbers.",
+"parts": [
+"1. Data Types Used in Digital Computers: Registers and memory hold either data (operated on for results) or control information (instructions/opcodes). Computer data falls into four categories:",
+"<img class=\"fig\" src=\"fig/U1Q5_f11.png\" style=\"width:48.00em\">",
+"Numbers used in arithmetic: Fixed-point (integers and fractions, signed or unsigned) and floating-point numbers (e.g., <code>+25</code> , <code>−6.75</code> , <code>3.2 × 10</code><sup><code>5</code></sup> ).",
+"Decimal numbers: Coded digit-by-digit in 4-bit BCD (e.g., <code>125 = 0001 0010 0101</code> ) for business/financial machines.",
+"Alphanumeric characters &amp; symbols: Letters and punctuation encoded in 7-bit ASCII, 8-bit EBCDIC, or Unicode (e.g., <code>'A' = 1000001</code><sub><code>2</code></sub> ).",
+"Other discrete symbols: Machine instructions (opcodes), memory addresses, status flags, and bit masks.",
+"2. Complements ( <b><code>(r − 1)</code></b> 's and <b><code>r</code></b> 's Complement): Complements turn subtraction into addition so a single binary adder circuit can perform both operations. For an n-digit number N in base r:",
+"<b><code>(r − 1)</code></b> 's complement: <code>(r</code><sup><code>n</code></sup><code> − 1) − N</code> . For decimal ( <code>r=10</code> ), 9's complement subtracts each digit from 9. For binary ( <code>r=2</code> ), 1's complement flips every <code>0 ↔ 1</code> .",
+"<b><code>r</code></b> 's complement: <code>r</code><sup><code>n</code></sup><code> − N = (r − 1)'s complement + 1</code> . For decimal, 10's complement = 9's complement + 1. For binary, 2's complement = 1's complement + 1.",
+"3. Subtraction Using 2's and 1's Complement — Example: <b><code>X = 1010100</code></b><sub><b><code>2</code></b></sub><b><code> (84)</code></b> and <b><code>Y = </code></b> <b><code>1000011</code></b><sub><b><code>2</code></b></sub><b><code> (67)</code></b> :",
+"<table><tr><td><b>Method</b></td><td><b>Case A: Compute X − Y (84 − 67 = +17)</b></td><td><b></b></td><td><b>Case B: Compute Y − X (67 − 84 = −17)</b></td><td><b></b></td></tr><tr><td>Using 2's Complement (Discard end carry if Cout=1 ; if Cout=0 , take −(2's comp))</td><td>2's comp of Y (1000011) = 0111101 . Add to X : 1010100 +</td><td></td><td>2's comp of X (1010100) = 0101100 .</td><td></td></tr><tr><td></td><td></td><td></td><td>Add to Y : 1000</td><td>0011 +</td></tr><tr><td></td><td>0111101 = 1 0010</td><td>0001 .</td><td>0101100 = 1101111 . No end carry → negative: −(2's comp of 1101111 ). Result = −00100012 (−17) .</td><td></td></tr><tr><td></td><td>End carry 1 occurs → discard carry. Result = +00100012 (+17) .</td><td></td><td></td><td></td></tr><tr><td>Using 1's Complement (End-around carry if Cout=1 ; if Cout=0 , take −(1's comp))</td><td>1's comp of Y (1000011) = 0111100 . Add to X : 1010100 +</td><td></td><td>1's comp of X (1010100) = 0101011 .</td><td></td></tr><tr><td></td><td></td><td></td><td>Add to Y : 1000</td><td>0011 +</td></tr><tr><td></td><td>0111100 = 1 0010</td><td>0000 .</td><td>0101011 = 1101110 . No end carry → negative: −(1's comp of 1101110 ). Result = −00100012 (−17) .</td><td></td></tr><tr><td></td><td>Add end-around carry to LSB: 0010000 + 1 . Result = +00100012 (+17) .</td><td></td><td></td><td></td></tr></table>"
+]
+},
+{
+"u": 1,
+"q": 6,
+"question": "Explain fixed-point representation. Describe signed-magnitude, signed-1's complement and signed-2's complement forms, and compare them with examples.",
+"parts": [
+"1. Fixed-Point Representation: In fixed-point format, a signed binary number uses the most significant bit (MSB) as the sign bit ( <code>0</code> for positive, <code>1</code> for negative) and the remaining bits for the number. The binary point is not physically stored; it is implied at a fixed position:",
+"<img class=\"fig\" src=\"fig/U1Q6_f12.png\" style=\"width:48.00em\">",
+"Fixed-Point Integer: Binary point is assumed at the extreme right (after the LSB), e.g., <code>0 </code> <code>0011011 = +27</code> .",
+"Fixed-Point Fraction: Binary point is assumed immediately after the sign bit ( <code>|x| &lt; 1</code> ), e.g., <code>0 .1011011 = +0.1011011</code><sub><code>2</code></sub> .",
+"2. Three Representations of Signed Integers: Positive numbers are identical in all three systems (sign bit <code>0</code> followed by binary magnitude). Negative numbers differ as shown for <code>±14</code> in an 8-bit register ( <code>+14 = 00001110</code> ):",
+"<table><tr><td><b>Representatio n</b></td><td><b>Rule for Forming Negative Number</b></td><td><b>+14 (8-bit)</b></td><td><b>−14 (8-bit)</b></td><td><b>8-Bit Range</b></td><td><b></b></td><td><b></b></td><td><b>Representatio ns of Zero</b></td></tr><tr><td>Signed- Magnitude</td><td>Set MSB sign bit to 1 ; keep 7-bit magnitude unchanged.</td><td>00001110</td><td>10001110</td><td>−127 to +127 −(2n-1−1) .. +(2n-</td><td></td><td></td><td>Two zeros: +0 =</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>)</td><td></td><td>00000000</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>−0 =</td></tr><tr><td></td><td></td><td></td><td></td><td>.. +(2n-</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>( 1−1)</td><td></td><td></td><td>10000000</td></tr><tr><td></td><td></td><td></td><td></td><td>1−1)</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Signed-1's Complement</td><td>Complement every bit of +14 (including the sign bit).</td><td>00001110</td><td>11110001</td><td>−127 to +127 −(2n-1−1) .. +(2n-</td><td></td><td></td><td>Two zeros: +0 =</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>)</td><td></td><td>00000000</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>−0 = 11111111</td></tr><tr><td></td><td></td><td></td><td></td><td>.. +(2n-</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>1−1)</td><td></td><td></td><td>11111111</td></tr><tr><td></td><td></td><td></td><td></td><td>1−1)</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Signed-2's Complement</td><td>Take 1's complement of +14 and add 1 .</td><td>00001110</td><td>11110010</td><td>−128 to +127 −2n-1 .. + (2n-1−1)</td><td></td><td></td><td>Single zero: 0 =</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td>+</td><td>00000000 (extra negative value −128 )</td></tr></table>",
+"3. Comparison &amp; Why Signed-2's Complement Dominates: Nearly all modern CPUs use signed- 2's complement for integer arithmetic because: (1) it has a unique representation for zero, avoiding <code>±0</code> comparison hardware; (2) sign bits are added directly with magnitude bits using an",
+"ordinary unsigned binary adder (discarding carry-out); and (3) overflow is easily detected via <code>V </code> <code>= C</code><sub><code>in</code></sub><code> ⊕ C</code><sub><code>out</code></sub> across the sign bit."
+]
+},
+{
+"u": 1,
+"q": 7,
+"question": "Explain floating-point representation. Describe the mantissa and exponent, normalization and the IEEE 754 single-precision format, with a numerical example.",
+"parts": [
+"1. Floating-Point Representation: Fixed-point registers have a limited range and cannot represent very large or very small numbers. Floating-point format represents a number in scientific notation as <code>N = m × r</code><sup><code>e</code></sup> , storing two components:",
+"<img class=\"fig\" src=\"fig/U1Q7_f13.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q7_f14.png\" style=\"width:48.00em\">",
+"Mantissa (Significand / Fraction, m): A signed fixed-point fraction representing the significant digits of the number.",
+"Exponent (e): Designates the number of places the binary point is shifted (\"floated\"). The radix <code>r = 2</code> is implicit in binary computers.",
+"2. Normalization &amp; Biased Exponent: A floating-point number is normalized when the most significant digit of the mantissa is non-zero (in binary, <code>0.1xxx...</code> or <code>1.xxx...</code> ). Normalization maximizes precision for the available bits. For example, <code>0.000101 × 2</code><sup><code>5</code></sup> is normalized by shifting left 3 bits and decreasing the exponent by 3 to give <code>0.101 × 2</code><sup><code>2</code></sup> . Instead of a signed exponent, a constant bias is added ( <code>E = e + bias</code> ) so stored exponents are non-negative unsigned integers, simplifying magnitude comparisons.",
+"3. IEEE 754 Single-Precision Format (32 Bits): Uses an implied leading <code>1</code> (\"hidden bit\" before the binary point) and a bias of <code>127</code> : <code>Value = (−1)</code><sup><code>S</code></sup><code> × (1.F)</code><sub><code>2</code></sub><code> × 2</code><sup><code>E − 127</code></sup> .",
+"<img class=\"fig\" src=\"fig/U1Q7_f15.png\" style=\"width:48.00em\">",
+"4. Numerical Example — Convert <b><code>−6.625</code></b> to IEEE 754 Single Precision:",
+"1. Sign bit (S): Since the number is negative, <code>S = 1</code> .",
+"2. Convert magnitude to binary: <code>6 = 110</code><sub><code>2</code></sub> and <code>0.625 = 0.5 + 0.125 = .101</code><sub><code>2</code></sub> ⇒ <code>6.625 = </code> <code>110.101</code><sub><code>2</code></sub> .",
+"3. Normalize ( <b><code>1.F × 2</code></b><sup><b><code>e</code></b></sup> ): Move binary point 2 places left: <code>110.101</code><sub><code>2</code></sub><code> = 1.10101</code><sub><code>2</code></sub><code> × 2</code><sup><code>2</code></sup> (so true exponent <code>e = 2</code> ).",
+"4. Biased exponent (E): <code>E = e + 127 = 2 + 127 = 129 = 10000001</code><sub><code>2</code></sub> .",
+"5. 23-bit Fraction (F): Drop the hidden leading <code>1</code> and pad with 0s: <code>F = </code>",
+"<code>10101000000000000000000</code> .",
+"6. Final 32-Bit Word: <code>1 | 10000001 | 10101000000000000000000</code> = <b><code>C0D40000</code></b><sub><b><code>16</code></b></sub> ."
+]
+},
+{
+"u": 1,
+"q": 8,
+"question": "Draw and explain the block diagram of a digital computer. Describe the function of the CPU, memory and input-output units.",
+"parts": [
+"1. Block Diagram of a Digital Computer: A general-purpose digital computer processes information in discrete binary form according to a stored program of instructions (von Neumann architecture, where instructions and data share the same memory).",
+"<img class=\"fig\" src=\"fig/U1Q8_f16.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q8_f17.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q8_f18.png\" style=\"width:48.00em\">",
+"2. Functions of the Major Operational Units:",
+"Input Unit: Accepts programs and raw data from the outside world (via keyboard, mouse, scanner, or sensors) and converts them into binary codes acceptable to the computer. Memory Unit: Stores both program instructions and data as binary words accessed by addresses. Main memory (RAM/ROM) is fast and directly addressed by the CPU over the",
+"address and data buses, whereas Auxiliary memory (magnetic disks, SSDs, tapes) provides large, non-volatile backing storage.",
+"Central Processing Unit (CPU): Acts as the brain of the system (called a microprocessor when fabricated on a single VLSI chip) and comprises three sub-units:",
+"Control Unit (CU): Fetches instructions one by one from memory, decodes the opcode, and issues timing and control signals to coordinate all other units during the Fetch → Decode → Execute cycle.",
+"Arithmetic Logic Unit (ALU): Executes arithmetic operations (add, subtract, increment, multiply) and bitwise logic operations (AND, OR, NOT, XOR, compare, shift).",
+"Processor Registers: High-speed internal flip-flop storage, including the Program Counter ( <code>PC</code> ), Instruction Register ( <code>IR</code> ), Accumulator ( <code>AC</code> ), Address/Data Registers ( <code>AR, DR</code> ), and status flags.",
+"Output Unit: Receives processed binary results from the computer and converts them into human-readable or machine-usable form (monitors, printers, actuators)."
+]
+},
+{
+"u": 1,
+"q": 9,
+"question": "Define computer organization. Explain how it differs from computer architecture and describe the operational units and their interconnections.",
+"parts": [
+"1. Definition of Computer Organization: Computer organization is concerned with the way the hardware components operate and the way they are interconnected together to form the complete computer system. In computer organization, the functional components are assumed to exist, and the task is to investigate the organizational structure to verify that all operational units work together as intended to realize the architectural specification. Organizational attributes are transparent (invisible) to the assembly-language programmer and include:",
+"Control Signals &amp; Timing: How clock pulses, sequence counters, and control logic generate micro-operation signals.",
+"Peripheral &amp; I/O Interfaces: Handshaking, strobe, polling, interrupt hardware, and DMA controllers connecting external devices.",
+"Memory Technology &amp; Hierarchy: Whether memory uses SRAM, DRAM, multilevel caches, or interleaved banks.",
+"Internal Datapath &amp; Bus Structure: Number of internal buses, bus width, number of ALUs, and arithmetic implementation (e.g., whether multiplication is done by a dedicated hardware multiplier circuit or by repeated addition/shifting).",
+"2. How Computer Organization Differs from Computer Architecture:",
+"<table><tr><td><b>Feature</b></td><td><b>Computer Organization (Hardware Internals)</b></td><td><b>Computer Architecture (Programmer's View)</b></td></tr><tr><td>Core Definition</td><td>How operational hardware units are connected and controlled to implement the architecture.</td><td>Structure and behavior of the computer as seen by the machine- language programmer (ISA).</td></tr></table>",
+"<table><tr><td><b>Feature</b></td><td><b>Computer Organization (Hardware Internals)</b></td><td><b>Computer Architecture (Programmer's View)</b></td></tr><tr><td>Primary Question</td><td>How is the instruction executed internally?</td><td>What instructions and data formats exist?</td></tr><tr><td>Key Attributes</td><td>Control signals, bus multiplexers, cache mapping, adder/multiplier circuits, memory technology.</td><td>Instruction set (opcodes), data types, addressing modes, programmer-visible registers, I/O model.</td></tr><tr><td>Software Compatibility</td><td>Can change across processor models without breaking binary compatibility (only speed/cost change).</td><td>Changing the architecture requires recompiling or rewriting existing machine-language programs.</td></tr></table>",
+"3. Operational Units and Their Interconnections (Register-Transfer View): At the organizational level, a digital computer consists of four major operational units—Input Unit, Memory Unit, Central Processing Unit (Control Unit + ALU + Registers), and Output Unit—interconnected by three system buses:",
+"Address Bus (Unidirectional, CPU → Memory/I/O): Carries the binary address from the Address Register ( <code>AR/MAR</code> ) to select a specific memory word or I/O port.",
+"Data Bus (Bidirectional, CPU ↔ Memory/I/O): Carries instructions and data words between CPU registers ( <code>DR, AC, IR</code> ), main memory, and I/O interfaces.",
+"Control Bus (Bidirectional): Carries timing and command signals such as <code>Memory Read</code> , <code>Memory Write</code> , <code>Bus Request (BR)</code> , <code>Bus Grant (BG)</code> , <code>Interrupt Request (INT)</code> , and the system <code>Clock</code> ."
+]
+},
+{
+"u": 1,
+"q": 10,
+"question": "Distinguish between computer design and computer architecture. Compare computer organization, computer design and computer architecture with suitable examples.",
+"parts": [
+"1. Definitions &amp; Hierarchy in System Development: Computer system engineering proceeds from abstract user specifications down to physical silicon circuits across three distinct layers:",
+"<img class=\"fig\" src=\"fig/U1Q10_f19.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U1Q10_f20.png\" style=\"width:48.00em\">",
+"Computer Architecture: The structure and behavior of the computer as seen by the machine- language programmer. It defines what the computer does, including the Instruction Set Architecture (ISA), instruction formats, data representation formats, addressing modes, programmer-visible registers, and I/O model.",
+"Computer Organization: The operational units and their interconnections that realize the architectural specification. It defines how the hardware components operate and work together—such as control signals, bus width, memory hierarchy/cache, pipelining, and whether multiplication uses a dedicated multiplier or repeated addition. Organization is transparent to the programmer.",
+"Computer Design (Implementation): The physical hardware engineering of the system once architecture and organization are specified. It encompasses system design (interconnecting CPU, memory, I/O), logic design (gates, flip-flops, registers, counters), and circuit design (transistors, CMOS/TTL IC layout).",
+"2. Structured Comparison of Architecture, Organization, and Design:",
+"<table><tr><td><b>Aspect</b></td><td><b>Computer Architecture</b></td><td><b>Computer Organization</b></td><td><b>Computer Design</b></td></tr><tr><td>Core Concern</td><td>Structure &amp; behavior seen by the programmer (ISA).</td><td>Operational hardware units and their interconnections.</td><td>Selection and physical wiring of hardware components.</td></tr><tr><td>Question Answered</td><td>What does the machine do?</td><td>How is it done with functional blocks?</td><td>With which gates and circuits is it built?</td></tr><tr><td>Key Examples</td><td>Instruction set, data types, addressing modes, word size.</td><td>Control signals, buses, cache hierarchy, adder/multiplier structure.</td><td>Logic gates, flip-flops, registers, CMOS/VLSI circuit layout.</td></tr></table>",
+"<table><tr><td><b>Aspect</b></td><td><b>Computer Architecture</b></td><td><b>Computer Organization</b></td><td><b>Computer Design</b></td></tr><tr><td>Visible to Programmer?</td><td>Yes (directly affects assembly code).</td><td>No (transparent to software).</td><td>No (hardware implementation level).</td></tr><tr><td>Effect of Changes</td><td>Programs must be rewritten or recompiled.</td><td>Same binary programs run; speed and cost change.</td><td>Same programs run; power, chip area, and clock speed change.</td></tr></table>",
+"3. Illustrative Examples: (a) Multiply Instruction: Whether a CPU has a <code>MUL</code> instruction is an architectural decision; whether <code>MUL</code> is executed by a hardware array multiplier or by an iterative shift-and-add unit is an organizational decision; building that multiplier from NAND gates and D flip-flops is computer design. (b) IBM System/360 &amp; x86 Family: Intel and AMD processors share the same x86 architecture (running the exact same software) while using different internal organizations and circuit designs."
+]
+},
+{
+"u": 2,
+"q": 1,
+"question": "Explain the analysis procedure of a combinational circuit. Analyze the given logic circuit by deriving its Boolean functions and truth table.",
+"parts": [
+"1. Six-Step Analysis Procedure for a Combinational Circuit: Analysis starts from a given logic gate diagram and determines the Boolean functions and truth table that describe what the circuit does:",
+"<img class=\"fig\" src=\"fig/U2Q1_f21.png\" style=\"width:48.00em\">",
+"1. Verify Combinational Structure: Confirm that the circuit consists only of logic gates with no feedback paths and no memory elements (latches/flip-flops).",
+"2. Label Intermediate Gate Outputs: Assign arbitrary variable symbols (such as <code>T</code><sub><code>1</code></sub><code>, T</code><sub><code>2</code></sub><code>, T</code><sub><code>3</code></sub><code>, </code> <code>F</code><sub><code>2</code></sub><code>'</code> ) to the output of every gate that is fed solely by primary inputs or previously labeled signals.",
+"3. Write First-Level Boolean Expressions: Express each first-level intermediate label as a Boolean function of the primary input variables.",
+"4. Propagate Forward to Primary Outputs: Express subsequent gate outputs in terms of primary inputs and earlier intermediate labels until all primary outputs are reached.",
+"5. Substitute &amp; Simplify: Substitute all intermediate variables in terms of the primary inputs and simplify using Boolean algebra.",
+"6. Construct the Truth Table: List all <code>2</code><sup><code>n</code></sup> input combinations and evaluate each intermediate signal and primary output column row-by-row to verify the algebraic derivation.",
+"2. Worked Analysis of the Standard Combinational Circuit (Fig. 4.2 in Notes — 3 Inputs <b><code>A, B, </code></b> <b><code>C</code></b> ; 2 Outputs <b><code>F</code></b><sub><b><code>1</code></b></sub><b><code>, F</code></b><sub><b><code>2</code></b></sub> ):",
+"<img class=\"fig\" src=\"fig/U2Q1_f22.png\" style=\"width:48.00em\">",
+"3. Complete Truth Table Verification (All 8 Combinations of <b><code>A, B, C</code></b> ):",
+"<table><tr><td><b>A</b></td><td><b>B</b></td><td><b>C</b></td><td><b>F2 = AB+AC+ BC</b></td><td><b>F2'</b></td><td><b>T1 = A+B+C</b></td><td><b>T2 = ABC</b></td><td><b>T3 = F2' · T1</b></td><td><b>F1 = T3 + T2</b></td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr><tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td></tr><tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr></table>",
+"Conclusion: Output <code>F</code><sub><code>1</code></sub><code> = 1</code> when an odd number of inputs are 1 (Sum of a Full Adder), and <code>F</code><sub><code>2</code></sub><code> = </code> <code>1</code> when two or more inputs are 1 (Carry-out majority function of a Full Adder). Thus, the analyzed circuit is a 1-bit Full Adder."
+]
+},
+{
+"u": 2,
+"q": 2,
+"question": "Design and explain a half adder and a full adder using logic gates. Show how a 4- bit binary ripple-carry adder is built from full adders.",
+"parts": [
+"1. Half Adder (HA): A combinational circuit that adds two single binary bits <code>x</code> and <code>y</code> to produce a Sum ( <code>S</code> ) and Carry ( <code>C</code> ). It cannot accept an incoming carry from a previous stage.",
+"<img class=\"fig\" src=\"fig/U2Q2_f23.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q2_f24.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q2_f25.png\" style=\"width:48.00em\">",
+"Boolean Equations: <code>S = x'y + xy' = x ⊕ y</code> (1 XOR gate);   <code>C = x · y</code> (1 AND gate).",
+"2. Full Adder (FA): Adds three input bits—two operand bits <code>x, y</code> and an incoming carry <code>z</code> ( <code>C</code><sub><code>in</code></sub> ) from the lower stage—to produce Sum ( <code>S</code> ) and Carry-out ( <code>C</code> ). A full adder can be constructed from two Half Adders and one OR gate:",
+"Boolean Equations: <code>S = x ⊕ y ⊕ z</code> ;   <code>C = xy + xz + yz = xy + z(x ⊕ y)</code> .",
+"<table><tr><td><b>Half Adder Truth Table</b></td><td><b></b></td><td><b></b></td><td><b></b></td><td><b>Full Adder Truth Table (Inputs: x, y, z; Outputs: C, S)</b></td><td><b></b></td><td><b></b></td><td><b></b></td><td><b></b></td></tr><tr><td>x</td><td>y</td><td>C</td><td>S</td><td>x, y, z</td><td>C</td><td>S</td><td>x, y, z</td><td>C, S</td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0, 0, 0</td><td>0</td><td>0</td><td>1, 0, 0</td><td>0, 1</td></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0, 0,</td><td>0</td><td>1</td><td>1, 0,</td><td>1, 0</td></tr><tr><td></td><td></td><td></td><td></td><td>1</td><td></td><td></td><td>1</td><td></td></tr><tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0, 1, 0</td><td>0</td><td>1</td><td>1, 1, 0</td><td>1, 0</td></tr><tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0, 1, 1</td><td>1</td><td>0</td><td>1, 1, 1</td><td>1, 1</td></tr></table>",
+"3. 4-Bit Binary Ripple-Carry Adder: Built by cascading four Full Adders ( <code>FA</code><sub><code>0</code></sub> to <code>FA</code><sub><code>3</code></sub> ) in series so that the carry-out <code>C</code><sub><code>i+1</code></sub> of stage i feeds the carry-in of stage i+1. The carry \"ripples\" from the LSB ( <code>FA</code><sub><code>0</code></sub> ) to the MSB ( <code>FA</code><sub><code>3</code></sub> ), requiring <code>2n</code> gate delays (8 gate levels for 4 bits).",
+"<img class=\"fig\" src=\"fig/U2Q2_f26.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 2,
+"q": 3,
+"question": "Design a BCD (decimal) adder using 4-bit binary adders. Explain the correction logic needed when the sum exceeds 9.",
+"parts": [
+"1. Need for Correction in BCD Addition: A BCD adder adds two 4-bit BCD digits ( <code>A, B</code> in <code>0000–</code> <code>1001</code> ) plus an input carry <code>C</code><sub><code>in</code></sub> , producing a sum ranging from <code>0</code> to <code>9 + 9 + 1 = 19</code> . A standard 4-bit binary adder produces a 5-bit binary sum <code>K Z</code><sub><code>8</code></sub><code> Z</code><sub><code>4</code></sub><code> Z</code><sub><code>2</code></sub><code> Z</code><sub><code>1</code></sub> (where <code>K</code> is the carry-out):",
+"<img class=\"fig\" src=\"fig/U2Q3_f27.png\" style=\"width:48.00em\">",
+"When the sum is <b><code>≤ 9</code></b> ( <b><code>0000</code></b> to <b><code>1001</code></b> ), the binary sum is already a valid BCD digit and needs no correction (add <code>0000</code> ).",
+"When the sum is <b><code>10</code></b> to <b><code>15</code></b> ( <b><code>0 1010</code></b> to <b><code>0 1111</code></b> ), the 4-bit code is invalid in BCD. When the sum is <b><code>16</code></b> to <b><code>19</code></b> ( <b><code>1 0000</code></b> to <b><code>1 0011</code></b> ), a carry <code>K = 1</code> is generated, but the 4-bit remainder is 6 too small because binary wraps at 16 instead of 10.",
+"Cure: Whenever the binary sum exceeds 9, add <b><code>6 (0110</code></b><sub><b><code>2</code></b></sub><b><code>)</code></b> using a second 4-bit binary adder to skip the 6 unused states and generate the decimal output carry <code>C = 1</code> .",
+"2. Derivation of Correction Logic: Inspecting the binary sums from 10 to 19:",
+"Sums 16–19 have <code>K = 1</code> .",
+"Sums 12–15 ( <code>1100, 1101, 1110, 1111</code> ) have <code>Z</code><sub><code>8</code></sub><code> = 1</code> and <code>Z</code><sub><code>4</code></sub><code> = 1</code> ( <code>Z</code><sub><code>8</code></sub><code>Z</code><sub><code>4</code></sub><code> = 1</code> ).",
+"Sums 10–11 ( <code>1010, 1011</code> ) have <code>Z</code><sub><code>8</code></sub><code> = 1</code> and <code>Z</code><sub><code>2</code></sub><code> = 1</code> ( <code>Z</code><sub><code>8</code></sub><code>Z</code><sub><code>2</code></sub><code> = 1</code> ).",
+"Combining these three conditions yields the decimal carry and correction equation: <b><code>C = K + </code></b> <b><code>Z</code></b><sub><b><code>8</code></b></sub><b><code>Z</code></b><sub><b><code>4</code></b></sub><b><code> + Z</code></b><sub><b><code>8</code></b></sub><b><code>Z</code></b><sub><b><code>2</code></b></sub> .",
+"<img class=\"fig\" src=\"fig/U2Q3_f28.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 2,
+"q": 4,
+"question": "Design a 4-bit magnitude comparator. Derive the Boolean expressions for A&amp;gt;B, A=B and A&amp;lt;B and draw the logic diagram.",
+"parts": [
+"1. Concept: A 4-bit magnitude comparator compares two 4-bit unsigned binary numbers <code>A = </code> <code>A</code><sub><code>3</code></sub><code>A</code><sub><code>2</code></sub><code>A</code><sub><code>1</code></sub><code>A</code><sub><code>0</code></sub> and <code>B = B</code><sub><code>3</code></sub><code>B</code><sub><code>2</code></sub><code>B</code><sub><code>1</code></sub><code>B</code><sub><code>0</code></sub> (from MSB <code>i = 3</code> down to LSB <code>i = 0</code> ) and asserts exactly one of three outputs: <code>(A = B)</code> , <code>(A &gt; B)</code> , or <code>(A &lt; B)</code> .",
+"<img class=\"fig\" src=\"fig/U2Q4_f29.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q4_f30.png\" style=\"width:48.00em\">",
+"2. Derivation of Boolean Expressions:",
+"Bit-Equality Signals ( <b><code>x</code></b><sub><b><code>i</code></b></sub> ): Two bits <code>A</code><sub><code>i</code></sub> and <code>B</code><sub><code>i</code></sub> are equal if both are 1 or both are 0 (XNOR function):",
+"<code>x</code><sub><code>i</code></sub><code> = A</code><sub><code>i</code></sub><code>B</code><sub><code>i</code></sub><code> + A</code><sub><code>i</code></sub><code>'B</code><sub><code>i</code></sub><code>' = (A</code><sub><code>i</code></sub><code> ⊕ B</code><sub><code>i</code></sub><code>)'</code>   for <code>i = 0, 1, 2, 3</code> .",
+"Equality Output <b><code>(A = B)</code></b> : Two 4-bit numbers are equal if and only if all four bit pairs are equal:",
+"<b><code>(A = B) = x</code></b><sub><b><code>3</code></b></sub><b><code> · x</code></b><sub><b><code>2</code></b></sub><b><code> · x</code></b><sub><b><code>1</code></b></sub><b><code> · x</code></b><sub><b><code>0</code></b></sub>",
+"Greater-Than Output <b><code>(A &gt; B)</code></b> : Scanning from MSB <code>i = 3</code> to <code>0</code> , the first bit position where <code>A</code> and <code>B</code> differ decides. <code>A &gt; B</code> if <code>A</code><sub><code>3</code></sub><code>=1, B</code><sub><code>3</code></sub><code>=0</code> ; OR if bit 3 is equal ( <code>x</code><sub><code>3</code></sub><code>=1</code> ) and <code>A</code><sub><code>2</code></sub><code>=1, B</code><sub><code>2</code></sub><code>=0</code> ; and so on:",
+"<b><code>(A &gt; B) = A</code></b><sub><b><code>3</code></b></sub><b><code>B</code></b><sub><b><code>3</code></b></sub><b><code>' + x</code></b><sub><b><code>3</code></b></sub><b><code>A</code></b><sub><b><code>2</code></b></sub><b><code>B</code></b><sub><b><code>2</code></b></sub><b><code>' + x</code></b><sub><b><code>3</code></b></sub><b><code>x</code></b><sub><b><code>2</code></b></sub><b><code>A</code></b><sub><b><code>1</code></b></sub><b><code>B</code></b><sub><b><code>1</code></b></sub><b><code>' + x</code></b><sub><b><code>3</code></b></sub><b><code>x</code></b><sub><b><code>2</code></b></sub><b><code>x</code></b><sub><b><code>1</code></b></sub><b><code>A</code></b><sub><b><code>0</code></b></sub><b><code>B</code></b><sub><b><code>0</code></b></sub><b><code>'</code></b>",
+"Less-Than Output <b><code>(A &lt; B)</code></b> : By symmetry, <code>A &lt; B</code> if the highest unequal bit position has <code>A</code><sub><code>i</code></sub><code>=0, B</code><sub><code>i</code></sub><code>=1</code> :",
+"<b><code>(A &lt; B) = A</code></b><sub><b><code>3</code></b></sub><b><code>'B</code></b><sub><b><code>3</code></b></sub><b><code> + x</code></b><sub><b><code>3</code></b></sub><b><code>A</code></b><sub><b><code>2</code></b></sub><b><code>'B</code></b><sub><b><code>2</code></b></sub><b><code> + x</code></b><sub><b><code>3</code></b></sub><b><code>x</code></b><sub><b><code>2</code></b></sub><b><code>A</code></b><sub><b><code>1</code></b></sub><b><code>'B</code></b><sub><b><code>1</code></b></sub><b><code> + x</code></b><sub><b><code>3</code></b></sub><b><code>x</code></b><sub><b><code>2</code></b></sub><b><code>x</code></b><sub><b><code>1</code></b></sub><b><code>A</code></b><sub><b><code>0</code></b></sub><b><code>'B</code></b><sub><b><code>0</code></b></sub>",
+"<img class=\"fig\" src=\"fig/U2Q4_f31.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 2,
+"q": 5,
+"question": "Explain the working of an 8-to-3 priority encoder with its truth table. Compare an ordinary encoder with a priority encoder.",
+"parts": [
+"1. Encoder vs. Priority Encoder: An encoder performs the inverse operation of a decoder: it has up to <code>2</code><sup><code>n</code></sup> input lines and n output lines that generate the binary code corresponding to the active input. However, a simple (ordinary) octal-to-binary encoder has two major flaws: (1) if two or more inputs are active simultaneously (e.g., <code>D</code><sub><code>3</code></sub> and <code>D</code><sub><code>6</code></sub> ), it outputs the bitwise OR ( <code>011 | 110 = </code> <code>111</code> ), which is erroneous; and (2) an output of <code>000</code> is ambiguous between <code>D</code><sub><code>0</code></sub> being active and no input being active. A priority encoder resolves both issues by assigning a priority order to inputs ( <code>D</code><sub><code>7</code></sub> highest down to <code>D</code><sub><code>0</code></sub> lowest), encoding only the highest-priority active input while ignoring lower-priority inputs ( <code>X</code> = don't care), and providing a valid bit <code>V = 1</code> whenever at least one input is active.",
+"<img class=\"fig\" src=\"fig/U2Q5_f32.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q5_f33.png\" style=\"width:48.00em\">",
+"2. Truth Table of an 8-to-3 Priority Encoder (and 4-Input Equations):",
+"<table><tr><td><b>D0</b></td><td><b>D1</b></td><td><b>D2</b></td><td><b>D3</b></td><td><b>D4</b></td><td><b>D5</b></td><td><b>D6</b></td><td><b>D7</b></td><td><b>x (MSB )</b></td><td><b>y</b></td><td><b>z (LSB)</b></td><td><b>V (Valid )</b></td></tr><tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>X</td><td>X</td><td>X</td><td>0 (No input)</td></tr><tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1 (D0)</td></tr><tr><td>X</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1 (D1)</td></tr><tr><td>X</td><td>X</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1 (D2)</td></tr></table>",
+"<table><tr><td><b>D0</b></td><td><b>D1</b></td><td><b>D2</b></td><td><b>D3</b></td><td><b>D4</b></td><td><b>D5</b></td><td><b>D6</b></td><td><b>D7</b></td><td><b>x (MSB )</b></td><td><b>y</b></td><td><b>z (LSB)</b></td><td><b>V (Valid )</b></td></tr><tr><td>X</td><td>X</td><td>X</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1 (D3)</td></tr><tr><td>X</td><td>X</td><td>X</td><td>X</td><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1 (D4)</td></tr><tr><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1 (D5)</td></tr><tr><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1 (D6)</td></tr><tr><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>X</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1 (D7 highe st)</td></tr></table>",
+"For a 4-input priority encoder ( <code>D</code><sub><code>0</code></sub><code>..D</code><sub><code>3</code></sub> , outputs <code>x, y, V</code> ): <b><code>x = D</code></b><sub><b><code>2</code></b></sub><b><code> + D</code></b><sub><b><code>3</code></b></sub> ,   <b><code>y = D</code></b><sub><b><code>3</code></b></sub><b><code> + D</code></b><sub><b><code>1</code></b></sub><b><code>D</code></b><sub><b><code>2</code></b></sub><b><code>'</code></b> ,   and <b><code>V = D</code></b><sub><b><code>0</code></b></sub><b><code> + D</code></b><sub><b><code>1</code></b></sub><b><code> + D</code></b><sub><b><code>2</code></b></sub><b><code> + D</code></b><sub><b><code>3</code></b></sub> . For an ordinary 8-to-3 encoder: <code>x = D</code><sub><code>4</code></sub><code>+D</code><sub><code>5</code></sub><code>+D</code><sub><code>6</code></sub><code>+D</code><sub><code>7</code></sub> , <code>y = </code> <code>D</code><sub><code>2</code></sub><code>+D</code><sub><code>3</code></sub><code>+D</code><sub><code>6</code></sub><code>+D</code><sub><code>7</code></sub> , <code>z = D</code><sub><code>1</code></sub><code>+D</code><sub><code>3</code></sub><code>+D</code><sub><code>5</code></sub><code>+D</code><sub><code>7</code></sub> ."
+]
+},
+{
+"u": 2,
+"q": 6,
+"question": "Explain the role of HDL in digital design. Write Verilog/VHDL code for a 4-bit full adder using structural and dataflow models and explain each part.",
+"parts": [
+"1. Role of Hardware Description Language (HDL) in Digital Design: A Hardware Description Language (HDL)—such as Verilog or VHDL—is a specialized computer language used to describe the structure, dataflow, and algorithmic behavior of digital logic circuits in textual form. Its three primary roles in modern VLSI/FPGA engineering are:",
+"Design Entry &amp; Documentation: Replaces hand-drawn gate schematics for complex circuits containing thousands or millions of gates, allowing hierarchical modular design (instantiating small modules like Half Adders inside Full Adders and 4-bit Adders).",
+"Logic Simulation &amp; Verification: Allows engineers to apply stimulus signals via a testbench ( <code>initial</code> , <code>$monitor</code> ) and verify functional correctness and propagation delays before any physical hardware is fabricated.",
+"Automated Logic Synthesis: Synthesis tools automatically translate the verified HDL code into an optimized gate-level netlist and physical IC/FPGA layout.",
+"2. Three Modeling Styles in Verilog HDL: (1) Gate-Level (Structural) Modeling using built-in gate primitives ( <code>and, or, xor, not</code> ) and module instantiation; (2) Dataflow Modeling using continuous assignment statements ( <code>assign</code> ) and bitwise/arithmetic operators ( <code>&amp;, |, ^, ~, </code> <code>+</code> ); and (3) Behavioral Modeling using procedural blocks ( <code>always @(...)</code> , <code>if-else</code> , <code>case</code> ) with <code>reg</code> variables.",
+"3. Complete Verilog Code for a 4-Bit Ripple-Carry Full Adder (Structural &amp; Dataflow Models):",
+"<img class=\"fig\" src=\"fig/U2Q6_f34.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q6_f35.png\" style=\"width:48.00em\">",
+"Explanation of Parts: In the structural model, <code>input</code> and <code>output</code> declare module ports (with <code>[3:0]</code> defining a 4-bit bus vector), <code>wire</code> declares internal physical connections (`C1, C2, C3`), and `FA0..FA3` instantiate four copies of `full_adder` in a ripple chain. In the dataflow model, `assign {c_out, sum} = A + B + c_in;` uses the concatenation operator `{ , }` to pack the 1-bit carry-out and 4-bit sum into a 5-bit target driven continuously by the `+` operator."
+]
+},
+{
+"u": 2,
+"q": 7,
+"question": "Explain the working of the SR latch (NOR and NAND) and the gated D latch with logic diagrams and function tables.",
+"parts": [
+"1. Latches Overview: A latch is a level-sensitive 1-bit storage element constructed from two cross-coupled logic gates whose outputs feed back into each other's inputs, creating two stable states: Set ( <code>Q = 1, Q' = 0</code> ) and Reset ( <code>Q = 0, Q' = 1</code> ).",
+"<img class=\"fig\" src=\"fig/U2Q7_f36.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q7_f37.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q7_f38.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q7_f39.png\" style=\"width:48.00em\">",
+"SR Latch with NOR Gates (Active-High Inputs):",
+"<code>S = 0, R = 0</code> : Both NOR gates act as inverters in a loop → Hold (no change). <code>S = 1, R = 0</code> : Lower NOR forces <code>Q' = 0</code> , which sets upper NOR <code>Q = 1</code> → Set. <code>S = 0, R = 1</code> : Upper NOR forces <code>Q = 0</code> , which sets lower NOR <code>Q' = 1</code> → Reset. <code>S = 1, R = 1</code> : Forces both <code>Q = 0</code> and <code>Q' = 0</code> → Invalid/Forbidden (causes a race if dropped to <code>00</code> together).",
+"SR Latch with NAND Gates (Active-Low Inputs): Works inversely because a NAND output goes to <code>1</code> whenever any input is <code>0</code> . Thus <code>S = 1, R = 1</code> holds the state; <code>S = 0, R = 1</code> sets <code>Q = 1</code> ; <code>S = 1, R = 0</code> resets <code>Q = 0</code> ; and <code>S = 0, R = 0</code> is forbidden ( <code>Q = Q' = 1</code> ). Adding two steering NAND gates driven by an Enable ( <code>En</code> ) input produces a Gated SR Latch (active- high <code>S, R</code> while <code>En = 1</code> ).",
+"Gated D (Transparent) Latch: Eliminates the forbidden state of the gated SR latch by feeding a single Data input <code>D</code> directly to <code>S</code> and through an inverter to <code>R</code> ( <code>R = D'</code> ). While <code>En = 1</code> , the latch is transparent and <code>Q</code> follows <code>D</code> ( <code>Q(t+1) = D</code> ); when <code>En = 0</code> , the last value of <code>D</code> is latched and held.",
+"<table><tr><td><b>NOR SR Latch</b></td><td><b></b></td><td><b></b></td><td><b></b></td><td><b>NAND SR Latch (Active-Low)</b></td><td><b></b></td><td><b></b></td><td><b></b></td><td><b>Gated D Latch</b></td><td><b></b></td><td><b></b></td><td><b></b></td></tr><tr><td>S</td><td>R</td><td>Q, Q'</td><td>Actio n</td><td>S</td><td>R</td><td>Q, Q'</td><td>Actio n</td><td>En</td><td>D</td><td>Q(t+1 )</td><td>Actio n</td></tr><tr><td>0</td><td>0</td><td>Q, Q'</td><td>Hold</td><td>1</td><td>1</td><td>Q, Q'</td><td>Hold</td><td>0</td><td>X</td><td>Q(t )</td><td>Hold</td></tr><tr><td>0</td><td>1</td><td>0, 1</td><td>Reset</td><td>1</td><td>0</td><td>0, 1</td><td>Reset</td><td>1</td><td>0</td><td>0</td><td>Reset</td></tr><tr><td>1</td><td>0</td><td>1, 0</td><td>Set</td><td>0</td><td>1</td><td>1, 0</td><td>Set</td><td>1</td><td>1</td><td>1</td><td>Set</td></tr></table>",
+"<table><tr><td><b>NOR SR Latch</b></td><td><b></b></td><td><b></b></td><td><b></b></td><td><b>NAND SR Latch (Active-Low)</b></td><td><b></b></td><td><b></b></td><td><b></b></td><td><b>Gated D Latch</b></td><td><b></b></td><td><b></b></td><td><b></b></td></tr><tr><td>S</td><td>R</td><td>Q, Q'</td><td>Actio n</td><td>S</td><td>R</td><td>Q, Q'</td><td>Actio n</td><td>En</td><td>D</td><td>Q(t+1 )</td><td>Actio n</td></tr><tr><td>1</td><td>1</td><td>0, 0</td><td>Invali d</td><td>0</td><td>0</td><td>1, 1</td><td>Invali d</td><td>—</td><td>—</td><td>—</td><td>No invali d state</td></tr></table>"
+]
+},
+{
+"u": 2,
+"q": 8,
+"question": "Explain the analysis of clocked sequential circuits. For a given circuit, derive state equations, state table and state diagram.",
+"parts": [
+"1. Analysis Procedure for Clocked Sequential Circuits: Analysis starts from a given flip-flop and gate schematic and determines its time-sequence behavior in four steps: (1) Write the flip-flop input equations and output equations from the gates; (2) Substitute the input equations into each flip-flop's characteristic equation ( <code>Q(t+1) = D</code> for D-FF; <code>JQ'+K'Q</code> for JK-FF; <code>T⊕Q</code> for T-FF) to obtain the state equations; (3) Evaluate the state and output equations for all <code>2</code><sup><code>n+m</code></sup> combinations of present state and inputs to build the state table; and (4) Draw the state diagram (circles for states, directed arcs labeled <code>input/output</code> for Mealy or circles labeled <code>state/output</code> for Moore).",
+"<img class=\"fig\" src=\"fig/U2Q8_f40.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q8_f41.png\" style=\"width:48.00em\">",
+"2. Worked Analysis Example (Mealy Circuit with Two D Flip-Flops <b><code>A, B</code></b> , Input <b><code>x</code></b> , Output <b><code>y</code></b> ): Given Flip-Flop Input &amp; Output Equations (from Fig. 5.15 in notes):",
+"<code>D</code><sub><code>A</code></sub><code> = Ax + Bx</code> ,    <code>D</code><sub><code>B</code></sub><code> = A'x</code> ,    and output <code>y = (A + B)x'</code> (Mealy model, since <code>y</code> depends on present input <code>x</code> ).",
+"State Equations (since <b><code>Q(t+1) = D</code></b> ): <b><code>A(t+1) = Ax + Bx</code></b>   and   <b><code>B(t+1) = A'x</code></b> .",
+"<table><tr><td><b>Present State (A B)</b></td><td><b>Next State A(t+1) B(t+1)</b></td><td><b></b></td><td><b>Output (y)</b></td><td><b></b></td><td><b>State Diagram Transitions (Arc: x / y)</b></td></tr><tr><td></td><td>x = 0</td><td>x = 1</td><td>x = 0</td><td>x = 1</td><td></td></tr><tr><td>00</td><td>00</td><td>01</td><td>0</td><td>0</td><td>00 → 00 (0/0) ; 00 → 01 (1/0)</td></tr><tr><td>01</td><td>00</td><td>11</td><td>1</td><td>0</td><td>01 → 00 (0/1) ; 01 → 11 (1/0)</td></tr><tr><td>10</td><td>00</td><td>10</td><td>1</td><td>0</td><td>10 → 00 (0/1) ; 10 → 10 (1/0)</td></tr><tr><td>11</td><td>00</td><td>10</td><td>1</td><td>0</td><td>11 → 00 (0/1) ; 11 → 10 (1/0)</td></tr></table>"
+]
+},
+{
+"u": 2,
+"q": 9,
+"question": "Explain the design procedure for clocked sequential circuits. Design a sequence detector for the pattern 1011 using JK flip-flops.",
+"parts": [
+"1. Seven-Step Design Procedure: (1) Derive the state diagram from the word specification; (2) Reduce redundant states if any; (3) Assign binary codes to states; (4) Choose flip-flop type (JK)",
+"and number of flip-flops; (5) Derive the state table and apply the JK excitation table ( <code>0→0: </code> <code>J=0,K=X</code> ; <code>0→1: J=1,K=X</code> ; <code>1→0: J=X,K=1</code> ; <code>1→1: J=X,K=0</code> ); (6) Simplify flip-flop input and output equations using K-maps; and (7) Draw the logic diagram.",
+"<img class=\"fig\" src=\"fig/U2Q9_f42.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q9_f43.png\" style=\"width:48.00em\">",
+"2. Design of Mealy <b><code>1011</code></b> Sequence Detector Using Two JK Flip-Flops ( <b><code>A, B</code></b> ):",
+"States (4 states ⇒ 2 JK Flip-Flops): <code>S</code><sub><code>0</code></sub><code> = 00</code> (initial/reset, no match), <code>S</code><sub><code>1</code></sub><code> = 01</code> ('1' detected), <code>S</code><sub><code>2</code></sub><code> = 10</code> ('10' detected), <code>S</code><sub><code>3</code></sub><code> = 11</code> ('101' detected). When in <code>S</code><sub><code>3</code></sub><code> (11)</code> and input <code>x = 1</code> arrives, the sequence <code>1011</code> is complete: output <code>y = 1</code> and transition to <code>S</code><sub><code>1</code></sub><code> (01)</code> (overlapping) or <code>S</code><sub><code>0</code></sub> .",
+"<table><tr><td><b>Present State (A B)</b></td><td><b>Input (x)</b></td><td><b>Next State (A+ B+)</b></td><td><b>Output (y)</b></td><td><b>JA</b></td><td><b>KA</b></td><td><b>JB</b></td><td><b>KB</b></td></tr><tr><td>0 0 (S0)</td><td>0</td><td>0 0</td><td>0</td><td>0</td><td>X</td><td>0</td><td>X</td></tr><tr><td>0 0 (S0)</td><td>1</td><td>0 1</td><td>0</td><td>0</td><td>X</td><td>1</td><td>X</td></tr><tr><td>0 1 (S1)</td><td>0</td><td>1 0</td><td>0</td><td>1</td><td>X</td><td>X</td><td>1</td></tr><tr><td>0 1 (S1)</td><td>1</td><td>0 1</td><td>0</td><td>0</td><td>X</td><td>X</td><td>0</td></tr><tr><td>1 0 (S2)</td><td>0</td><td>0 0</td><td>0</td><td>X</td><td>1</td><td>0</td><td>X</td></tr><tr><td>1 0 (S2)</td><td>1</td><td>1 1</td><td>0</td><td>X</td><td>0</td><td>1</td><td>X</td></tr><tr><td>1 1 (S3)</td><td>0</td><td>1 0</td><td>0</td><td>X</td><td>0</td><td>X</td><td>1</td></tr><tr><td>1 1 (S3)</td><td>1</td><td>0 1</td><td>1</td><td>X</td><td>1</td><td>X</td><td>0</td></tr></table>",
+"3. K-Map Simplification (3-Variable K-Maps in <b><code>A, B, x</code></b> ) &amp; Gate-Level Logic Implementation:",
+"<table><tr><td><b>K-Map for JA (A \\ Bx)</b></td><td><b></b></td><td><b>K-Map for KA (A \\ Bx)</b></td><td><b></b></td><td><b>K-Map for JB (A \\ Bx)</b></td><td><b></b></td><td><b></b></td><td><b>K-Map for KB (A \\ Bx)</b></td></tr><tr><td>Bx: 00 01 11 10 A=0: 0 0 0 1 A=1: X X X X Group (m2, m6) ⇒ JA</td><td></td><td>Bx: 00 01 11 10 A=0: X X X X A=1: 1 0 1 0</td><td></td><td>Bx: 00 01 11 10 A=0: 0 1 X X A=1: 0 1 X X</td><td></td><td></td><td>Bx: 00 01 11 10 A=0: X X 0 1 A=1: X X 0 1 Quad (0,2,4,6) ⇒ KB = x'</td></tr><tr><td></td><td>(m2, m6) ⇒ JA</td><td>Group</td><td>m4, m7 ⇒ KA =</td><td>Quad</td><td>(</td><td>1,3,5,7) ⇒</td><td>Quad</td></tr><tr><td></td><td></td><td>B'x' + Bx</td><td></td><td>JB = x</td><td></td><td></td><td></td></tr><tr><td>= B · x'</td><td></td><td>B'x' + Bx</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>",
+"Final Flip-Flop Input &amp; Output Equations: <b><code>J</code></b><sub><b><code>A</code></b></sub><b><code> = B · x'</code></b> ,   <b><code>K</code></b><sub><b><code>A</code></b></sub><b><code> = (B ⊕ x)'</code></b> ,   <b><code>J</code></b><sub><b><code>B</code></b></sub><b><code> = x</code></b> ,   <b><code>K</code></b><sub><b><code>B</code></b></sub><b><code> = </code></b> <b><code>x'</code></b> ,   and Mealy Output <b><code>y = A · B · x</code></b> (3-input AND gate)."
+]
+},
+{
+"u": 2,
+"q": 10,
+"question": "Explain the working of a 4-bit bidirectional shift register with parallel load. Describe SISO, SIPO, PISO and PIPO modes with timing diagrams.",
+"parts": [
+"1. 4-Bit Bidirectional Shift Register with Parallel Load (Universal Shift Register): A universal shift register consists of four D flip-flops ( <code>A</code><sub><code>3</code></sub><code>, A</code><sub><code>2</code></sub><code>, A</code><sub><code>1</code></sub><code>, A</code><sub><code>0</code></sub> ) sharing a common clock and clear, with a 4-to-1 Multiplexer placed in front of each flip-flop's <code>D</code> input. Two mode select lines <code>S</code><sub><code>1</code></sub><code>, </code> <code>S</code><sub><code>0</code></sub> control all four MUXes simultaneously:",
+"<img class=\"fig\" src=\"fig/U2Q10_f44.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q10_f45.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U2Q10_f46.png\" style=\"width:48.00em\">",
+"<table><tr><td><b>Mode Select (S1 S0)</b></td><td><b>MUX Input Selected for Stage i (Di)</b></td><td><b>Register Operation</b></td></tr><tr><td>0 0</td><td>MUX Input 0 ← Ai (own output fed back)</td><td>Hold (No change)</td></tr><tr><td>0 1</td><td>MUX Input 1 ← Ai+1 (Serial-Right input feeds MSB A3 )</td><td>Shift Right (Down)</td></tr><tr><td>1 0</td><td>MUX Input 2 ← Ai−1 (Serial-Left input feeds LSB A0 )</td><td>Shift Left (Up)</td></tr><tr><td>1 1</td><td>MUX Input 3 ← Ii (External parallel input line)</td><td>Parallel Load</td></tr></table>",
+"2. Four Operating Modes of Shift Registers &amp; Timing Behavior:",
+"SISO (Serial-In, Serial-Out): Data enters 1 bit per clock pulse at Serial Input ( <code>SI</code> ) and exits at Serial Output ( <code>SO</code> ) after n clock pulses (4 pulses for 4 bits). Used as a digital delay line. SIPO (Serial-In, Parallel-Out): Data is shifted in serially over 4 clock pulses; once loaded, all 4 bits ( <code>A</code><sub><code>3</code></sub><code>..A</code><sub><code>0</code></sub> ) are read out simultaneously in parallel (used in UART receiver serial-to-parallel conversion).",
+"PISO (Parallel-In, Serial-Out): All 4 bits are loaded in 1 clock pulse via Parallel Load ( <code>S</code><sub><code>1</code></sub><code>S</code><sub><code>0</code></sub><code> = </code> <code>11</code> ), then shifted out 1 bit per clock pulse on subsequent edges ( <code>S</code><sub><code>1</code></sub><code>S</code><sub><code>0</code></sub><code> = 01</code> , used in transmitter parallel-to-serial conversion).",
+"PIPO (Parallel-In, Parallel-Out): All 4 bits load on a single active clock edge and appear immediately at the 4 parallel outputs (acts as a standard buffer register).",
+"<img class=\"fig\" src=\"fig/U2Q10_f47.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 3,
+"q": 1,
+"question": "Define Register Transfer Language (RTL). Explain its notation, symbols and conventions used to describe digital systems with suitable examples.",
+"parts": [
+"1. Definition of Register Transfer Language (RTL) &amp; Micro-Operations: A digital computer is an interconnection of hardware modules (registers, decoders, multiplexers, adders, counters) whose internal organization is completely specified by: (1) the set of registers it contains and their functions; (2) the sequence of micro-operations (elementary operations performed on data stored in registers during one clock pulse, such as load, clear, shift, count, add); and (3) the control conditions that initiate that sequence. Register Transfer Language (RTL) is the symbolic notation used by hardware designers to describe micro-operation transfers among registers concisely and unambiguously without drawing gate-level schematics.",
+"<img class=\"fig\" src=\"fig/U3Q1_f48.png\" style=\"width:48.00em\">",
+"2. RTL Conventions for Naming &amp; Partitioning Registers:",
+"Register Names: Denoted by uppercase letters (optionally followed by digits) indicating their function, such as <code>MAR</code> (Memory Address Register), <code>PC</code> (Program Counter), <code>IR</code> (Instruction Register), and <code>R1, R2</code> (Processor Registers).",
+"Bit Numbering: Bits are numbered from right to left starting at <code>0</code> for the Least Significant Bit (LSB) up to <code>n−1</code> for the Most Significant Bit (MSB), e.g., bits <code>15..0</code> in a 16-bit register. Subfields (Parentheses): Portions of a register are specified inside parentheses by bit range or name: for example, in a 16-bit <code>PC</code> , <code>PC(7–0)</code> or <code>PC(L)</code> denotes the low byte, and <code>PC(15–</code>",
+"<code>8)</code> or <code>PC(H)</code> denotes the high byte.",
+"3. Standard Symbols of Register Transfer Language &amp; Worked Examples:",
+"<table><tr><td><b>RTL Symbol</b></td><td><b>Meaning &amp; Hardware Convention</b></td><td><b>Concrete RTL Examples &amp; Explanation</b></td></tr><tr><td>Letters &amp; Numerals</td><td>Denotes a hardware register name.</td><td>MAR, PC, IR, R1, R2, DR, AC</td></tr><tr><td>Parentheses ( )</td><td>Denotes a bit range or named byte/subfield of a register.</td><td>R2(15–8) ← R1(7–0) copies the lower 8 bits of R1 into the upper 8 bits of R2 .</td></tr><tr><td>Left Arrow ←</td><td>Denotes parallel transfer of information ( Destination ← Source ) in 1 clock pulse.</td><td>R2 ← R1 copies R1 into R2 ; R1 is unchanged.</td></tr><tr><td>Colon :</td><td>Terminates a Boolean control condition; the micro-operation follows only if condition = 1.</td><td>P: R2 ← R1 executes R2 ← R1 only when control signal P = 1 .</td></tr></table>",
+"<table><tr><td><b>RTL Symbol</b></td><td><b>Meaning &amp; Hardware Convention</b></td><td><b>Concrete RTL Examples &amp; Explanation</b></td></tr><tr><td>Comma ,</td><td>Separates two or more micro-operations executed simultaneously on the same clock edge.</td><td>T: R2 ← R1, R1 ← R2 exchanges (swaps) R1 and R2 in one clock pulse.</td></tr><tr><td>Square Brackets [ ]</td><td>Specifies a memory word address inside memory unit M .</td><td>DR ← M[AR] reads the memory word at address AR into DR .</td></tr></table>"
+]
+},
+{
+"u": 3,
+"q": 2,
+"question": "Explain register transfer with a block diagram. Describe how a transfer with a control function, such as 'P: R2 &amp;lt;- R1', is implemented in hardware using a load control and clock.",
+"parts": [
+"1. Register Representation &amp; Basic Transfer: Computer registers are denoted by uppercase identifiers (e.g., <code>R1, R2, PC, AR, IR</code> ) and drawn as rectangular boxes, optionally partitioned into bit cells ( <code>15..0</code> ) or byte subfields such as <code>PC(H)</code> and <code>PC(L)</code> . The basic transfer <code>R2 ← R1</code> copies all n bits from source register <code>R1</code> into destination register <code>R2</code> in parallel during one clock pulse without altering <code>R1</code> .",
+"<img class=\"fig\" src=\"fig/U3Q2_f49.png\" style=\"width:48.00em\">",
+"2. Hardware Implementation of Controlled Transfer ( <b><code>P: R2 ← R1</code></b> ): In digital systems, data transfers must occur only when a specific Boolean control condition <code>P = 1</code> is satisfied by the control unit. To prevent uncontrolled overwriting on every clock pulse:",
+"The n data output lines of source register <code>R1</code> are wired directly to the n data input lines of destination register <code>R2</code> .",
+"The control circuit generates the Boolean signal <code>P</code> and connects it to the <b><code>Load</code></b> control input of <code>R2</code> .",
+"Both the control circuit and register <code>R2</code> are synchronized by a common positive-edge- triggered Clock signal.",
+"<img class=\"fig\" src=\"fig/U3Q2_f50.png\" style=\"width:48.00em\">",
+"3. Simultaneous Transfers (Register Swap): Writing <code>T: R2 ← R1, R1 ← R2</code> separated by a comma executes both micro-operations on the same clock pulse <code>t+1</code> , swapping the contents of <code>R1</code> and <code>R2</code> directly because edge-triggered flip-flops sample their inputs just before their outputs change."
+]
+},
+{
+"u": 3,
+"q": 3,
+"question": "Explain the common bus system for transferring data among registers using multiplexers. Describe how memory read and write transfers are represented in RTL.",
+"parts": [
+"1. Common Bus System Using Multiplexers: Wiring every register directly to every other register requires <code>n(n−1)</code> multi-bit paths. A common bus system uses a single shared highway of k lines, where only one source register places data on the bus at a time. For a system of 4 registers ( <b><code>A, </code></b> <b><code>B, C, D</code></b> ) of 4 bits each:",
+"<img class=\"fig\" src=\"fig/U3Q3_f51.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q3_f52.png\" style=\"width:48.00em\">",
+"Four <b><code>4 × 1</code></b> Multiplexers ( <code>MUX 3 .. MUX 0</code> ) are used—one per bit position.",
+"<code>MUX i</code> receives bit i from each register ( <code>A</code><sub><code>i</code></sub><code>, B</code><sub><code>i</code></sub><code>, C</code><sub><code>i</code></sub><code>, D</code><sub><code>i</code></sub> ) and drives <code>Bus line i</code> . Two common select lines <b><code>S</code></b><sub><b><code>1</code></b></sub><b><code>, S</code></b><sub><b><code>0</code></b></sub> connect to all four MUXes: <code>00 → A</code> , <code>01 → B</code> , <code>10 → C</code> , <code>11 → </code> <code>D</code> .",
+"General Size Rule: Connecting n registers of k bits each requires k multiplexers of size <b><code>n × </code></b> <b><code>1</code></b> and <b><code>⌈log</code></b><sub><b><code>2</code></b></sub><b><code> n⌉</code></b> select lines. (Alternatively, a bus can be built using three-state buffers and a decoder).",
+"<img class=\"fig\" src=\"fig/U3Q3_f53.png\" style=\"width:48.00em\">",
+"2. Memory Read and Write Transfers in RTL: A memory unit of <code>2</code><sub><code>k</code></sub> words is denoted by <code>M</code> , and the word addressed by the Address Register ( <code>AR</code> ) is written as <code>M[AR]</code> :",
+"Memory Read: <b><code>Read: DR ← M[AR]</code></b> — Copies the memory word selected by <code>AR</code> into the Data Register ( <code>DR</code> ); the memory word in <code>M[AR]</code> remains unchanged.",
+"Memory Write: <b><code>Write: M[AR] ← R1</code></b> (or <code>DR</code> ) — Stores the contents of register <code>R1</code> into the memory location specified by <code>AR</code> , overwriting the previous memory word."
+]
+},
+{
+"u": 3,
+"q": 4,
+"question": "Explain the arithmetic micro-operations (add, subtract, increment, decrement, complement). Design a 4-bit arithmetic circuit and show its function table.",
+"parts": [
+"1. Basic Arithmetic Micro-Operations: Arithmetic micro-operations operate on numeric data in registers: Addition ( <code>R3 ← R1 + R2</code> ), Subtraction via 2's complement ( <code>R3 ← R1 + R2' + 1</code> ), 1's Complement ( <code>R2 ← R2'</code> ), 2's Complement/Negate ( <code>R2 ← R2' + 1</code> ), Increment ( <code>R1 ← R1 + 1</code> ), and Decrement ( <code>R1 ← R1 − 1</code> ). Multiplication and division are implemented as multi-step sequences of add/subtract and shift micro-operations.",
+"<img class=\"fig\" src=\"fig/U3Q4_f54.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q4_f55.png\" style=\"width:48.00em\">",
+"2. Design of a 4-Bit Arithmetic Circuit: All eight arithmetic micro-operations can be generated by a single 4-bit parallel Full Adder chain ( <code>FA</code><sub><code>0</code></sub><code>..FA</code><sub><code>3</code></sub> ) by placing a <b><code>4 × 1</code></b> Multiplexer on the <code>Y</code><sub><code>i</code></sub> (B-side) input of each Full Adder stage. Each MUX is controlled by two selection lines <code>S</code><sub><code>1</code></sub><code>, S</code><sub><code>0</code></sub>",
+"and receives four inputs: <code>00 → B</code><sub><code>i</code></sub> , <code>01 → B</code><sub><code>i</code></sub><code>'</code> , <code>10 → 0</code> , and <code>11 → 1</code> . The Full Adder computes <b><code>D</code></b> <b><code>= A + Y + C</code></b><sub><b><code>in</code></b></sub> .",
+"<table><tr><td><b>S1</b></td><td><b>S0</b></td><td><b>Cin</b></td><td><b>MUX Output (Y)</b></td><td><b>Output Equation (D = A + Y + Cin)</b></td><td><b>Micro- Operation Performed</b></td></tr><tr><td>0</td><td>0</td><td>0</td><td>B</td><td>D = A + B</td><td>Add</td></tr><tr><td>0</td><td>0</td><td>1</td><td>B</td><td>D = A + B +</td><td>Add with carry</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>1</td><td></td></tr><tr><td>0</td><td>1</td><td>0</td><td>B'</td><td>D = A + B'</td><td>Subtract with borrow ( A − B − 1 )</td></tr><tr><td>0</td><td>1</td><td>1</td><td>B'</td><td>D = A + B' + 1</td><td>Subtract ( A − B in 2's complement)</td></tr><tr><td>1</td><td>0</td><td>0</td><td>0</td><td>D = A</td><td>Transfer A</td></tr><tr><td>1</td><td>0</td><td>1</td><td>0</td><td>D = A + 1</td><td>Increment A</td></tr><tr><td>1</td><td>1</td><td>0</td><td>All 1's</td><td>D = A +</td><td>Decrement A (adding −1 )</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>Decreme</td></tr><tr><td></td><td></td><td></td><td>(−1)</td><td>1111 = A −</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>1</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>1</td><td>1</td><td>1</td><td>All 1's (−1)</td><td>D = A +</td><td>Transfer A</td></tr><tr><td></td><td></td><td></td><td></td><td>1111 + 1 =</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>A</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>"
+]
+},
+{
+"u": 3,
+"q": 5,
+"question": "Explain the logic micro-operations (AND, OR, XOR, complement, selective-set, selective-complement, mask, clear). Design a one-stage logic circuit with a function table.",
+"parts": [
+"1. Logic Micro-Operations &amp; One-Stage Hardware Circuit: Logic micro-operations treat each bit of a register independently as a binary variable (with no carry propagation between bit positions). Although <code>2</code><sup><code>4</code></sup><code> = 16</code> two-variable Boolean functions exist, hardware implements the four primary operations—AND ( <b><code>∧</code></b>), OR ( <b><code>∨</code></b>), XOR ( <b><code>⊕</code></b>), and Complement/NOT ( <b><code>'</code></b> )—using four gates per bit feeding a <b><code>4 × 1</code></b> Multiplexer controlled by select lines <code>S</code><sub><code>1</code></sub><code>, S</code><sub><code>0</code></sub> :",
+"<img class=\"fig\" src=\"fig/U3Q5_f56.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q5_f57.png\" style=\"width:48.00em\">",
+"2. Bit-Manipulation Applications (Using Register B as a Mask on Register A = <b><code>1010</code></b> , B = <b><code>1100</code></b> ):",
+"<table><tr><td><b>Operation</b></td><td><b>RTL Micro- Operation</b></td><td><b>Bitwise Effect on Register A</b></td><td><b></b></td><td><b></b></td><td><b>Worked Example (A = 1010, B = 1100)</b></td><td><b></b></td></tr><tr><td>Selective-Set</td><td>A ← A ∨ B (OR)</td><td>Sets bits of A to 1 wherever B = 1 ; other bits unchanged.</td><td></td><td></td><td>1010 ∨ 1100 =</td><td></td></tr><tr><td></td><td></td><td></td><td>ed.</td><td></td><td>1110</td><td></td></tr><tr><td>Selective- Complement</td><td>A ← A ⊕ B (XOR)</td><td>Inverts (flips) bits of A wherever B = 1 ; other bits unchanged.</td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>B</td><td></td><td>1010 ⊕ 1100 =</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>0110</td><td></td></tr><tr><td>Selective-Clear</td><td>A ← A ∧ B'</td><td>Clears bits of A to 0 wherever B = 1 ; keeps bits where B = 0 .</td><td></td><td></td><td>1010 ∧ 0011 = 0010</td><td></td></tr><tr><td>Mask</td><td>A ← A ∧ B (AND)</td><td>Clears bits of A to 0 wherever B = 0 ; extracts bits where B = 1 .</td><td></td><td></td><td>1010 ∧ 1100 =</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td>B = 1 .</td><td></td><td>1000</td><td></td></tr><tr><td>Clear</td><td>A ← A ⊕ A</td><td>XORing a register with itself (or equal B ) clears all bits to 0 .</td><td></td><td></td><td>1010 ⊕ 1010 =</td><td></td></tr><tr><td></td><td></td><td></td><td>.</td><td></td><td>0000</td><td></td></tr></table>"
+]
+},
+{
+"u": 3,
+"q": 6,
+"question": "Explain logical, circular and arithmetic shift micro-operations with examples. Describe the working of a 4-bit combinational circuit shifter.",
+"parts": [
+"1. Three Categories of Shift Micro-Operations (Illustrated on <b><code>R = 1011 0011</code></b> ):",
+"<img class=\"fig\" src=\"fig/U3Q6_f58.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q6_f59.png\" style=\"width:48.00em\">",
+"Logical Shift ( <b><code>shl, shr</code></b> ): Shifts bits left or right and inserts <b><code>0</code></b> into the vacated extreme bit position. For unsigned numbers, <code>shl</code> multiplies by 2 and <code>shr</code> divides by 2.",
+"Example: <code>shl(1011 0011) = 0110 0110</code> (MSB lost, 0 enters LSB);   <code>shr(1011 0011) = 0101 </code> <code>1001</code> (LSB lost, 0 enters MSB).",
+"Circular Shift / Rotate ( <b><code>cil, cir</code></b> ): Circulates the bit shifted out of one end directly back into the opposite end so no bit is lost.",
+"Example: <code>cil(1011 0011) = 0110 0111</code> (MSB <code>1</code> wraps to LSB);   <code>cir(1011 0011) = 1101 </code> <code>1001</code> (LSB <code>1</code> wraps to MSB).",
+"Arithmetic Shift ( <b><code>ashl, ashr</code></b> ): Designed for signed 2's-complement numbers. <b><code>ashr</code></b> shifts right by 1 bit (dividing by 2) while preserving the sign bit (the MSB sign bit remains unchanged and is copied into the adjacent bit). <b><code>ashl</code></b> is identical to <code>shl</code> (inserts 0 at LSB, multiplying by 2), but sets an overflow flip-flop <code>V</code><sub><code>s</code></sub><code> = R</code><sub><code>n-1</code></sub><code> ⊕ R</code><sub><code>n-2</code></sub> if the sign bit changes. Example: <code>ashr(1011 0011 [−77]) = 1101 1001 [−39]</code> ;   <code>ashl(1011 0011) = 0110 0110</code> (sign flipped <code>1→0</code> , so <code>V</code><sub><code>s</code></sub><code> = 1</code> overflow).",
+"2. 4-Bit Combinational Circuit Shifter: Instead of shifting serially over clock pulses, a combinational shifter uses four <b><code>2 × 1</code></b> Multiplexers driven by a single direction select line <code>S</code> (where <code>A</code><sub><code>0</code></sub> is MSB and <code>A</code><sub><code>3</code></sub> is LSB, with serial inputs <code>I</code><sub><code>R</code></sub> for right-shift and <code>I</code><sub><code>L</code></sub> for left-shift):",
+"<table><tr><td><b>Select Line (S)</b></td><td><b>H0 (MSB)</b></td><td><b>H1</b></td><td><b>H2</b></td><td><b>H3 (LSB)</b></td><td><b>Shift Direction &amp; Serial Input Selection</b></td></tr><tr><td>S = 0</td><td>IR</td><td>A0</td><td>A1</td><td>A2</td><td>Shift Right: Set IR = 0 (Logical), IR = A3 (Circular), or IR = A0 (Arithmetic).</td></tr><tr><td>S = 1</td><td>A1</td><td>A2</td><td>A3</td><td>IL</td><td>Shift Left: Set IL = 0 (Logical/Arith metic) or IL = A0 (Circular).</td></tr></table>"
+]
+},
+{
+"u": 3,
+"q": 7,
+"question": "Explain instruction codes in a basic computer. Describe the instruction format, direct and indirect addressing modes, and how the stored program organization works.",
+"parts": [
+"1. Instruction Codes &amp; Operation Code (Opcode): A computer program is a sequence of binary instructions stored in main memory. An instruction code is a group of bits that instructs the computer to perform a specific operation. It is divided into functional fields:",
+"<img class=\"fig\" src=\"fig/U3Q7_f60.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q7_f61.png\" style=\"width:48.00em\">",
+"Operation Code (Opcode): A group of k bits that defines the operation to be performed (such as <code>ADD, AND, LDA, STA, BUN, Complement, Shift</code> ). A k-bit opcode can encode up to <code>2</code><sup><code>k</code></sup> distinct operations (in the basic computer, 3 bits encode <code>2</code><sup><code>3</code></sup><code> = 8</code> opcode groups). Address / Operand Field: Specifies the 12-bit memory address of the operand (in a <code>4096 × </code> <code>16</code> memory, since <code>2</code><sup><code>12</code></sup><code> = 4096</code> ) or a register/I/O operation bit.",
+"Mode Bit ( <b><code>I</code></b> , Bit 15): Selects how the 12-bit address field is interpreted ( <code>I = 0</code> for Direct addressing, <code>I = 1</code> for Indirect addressing).",
+"2. Stored-Program Organization: Introduced by John von Neumann, a stored-program computer stores both program instructions and data operands in the same common memory unit ( <code>4096 × 16</code> words). In a single-accumulator organization, every memory-reference instruction fetches one operand from memory <code>M[EA]</code> and performs the operation with the 16-bit",
+"Accumulator ( <b><code>AC</code></b> ) register (e.g., <code>ADD 457</code> performs <code>AC ← AC + M[457]</code> ). Because instructions and data share memory, modifying a program only requires changing memory words rather than rewiring hardware.",
+"3. Direct vs. Indirect Addressing Modes &amp; Effective Address (EA): The Effective Address (EA) is the actual memory address where the operand resides:",
+"<img class=\"fig\" src=\"fig/U3Q7_f62.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 3,
+"q": 8,
+"question": "Explain the instruction formats and instruction types (memory-reference, register-reference, input-output) of the basic computer with their opcode encoding.",
+"parts": [
+"1. Basic Computer Instruction Formats (16-Bit Word): The basic computer has a <code>4096 × 16</code> memory (requiring a 12-bit address) and uses three 16-bit instruction formats distinguished by the 3-bit Opcode ( <code>Bits 14–12</code> ) and Mode bit <code>I</code> ( <code>Bit 15</code> ):",
+"<img class=\"fig\" src=\"fig/U3Q8_f63.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q8_f64.png\" style=\"width:48.00em\">",
+"Three 16-Bit Instruction Formats of the Basic Computer",
+"1. Memory-Reference Format (Opcode = 000 to 110): <code>| I (Bit 15: 0=Direct, 1=Indirect) | </code> <code>Opcode (Bits 14–12) | Address (Bits 11–0) |</code>",
+"2. Register-Reference Format (Opcode = 111, I = 0 ⇒ Hex 7xxx): <code>| 0 | 1 1 1 | Register </code> <code>Operation Bit B</code><code>11</code><code>..B</code><code>0</code><code> (Bits 11–0) |</code>",
+"3. Input-Output Format (Opcode = 111, I = 1 ⇒ Hex Fxxx): <code>| 1 | 1 1 1 | I/O Operation Bit </code> <code>B</code><code>11</code><code>..B</code><code>6</code><code> (Bits 11–0) |</code>",
+"2. Complete Instruction Types &amp; Opcode Encoding (25 Instructions Total):",
+"<table><tr><td><b>Instruction Category</b></td><td><b>Opcode &amp; Hex Prefix</b></td><td><b></b></td><td><b>Instructions &amp; Symbolic RTL Operations</b></td></tr><tr><td>Memory-Reference (7 Instructions)</td><td>Opcode 000–110 Direct ( I=0 ): 0xxx–6xxx Indirect ( I=1 ): 8xxx–Exxx</td><td></td><td>• AND ( 0/8xxx ): AC ← AC ∧ M[AR] | ADD ( 1/9xxx ): AC ← AC + M[AR], E ← Cout • LDA ( 2/Axxx ): AC ← M[AR] | STA ( 3/Bxxx ): M[AR] ← AC • BUN ( 4/Cxxx ): PC ← AR | BSA ( 5/Dxxx ): M[AR] ← PC, PC ← AR + 1 • ISZ ( 6/Exxx ): M[AR] ← M[AR] + 1 ; if M[AR]+1 = 0 then PC ← PC + 1</td></tr><tr><td>Register-Reference (12 Instructions, executed at r = D7I'T3 )</td><td>Opcode 111, I = 0 Fixed Hex 7xxx (1 bit set in B11..B0 )</td><td></td><td>CLA (7800): AC←0 ; CLE (7400): E←0 ; CMA (7200): AC←AC' ; CME (7100): E←E' ; CIR</td></tr><tr><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td>(1</td><td>(7080) ; CIL (7040) ; INC (7020): AC←AC+1 ;</td></tr><tr><td></td><td></td><td></td><td>SPA (7010) ; SNA (7008) ; SZA (7004) ; SZE (7002) ; HLT (7001): S←0 .</td></tr></table>",
+"<img class=\"fig\" src=\"fig/U3Q8_f65.png\" style=\"width:25.93em\">",
+"<table><tr><td><b>Instruction Category</b></td><td><b></b></td><td><b>Opcode &amp; Hex Prefix</b></td><td><b></b></td><td><b>Instructions &amp; Symbolic RTL Operations</b></td></tr><tr><td>Input-Output (6 Instructions, executed at p = D7IT3 )</td><td></td><td>Opcode 111, I = 1 Fixed Hex Fxxx (1</td><td></td><td>INP (F800): AC(0–7)←INPR, FGI←0 ; OUT (F400): OUTR←AC(0–7), FGO←0 ; SKI (F200):</td></tr><tr><td></td><td>s,</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td>ex Fxxx (1</td><td>if(FGI=1) PC←PC+1 ; SKO (F100): if(FGO=1)</td></tr><tr><td></td><td></td><td>bit set in B11..B6 )</td><td></td><td>PC←PC+1 ; ION (F080): IEN←1 ; IOF (F040): IEN←0 .</td></tr><tr><td></td><td></td><td>11 6</td><td></td><td></td></tr></table>"
+]
+},
+{
+"u": 3,
+"q": 9,
+"question": "Explain the instruction cycle of the basic computer with a flowchart. Describe the fetch, decode, indirect-address and execute phases with RTL statements and timing signals.",
+"parts": [
+"1. Four Phases of the Instruction Cycle: For each instruction stored in memory, the hardwired control unit (driven by Sequence Counter <code>SC</code> timing signals <code>T</code><sub><code>0</code></sub><code>, T</code><sub><code>1</code></sub><code>, T</code><sub><code>2</code></sub><code>, …</code> ) repeats four phases until <code>HLT</code> clears the start-stop flip-flop <code>S</code> : (1) Fetch, (2) Decode, (3) Read Effective Address (if indirect), and (4) Execute.",
+"<img class=\"fig\" src=\"fig/U3Q9_f66.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q9_f67.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q9_f68.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q9_f69.png\" style=\"width:48.00em\">",
+"2. Detailed RTL Execution of Memory-Reference Instructions (Starting at <b><code>T</code></b><sub><b><code>4</code></b></sub> ):",
+"AND ( <b><code>D</code></b><sub><b><code>0</code></b></sub> ): <code>D</code><sub><code>0</code></sub><code>T</code><sub><code>4</code></sub><code>: DR ← M[AR]</code> ;   <code>D</code><sub><code>0</code></sub><code>T</code><sub><code>5</code></sub><code>: AC ← AC ∧ DR, SC ← 0</code> .",
+"ADD ( <b><code>D</code></b><sub><b><code>1</code></b></sub> ): <code>D</code><sub><code>1</code></sub><code>T</code><sub><code>4</code></sub><code>: DR ← M[AR]</code> ;   <code>D</code><sub><code>1</code></sub><code>T</code><sub><code>5</code></sub><code>: AC ← AC + DR, E ← C</code><sub><code>out</code></sub><code>, SC ← 0</code> .",
+"LDA ( <b><code>D</code></b><sub><b><code>2</code></b></sub> ): <code>D</code><sub><code>2</code></sub><code>T</code><sub><code>4</code></sub><code>: DR ← M[AR]</code> ;   <code>D</code><sub><code>2</code></sub><code>T</code><sub><code>5</code></sub><code>: AC ← DR, SC ← 0</code> .",
+"STA ( <b><code>D</code></b><sub><b><code>3</code></b></sub> ): <code>D</code><sub><code>3</code></sub><code>T</code><sub><code>4</code></sub><code>: M[AR] ← AC, SC ← 0</code> .",
+"BUN ( <b><code>D</code></b><sub><b><code>4</code></b></sub> ): <code>D</code><sub><code>4</code></sub><code>T</code><sub><code>4</code></sub><code>: PC ← AR, SC ← 0</code> .",
+"BSA ( <b><code>D</code></b><sub><b><code>5</code></b></sub> ): <code>D</code><sub><code>5</code></sub><code>T</code><sub><code>4</code></sub><code>: M[AR] ← PC, AR ← AR + 1</code> ;   <code>D</code><sub><code>5</code></sub><code>T</code><sub><code>5</code></sub><code>: PC ← AR, SC ← 0</code> .",
+"ISZ ( <b><code>D</code></b><sub><b><code>6</code></b></sub> ): <code>D</code><sub><code>6</code></sub><code>T</code><sub><code>4</code></sub><code>: DR ← M[AR]</code> ;   <code>D</code><sub><code>6</code></sub><code>T</code><sub><code>5</code></sub><code>: DR ← DR + 1</code> ;   <code>D</code><sub><code>6</code></sub><code>T</code><sub><code>6</code></sub><code>: M[AR] ← DR, if (DR = 0) then</code> <code>(PC ← PC + 1), SC ← 0</code> ."
+]
+},
+{
+"u": 3,
+"q": 10,
+"question": "Explain input-output configuration and the interrupt cycle in the basic computer. Describe how the interrupt flip-flop (IEN, R) works with a flowchart and compare programmed I/O with interrupt-initiated I/O.",
+"parts": [
+"1. Input-Output Configuration: The terminal consists of a Keyboard connected via a receiver interface to the 8-bit Input Register ( <code>INPR</code> ) and Printer connected via a transmitter interface to the 8-bit Output Register ( <code>OUTR</code> ). Two 1-bit synchronization flags prevent data loss between the fast CPU and slow devices:",
+"<img class=\"fig\" src=\"fig/U3Q10_f70.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q10_f71.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U3Q10_f72.png\" style=\"width:48.00em\">",
+"Input Flag ( <b><code>FGI</code></b> ): Set to <code>1</code> when a key is pressed and loaded into <code>INPR</code> . Executing <code>INP</code> transfers <code>AC(0–7) ← INPR</code> and clears <code>FGI ← 0</code> .",
+"Output Flag ( <b><code>FGO</code></b> ): Initially <code>1</code> (ready). Executing <code>OUT</code> transfers <code>OUTR ← AC(0–7)</code> and clears <code>FGO ← 0</code> ; the printer sets <code>FGO ← 1</code> once printing finishes.",
+"2. Interrupt Flip-Flops ( <b><code>IEN, R</code></b> ) &amp; Interrupt Cycle RTL: During instruction execution (when <code>T</code><sub><code>0</code></sub><code>'T</code><sub><code>1</code></sub><code>'T</code><sub><code>2</code></sub><code>' = 1</code> ), hardware checks if interrupts are enabled ( <code>IEN = 1</code> ) and either flag is ready ( <code>FGI = 1</code> or <code>FGO = 1</code> ). If true, the interrupt flip-flop <b><code>R ← 1</code></b> is set:",
+"Condition to Set R: <code>T</code><sub><code>0</code></sub><code>'T</code><sub><code>1</code></sub><code>'T</code><sub><code>2</code></sub><code>' (IEN)(FGI + FGO): R ← 1</code> .",
+"On the next cycle, since <code>R = 1</code> , the CPU executes the 3-step Interrupt Cycle instead of Fetch:",
+"<b><code>RT</code></b><sub><b><code>0</code></b></sub><b><code>: AR ← 0, TR ← PC</code></b> (Select memory address 0 and copy return address <code>PC</code> into Temporary Register <code>TR</code> ).",
+"<b><code>RT</code></b><sub><b><code>1</code></b></sub><b><code>: M[AR] ← TR, PC ← 0</code></b> (Store return address into <code>M[0]</code> and clear <code>PC ← 0</code> ). <b><code>RT</code></b><sub><b><code>2</code></b></sub><b><code>: PC ← PC + 1, IEN ← 0, R ← 0, SC ← 0</code></b> ( <code>PC</code> becomes <code>1</code> , where a <code>BUN</code> jumps to the I/O service routine; disable further interrupts; return to normal instruction cycle; service routine ends with <code>ION</code> and indirect <code>BUN 0 I</code> ).",
+"3. Programmed I/O vs. Interrupt-Initiated I/O:",
+"<table><tr><td><b>Feature</b></td><td><b>Programmed I/O (Polling)</b></td><td><b>Interrupt-Initiated I/O</b></td></tr><tr><td>Who Initiates Transfer?</td><td>CPU continuously polls FGI / FGO in a tight loop ( SKI / BUN ).</td><td>External device signals CPU when ready by setting FGI / FGO → R = 1 .</td></tr><tr><td>CPU Utilization</td><td>Very poor — wastes millions of CPU cycles busy-waiting.</td><td>High — CPU executes useful main program instructions until interrupted.</td></tr><tr><td>Hardware / Software Cost</td><td>Minimal hardware; simple polling loop.</td><td>Requires IEN , R flip-flops, interrupt cycle hardware, and ISR software.</td></tr></table>"
+]
+},
+{
+"u": 4,
+"q": 1,
+"question": "Define control memory. Explain the organization of a microprogrammed control unit with a block diagram, and describe the terms microinstruction, microprogram and control word.",
+"parts": [
+"1. Key Definitions:",
+"<img class=\"fig\" src=\"fig/U4Q1_f73.png\" style=\"width:48.00em\">",
+"Control Word: A binary string of <code>1</code> s and <code>0</code> s in which each bit or field activates specific data- path hardware control lines during one clock cycle.",
+"Microinstruction: A control word stored in control memory that specifies one or more parallel micro-operations for the processor and next-address sequencing information.",
+"Microprogram (Routine) &amp; Firmware: A sequence of microinstructions implementing a machine instruction (e.g., <code>FETCH</code> , <code>ADD</code> , <code>STORE</code> ). Microprograms permanently stored in ROM are called firmware.",
+"Control Memory: A dedicated ROM (or Writable Control Store RAM for dynamic",
+"microprogramming) inside the control unit that holds all microprogram routines.",
+"2. Organization of a Microprogrammed Control Unit: The unit consists of four blocks operating in a closed loop:",
+"<img class=\"fig\" src=\"fig/U4Q1_f74.png\" style=\"width:48.00em\">",
+"Control Address Register (CAR): Holds the address of the next microinstruction to be read from control memory.",
+"Control Memory (ROM): Outputs the microinstruction word at the address specified by <code>CAR</code> . Control Data Register (CDR / Pipeline Register): Holds the present microinstruction while the next address is computed, allowing overlap of microinstruction execution and next-address generation.",
+"Next-Address Generator (Microprogram Sequencer): Computes the next <code>CAR</code> address based on the microinstruction's <code>CD, BR, AD</code> fields and CPU status flags."
+]
+},
+{
+"u": 4,
+"q": 2,
+"question": "Explain address sequencing in a microprogrammed control unit. Describe the mapping of instruction opcode to a control memory address, conditional branching and subroutine calls.",
+"parts": [
+"1. Four Capabilities of Address Sequencing: To step through routines in control memory, the sequencer uses a <code>4 × 1</code> Multiplexer feeding <code>CAR</code> (selected by branch logic lines <code>S</code><sub><code>1</code></sub><code>S</code><sub><code>0</code></sub> ) to provide four addressing capabilities:",
+"<img class=\"fig\" src=\"fig/U4Q2_f75.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q2_f76.png\" style=\"width:48.00em\">",
+"1. Incrementing CAR ( <b><code>S</code></b><sub><b><code>1</code></b></sub><b><code>S</code></b><sub><b><code>0</code></b></sub><b><code> = 00 → CAR ← CAR + 1</code></b> ): Sequential execution of microinstructions within a routine.",
+"2. Conditional &amp; Unconditional Branching ( <b><code>S</code></b><sub><b><code>1</code></b></sub><b><code>S</code></b><sub><b><code>0</code></b></sub><b><code> = 01 → CAR ← AD</code></b> ): A status bit (Unconditional <code>1</code> , Indirect bit <code>I</code> , Sign <code>S</code> , or Zero <code>Z</code> ) is selected by the Condition ( <code>CD</code> ) field via a test multiplexer. If the tested condition is <code>1</code> , the branch address field <code>AD</code> is loaded into <code>CAR</code> ; if <code>0</code> , <code>CAR</code> increments ( <code>CAR + 1</code> ).",
+"3. Mapping from Instruction Opcode ( <b><code>S</code></b><sub><b><code>1</code></b></sub><b><code>S</code></b><sub><b><code>0</code></b></sub><b><code> = 11</code></b> ): At the end of the <code>FETCH</code> routine, the machine instruction's 4-bit opcode ( <code>DR[14–11] = xxxx</code> ) is transformed into the starting 7-bit control-memory address of its execution routine using direct bit mapping: <b><code>0 xxxx 00</code></b> . This places routines at multiples of 4 (addresses <code>0, 4, 8, 12, …, 60</code> ), giving each routine 4 words (if more are needed, word 4 jumps to another region).",
+"4. Subroutine Call and Return ( <b><code>S</code></b><sub><b><code>1</code></b></sub><b><code>S</code></b><sub><b><code>0</code></b></sub><b><code> = 10 → CAR ← SBR</code></b> ): Shared microcode (such as the <code>INDRCT</code> routine that fetches the effective address when <code>I = 1</code> ) is stored once as a subroutine. On a <b><code>CALL</code></b> , the return address <code>CAR + 1</code> is latched into the Subroutine Register (SBR) while <code>CAR ← AD</code> . On a <b><code>RET</code></b> , <code>CAR ← SBR</code> resumes execution after the call."
+]
+},
+{
+"u": 4,
+"q": 3,
+"question": "Design a microprogrammed control unit. Explain the microinstruction format, the decoding of fields and the design of the microprogram sequencer with a diagram.",
+"parts": [
+"1. 20-Bit Microinstruction Format &amp; Field Decoding: Each control-memory word (128 words × 20 bits) is divided into six fields: three 3-bit micro-operation fields ( <code>F1, F2, F3</code> ) and three next- address fields ( <code>CD, BR, AD</code> ):",
+"<img class=\"fig\" src=\"fig/U4Q3_f77.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q3_f78.png\" style=\"width:48.00em\">",
+"20-Bit Microinstruction Format &amp; Hardware Decoder Structure",
+"<code>| F1 (3 bits: 19–17) | F2 (3 bits: 16–14) | F3 (3 bits: 13–11) | CD (2 bits: </code> <code>10–9) | BR (2 bits: 8–7) | AD (7 bits: 6–0) |</code>",
+"• Decoding F1, F2, F3: Each 3-bit field drives its own <b><code>3 × 8</code></b> decoder (code <code>000 = NOP</code> , plus 7 distinct micro-operations per field). Because the three decoders operate independently, up to three micro-operations (e.g., <code>READ</code> in F2 and <code>INCPC</code> in F3) can execute simultaneously in one clock period.",
+"2. Design of the Microprogram Sequencer: The sequencer consists of MUX 1 ( <b><code>4 × 1</code></b> , 7-bit) feeding <code>CAR</code> , MUX 2 ( <b><code>4 × 1</code></b> , 1-bit test MUX) driven by <code>CD</code> to select status bit <code>T ∈ {1, I, S, </code> <code>Z}</code> , a 7-bit Incrementer ( <b><code>CAR + 1</code></b> ), the Subroutine Register ( <b><code>SBR</code></b> ), and combinational Input Logic that takes <code>BR</code> bits ( <code>I</code><sub><code>1</code></sub><code>, I</code><sub><code>0</code></sub> ) and <code>T</code> to generate <code>S</code><sub><code>1</code></sub><code>, S</code><sub><code>0</code></sub> and SBR load enable <code>L</code> :",
+"<table><tr><td><b>BR (I1 I0)</b></td><td><b>Mnemonic</b></td><td><b>Test Bit (T)</b></td><td><b>MUX 1 Select (S1 S0)</b></td><td><b>Load SBR (L)</b></td><td><b>Sequencer Action</b></td><td><b></b></td></tr><tr><td>0 0</td><td>JMP</td><td>0 / 1</td><td>00 (if T=0) / 01 (if T=1)</td><td>0</td><td>If T=1: CAR</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>← AD ; else CAR ← CAR + 1</td><td></td></tr><tr><td>0 1</td><td>CALL</td><td>0 / 1</td><td>00 (if T=0) / 01 (if T=1)</td><td>T (0 / 1)</td><td>If T=1: CAR</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>← AD, SBR ←</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>CAR + 1 ; else CAR + 1</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>1 0</td><td>RET</td><td>X</td><td>10</td><td>0</td><td>CAR ← SBR (Return from subroutine)</td><td></td></tr><tr><td>1 1</td><td>MAP</td><td>X</td><td>11</td><td>0</td><td>CAR ← 0 |</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td>CAR ← 0 |</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>DR(14–11) |</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>00 (Map opcode)</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td>00</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>",
+"Boolean Equations of Input Logic: <b><code>S</code></b><sub><b><code>1</code></b></sub><b><code> = I</code></b><sub><b><code>1</code></b></sub> ,    <b><code>S</code></b><sub><b><code>0</code></b></sub><b><code> = I</code></b><sub><b><code>1</code></b></sub><b><code>I</code></b><sub><b><code>0</code></b></sub><b><code> + I</code></b><sub><b><code>1</code></b></sub><b><code>'T</code></b> ,    and    <b><code>L = I</code></b><sub><b><code>1</code></b></sub><b><code>'I</code></b><sub><b><code>0</code></b></sub><b><code>T</code></b> ."
+]
+},
+{
+"u": 4,
+"q": 4,
+"question": "Explain the general register organization of a CPU with a block diagram. Show how the control word selects registers and ALU operations, and illustrate with an example micro-operation.",
+"parts": [
+"1. General Register Organization (7 CPU Registers): Because memory access is slow, CPUs include a set of fast general-purpose registers ( <code>R1</code> through <code>R7</code> ) connected to a shared ALU via two <code>8 × 1</code> multiplexers ( <code>MUX A</code> and <code>MUX B</code> ) and an output bus driven back into the registers through a <code>3 × 8</code> destination decoder:",
+"<img class=\"fig\" src=\"fig/U4Q4_f79.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q4_f80.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q4_f81.png\" style=\"width:48.00em\">",
+"2. 14-Bit Control Word Encoding: <code>Control Word = SELA (3b) | SELB (3b) | SELD (3b) | </code> <code>OPR (5b)</code> :",
+"Register Fields ( <b><code>SELA, SELB, SELD</code></b> ): <code>000 = External Input</code> (for <code>SELA/SELB</code> ) or <code>None</code> (for <code>SELD</code> ); <code>001 = R1</code> , <code>010 = R2</code> , <code>011 = R3</code> , <code>100 = R4</code> , <code>101 = R5</code> , <code>110 = R6</code> , <code>111 = R7</code> . ALU Operation Field ( <b><code>OPR</code></b> ): <code>00000 = TSFA (Transfer A)</code> , <code>00001 = INCA (A+1)</code> , <code>00010 = </code> <code>ADD (A+B)</code> , <code>00101 = SUB (A−B)</code> , <code>00110 = DECA (A−1)</code> , <code>01000 = AND</code> , <code>01010 = OR</code> , <code>01100 </code> <code>= XOR</code> , <code>01110 = COMA (A')</code> , <code>10000 = SHRA</code> , <code>11000 = SHLA</code> .",
+"3. Step-by-Step Example — Execute <b><code>R1 ← R2 − R3</code></b> in One Clock Cycle:",
+"1. Select Source A ( <b><code>R2</code></b> ): <code>SELA = 010</code> places <code>R2</code> onto ALU input A.",
+"2. Select Source B ( <b><code>R3</code></b> ): <code>SELB = 011</code> places <code>R3</code> onto ALU input B.",
+"3. Select Destination ( <b><code>R1</code></b> ): <code>SELD = 001</code> causes the <code>3 × 8</code> decoder to assert <code>R1</code> 's load enable line.",
+"4. Select ALU Operation ( <b><code>SUB</code></b> ): <code>OPR = 00101</code> instructs the ALU to compute <code>A − B</code> .",
+"5. 14-Bit Control Word: <b><code>010 011 001 00101</code></b> . On the next rising clock edge, <code>R2 − R3</code> is latched into <code>R1</code> ."
+]
+},
+{
+"u": 4,
+"q": 5,
+"question": "Explain the three-address, two-address, one-address and zero-address instruction formats. Write programs to evaluate X = (A+B)*(C+D) in each format.",
+"parts": [
+"1. Four Instruction Formats Based on CPU Organization:",
+"<img class=\"fig\" src=\"fig/U4Q5_f82.png\" style=\"width:48.00em\">",
+"Three-Address Format (General Register / RISC Organization): Each instruction specifies two source operands and one destination address ( <code>OP Dest, Src1, Src2</code> ). Produces very short programs, but each instruction word requires many bits.",
+"Two-Address Format (General Register Organization): Specifies two operand addresses where the first address serves as both a source and the destination ( <code>OP Dest/Src1, Src2</code> ). Most common in commercial CISC processors.",
+"One-Address Format (Single Accumulator Organization): Uses an implied Accumulator ( <code>AC</code> ) register for one operand and the result, requiring only one explicit memory address field ( <code>OP </code> <code>Address</code> ).",
+"Zero-Address Format (Stack Organization): Arithmetic instructions ( <code>ADD, MUL</code> ) contain only an opcode and no address fields; they pop the top two operands from a LIFO stack, compute the result, and push it back onto the Top of Stack ( <code>TOS</code> ). Memory is touched only by <code>PUSH</code> and <code>POP</code> using Reverse Polish Notation: <code>AB+CD+×</code> .",
+"2. Programs to Evaluate <b><code>X = (A + B) × (C + D)</code></b> Without Destroying Inputs:",
+"<table><tr><td><b>Three-Address Format</b></td><td><b>Two-Address Format</b></td><td><b>One-Address Format</b></td><td><b>Zero-Address (Stack)</b></td></tr><tr><td>ADD R1, A, B (R1 ← M[A] + M[B]) ADD R2, C, D (R2 ← M[C] + M[D]) MUL X, R1, R2 (M[X] ← R1 × R2) Total: 3 instructions</td><td>MOV R1, A (R1 ← M[A]) ADD R1, B (R1 ← R1+M[B]) MOV R2, C (R2 ← M[C]) ADD R2, D (R2 ← R2+M[D]) MUL R1, R2 (R1 ← R1×R2) MOV X, R1 (M[X] ← R1) Total: 6 instructions</td><td>LOAD A (AC ← M[A]) ADD B (AC ← AC+M[B]) STORE T (M[T] ← AC) LOAD C (AC ← M[C]) ADD D (AC ← AC+M[D]) MUL T (AC ← AC×M[T]) STORE X (M[X] ← AC) Total: 7 instructions</td><td>PUSH A (TOS ← M[A]) PUSH B (TOS ← M[B]) ADD (TOS ← A+B) PUSH C (TOS ← M[C]) PUSH D (TOS ← M[D]) ADD (TOS ← C+D) MUL (TOS ← (A+B) (C+D)) POP X (M[X] ← TOS) Total: 8 instructions</td></tr></table>"
+]
+},
+{
+"u": 4,
+"q": 6,
+"question": "Explain data transfer and data manipulation instructions. Describe arithmetic, logical and shift instructions with suitable examples.",
+"parts": [
+"1. Data Transfer Instructions: Move binary data between memory, CPU registers, stack, and I/O ports without altering the data content:",
+"<img class=\"fig\" src=\"fig/U4Q6_f83.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q6_f84.png\" style=\"width:48.00em\">",
+"Key Instructions: <code>LD</code> (Load memory to register: <code>AC ← M[EA]</code> ), <code>ST</code> (Store register to memory: <code>M[EA] ← AC</code> ), <code>MOV</code> (Register-to-register transfer), <code>XCH</code> (Swap two registers or register and memory), <code>IN / OUT</code> (Transfer to/from I/O port), and <code>PUSH / POP</code> (Transfer to/from top of stack).",
+"2. Data Manipulation Instructions: Perform computational operations on data in registers and update status flags. Divided into three families:",
+"<table><tr><td><b>Sub-Category</b></td><td><b>Mnemonics &amp; Operations</b></td><td><b>Concrete Examples (on 8-bit A = 1011 0101)</b></td></tr><tr><td>A. Arithmetic Instructions</td><td>INC (A+1), DEC (A−1), ADD (A+B), SUB (A−B), MUL (A×B), DIV (A÷B), ADDC (Add with carry A+B+C for multi-word precision), SUBB (Subtract with borrow), NEG (2's complement −A ).</td><td>• ADDC R1, R2 adds high-order words including carry C from low-order addition. • NEG A on 0001 0110 (+22) gives 1110 1010 (−22) .</td></tr><tr><td>B. Logical &amp; Bit- Manipulation</td><td>CLR (0), COM (A'), AND (Clear/mask bits), OR (Set bits), XOR (Complement/toggle bits), CLRC / SETC / COMC (Carry flag control), EI / DI (Enable/Disable interrupts).</td><td>With mask B = 0000 1111 : • A AND B = 0000 0101 (clears upper nibble). • A OR B = 1011 1111 (sets lower nibble). • A XOR B = 1011 1010 (flips lower nibble).</td></tr></table>",
+"<table><tr><td><b>Sub-Category</b></td><td><b>Mnemonics &amp; Operations</b></td><td><b>Concrete Examples (on 8-bit A = 1011 0101)</b></td></tr><tr><td>C. Shift &amp; Rotate Instructions</td><td>Logical: SHR, SHL (insert 0). Arithmetic: SHRA (keep sign bit), SHLA . Rotate: ROR, ROL (wrap around) and RORC, ROLC (rotate through carry C ).</td><td>On A = 1011 0101 (−75) : • SHR A = 0101 1010 (0 enters left). • SHRA A = 1101 1010 (sign 1 copied right). • ROR A = 1101 1010 (LSB 1 rotates to MSB).</td></tr></table>"
+]
+},
+{
+"u": 4,
+"q": 7,
+"question": "Explain addition and subtraction of signed-magnitude and signed-2's- complement numbers. Draw the hardware block diagram and flowchart, and add and subtract two sample numbers.",
+"parts": [
+"1. Signed-Magnitude Addition &amp; Subtraction: Numbers are stored with magnitudes in registers <code>A, B</code> and signs in flip-flops <code>A</code><sub><code>s</code></sub><code>, B</code><sub><code>s</code></sub> . A mode control <code>M = A</code><sub><code>s</code></sub><code> ⊕ B</code><sub><code>s</code></sub><code> ⊕ op</code> (where <code>op = 0</code> for Add, <code>1</code> for Subtract) drives a complementer and parallel adder:",
+"<img class=\"fig\" src=\"fig/U4Q7_f85.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q7_f86.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q7_f87.png\" style=\"width:48.00em\">",
+"Equal Effective Signs ( <b><code>M = 0</code></b> ): Magnitudes are added ( <code>EA ← A + B</code> ), overflow is saved in <code>AVF ← E</code> , and result sign is <code>A</code><sub><code>s</code></sub> .",
+"Different Effective Signs ( <b><code>M = 1</code></b> ): Magnitudes are subtracted via 2's complement ( <code>EA ← A + </code> <code>B' + 1</code> ). If end carry <code>E = 1</code> , then <code>A ≥ B</code> and <code>A</code> is positive with sign <code>A</code><sub><code>s</code></sub> (if <code>A = 0</code> , force <code>A</code><sub><code>s</code></sub>  <code>← 0</code> ). If <code>E = 0</code> , then <code>A &lt; B</code> , so take the 2's complement of <code>A</code> ( <code>A ← A' + 1</code> ) and invert the sign ( <code>A</code><sub><code>s</code></sub><code> ← A</code><sub><code>s</code></sub><code>'</code> ).",
+"2. Signed-2's-Complement Addition &amp; Subtraction: Sign bits are part of the registers ( <code>AC</code> and <code>BR</code> ) and are added directly with magnitude bits using a single parallel adder and complementer (controlled by <code>M = 0</code> for Add: <code>AC ← AC + BR</code> ; <code>M = 1</code> for Subtract: <code>AC ← AC + BR' + 1</code> ). No sign comparison or post-complementing is required; any carry out of the sign bit is discarded, and overflow is detected by <b><code>V = C</code></b><sub><b><code>n</code></b></sub><b><code> ⊕ C</code></b><sub><b><code>n-1</code></b></sub> .",
+"<img class=\"fig\" src=\"fig/U4Q7_f88.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 4,
+"q": 8,
+"question": "Explain the restoring and non-restoring division algorithms with flowcharts. Divide 1000 by 11 using a division algorithm and show all steps.",
+"parts": [
+"1. Restoring vs. Non-Restoring Division Algorithms:",
+"<img class=\"fig\" src=\"fig/U4Q8_f89.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q8_f90.png\" style=\"width:48.00em\">",
+"Restoring Division: Dividend is placed in <code>AQ</code> (2n bits) and divisor in <code>B</code> (n bits). First, check divide-overflow (if <code>A ≥ B</code> , set <code>DVF = 1</code> and halt). Then for <code>SC = n</code> down to <code>1</code> : (1) Shift <code>EAQ</code> left by 1 bit ( <code>shl EAQ</code> ); (2) Subtract divisor: <code>EA ← A + B' + 1</code> ; (3) If carry <code>E = 1</code> (meaning <code>A </code> <code>≥ 0</code> , divisor fits), set quotient bit <code>Q</code><sub><code>0</code></sub><code> ← 1</code> ; (4) If <code>E = 0</code> (result negative), set <code>Q</code><sub><code>0</code></sub><code> ← 0</code> and restore <b><code>A</code></b> by adding <code>B</code> back ( <code>A ← A + B</code> ).",
+"Non-Restoring Division: Eliminates the extra restoration addition inside the loop. Shift <code>AQ</code> left: if the previous <code>A ≥ 0</code> , subtract <code>B</code> ( <code>A ← A − B</code> ); if the previous <code>A &lt; 0</code> , add <code>B</code> ( <code>A ← A + </code> <code>B</code> ) in the next step. Set <code>Q</code><sub><code>0</code></sub><code> = 1</code> if the new <code>A ≥ 0</code> , else <code>Q</code><sub><code>0</code></sub><code> = 0</code> . After all n steps, if the final remainder <code>A &lt; 0</code> , add <code>B</code> once to restore the remainder.",
+"2. Step-by-Step Restoring Division of <b><code>1000</code></b><sub><b><code>2</code></b></sub><b><code> (8) ÷ 11</code></b><sub><b><code>2</code></b></sub><b><code> (3)</code></b> (4-Bit Registers: Dividend <b><code>AQ = </code></b> <b><code>0000 1000</code></b> , Divisor <b><code>B = 0011</code></b> , 2's Comp <b><code>B'+1 = 1101</code></b> , <b><code>SC = 4</code></b> ):",
+"<table><tr><td><b>Step / Iteration</b></td><td><b>Operation Performed</b></td><td><b>E</b></td><td><b>A (Remainder)</b></td><td><b>Q (Quotient)</b></td><td><b>SC</b></td></tr><tr><td>Initial</td><td>Load Dividend 8 = 0000 1000 in AQ , Divisor B = 0011</td><td>0</td><td>0000</td><td>1000</td><td>4</td></tr></table>",
+"<table><tr><td><b>Step / Iteration</b></td><td><b>Operation Performed</b></td><td><b></b></td><td><b>E</b></td><td><b>A (Remainder)</b></td><td><b></b></td><td><b></b></td><td><b>Q (Quotient)</b></td><td><b></b></td><td><b>SC</b></td></tr><tr><td>Step 1</td><td>shl EAQ Subtract B : A</td><td></td><td>0</td><td>0001</td><td></td><td></td><td>000_ 000_ 0000</td><td></td><td>4 4 3</td></tr><tr><td></td><td></td><td>A</td><td>0</td><td></td><td>1110</td><td></td><td></td><td>000_</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>0001</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>+ 1101 =</td><td></td><td>0</td><td></td><td>00</td><td>001</td><td></td><td></td><td></td></tr><tr><td></td><td>0001 + 1101</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>= 0 1110 E = 0 ⇒ Q0 ← 0 , Restore A ← 1110 + 0011 = 0001</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>= 0 1110</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Step 2</td><td>shl EAQ Subtract B : A</td><td></td><td>0</td><td>0010</td><td></td><td></td><td>000_ 000_ 0000</td><td></td><td>3 3 2</td></tr><tr><td></td><td></td><td>A</td><td>0</td><td></td><td>1111</td><td></td><td></td><td>000_</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>0010</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>+ 1101 =</td><td></td><td>0</td><td></td><td>00</td><td>010</td><td></td><td></td><td></td></tr><tr><td></td><td>0010 + 1101</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>= 0 1111 E = 0 ⇒ Q0 ← 0 , Restore</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>= 0 1111</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>A ← 1111 + 0011 = 0010</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Step 3</td><td>shl EAQ Subtract B : A</td><td></td><td>0</td><td>0100</td><td></td><td></td><td>000_ 000_ 0001</td><td></td><td>2 2 1</td></tr><tr><td></td><td></td><td></td><td>1</td><td>0001</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>0001</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>+ 1101 =</td><td></td><td>1</td><td></td><td>00</td><td>001</td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>0100 + 1101</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>= 1 0001 E = 1 ⇒ Q0 ← 1 (Keep A = 0001 )</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Step 4</td><td>shl EAQ Subtract B : A</td><td></td><td>0</td><td>0010</td><td></td><td></td><td>001_ 001_ 0010</td><td></td><td>1 1 0</td></tr><tr><td></td><td></td><td></td><td>0</td><td>1111</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>+ 1101 =</td><td></td><td>0</td><td>00</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>0010 + 1101</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>= 0 1111</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td>E = 0 ⇒ Q0 ← 0 , Restore A ← 1111 + 0011 = 0010</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>",
+"Final Answer: Quotient <code>Q = 0010</code><sub><code>2</code></sub><code> (2)</code> and Remainder <code>A = 0010</code><sub><code>2</code></sub><code> (2)</code>   (Check: <code>8 = 3 × 2 + </code> <code>2</code> ).",
+"3. Step-by-Step Non-Restoring Division of <b><code>1000</code></b><sub><b><code>2</code></b></sub><b><code> (8) ÷ 11</code></b><sub><b><code>2</code></b></sub><b><code> (3)</code></b> (4-Bit Registers: <b><code>AQ = 0000 </code></b> <b><code>1000</code></b> , <b><code>B = 0011</code></b> , <b><code>−B = 1101</code></b> ):",
+"<table><tr><td><b>Step</b></td><td><b>Sign of Previous A &amp; Action Taken</b></td><td><b></b></td><td><b>A (Remainder)</b></td><td><b></b></td><td><b>Q (Quotient)</b></td><td><b></b></td><td><b></b></td></tr><tr><td>Initial</td><td>Dividend 0000 1000 (8) , Divisor B = 0011 (3)</td><td></td><td>0000 (A ≥ 0)</td><td></td><td>1000</td><td></td><td></td></tr><tr><td>Step 1</td><td>shl AQ → A = 0001 . Since prev A ≥ 0 , subtract B: 0001 + 1101 = 1110 (&lt; 0) ⇒ Q0 = 0</td><td></td><td>1110 (A &lt; 0)</td><td></td><td>0000</td><td></td><td></td></tr><tr><td>Step 2</td><td>shl AQ → A = 1100 . Since prev A &lt; 0 , add B: 1100 + 0011 = 1111 (&lt; 0) ⇒ Q0 = 0</td><td></td><td>1111 (A &lt; 0)</td><td></td><td>0000</td><td></td><td></td></tr><tr><td>Step 3</td><td>shl AQ → A = 1110 . Since prev A &lt; 0 , add B: 1110 + 0011 = 0001 (≥ 0) ⇒ Q0 = 1</td><td></td><td>0001 (A ≥ 0)</td><td></td><td>0001</td><td></td><td></td></tr><tr><td>Step 4</td><td>shl AQ → A = 0010 . Since prev A ≥ 0 , subtract B: 0010 + 1101 = 1111 (&lt; 0) ⇒ Q0 = 0</td><td></td><td>1111 (A &lt; 0)</td><td></td><td>0010</td><td></td><td></td></tr><tr><td>Final Correction</td><td>Since final A = 1111 &lt; 0 , add B once: A ← 1111 + 0011 = 0010 (2)</td><td></td><td></td><td></td><td>0010 (2)</td><td></td><td></td></tr><tr><td></td><td></td><td>A ← 1111</td><td></td><td>0010 (2)</td><td></td><td>00</td><td>010 (2)</td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></table>",
+"<img class=\"fig\" src=\"fig/U4Q8_f91.png\" style=\"width:25.71em\">",
+"<img class=\"fig\" src=\"fig/U4Q8_f92.png\" style=\"width:25.71em\">",
+"<img class=\"fig\" src=\"fig/U4Q8_f93.png\" style=\"width:25.71em\">"
+]
+},
+{
+"u": 4,
+"q": 9,
+"question": "Explain the decimal arithmetic unit. Describe the BCD adder circuit and how a decimal digit is added with correction when the sum exceeds 9.",
+"parts": [
+"1. Decimal Arithmetic Unit Overview: Commercial and financial computations naturally use decimal numbers. Converting decimal fractions (such as <code>0.1</code><sub><code>10</code></sub> ) into binary and back wastes processor time and introduces recurring binary fraction rounding errors. A Decimal Arithmetic Unit operates directly on numbers stored in 4-bit Binary-Coded Decimal (BCD, 8421 code) format, where each decimal digit ( <code>0–9</code> ) occupies 4 bits ( <code>0000</code> to <code>1001</code> ) and bit patterns <code>1010</code> to <code>1111</code> are invalid.",
+"<img class=\"fig\" src=\"fig/U4Q9_f94.png\" style=\"width:48.00em\">",
+"2. BCD Adder Circuit &amp; Derivation of Correction Logic: Adding two 4-bit BCD digits <code>A</code> and <code>B</code> together with an input carry <code>C</code><sub><code>in</code></sub> produces a sum ranging from <code>0</code> to <code>9 + 9 + 1 = 19</code> . A first 4- bit binary adder forms the 5-bit binary sum <code>K Z</code><sub><code>8</code></sub><code> Z</code><sub><code>4</code></sub><code> Z</code><sub><code>2</code></sub><code> Z</code><sub><code>1</code></sub> (where <code>K</code> is the binary carry-out): When Binary Sum <b><code>≤ 9</code></b> ( <b><code>0 0000</code></b> to <b><code>0 1001</code></b> ): The binary sum is already a valid BCD digit; no correction is needed (add <code>0000</code> ) and output decimal carry <code>C = 0</code> .",
+"When Binary Sum is <b><code>10–15</code></b> ( <b><code>0 1010</code></b> to <b><code>0 1111</code></b> ): <code>K = 0</code> , but the 4-bit code falls in the invalid BCD range. Here <code>Z</code><sub><code>8</code></sub><code> = 1</code> and either <code>Z</code><sub><code>4</code></sub><code> = 1</code> (for 12–15) or <code>Z</code><sub><code>2</code></sub><code> = 1</code> (for 10–11). When Binary Sum is <b><code>16–19</code></b> ( <b><code>1 0000</code></b> to <b><code>1 0011</code></b> ): <code>K = 1</code> , and because a 4-bit binary counter wraps at 16 instead of 10, the 4-bit sum is 6 less than the true decimal digit.",
+"Correction Rule: Whenever the sum exceeds 9, set the decimal output carry <b><code>C = K + Z</code></b><sub><b><code>8</code></b></sub><b><code>Z</code></b><sub><b><code>4</code></b></sub><b><code> + </code></b> <b><code>Z</code></b><sub><b><code>8</code></b></sub><b><code>Z</code></b><sub><b><code>2</code></b></sub><b><code> = 1</code></b> and add <b><code>6 (0110</code></b><sub><b><code>2</code></b></sub><b><code>)</code></b> to <code>Z</code><sub><code>8</code></sub><code>Z</code><sub><code>4</code></sub><code>Z</code><sub><code>2</code></sub><code>Z</code><sub><code>1</code></sub> in a second 4-bit binary adder (by wiring <code>0 C C 0</code> to its B-inputs and ignoring its carry-out):",
+"<img class=\"fig\" src=\"fig/U4Q9_f95.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 4,
+"q": 10,
+"question": "Explain decimal arithmetic operations: BCD addition and subtraction using 9's complement and 10's complement. Illustrate with numerical examples.",
+"parts": [
+"1. BCD Addition &amp; Subtraction Using 9's and 10's Complements: Decimal arithmetic units represent numbers in signed-magnitude BCD format and perform subtraction <code>A − B</code> by adding the 10's complement of the subtrahend <code>B</code> (where <code>10's complement of B = 9's complement </code> <code>of B + 1</code> ). For each BCD digit <code>d</code> ( <code>0–9</code> ), the 9's complement is <code>(9 − d)</code> . In hardware, a 9's complementer circuit forms <code>(9 − d)</code> by inverting the four bits of <code>d</code> (giving <code>15 − d</code> ) and adding <code>1010</code><sub><code>2</code></sub><code> (10)</code> while discarding the carry: <code>(15 − d) + 10 − 16 = 9 − d</code> .",
+"<img class=\"fig\" src=\"fig/U4Q10_f96.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U4Q10_f97.png\" style=\"width:48.00em\">",
+"2. Rules &amp; Worked Numerical Examples of Decimal Subtraction ( <b><code>573 − 328</code></b> and <b><code>328 − 573</code></b> ):",
+"<table><tr><td><b>Case &amp; Rule</b></td><td><b>Worked Decimal &amp; BCD Calculation</b></td><td><b>Final Signed Result</b></td></tr><tr><td>Case 1: A ≥ B ( 573 − 328 ) End carry E = 1 occurs. Rule: Discard end carry; result is positive and in true BCD form.</td><td>• 9's complement of 328 : 999 − 328 = 671 . • 10's complement of 328 : 671 + 1 = 672 . • Add to 573 : 573 + 672 = 1 245 (BCD: 0101 0111 0011 + 0110 0111 0010 ). • End carry 1 is discarded ⇒ Magnitude = 245 (0010 0100 0101BCD) .</td><td>+245</td></tr><tr><td>Case 2: A &lt; B ( 328 − 573 ) No end carry ( E = 0 ). Rule: Take 10's complement of sum and attach a minus sign.</td><td>• 9's complement of 573 : 999 − 573 = 426 . • 10's complement of 573 : 426 + 1 = 427 . • Add to 328 : 328 + 427 = 0 755 (No end carry out of hundreds digit). • Take −(10's comp of 755 ) = −(999 − 755 + 1) = −245 .</td><td>−245</td></tr></table>"
+]
+},
+{
+"u": 5,
+"q": 1,
+"question": "Explain the input-output interface. Describe the I/O bus and interface modules, the isolated I/O and memory-mapped I/O techniques, and compare them.",
+"parts": [
+"1. Need for I/O Interface &amp; I/O Bus Structure: Peripherals cannot connect directly to the CPU bus because they are electromechanical/electromagnetic, operate at much slower speeds, and use different data formats and word widths. The I/O bus from the CPU consists of Data lines, Address lines, and Control lines. Each peripheral attaches to the I/O bus through an Interface Unit containing Port registers, a Control register, and a Status register (selected via Chip Select <code>CS</code> and Register Select <code>RS1, RS0</code> ). When the CPU places a device address on the address lines, only the matching interface enables itself and responds to four types of I/O commands: Control, Status, Data Output, and Data Input.",
+"<img class=\"fig\" src=\"fig/U5Q1_f98.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q1_f99.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q1_f100.png\" style=\"width:48.00em\">",
+"2. Isolated I/O vs. Memory-Mapped I/O Comparison:",
+"<table><tr><td><b>Feature</b></td><td><b>Isolated I/O (Port-Mapped I/O)</b></td><td><b>Memory-Mapped I/O</b></td></tr><tr><td>Address Space</td><td>Separate address spaces for memory and I/O ports (both can use the same numerical addresses).</td><td>Single shared address space; I/O interface registers are treated as memory locations.</td></tr><tr><td>Control Lines</td><td>Requires 4 separate lines: Memory</td><td></td></tr><tr><td></td><td></td><td>Requires only 2 lines: common Read</td></tr><tr><td></td><td>Read, Memory Write, I/O Read,</td><td>and W</td></tr><tr><td></td><td>I/O Write .</td><td></td></tr><tr><td></td><td>I/O Write</td><td></td></tr><tr><td></td><td></td><td></td></tr></table>",
+"<table><tr><td><b>Feature</b></td><td><b>Isolated I/O (Port-Mapped I/O)</b></td><td><b>Memory-Mapped I/O</b></td></tr><tr><td>CPU Instructions</td><td>Uses dedicated IN and OUT instructions.</td><td>Uses standard memory instructions ( LOAD, STORE, ADD, AND, BIT TEST ) on I/O registers.</td></tr><tr><td>Advantage &amp; Drawback</td><td>Adv: Full memory address space stays available for RAM/ROM. Disadv: Extra control lines and limited I/O instructions.</td><td>Adv: Full instruction set and addressing modes work on I/O. Disadv: Part of the memory address range is consumed by I/O ports.</td></tr></table>"
+]
+},
+{
+"u": 5,
+"q": 2,
+"question": "Explain asynchronous data transfer. Describe strobe control and handshaking methods for source-initiated and destination-initiated transfers with timing diagrams.",
+"parts": [
+"1. Asynchronous Data Transfer Overview: When the CPU and an I/O interface operate on independent clocks, data transfers must be synchronized by control signals traded along with the data on the bus using either Strobe Control (1 wire) or Handshaking (2 wires).",
+"<img class=\"fig\" src=\"fig/U5Q2_f101.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q2_f102.png\" style=\"width:48.00em\">",
+"2. Strobe Control (Source-Initiated vs. Destination-Initiated):",
+"Source-Initiated Strobe: The source places valid data on the data bus, waits a brief setup delay, and asserts <code>Strobe = 1</code> . The destination latches the data on the falling edge of <code>Strobe</code> , after which the source removes the data.",
+"Destination-Initiated Strobe: The destination asserts <code>Strobe = 1</code> to request data; the source places valid data on the bus; the destination latches the data and drops <code>Strobe = 0</code> ; the source then removes the data. Drawback: Neither side receives confirmation that the transfer actually succeeded.",
+"3. Two-Wire Handshaking (Source-Initiated vs. Destination-Initiated): Adds a reply signal so both units verify completion:",
+"<img class=\"fig\" src=\"fig/U5Q2_f103.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 5,
+"q": 3,
+"question": "Explain the modes of data transfer: programmed I/O, interrupt-initiated I/O and DMA. Compare them and discuss when each mode is suitable.",
+"parts": [
+"1. Three Modes of Data Transfer Between CPU/Memory and I/O Devices:",
+"<img class=\"fig\" src=\"fig/U5Q3_f104.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q3_f105.png\" style=\"width:48.00em\">",
+"Mode 1 — Programmed I/O (Polling): Every data byte/word transfer is executed directly by CPU instructions (`IN, OUT`). Because the peripheral cannot alert the CPU, the processor executes a continuous busy-waiting polling loop: it reads the interface Status Register, tests the Ready Flag bit, and branches back repeatedly until `Flag = 1`, then reads the Data Register and stores the word in memory. While simple in hardware, it ties up 100% of the CPU waiting for slow electromechanical devices.",
+"Mode 2 — Interrupt-Initiated I/O: Eliminates busy-waiting by allowing the CPU to execute useful main-program instructions while the I/O device prepares data. When the device is",
+"ready, the interface asserts an Interrupt Request (`INT`). At the end of the current instruction, if `IEN = 1`, the CPU saves the Program Counter (`PC`) and status flags, branches to the Interrupt Service Routine (ISR) (via a Vectored address supplied by the device or a Non-Vectored fixed address), transfers one word, clears the flag, and returns to the interrupted program.",
+"Mode 3 — Direct Memory Access (DMA): For high-speed block devices (such as magnetic disks or network cards), executing an ISR for every single word is still too slow. In DMA, the CPU initializes a hardware DMA Controller with the starting memory address, word count, and read/write direction. The DMA controller then arbitrates for the system bus via `Bus Request (BR)` and `Bus Grant (BG)`, transfers the entire data block directly between the device and RAM at memory speed without CPU intervention, and sends a single interrupt to the CPU only when `Word Count = 0`.",
+"2. Comprehensive Comparison &amp; Suitability of the Three Transfer Modes:",
+"<table><tr><td><b>Comparison Criterion</b></td><td><b></b></td><td><b>Programmed I/O (Polling)</b></td><td><b></b></td><td><b>Interrupt-Initiated I/O</b></td><td><b></b></td><td><b></b></td><td><b>Direct Memory Access (DMA)</b></td><td><b></b></td></tr><tr><td>Who Initiates Transfer?</td><td></td><td>CPU software continuously polls status flag.</td><td></td><td>I/O interface hardware asserts interrupt signal.</td><td></td><td></td><td>DMA controller hardware becomes bus master.</td><td></td></tr><tr><td>Data Transfer Path</td><td></td><td>Device ↔ CPU</td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td>Device</td><td>↔ CPU</td><td></td><td>Device ↔</td><td>↔ Main</td></tr><tr><td></td><td>ath</td><td>Register ↔</td><td>Memory</td><td>Register</td><td></td><td>↔ Memory</td><td>Memory Directly</td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>CPU Involvement</td><td></td><td>100% (Full time) — trapped in polling loop for entire transfer.</td><td></td><td>Moderate — executes ISR instructions once per transferred word.</td><td></td><td></td><td>Minimal — only at block initialization and final completion interrupt.</td><td></td></tr><tr><td>Extra Hardware Cost</td><td></td><td>Lowest (basic port &amp; status registers only).</td><td></td><td>Medium (needs interrupt controller / priority logic).</td><td></td><td></td><td>Highest (requires dedicated multi-register DMA controller).</td><td></td></tr><tr><td>When Suitable (Use Case)</td><td></td><td>Simple microcontrollers or boot loaders where CPU has no other task.</td><td></td><td>Low-bandwidth, irregular character devices (keyboards, mice, serial terminals).</td><td></td><td></td><td>High-speed block transfers (hard disks, SSDs, graphics, network interfaces).</td><td></td></tr></table>"
+]
+},
+{
+"u": 5,
+"q": 4,
+"question": "Explain priority interrupt schemes. Describe the daisy-chaining priority, parallel priority and priority encoder with neat diagrams.",
+"parts": [
+"1. Priority Interrupt Schemes: When multiple I/O devices request an interrupt simultaneously, a priority interrupt system determines which device is served first (high-speed disks get highest priority; slow keyboards get lowest). Software polling is slow because the CPU tests flags sequentially; hardware priority schemes solve this immediately.",
+"<img class=\"fig\" src=\"fig/U5Q4_f106.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q4_f107.png\" style=\"width:48.00em\">",
+"2. Daisy-Chaining Priority (Serial Hardware): All devices pull a common <code>INT</code> line low to request service. In response, the CPU sends <code>INTACK = 1</code> into the highest-priority device's Priority-In ( <b><code>PI</code></b> ) input:",
+"If a device is not requesting service, it passes <code>INTACK</code> onward via its Priority-Out ( <b><code>PO = PI = </code></b> <b><code>1</code></b> ) pin to the next device.",
+"If a device is requesting service and receives <code>PI = 1</code> , it blocks the acknowledge ( <code>PO = 0</code> ) so lower-priority devices receive <code>PI = 0</code> , and places its own Vector Address ( <b><code>VAD</code></b> ) onto the data bus for the CPU.",
+"3. Parallel Priority Interrupt &amp; Priority Encoder: Uses an n-bit Interrupt Register (bits <code>I</code><sub><code>0</code></sub><code>..I</code><sub><code>3</code></sub> , where <code>I</code><sub><code>0</code></sub> has highest priority) and a programmable Mask Register ( <code>M</code><sub><code>0</code></sub><code>..M</code><sub><code>3</code></sub> ). Each request is ANDed with its mask bit and fed into a 4-to-2 Priority Encoder:",
+"<img class=\"fig\" src=\"fig/U5Q4_f108.png\" style=\"width:48.00em\">"
+]
+},
+{
+"u": 5,
+"q": 5,
+"question": "Explain Direct Memory Access (DMA). Describe the DMA controller block diagram, DMA transfer steps and cycle-stealing versus burst modes.",
+"parts": [
+"1. DMA Controller Architecture: During DMA, the CPU floats its address, data, and read/write bus lines in a high-impedance (Hi-Z) state so the DMA controller becomes the temporary bus master. A DMA controller contains three CPU-programmable registers:",
+"<img class=\"fig\" src=\"fig/U5Q5_f109.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q5_f110.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q5_f111.png\" style=\"width:48.00em\">",
+"Address Register: Holds the target memory address; automatically increments after each word is transferred.",
+"Word Count Register: Holds the number of words remaining in the block; automatically decrements after each transfer until it reaches <code>0</code> .",
+"Control Register: Specifies the transfer direction (Read from memory to device, or Write from device to memory).",
+"<img class=\"fig\" src=\"fig/U5Q5_f112.png\" style=\"width:48.00em\">",
+"2. Step-by-Step DMA Transfer Sequence: (1) Initialization: The CPU writes the starting memory address, word count, and read/write mode into the DMA registers via <code>DS/RS</code> and starts the DMA;",
+"(2) When the peripheral has a word ready, it asserts <code>DMA Request</code> to the DMA controller; (3) The DMA controller asserts Bus Request ( <b><code>BR = 1</code></b> ) to the CPU; (4) The CPU finishes its current bus cycle, places its buses in Hi-Z, and asserts Bus Grant ( <b><code>BG = 1</code></b> ); (5) The DMA controller places its Address Register on the address bus, asserts <code>DMA Acknowledge</code> to the device, and issues <code>RD</code> or <code>WR</code> so one word moves directly between the device and RAM; (6) The Address Register increments and Word Count decrements; (7) When <code>Word Count = 0</code> , the DMA controller drops <code>BR = 0</code> and asserts <code>Interrupt</code> to notify the CPU that the block is complete.",
+"3. Burst Mode vs. Cycle-Stealing Mode: In Burst (Block) Mode, the DMA controller holds the bus continuously until the entire block of words is transferred (fastest for high-speed disks, though the CPU is blocked from memory during the burst). In Cycle-Stealing Mode, the DMA controller transfers one word by \"stealing\" a single memory cycle, then releases <code>BR</code> so the CPU continues executing instructions with minimal delay."
+]
+},
+{
+"u": 5,
+"q": 6,
+"question": "Explain the memory hierarchy in a computer system. Describe the levels of the hierarchy, and justify why a hierarchy improves performance and cost-effectiveness.",
+"parts": [
+"1. Memory Hierarchy Levels: Because no single memory technology provides sub-nanosecond speed, terabyte capacity, and low cost per bit simultaneously, computer systems organize storage into a pyramid of levels from the CPU outward:",
+"<img class=\"fig\" src=\"fig/U5Q6_f113.png\" style=\"width:48.00em\">",
+"<table><tr><td><b>Hierarchy Level</b></td><td><b>Technology</b></td><td><b>Typical Access Time</b></td><td><b>Typical Capacity</b></td><td><b>Role &amp; Management</b></td></tr><tr><td>1. CPU Registers</td><td>Flip-Flops (CMOS)</td><td>&lt; 1 ns (1 clock)</td><td>Tens of words</td><td>Holds active operands; managed by compiler/CPU.</td></tr><tr><td>2. Cache Memory</td><td>Static RAM (SRAM)</td><td>1 – 10 ns</td><td>KB to several MB</td><td>Holds active code/data blocks; managed by hardware.</td></tr><tr><td>3. Main Memory</td><td>Dynamic RAM (DRAM)</td><td>50 – 100</td><td>Several GB</td><td>Directly addressed by CPU; holds running programs.</td></tr><tr><td></td><td></td><td>ns</td><td></td><td></td></tr><tr><td>4. Auxiliary Disk</td><td>Magnetic Disk / SSD</td><td>0.1 – 10 ms</td><td>Hundreds of GB–TB</td><td>Non-volatile backing store for files &amp; virtual memory.</td></tr><tr><td>5. Magnetic Tape</td><td>Magnetic Ribbon</td><td>Seconds</td><td>Multi-TB (offline)</td><td>Sequential archival and backup storage.</td></tr></table>",
+"2. Why the Hierarchy Improves Both Performance and Cost-Effectiveness (Locality of Reference): The hierarchy succeeds because real programs do not access memory randomly; they exhibit Locality of Reference:",
+"Temporal Locality: A memory word accessed recently is highly likely to be accessed again in the near future (e.g., instructions inside a loop, loop counters, and frequently called subroutines).",
+"Spatial Locality: Memory words located at addresses adjacent to a recently accessed word are likely to be needed next (e.g., sequential instruction fetches, array elements, and stack frames).",
+"Performance &amp; Cost Justification: By keeping active blocks in a small, fast SRAM cache (achieving a hit ratio <code>h ≥ 0.90–0.95</code> ) and storing the bulk of data in inexpensive DRAM and",
+"disk, the average access time <code>T</code><sub><code>avg</code></sub><code> = h · T</code><sub><code>cache</code></sub><code> + (1 − h) · T</code><sub><code>main</code></sub> approaches the speed of the fast cache while the average cost per bit approaches the low cost of main/auxiliary memory."
+]
+},
+{
+"u": 5,
+"q": 7,
+"question": "Explain main memory organization. Describe RAM and ROM chips, memory address maps, and how memory chips are connected to the CPU, with a numerical example.",
+"parts": [
+"1. RAM and ROM Chip Organization: Main memory is constructed by interconnecting multiple RAM and ROM IC chips to the CPU's address, data, and control buses:",
+"<img class=\"fig\" src=\"fig/U5Q7_f114.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q7_f115.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q7_f116.png\" style=\"width:48.00em\">",
+"<b><code>128 × 8</code></b> RAM Chip: Since <code>128 = 2</code><sub><code>7</code></sub> , it has 7 address lines ( <b><code>AD</code></b><sub><b><code>7</code></b></sub><b><code>..AD</code></b><sub><b><code>1</code></b></sub> ), an 8-bit bidirectional tri-state data bus, Read ( <code>RD</code> ) and Write ( <code>WR</code> ) inputs, and two chip-select inputs ( <code>CS1 = 1</code> and active-low <code>CS2' = 0</code> ) so the chip operates only when <code>CS1 · CS2' = 1</code> . <b><code>512 × 8</code></b> ROM Chip: Since <code>512 = 2</code><sup><code>9</code></sup> , it has 9 address lines ( <b><code>AD</code></b><sub><b><code>9</code></b></sub><b><code>..AD</code></b><sub><b><code>1</code></b></sub> ), an 8-bit output- only tri-state data bus, and two chip-select inputs ( <code>CS1, CS2'</code> ); it needs no <code>RD/WR</code> lines because it is read-only.",
+"2. Numerical Design Example — Construct <b><code>512 Bytes RAM + 512 Bytes ROM</code></b> (1024 Bytes Total = 10 Address Lines):",
+"Chip Count &amp; Decoding: We need four <b><code>128 × 8</code></b> RAM chips ( <code>4 × 128 = 512</code> bytes) and one <b><code>512 × 8</code></b> ROM chip. Lines <code>1–7</code> go to the 7-bit address inputs of all four RAM chips; lines <code>1–9</code> go to the 9-bit address inputs of the ROM chip. Address lines <code>8</code> and <code>9</code> drive a <b><code>2 × 4</code></b> decoder whose outputs select <code>CS1</code> of <code>RAM 1..RAM 4</code> . Address line <code>10</code> distinguishes RAM vs. ROM: <b><code>Line 10 = 0</code></b> enables all RAMs (connected to active-low <code>CS2'</code> of RAMs), while <b><code>Line </code></b> <b><code>10 = 1</code></b> enables the ROM (connected to <code>CS1</code> of ROM).",
+"<table><tr><td><b>Component</b></td><td><b>Hexadecimal Address Range</b></td><td><b>Line 10 (RAM/ROM)</b></td><td><b>Line 9</b></td><td><b>Line 8</b></td><td><b>Lines 7 – 1 (Internal Word Address)</b></td></tr><tr><td>RAM 1 (128 × 8)</td><td>0000 – 007F</td><td>0</td><td>0</td><td>0</td><td>xxxxxxx (7 bits: 0000000– 1111111 )</td></tr><tr><td>RAM 2 (128 × 8)</td><td>0080 – 00FF</td><td>0</td><td>0</td><td>1</td><td>xxxxxxx (Selected when Decoder Out 1 = 1)</td></tr></table>",
+"<table><tr><td><b>Component</b></td><td><b>Hexadecimal Address Range</b></td><td><b>Line 10 (RAM/ROM)</b></td><td><b>Line 9</b></td><td><b>Line 8</b></td><td><b>Lines 7 – 1 (Internal Word Address)</b></td></tr><tr><td>RAM 3 (128 × 8)</td><td>0100 – 017F</td><td>0</td><td>1</td><td>0</td><td>xxxxxxx (Selected when Decoder Out 2 = 1)</td></tr><tr><td>RAM 4 (128 × 8)</td><td>0180 – 01FF</td><td>0</td><td>1</td><td>1</td><td>xxxxxxx (Selected when Decoder Out 3 = 1)</td></tr><tr><td>ROM (512 × 8)</td><td>0200 – 03FF</td><td>1</td><td>x</td><td>x</td><td>xxxxxxx (Lines 9–1 form 9-bit ROM address)</td></tr></table>"
+]
+},
+{
+"u": 5,
+"q": 8,
+"question": "Explain auxiliary memory devices. Describe the working of magnetic disks and magnetic tapes, and compare them with regard to speed and capacity.",
+"parts": [
+"1. Auxiliary (Secondary / Backing) Memory Overview: Auxiliary memory provides permanent, non-volatile, high-capacity storage (hundreds of GB to multi-TB) at the lowest cost per bit in the memory hierarchy. Because auxiliary devices involve mechanical motion or block interfaces, the CPU cannot execute programs directly from them; instead, blocks/sectors are transferred into main memory (RAM) via an I/O processor or DMA controller.",
+"<img class=\"fig\" src=\"fig/U5Q8_f117.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q8_f118.png\" style=\"width:48.00em\">",
+"2. Working &amp; Geometry of Magnetic Disks: A magnetic disk consists of one or more circular metal/glass platters coated with magnetizable material and rotated at a constant high speed (e.g., 5400–15,000 rpm) by a spindle motor. Read/write heads mounted on a movable actuator arm fly just above each surface:",
+"Tracks, Sectors &amp; Cylinders: Each surface is divided into concentric circles called tracks, and each track is subdivided into fixed-size sectors (typically 512 bytes or 4 KB, separated by inter-sector gaps)—the smallest addressable transfer unit. The set of tracks at the same radius across all platter surfaces forms a cylinder. A disk address specifies <code>(Surface/Head </code> <code>#, Track #, Sector #)</code> .",
+"Disk Access Time Formula &amp; Numerical Example: Accessing a sector requires three sequential delays:",
+"<b><code>Disk Access Time = Seek Time + Rotational Latency + Transfer Time</code></b>",
+"where Seek Time is the time to move the head arm to the target track (ms), Rotational Latency is the average wait for the sector to rotate under the head ( <code>½ × [60 / RPM]</code> seconds), and Transfer Time is the time for the sector bits to pass under the head. Worked Example (7200 RPM disk, Seek = 9 ms, 200 sectors/track): One revolution = <code>60 / </code> <code>7200 = 8.33 ms</code> ; Average rotational latency = <code>8.33 / 2 = 4.17 ms</code> ; Sector transfer time = <code>8.33 / 200 = 0.04 ms</code> ⇒ <b><code>Total Access Time = 9 + 4.17 + 0.04 = 13.21 ms</code></b> .",
+"3. Working of Magnetic Tapes: A magnetic tape uses a long plastic ribbon coated with magnetic oxide wound on reels. Data is recorded across 7 or 9 parallel tracks (1 byte + parity bit across the width) in variable- or fixed-length records (blocks) separated by Inter-Record Gaps (IRG) (which allow the tape to accelerate/decelerate) and End-of-File (EOF) markers. Because reaching record N requires winding past records <code>1..N−1</code> , magnetic tape is strictly a sequential- access medium.",
+"4. Comparison of Magnetic Disk and Magnetic Tape:",
+"<table><tr><td><b>Feature</b></td><td><b>Magnetic Disk (Hard Disk Drive)</b></td><td><b>Magnetic Tape</b></td></tr><tr><td>Access Method</td><td>Direct (Random) Access to any track and sector.</td><td>Sequential Access only (must wind past preceding records).</td></tr></table>",
+"<table><tr><td><b>Feature</b></td><td><b>Magnetic Disk (Hard Disk Drive)</b></td><td><b>Magnetic Tape</b></td></tr><tr><td>Access Time (Speed)</td><td>Fast ( 5 – 15 milliseconds ).</td><td>Very Slow ( seconds to minutes to locate a file).</td></tr><tr><td>Data Organization</td><td>Concentric tracks, fixed sectors, and cylinders.</td><td>Linear parallel tracks, records, Inter-Record Gaps (IRG), EOF marks.</td></tr><tr><td>Capacity &amp; Cost/Bit</td><td>High capacity (GB to TB); low cost per bit; online storage.</td><td>Extremely large archival capacity (multi-TB cartridges); lowest cost/bit.</td></tr><tr><td>Primary Application</td><td>Active OS files, databases, and virtual memory paging.</td><td>Offline system backups, disaster recovery, and sequential batch archives.</td></tr></table>"
+]
+},
+{
+"u": 5,
+"q": 9,
+"question": "Explain associative memory (content addressable memory). Describe its hardware organization, match logic and read/write operations with a block diagram.",
+"parts": [
+"1. Concept &amp; Hardware Organization: An Associative Memory (Content Addressable Memory, CAM) searches all stored words in parallel by content in one memory cycle. A CAM array of m words by n bits is controlled by three registers:",
+"<img class=\"fig\" src=\"fig/U5Q9_f119.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q9_f120.png\" style=\"width:48.00em\">",
+"Argument Register ( <b><code>A</code></b> , n bits): Holds the search pattern being looked up.",
+"Key Register ( <b><code>K</code></b> , n bits): Acts as a bit mask to select a specific subfield for comparison. If <code>K</code><sub><code>j</code></sub>  <code>= 1</code> , bit position j of <code>A</code> is compared with bit j of every word; if <code>K</code><sub><code>j</code></sub><code> = 0</code> , column j is masked off (ignored as a match).",
+"Match Register ( <b><code>M</code></b> , m bits): Contains one flip-flop <code>M</code><sub><code>i</code></sub> per memory word. After the parallel comparison, <code>M</code><sub><code>i</code></sub><code> = 1</code> for every word i whose unmasked bits match <code>A</code> .",
+"Associative Memory Block Diagram &amp; One-Word Match Logic",
+"<code>[ Argument Register A (A</code><sub><code>1</code></sub><code> .. A</code><sub><code>n</code></sub><code>) ]</code> &amp; <code>[ Key Register K (K</code><sub><code>1</code></sub><code> .. K</code><sub><code>n</code></sub><code>) ]</code>",
+"↓ (Compared in parallel across all m words)",
+"<code>[ Word 1: F</code><sub><code>11</code></sub><code> .. F</code><sub><code>1n</code></sub><code> ] → M</code><sub><code>1</code></sub>  |  <code>[ Word i: F</code><sub><code>i1</code></sub><code> .. F</code><sub><code>in</code></sub><code> ] → M</code><sub><code>i</code></sub>  |  <code>[ Word m: F</code><sub><code>m1</code></sub><code> .. F</code><sub><code>mn</code></sub>  <code>] → M</code><sub><code>m</code></sub><code> (Match Register)</code>",
+"2. Derivation of Match Logic for Word i ( <b><code>M</code></b><sub><b><code>i</code></b></sub> ):",
+"Single-Bit Comparison ( <b><code>x</code></b><sub><b><code>j</code></b></sub> ): Bit cell <code>F</code><sub><code>ij</code></sub> matches argument bit <code>A</code><sub><code>j</code></sub> when both are equal (XNOR):",
+"<code>x</code><sub><code>j</code></sub><code> = A</code><sub><code>j</code></sub><code>F</code><sub><code>ij</code></sub><code> + A</code><sub><code>j</code></sub><code>'F</code><sub><code>ij</code></sub><code>'</code> .",
+"Including Key Bit <b><code>K</code></b><sub><b><code>j</code></b></sub> : Position j is satisfied if either the bits match ( <code>x</code><sub><code>j</code></sub><code> = 1</code> ) OR the bit is masked off ( <code>K</code><sub><code>j</code></sub><code> = 0 ⇒ K</code><sub><code>j</code></sub><code>' = 1</code> ), giving <code>(x</code><sub><code>j</code></sub><code> + K</code><sub><code>j</code></sub><code>')</code> .",
+"Word Match Equation (ANDing all n bit positions):",
+"<b><code>M</code></b><sub><b><code>i</code></b></sub><b><code> = (x</code></b><sub><b><code>1</code></b></sub><b><code> + K</code></b><sub><b><code>1</code></b></sub><b><code>') · (x</code></b><sub><b><code>2</code></b></sub><b><code> + K</code></b><sub><b><code>2</code></b></sub><b><code>') · … · (x</code></b><sub><b><code>n</code></b></sub><b><code> + K</code></b><sub><b><code>n</code></b></sub><b><code>') = ∏</code></b><sub><b><code>j=1..n</code></b></sub><b><code> (A</code></b><sub><b><code>j</code></b></sub><b><code>F</code></b><sub><b><code>ij</code></b></sub><b><code> + A</code></b><sub><b><code>j</code></b></sub><b><code>'F</code></b><sub><b><code>ij</code></b></sub><b><code>' + K</code></b><sub><b><code>j</code></b></sub><b><code>')</code></b> . Read &amp; Write Operations: On a Read, matched words ( <code>M</code><sub><code>i</code></sub><code> = 1</code> ) are read out sequentially in priority order. On a Write, an extra Tag (Valid) bit per word identifies empty slots, and new data is written into the first unused word (clearing its tag to occupied)."
+]
+},
+{
+"u": 5,
+"q": 10,
+"question": "Explain cache memory. Describe associative, direct and set-associative mapping, and calculate the hit ratio and average access time for a given example. [10",
+"parts": [
+"Marks]",
+"1. Cache Memory Concept: Cache is a small, high-speed SRAM buffer placed between the CPU and main memory to hold active blocks of instructions and data. Using our textbook benchmark —Main Memory = <b><code>32K × 12</code></b> bits ( <code>32K = 2</code><sup><code>15</code></sup><code> ⇒ 15-bit CPU address</code> , written as 5 octal digits) and Cache Memory = <b><code>512</code></b> words ( <code>512 = 2</code><sup><code>9</code></sup><code> ⇒ 9-bit cache index</code> )—there are three cache mapping organizations:",
+"<img class=\"fig\" src=\"fig/U5Q10_f121.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q10_f122.png\" style=\"width:48.00em\">",
+"<img class=\"fig\" src=\"fig/U5Q10_f123.png\" style=\"width:48.00em\">",
+"Associative Mapping: The cache is built as a Content Addressable Memory (CAM) where each entry stores both the full 15-bit Address (Tag) and the 12-bit Data word ( <code>512 × 27</code> bits). Any main-memory word can be placed in any cache slot, and all 512 tags are searched in parallel. Gives the highest hit ratio and zero conflict misses, but CAM hardware is expensive.",
+"Direct Mapping: Uses inexpensive standard RAM by splitting the 15-bit CPU address into a 9- bit Index (low 9 bits, selecting 1 of 512 cache lines) and a 6-bit Tag (high 6 bits). Each cache word stores <code>Tag (6 bits) + Data (12 bits) = 18 bits</code> ( <code>512 × 18</code> RAM). A memory word can map to only one fixed cache index; if two active addresses share the same index (e.g., octal <code>00000</code> and <code>01000</code> , both index <code>000</code> ), they repeatedly evict each other",
+"(conflict/thrashing misses).",
+"Set-Associative Mapping (Compromise): Each 9-bit Index addresses a set of k words (for 2- way set-associative, <code>k = 2</code> ), so each cache entry holds <code>2 × (6-bit Tag + 12-bit Data) = </code> <code>36 bits</code> ( <code>512 × 36</code> RAM, holding 1024 words). Up to k different memory words with the same index can reside in the cache simultaneously; on a miss when a set is full, LRU, FIFO, or Random replacement selects which word to replace.",
+"2. Numerical Calculation of Hit Ratio &amp; Average Access Time:",
+"<img class=\"fig\" src=\"fig/U5Q10_f124.png\" style=\"width:48.00em\">"
+]
+}
+]
