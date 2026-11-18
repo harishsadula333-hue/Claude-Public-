@@ -165,7 +165,7 @@ END = dict(
     s2=text_img("the celebration", PINYON(130), GOLD_L),
     s4=text_img("HALDI · MEHENDI · WEDDING FUNCTIONS", SANS(34), (255, 255, 255), tr=5),
     s5=text_img("DM TO BOOK", CINZEL(70), (255, 255, 255), tr=10, grad=True),
-    s6=text_img("@sundarlyshevents", SANS(50), (255, 255, 255), tr=1),
+    s6=text_img("@sundarlyshmemories", SANS(50), (255, 255, 255), tr=1),
     s7=text_img("BENGALURU  ·  HYDERABAD", SANS(30), (233, 207, 198), tr=8),
 )
 

@@ -16,7 +16,7 @@ Made from Sundarlysh's own photos and clips of a wedding-home décor setup.
 | 22.9–32.2 s | Doorway photo, garlanded doors, marigold close-up | Traditional touch · **Marigold Door Garlands** |
 | 32.2–34.6 s | Balcony with drapes and hanging florals | Outdoors too · **Balcony Décor** |
 | 34.6–42.1 s | Mandir clips and photo | The sacred space · **Pooja Mandir Décor** |
-| 42.1–47 s | Wine end card with logo | *Your home, dressed for the celebration* · Haldi · Mehendi · Wedding functions · **DM TO BOOK** · @sundarlyshevents · Bengaluru · Hyderabad |
+| 42.1–47 s | Wine end card with logo | *Your home, dressed for the celebration* · Haldi · Mehendi · Wedding functions · **DM TO BOOK** · @sundarlyshmemories · Bengaluru · Hyderabad |
 
 Footage has a light colour polish (warmer, richer colours). Clips are slowed slightly (0.8–0.9×) for a smoother, more premium feel. Moments with a family member's face in frame are left out.
 
