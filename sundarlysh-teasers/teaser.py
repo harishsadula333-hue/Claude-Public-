@@ -66,6 +66,8 @@ def style(spec, maxw=W - 200):
     if k == "sans": return text_img(t, fit(t, SANS, z or 44, maxw, 2), (255, 255, 255), tr=2, shadow=.5)
     if k == "big": return text_img(t, fit(t, lambda s: CINZEL(s, 800), z or 200, maxw), (255, 255, 255), shadow=.8, gold=True, pad=36)
     if k == "pill": return pill(t, z or 32)
+    if k == "bub": return text_img(t, fit(t, lambda s: PLAYI(s, 800), z or 66, W - 260), PLUM_D)
+    if k == "bubk": return text_img(t, fit(t, SANS, z or 30, W - 260, 4), (168, 104, 92), tr=4)
     raise ValueError(k)
 def paste(base, spr, x, y, a=1.0):
     if a <= 0.003: return
@@ -137,7 +139,7 @@ class Video:
 SEG = []; t = 0.0
 for s in SP["segments"]:
     s = dict(s); s["t0"] = t; s["t1"] = t + s["beats"] * B; t = s["t1"]
-    s["spr"] = [style(l) for l in s.get("lines", [])]; SEG.append(s)
+    s["spr"] = [style(l) for l in s.get("lines", [])]; s["bsp"] = [style(l) for l in s.get("bubble", [])]; SEG.append(s)
 DUR = t; XF = .2
 _vid = {}
 def base_frame(s, t):
@@ -162,6 +164,25 @@ def render_seg(s, t):
             for i, x in enumerate(sp):
                 d0 = .1 + i * .22; paste(fr, x, (W - x.width) / 2, y + (1 - eout((u - d0) / .4)) * 30, ease((u - d0) / .3) * out); y += x.height - 34
             lw = int(240 * eout((u - .3) / .5)); paste(fr, line(lw), (W - lw) / 2, 1726, out)
+        if s["bsp"]:
+            bs = s["bsp"]; bw_ = max(x.width for x in bs) + 60; bh_ = sum(x.height for x in bs) - 30 * (len(bs) - 1) + 30
+            by = s.get("bubble_y", 220); tx = s.get("tail_x", .5) * W; a = ease((u - .08) / .2) * out
+            sc = .7 + .3 * back((u - .08) / .35)
+            up = s.get("tail_up", False); top = 100 if up else 30
+            lay = Image.new("RGBA", (bw_ + 60, bh_ + 130), (0, 0, 0, 0)); d = ImageDraw.Draw(lay)
+            d.rounded_rectangle((30, top, bw_ + 30, bh_ + top), 46, fill=(255, 252, 247, 255), outline=GOLD + (255,), width=5)
+            cx = min(max(tx - (W - bw_) / 2 + 30, 110), bw_ - 50)
+            if up:
+                d.polygon([(cx - 34, top + 4), (cx + 34, top + 4), (cx + 6, top - 70)], fill=(255, 252, 247, 255))
+                d.line([(cx - 34, top), (cx + 6, top - 70), (cx + 34, top)], fill=GOLD + (255,), width=5)
+            else:
+                d.polygon([(cx - 34, bh_ + 26), (cx + 34, bh_ + 26), (cx - 6, bh_ + 100)], fill=(255, 252, 247, 255))
+                d.line([(cx - 34, bh_ + 30), (cx - 6, bh_ + 100), (cx + 34, bh_ + 30)], fill=GOLD + (255,), width=5)
+            yy = top + 15
+            for x in bs: lay.alpha_composite(x, (30 + (bw_ - x.width) // 2, int(yy))); yy += x.height - 30
+            sh = Image.new("RGBA", lay.size, (0, 0, 0, 0)); sh.putalpha(lay.getchannel("A").filter(ImageFilter.GaussianBlur(10)).point(lambda v: int(v * .45)))
+            full = Image.new("RGBA", lay.size, (0, 0, 0, 0)); full.alpha_composite(sh, (0, 0)); full.alpha_composite(lay)
+            full = scaled(full, sc); paste(fr, full, (W - full.width) / 2, by + (1 - sc) * 60, a)
         paste(fr, MARK, (W - MARK.width) / 2, 60, .97)
     else:
         sparkles(fr, t)
