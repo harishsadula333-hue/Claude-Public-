@@ -41,3 +41,17 @@ All by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attr
 
 Sound: the music plus synthesised impacts, a riser and a chime shimmer, loudness-normalised to -14 LUFS. The price is left out on purpose for a teaser.
 Music: "Wish Background" by Kevin MacLeod (incompetech.com), licensed under CC BY 4.0. The credit goes in the caption.
+
+### Energetic beat version (recommended)
+`Sundarlysh_Memories_Something_Magical_Teaser_BEATS.mp4` uses the same visuals with an **original Christmas EDM track** (`magic_beat.py`, 120 bpm). Every kick lands on a cut. The video adds a zoom and brightness pulse on each kick, a golden glow pulse on the cards, and camera shake on the big hits. It was rendered with `magic_teaser2.py out.mp4 beat.wav`.
+
+| Time | Music |
+|---|---|
+| 0–4 s | Heartbeat kick, magical bell arpeggios, sleigh bells, dark pad |
+| 4–6 s | Hit on "HYDERABAD", then a snare roll, a riser, ¼ s of silence and the **DROP** |
+| 6–11 s | Full beat: kick, 808 bass, claps, hats, pumping supersaw, and a "Jingle Bells" bell lead on the countdown |
+| 11–12 s | Second build |
+| 12–19 s | **Big drop** on the reveal, with a "hey!" hit at 13.5 s |
+| 19–20 s | Final hit with the logo, then a sparkle tail |
+
+The music is original and written for this video, so no credit is needed. The "Jingle Bells" melody is public domain. Loudness is -12 LUFS.
