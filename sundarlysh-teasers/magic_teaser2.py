@@ -126,9 +126,9 @@ R4 = text_img("WORKSHOP", CINZEL(132), (255, 255, 255), tr=16, glow=.7, gold=Tru
 R5 = text_img("24 little surprises, made by you", PLAYI(56, 600), (255, 244, 236), glow=.3)
 D1 = text_img("SAVE THE DATE", SANS(36), GOLD_L, tr=9)
 D2 = text_img("SUNDAY", CINZEL(70), (255, 240, 230), tr=14)
-D3 = text_img("29 NOVEMBER", CINZEL(118), (255, 255, 255), tr=6, glow=.7, gold=True)
-D4 = text_img("Van Lavino Café & Patisserie", fit("Van Lavino Café & Patisserie", PLAYI, 70, W - 160), GOLD_L, glow=.3)
-D5 = text_img("FINANCIAL DISTRICT, HYDERABAD", fit("FINANCIAL DISTRICT, HYDERABAD", SANS, 40, W - 160, 3), (255, 255, 255), tr=3)
+D3 = text_img("29 NOVEMBER", fit("29 NOVEMBER", CINZEL, 118, 720, 6), (255, 255, 255), tr=6, glow=.7, gold=True)
+D4 = text_img("Van Lavino Café & Patisserie", fit("Van Lavino Café & Patisserie", PLAYI, 70, 700), GOLD_L, glow=.3)
+D5 = text_img("FINANCIAL DISTRICT, HYDERABAD", fit("FINANCIAL DISTRICT, HYDERABAD", SANS, 40, 660, 3), (255, 255, 255), tr=3)
 E1 = text_img("COMING SOON", CINZEL(96), (255, 255, 255), tr=14, glow=.8, gold=True)
 E2 = text_img("@sundarlyshmemories", SANS(52, 700), (255, 255, 255), tr=1)
 E3 = text_img("Stay tuned", PLAYI(64, 600), GOLD_L)
@@ -218,10 +218,13 @@ def reveal(t):
 def date_card(t):
     u = t - 16.0; fr = PLUMBG.copy(); dust(fr, t, .8)
     d = ImageDraw.Draw(fr); kk = eout(u / .5); m = int(90 + (1 - kk) * 40)
-    d.rounded_rectangle((m, 560, W - m, 1360), 30, outline=GOLD + (int(255 * kk),), width=5)
-    d.rounded_rectangle((m + 18, 578, W - m - 18, 1342), 22, outline=GOLD_L + (int(140 * kk),), width=2)
-    yy = 620
-    for i, (sp, gap) in enumerate(((D1, -10), (D2, -30), (D3, 30), (D4, -24), (D5, 0))):
+    rows = ((D1, -40), (D2, -50), (D3, -10), (D4, -40), (D5, 0))
+    content = sum(sp.height + g for sp, g in rows) - 80          # minus top/bottom sprite padding
+    top = int(H * .47 - content / 2 - 70); bot = int(H * .47 + content / 2 + 70)
+    d.rounded_rectangle((m, top, W - m, bot), 30, outline=GOLD + (int(255 * kk),), width=5)
+    d.rounded_rectangle((m + 18, top + 18, W - m - 18, bot - 18), 22, outline=GOLD_L + (int(140 * kk),), width=2)
+    yy = top + 70 - 40
+    for i, (sp, gap) in enumerate(rows):
         d0 = .08 + i * .14; paste(fr, sp, (W - sp.width) / 2, yy + (1 - eout((u - d0) / .4)) * 34, ease((u - d0) / .25)); yy += sp.height + gap
     if u < .12: fr = Image.blend(Image.alpha_composite(reveal(15.999), Image.new("RGBA", (W, H), (0, 0, 0, 0))), fr, ease(u / .12))
     return fr
