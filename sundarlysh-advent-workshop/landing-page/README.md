@@ -5,7 +5,7 @@
 ## Settings (top of `index.html`)
 | Setting | What to put |
 |---|---|
-| `PAYMENT_URL` | The **Razorpay Payment Page** link (Razorpay Dashboard → Payment Pages → Create → "Event tickets", ₹1,400). While it's empty, the button says "Register interest" or "DM us to book", so nobody can pay early. |
+| `PAYMENT_URL` | The **Razorpay Payment Page** link (Razorpay Dashboard → Payment Pages → Create → "Event tickets", ₹1,399). While it's empty, the button says "Register interest" or "DM us to book", so nobody can pay early. |
 | `SHEET_ENDPOINT` | A Google Apps Script web-app URL that saves every registration into a Google Sheet (steps below). Optional. |
 | `PRICE` / `PRICE_NOTE` | Shown on the details card. Set `PRICE: ""` to hide the price (it was removed from the reel). |
 | `WHATSAPP` | `https://wa.me/91XXXXXXXXXX?text=...` using the new business number. Used when payments are off. |
