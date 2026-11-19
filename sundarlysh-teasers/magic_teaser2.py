@@ -119,6 +119,7 @@ M4 = text_img("HYDERABAD", fit("HYDERABAD", CINZEL, 150, W - 200, 10), (255, 255
 NUMS = [24, 21, 18, 15, 12, 9, 6, 3, 2, 1]
 NUM_SPR = {n: text_img(str(n), CINZEL(420, 800), (255, 255, 255), glow=1.0, gold=True, pad=60) for n in NUMS}
 R1 = pill("FIRST TIME EVER IN HYDERABAD", 34)
+M5 = text_img("FIRST TIME EVER IN", fit("FIRST TIME EVER IN", CINZEL, 66, W - 200, 8), (255, 255, 255), tr=8, glow=.7, gold=True)
 R2 = text_img("The Christmas", PLAYI(104, 800), GOLD_L, glow=.6)
 R3 = text_img("ADVENT CALENDAR", fit("ADVENT CALENDAR", CINZEL, 98, W - 120, 6), (255, 255, 255), tr=6, glow=.7, gold=True)
 R4 = text_img("WORKSHOP", CINZEL(132), (255, 255, 255), tr=16, glow=.7, gold=True)
@@ -149,7 +150,7 @@ def glow_at(p):
     if q not in GLOW_LV:
         GLOW_LV[q] = Image.fromarray(np.dstack([np.full((H, W), 255), np.full((H, W), 214), np.full((H, W), 160), _ga * 70 * q]).astype(np.uint8), "RGBA")
     return GLOW_LV[q]
-HITS = [(4.0, 10), (6.0, 26), (12.0, 30), (13.5, 12), (19.0, 22)]
+HITS = [(4.0, 10), (4.5, 16), (6.0, 26), (12.0, 30), (13.5, 12), (19.0, 22)]
 def shake(fr, t):
     for t0, amp in HITS:
         u = t - t0
@@ -177,9 +178,16 @@ def mystery(t):
         u = t - 2
         paste(fr, M3, (W - M3.width) / 2, 880 + (1 - eout(u / .8)) * 30, ease(u / .5) * ease((2 - u) / .25))
     else:
-        u = t - 4; sc = 1.25 - .25 * eout(u / 1.2)
-        m4 = scaled(shimmer(M4, (u - .4) / 1.2) if u > .4 else M4, sc)
-        paste(fr, m4, (W - m4.width) / 2, H / 2 - m4.height / 2, ease(u / .1))
+        u = t - 4; v = u - .5
+        y4 = H / 2 - M4.height / 2 + 40; y5 = y4 - M5.height + 30
+        m5 = shimmer(M5, (u - .2) / 1.0) if u > .2 else M5
+        paste(fr, m5, (W - M5.width) / 2, y5 - (1 - eout(u / .3)) * 40, ease(u / .1))
+        if v >= 0:
+            sc = 1.3 - .3 * eout(v / .9)
+            m4 = scaled(shimmer(M4, (v - .3) / 1.0) if v > .3 else M4, sc)
+            paste(fr, m4, (W - m4.width) / 2, y4 + M4.height / 2 - m4.height / 2, ease(v / .08))
+            d = ImageDraw.Draw(fr); lw = int(260 * eout((v - .1) / .4)); yl = int(y4 + M4.height - 10)
+            if lw > 0: d.line((W / 2 - lw, yl, W / 2 + lw, yl), fill=GOLD_L + (220,), width=3)
     if t < .15: fr = Image.blend(Image.new("RGBA", (W, H), (0, 0, 0, 255)), fr, ease(t / .15))
     return fr
 

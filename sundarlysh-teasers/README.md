@@ -48,7 +48,7 @@ Music: "Wish Background" by Kevin MacLeod (incompetech.com), licensed under CC B
 | Time | Music |
 |---|---|
 | 0–4 s | Heartbeat kick, magical bell arpeggios, sleigh bells, dark pad |
-| 4–6 s | Hit on "HYDERABAD", then a snare roll, a riser, ¼ s of silence and the **DROP** |
+| 4–6 s | Hit on "FIRST TIME EVER IN", then "HYDERABAD" on the next kick, then a snare roll, a riser, ¼ s of silence and the **DROP** |
 | 6–11 s | Full beat: kick, 808 bass, claps, hats, pumping supersaw, and a "Jingle Bells" bell lead on the countdown |
 | 11–12 s | Second build |
 | 12–19 s | **Big drop** on the reveal, with a "hey!" hit at 13.5 s |
