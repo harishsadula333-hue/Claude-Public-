@@ -31,7 +31,7 @@ The same links, with a Status column, are in `Sundarlysh_Memories_Leads.xlsx` �
 > Hi! I'm from Sundarlysh Memories (events & workshops, Hyderabad). We're hosting a Christmas advent-calendar workshop on 29 Nov. Is it okay to share it once in the group? Happy to offer members 10% off as a thank-you 🎄
 
 ## 2. Highest-impact actions (do these first)
-1. **List the event on District (Zomato)**, the biggest event-discovery app in Hyderabad. It's free to list ("List your event"). Also list it on **AllEvents.in**, **Meetup** (via Anything Art in Hyderabad / letsmeet.in), **Luma** and as a **Facebook Event** on the new Facebook page. Each listing is free reach to people already looking for weekend plans.
+1. **All bookings go through the landing page and DMs (no ticket apps).** Share the landing page with `?src=` tracking everywhere, and close in DMs with `DM_Sales_Playbook.md`. The new Facebook page can carry a Facebook Event that links to the landing page.
 2. **Micro-influencer barter.** Offer 2–3 free seats to Hyderabad mom, lifestyle or food creators (5k–50k followers, living near Gachibowli/Kokapet) in exchange for a reel on the day **and** a story beforehand. One honest creator story usually beats ₹1,000 of ads.
 3. **Instagram Collab with Van Lavino** on the launch post. Their followers already go to the venue.
 4. **Show the real product.** Display one **finished advent calendar** at the Van Lavino counter next to the table tent (with QR). Post a 10–15 s real video of the props and the finished calendar; real footage converts better than AI images.

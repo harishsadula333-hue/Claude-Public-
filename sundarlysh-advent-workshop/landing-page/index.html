@@ -21,7 +21,16 @@ window.EVENT = {
   PRICE: "₹1,399",
   PRICE_NOTE: "per person · includes a ₹500 food voucher at the café",
   INSTAGRAM: "https://www.instagram.com/sundarlyshmemories/",
-  WHATSAPP: ""   // e.g. "https://wa.me/91XXXXXXXXXX?text=Hi%2C%20I%27d%20like%20to%20book%20the%20Advent%20Calendar%20Workshop"
+  IG_DM: "https://ig.me/m/sundarlyshmemories",          // opens an Instagram DM straight away
+  // Business WhatsApp number with country code, digits only, e.g. "919876543210". Leave "" to use Instagram DM instead.
+  WHATSAPP_NUMBER: "",
+  // Honest numbers only. Leave "" to hide. Update as seats sell.
+  TOTAL_SEATS: "20",
+  SEATS_BOOKED: "",
+  // Workshop start (IST) for the countdown
+  START: "2026-11-29T17:00:00+05:30",
+  // Extra offer shown in the offers box once the client approves it, e.g. "Bring a friend: 2 seats for ₹2,599". Leave "" to hide.
+  FRIEND_OFFER: ""
 };
 </script>
 <style>
@@ -116,9 +125,31 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
   border-top:1px solid var(--gold); display:flex; align-items:center; justify-content:space-between; gap:10px; }
 .sticky .t { font-size:15px; font-weight:700; } .sticky .t b { color:var(--gold-l); }
 .sticky .btn { padding:12px 18px; font-size:15px; white-space:nowrap; flex:none; }
+.sticky .acts { display:flex; gap:8px; flex:none; }
+.btn.wa { background:#1FAF5A; color:#fff; }
+.sticky .btn.wa { padding:12px 14px; }
+/* urgency strip */
+.strip { position:sticky; top:0; z-index:60; background:var(--foil); color:var(--plum-d); text-align:center; font-weight:800; font-size:14px; letter-spacing:.02em; padding:8px 10px; white-space:nowrap; overflow:hidden; }
+.strip b { font-variant-numeric:tabular-nums; }
+.value { list-style:none; display:grid; gap:8px; max-width:560px; margin:0 auto 22px; text-align:left; }
+.value li { background:rgba(34,0,15,.65); border:1px solid rgba(201,165,94,.55); border-radius:12px; padding:10px 14px; font-weight:700; font-size:17px; }
+.value li::before { content:"✓ "; color:var(--gold-l); font-weight:800; }
+.seatbar { max-width:420px; margin:0 auto 18px; display:none; }
+.seatbar .lbl { font-weight:800; font-size:16px; margin-bottom:6px; color:var(--gold-l); }
+.seatbar .track { height:12px; border-radius:8px; background:rgba(255,255,255,.18); overflow:hidden; }
+.seatbar .fill { height:100%; background:var(--foil); width:0; }
+.offers { display:grid; gap:10px; margin-top:16px; }
+.offers .o { background:rgba(6,34,26,.7); border:1px dashed var(--gold); border-radius:12px; padding:12px; font-size:16px; }
+.offers .o b { color:var(--gold-l); letter-spacing:.1em; }
+.or { text-align:center; font-weight:800; color:#8a6f7a; margin:14px 0 4px; font-size:14px; letter-spacing:.2em; }
+.trust { display:flex; flex-wrap:wrap; justify-content:center; gap:8px 16px; margin-top:12px; font-size:14px; color:#6c5560; font-weight:700; }
+.gift { background:linear-gradient(135deg,#7A1E50,#45012A); border:2px solid var(--gold); border-radius:18px; padding:26px; text-align:center; }
+.gift p { color:#F4E4DA; max-width:560px; margin:8px auto 16px; font-size:18px; }
 </style>
 </head>
 <body>
+
+<div class="strip" id="strip">🎄 Starts in <b id="cd">…</b> · Limited seats</div>
 
 <header class="hero">
   <div class="bg" role="img" aria-label="Handmade advent calendar of 24 kraft pouches"></div>
@@ -130,7 +161,14 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     <div class="facts">
       <span><b>SUN</b> · 29 November</span><span><b>5 PM – 7 PM</b></span><span>Van Lavino Café &amp; Patisserie · <b>Financial District, Hyderabad</b></span>
     </div>
-    <div class="cta"><a class="btn" href="#book">Book my seat</a><a class="btn ghost" href="#how">How it works</a></div>
+    <ul class="value">
+      <li>All 24 kinds of props &amp; gifts included</li>
+      <li>₹500 food voucher at Van Lavino Café</li>
+      <li>You take your finished advent calendar home</li>
+      <li>No experience needed · kids welcome with a parent</li>
+    </ul>
+    <div class="seatbar" id="seatbar"><div class="lbl" id="seatLbl"></div><div class="track"><div class="fill" id="seatFill"></div></div></div>
+    <div class="cta"><a class="btn" href="#book" id="heroBook">Book my seat</a><a class="btn wa" id="heroWa" href="#" target="_blank" rel="noopener">Book on WhatsApp</a></div>
   </div>
 </header>
 
@@ -165,27 +203,45 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
       <div class="ven it">Van Lavino Café &amp; Patisserie</div>
       <div class="loc">Financial District, Hyderabad</div>
       <div id="priceBlock"><hr><div class="price" id="price"></div><div class="note" id="priceNote"></div></div>
-      <div class="eb"><b>EARLY BIRD OFFER</b><br>The first 5 bookings get <b>10% off</b> any Sundarlysh Memories workshop in December.</div>
+      <div class="offers">
+        <div class="o"><b>EARLY BIRD OFFER</b><br>The first 5 bookings get <b>10% off</b> any Sundarlysh Memories workshop in December.</div>
+        <div class="o" id="friendOffer" style="display:none"></div>
+      </div>
     </div>
     <form id="regForm" novalidate>
-      <h3>Register</h3>
-      <p class="s" id="formSub">Fill in your details and we'll confirm your seat.</p>
+      <h3>Book your seat</h3>
+      <p class="s" id="formSub">Takes 30 seconds. Your seat is confirmed on WhatsApp.</p>
       <label for="name">Full name</label><input id="name" name="name" autocomplete="name" required>
       <div class="row2">
-        <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile" required></div>
+        <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Mobile no." required></div>
         <div><label for="seats">Seats</label><select id="seats" name="seats"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
       </div>
-      <label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required>
+      <label for="email">Email <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label><input id="email" name="email" type="email" autocomplete="email">
       <label for="kids">Bringing kids?</label><select id="kids" name="kids"><option value="No">No</option><option value="Yes">Yes</option></select>
       <button class="btn" type="submit" id="submitBtn">Continue to payment</button>
-      <p class="consent">By registering you agree to be contacted on WhatsApp about this workshop.</p>
+      <div class="or" id="orSep">OR</div>
+      <a class="btn wa" id="formWa" href="#" target="_blank" rel="noopener" style="width:100%">Book on WhatsApp</a>
+      <div class="trust"><span id="trustPay">🔒 Secure payment via Razorpay</span><span>✅ Seat confirmed on WhatsApp</span><span>🎁 Gift a seat to someone</span></div>
+      <p class="consent">By booking you agree to be contacted on WhatsApp about this workshop.</p>
       <p class="msg" id="msg"></p>
     </form>
   </div>
 </div></section>
 
+<section style="padding-top:0"><div class="wrap" style="max-width:760px">
+  <div class="gift">
+    <span class="kicker">Christmas gift idea</span>
+    <div class="it" style="font-size:clamp(30px,5vw,42px);color:var(--gold-l);line-height:1.1;margin-top:6px">Gift a seat to someone special</div>
+    <p>A Christmas experience instead of another thing: your friend, mum, sister or partner makes their own advent calendar. Book in their name, and we'll send them a lovely invite on WhatsApp.</p>
+    <a class="btn wa" id="giftWa" href="#" target="_blank" rel="noopener">Gift a seat on WhatsApp</a>
+  </div>
+</div></section>
+
 <section><div class="wrap" style="max-width:760px">
   <div class="h2"><span class="kicker">FAQ</span><span class="it">Good to know</span></div>
+  <details><summary>What's included in ₹1,399?</summary><p>The 2-hour guided workshop, all 24 kinds of props and gifts, the gift bags or goodies box, and a ₹500 food voucher to use at Van Lavino Café &amp; Patisserie. Everything you make goes home with you.</p></details>
+  <details><summary>Do I need to bring anything?</summary><p>Nothing at all. Just bring yourself (and your friends!). Everything is set up for you.</p></details>
+  <details><summary>Can I gift a seat?</summary><p>Yes! Book in your friend's name or message us on WhatsApp, and we'll send them an invite.</p></details>
   <details><summary>What is an advent calendar?</summary><p>A Christmas countdown: one small surprise to open every day in December until Christmas. At this workshop you create the whole calendar yourself.</p></details>
   <details><summary>Do I need any craft experience?</summary><p>Not at all. Everything is set up for you and our team guides you through each step.</p></details>
   <details><summary>Can I bring my kids?</summary><p>Yes, the workshop is fun for all ages. Please book a seat for each participant.</p></details>
@@ -201,7 +257,7 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
   <p style="margin-top:14px;font-size:14px;opacity:.7">Images are for illustration only.</p>
 </footer>
 
-<div class="sticky"><div class="t"><b>Sun 29 Nov · 5–7 PM</b><br>Van Lavino Café, Financial District</div><a class="btn" href="#book">Book now</a></div>
+<div class="sticky"><div class="t"><b>Sun 29 Nov · 5–7 PM</b><br>Van Lavino, FD</div><div class="acts"><a class="btn wa" id="stickyWa" href="#" target="_blank" rel="noopener" aria-label="Book on WhatsApp">WhatsApp</a><a class="btn" href="#book">Book now</a></div></div>
 
 <script>
 (function () {
@@ -210,9 +266,37 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
   $("igLink").href = E.INSTAGRAM;
   if (E.PRICE) { $("price").textContent = E.PRICE; $("priceNote").textContent = E.PRICE_NOTE; } else { $("priceBlock").style.display = "none"; }
   var live = !!E.PAYMENT_URL;
+  // where did this visitor come from? use links like  ...?src=ig-bio  ?src=wa-group  ?src=flyer
+  var src = new URLSearchParams(location.search).get("src") || (document.referrer ? new URL(document.referrer).hostname : "direct");
+  function chat(text) {
+    return E.WHATSAPP_NUMBER ? "https://wa.me/" + E.WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text) : E.IG_DM;
+  }
+  var bookMsg = "Hi! I'd like to book the Christmas Advent Calendar Workshop on Sun 29 Nov (5–7 PM) 🎄";
+  ["heroWa", "formWa", "stickyWa"].forEach(function (id) { $(id).href = chat(bookMsg); });
+  $("giftWa").href = chat("Hi! I'd like to GIFT a seat for the Christmas Advent Calendar Workshop on 29 Nov 🎁");
+  if (!E.WHATSAPP_NUMBER) { $("heroWa").textContent = "Book via Instagram DM"; $("formWa").textContent = "Book via Instagram DM"; $("stickyWa").textContent = "DM"; $("giftWa").textContent = "Gift a seat via DM"; }
+  if (E.PRICE) $("heroBook").textContent = "Book my seat · " + E.PRICE;
+  // honest seat counter
+  var tot = parseInt(E.TOTAL_SEATS, 10), bk = parseInt(E.SEATS_BOOKED, 10);
+  if (tot && !isNaN(bk)) {
+    var left = Math.max(0, tot - bk); $("seatbar").style.display = "block";
+    $("seatLbl").textContent = left > 0 ? (bk + " booked · only " + left + " seats left") : "Sold out · DM us for the waitlist";
+    $("seatFill").style.width = Math.min(100, bk / tot * 100) + "%";
+  }
+  if (E.FRIEND_OFFER) { $("friendOffer").innerHTML = "<b>BRING A FRIEND</b><br>"; $("friendOffer").appendChild(document.createTextNode(E.FRIEND_OFFER)); $("friendOffer").style.display = "block"; }
+  // countdown
+  var start = new Date(E.START).getTime();
+  function tick() {
+    var d = start - Date.now();
+    if (d <= 0) { $("strip").textContent = "🎄 Happening now! Thank you for an amazing workshop"; return; }
+    var dd = Math.floor(d / 864e5), hh = Math.floor(d / 36e5) % 24, mm = Math.floor(d / 6e4) % 60, ss = Math.floor(d / 1e3) % 60;
+    $("cd").textContent = dd + "d " + String(hh).padStart(2, "0") + "h " + String(mm).padStart(2, "0") + "m " + String(ss).padStart(2, "0") + "s";
+  }
+  tick(); setInterval(tick, 1000);
   if (!live) {
-    $("submitBtn").textContent = E.SHEET_ENDPOINT ? "Register interest" : "DM us to book";
-    $("formSub").textContent = "Online payments open soon. Leave your details or DM us on Instagram to reserve your seat.";
+    $("orSep").style.display = "none"; $("formWa").style.display = "none"; $("trustPay").style.display = "none";
+    $("submitBtn").textContent = E.SHEET_ENDPOINT ? "Reserve my seat" : "Reserve via WhatsApp / DM";
+    $("formSub").textContent = "Leave your details and we'll confirm your seat on WhatsApp within the hour.";
   }
   function show(t, ok) { var m = $("msg"); m.textContent = t; m.style.color = ok ? "#1E6B48" : "#A3263A"; m.className = "msg show"; }
 
@@ -221,9 +305,11 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     var f = e.target, name = f.name.value.trim(), phone = f.phone.value.replace(/\D/g, ""), email = f.email.value.trim();
     if (name.length < 2) return show("Please enter your name.");
     if (phone.length < 10) return show("Please enter a valid 10-digit WhatsApp number.");
-    if (!/^\S+@\S+\.\S+$/.test(email)) return show("Please enter a valid email.");
-    if (!E.SHEET_ENDPOINT && !live) { window.open(E.WHATSAPP || E.INSTAGRAM, "_blank"); return; }
-    var data = { name: name, phone: phone, email: email, seats: f.seats.value, kids: f.kids.value,
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) return show("Please check your email (or leave it empty).");
+    if (!E.SHEET_ENDPOINT && !live) {
+      window.open(chat(bookMsg + "\nName: " + name + "\nSeats: " + f.seats.value + "\nKids: " + f.kids.value), "_blank"); return;
+    }
+    var data = { name: name, phone: phone, email: email, seats: f.seats.value, kids: f.kids.value, source: src,
                  event: "Advent Calendar Workshop 29 Nov", ts: new Date().toISOString() };
     $("submitBtn").disabled = true; $("submitBtn").textContent = "Please wait…";
     var save = E.SHEET_ENDPOINT
@@ -232,7 +318,7 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     save.catch(function () {}).then(function () {
       if (live) {
         var u = new URL(E.PAYMENT_URL);
-        u.searchParams.set("name", name); u.searchParams.set("email", email); u.searchParams.set("phone", phone);
+        u.searchParams.set("name", name); if (email) u.searchParams.set("email", email); u.searchParams.set("phone", phone);
         window.location.href = u.toString();
       } else {
         show("Thank you! We've received your details and will contact you on WhatsApp to confirm your seat.", true);
