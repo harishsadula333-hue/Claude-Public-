@@ -27,3 +27,17 @@ All by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attr
 
 ## Re-render
 `teaser.py <spec.json> out.mp4`. Each `.json` lists the shots, captions and beat lengths. Edit the text there.
+
+## "Something magical is coming to Hyderabad" (20 s)
+`Sundarlysh_Memories_Something_Magical_Teaser.mp4` is a 1080×1920, 30 fps teaser for the Advent Calendar Workshop that keeps the workshop a mystery until the reveal. It was rendered with `magic_teaser.py`.
+
+| Time | What's on screen |
+|---|---|
+| 0–6 s | Dark, glowing gold dust. "Something magical…", then "is coming to", then **HYDERABAD** |
+| 6–12 s | A beat-cut countdown 24 → 1 over workshop moments, with a flash and tick on every beat |
+| 12–16 s | An impact and a gold burst reveal **FIRST TIME EVER IN HYDERABAD · The Christmas ADVENT CALENDAR WORKSHOP** |
+| 16–18 s | Save the date: Sunday 29 November, Van Lavino Café & Patisserie, Financial District |
+| 18–20 s | Logo, COMING SOON, Stay tuned, @sundarlyshmemories |
+
+Sound: the music plus synthesised impacts, a riser and a chime shimmer, loudness-normalised to -14 LUFS. The price is left out on purpose for a teaser.
+Music: "Wish Background" by Kevin MacLeod (incompetech.com), licensed under CC BY 4.0. The credit goes in the caption.
