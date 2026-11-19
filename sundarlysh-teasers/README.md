@@ -71,3 +71,7 @@ The music is original and written for this video, so no credit is needed. The "J
 **Music:** "Hitman" by Kevin MacLeod (incompetech.com), licensed under CC BY 4.0. It is re-edited on its beat grid with `hype_mix.py`: the breakdown, then bars 5–13 with the re-entry on the drop. Sound effects (whooshes, hits, glitches, snare roll, riser, typewriter clicks) are synthesised and synced to the cuts. Font: Anton (SIL OFL).
 **Credit for the caption:** Music: "Hitman" by Kevin MacLeod (incompetech.com), CC BY 4.0
 An earlier version with Christmas trap music can be rebuilt with `kinetic_teaser.py` + `carol_beat.py`.
+
+### v3: client changes from the 19 Nov meeting (use this one)
+`Sundarlysh_Memories_Are_You_Ready_Teaser_v3.mp4` (`kinetic_teaser3.py out.mp4 hitman_mix.wav`) has Christmas red, green and white backgrounds with snow and confetti, and no black. "WONDERFUL" replaces "MAGICAL". The plain Christmas cake replaces the cake-painting photo, and only advent and Christmas photos are used. *Advent Calendar* is set in a script font, the venue in Playfair italic and the date in Cinzel. The elements copied from the sample videos are replaced with festive effects. The script with timings for the client's review is in `Teaser_Script_for_Review.md`.
+`Sundarlysh_Memories_Something_Wonderful_Teaser_BEATS.mp4` is the gold teaser with "Something wonderful…" (it replaces the "magical" versions, which should no longer be used).

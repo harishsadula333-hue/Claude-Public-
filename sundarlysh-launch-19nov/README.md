@@ -28,7 +28,7 @@ Day 1 of the plan: **set up in the morning, build curiosity in the evening.** To
 
 **Caption**
 ```
-Something magical is coming to Hyderabad ✨🎄
+Something wonderful is coming to Hyderabad ✨🎄
 
 For the first time ever in Hyderabad, a Christmas experience where YOU create 24 little surprises… one for every day till Christmas. 🎁
 
@@ -45,7 +45,7 @@ Tag the friend you'd bring 👇
 
 ## 2. Stories (from 7:45 PM, right after the reel)
 1. **Share the reel** to your story and add a "NEW" GIF.
-2. **Countdown:** upload `02_story_countdown.jpg` → add a *Countdown* sticker inside the gold frame. Name it `Something magical ✨`, end it on 29 Nov at 5:00 PM, and turn on reminders.
+2. **Countdown:** upload `02_story_countdown.jpg` → add a *Countdown* sticker inside the gold frame. Name it `Something wonderful ✨`, end it on 29 Nov at 5:00 PM, and turn on reminders.
 3. **Poll:** upload `03_story_poll.jpg` → put a *Poll* sticker in the empty space under the title: `Yes, I love them! 🎄` / `Not yet – teach me!`
 4. Post the countdown again on 22, 25 and 27 Nov: a story reshare picks up the same countdown.
 

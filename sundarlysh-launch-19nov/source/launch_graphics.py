@@ -82,7 +82,7 @@ c.alpha_composite(logo(180), ((W - 180) // 2, 250))
 y = 470
 y = put(c, pill("FIRST TIME EVER IN HYDERABAD", 34), W / 2, y) + 40
 y = put(c, text_img("Something", PLAYI(140, 800), GOLD_L, glow=.8), W / 2, y) - 70
-y = put(c, text_img("magical...", PLAYI(160, 800), GOLD_L, glow=.8), W / 2, y) - 40
+y = put(c, text_img("wonderful...", fit("wonderful...", PLAYI, 160, W - 120), GOLD_L, glow=.8), W / 2, y) - 40
 y = put(c, text_img("is coming to", PLAYI(80, 600), CREAM, glow=.4), W / 2, y) - 50
 y = put(c, text_img("HYDERABAD", fit("HYDERABAD", CINZEL, 150, W - 180, 10), (255, 255, 255), tr=10, glow=.9, gold=True), W / 2, y) - 20
 put(c, text_img("29 · 11 · 2026", CINZEL(54, 700), CREAM, tr=10), W / 2, y)
@@ -95,7 +95,7 @@ s = photo_bg(P7 + "a_open.jpg", W, H, .34); sparkles(s, 150, 8)
 y = 300
 y = put(s, text_img("THE COUNTDOWN", CINZEL(84), (255, 255, 255), tr=8, glow=.7, gold=True), W / 2, y) - 60
 y = put(s, text_img("BEGINS", CINZEL(84), (255, 255, 255), tr=8, glow=.7, gold=True), W / 2, y) - 10
-y = put(s, text_img("Something magical is coming", PLAYI(62, 700), GOLD_L, glow=.4), W / 2, y) - 60
+y = put(s, text_img("Something wonderful is coming", fit("Something wonderful is coming", PLAYI, 62, W - 120), GOLD_L, glow=.4), W / 2, y) - 60
 y = put(s, text_img("to Hyderabad", PLAYI(62, 700), GOLD_L, glow=.4), W / 2, y)
 d = ImageDraw.Draw(s); d.rounded_rectangle((150, 960, W - 150, 1330), 36, outline=GOLD_L + (200,), width=4)
 d.rounded_rectangle((168, 978, W - 168, 1312), 28, outline=GOLD + (120,), width=2)

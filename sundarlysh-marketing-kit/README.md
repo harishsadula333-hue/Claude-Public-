@@ -80,7 +80,7 @@ Meta ads budget: ₹1,000 total (about ₹100 a day), targeting Hyderabad, women
 
 | Day | Date | Instagram / Stories | WhatsApp | Ads |
 |---|---|---|---|---|
-| 1 | Thu 19 | Teaser: "Something magical is coming… 🎄" (Christmas teaser) | Message A to all contacts | — |
+| 1 | Thu 19 | Teaser: "Something wonderful is coming… 🎄" (Christmas teaser) | Message A to all contacts | — |
 | 2 | Fri 20 | Main reel (Advent workshop), plus a poll story: "Ever made an advent calendar?" | Message B with the reel | Start the ad with the reel |
 | 3 | Sat 21 | Caricature video | Join 3–5 Hyderabad community groups and share the flyer | Ad running |
 | 4 | Sun 22 | Prachi's voice video (AI face, street + Christmas shop) | — | Ad running |
@@ -124,7 +124,7 @@ Two friends, Riya and Meera, in 3D caricature style:
 ---
 
 ## 6. Teaser scripts
-**Christmas workshop teaser (15–20 s):** 24 hook → "Something magical is coming to Hyderabad" → title + FIRST TIME EVER → date card → "DM to book".
+**Christmas workshop teaser (15–20 s):** 24 hook → "Something wonderful is coming to Hyderabad" → title + FIRST TIME EVER → date card → "DM to book".
 
 **General workshop teaser (20 s):** "Bored of the usual weekend?" → Ubtan bar · Mehendi & glitter · Decoden · Bedazzle · Sand candles · Cake & paint · 3D art · Christmas specials → "Workshops for kitty parties, cafés, birthdays & celebrations" → @sundarlyshmemories.
 

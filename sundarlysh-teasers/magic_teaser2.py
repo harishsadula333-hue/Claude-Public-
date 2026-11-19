@@ -1,4 +1,4 @@
-"""Sundarlysh Memories – 'Something magical is coming to Hyderabad' teaser (1080x1920, 30fps, 20 s).
+"""Sundarlysh Memories – 'Something wonderful is coming to Hyderabad' teaser (1080x1920, 30fps, 20 s).
 Audio: original 120 bpm Christmas EDM track from magic_beat.py (beat.wav), every hit on the cut grid.
 usage: magic_teaser2.py <out.mp4> <beat.wav> [--preview ...]
 usage: magic_teaser.py <out.mp4> [--preview t1,t2,...]
@@ -113,7 +113,7 @@ LOGO_L = logo(620)
 
 # ---------------------------------------------------------------- sprites
 M1 = text_img("Something", PLAYI(130, 800), GOLD_L, glow=.8)
-M2 = text_img("magical...", PLAYI(150, 800), GOLD_L, glow=.8)
+M2 = text_img("wonderful...", fit("wonderful...", PLAYI, 150, W - 120), GOLD_L, glow=.8)
 M3 = text_img("is coming to", PLAYI(84, 600), (255, 244, 236), glow=.5)
 M4 = text_img("HYDERABAD", fit("HYDERABAD", CINZEL, 150, W - 200, 10), (255, 255, 255), tr=10, glow=.9, gold=True)
 NUMS = [24, 21, 18, 15, 12, 9, 6, 3, 2, 1]

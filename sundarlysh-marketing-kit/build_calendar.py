@@ -43,7 +43,7 @@ ws.row_dimensions[HR].height = 42
 
 P = [
  (date(2026,11,19), "Set-up + Tease", "Get ready (morning) & create curiosity (evening)",
-  "Evening: post the Christmas Workshop TEASER (23 s): 'Something magical is coming to Hyderabad'",
+  "Evening: post the Christmas Workshop TEASER (23 s): 'Something wonderful is coming to Hyderabad'",
   "Countdown sticker to 29 Nov · poll: 'Ever made an advent calendar?'",
   "Morning: set up WhatsApp Business on the spare number (logo as photo, name 'Sundarlysh Memories', city only). Evening: Message A 'Save our number' to all existing contacts and leads.",
   "Join: Hyderabad Mommies, Moms of India Hyderabad, Telugu Moms Network, Anything Art in Hyderabad (Meetup), letsmeet.in. Remove exact map location from Instagram/Google; shortlist top 15 High-priority leads.",
