@@ -55,3 +55,17 @@ Music: "Wish Background" by Kevin MacLeod (incompetech.com), licensed under CC B
 | 19–20 s | Final hit with the logo, then a sparkle tail |
 
 The music is original and written for this video, so no credit is needed. The "Jingle Bells" melody is public domain. Loudness is -12 LUFS.
+
+## "ARE YOU READY?" kinetic-type teaser (21 s)
+`Sundarlysh_Memories_Are_You_Ready_Teaser.mp4` is in the style of trending "coming soon" reels. Words cut on every beat over black, cream and Christmas red, followed by a burst of workshop photos and a "COMING SOON / STAY TUNED" ending. It was rendered with `kinetic_teaser.py out.mp4 carol.wav`.
+
+| Time | On screen |
+|---|---|
+| 0–5 s | SUNDARLYSH MEMORIES PRESENTS, then ARE · YOU · READY? (glitch flicker, stacked outline echo) · SOMETHING · MAGICAL · IS · COMING · TO |
+| 5–6 s | **HYDERABAD** zooms through the screen, then "FIRST TIME EVER IN HYDERABAD" |
+| 6–10 s | Photo flashes with light-leak wipes, a CHRISTMAS echo stack, then 24 · SURPRISES · MADE · BY · YOU, and a beat of silence |
+| 10–15 s | **Drop**: photo cuts every half-beat with THE CHRISTMAS · ADVENT CALENDAR · WORKSHOP · 29.11.2026 · DON'T MISS · SUNDAY 5–7 PM · VAN LAVINO CAFÉ, FINANCIAL DISTRICT |
+| 15–18 s | COMING SOON letters slide together, with red and cream "STAY TUNED" tape banners |
+| 18–21 s | STAY is typed out, TUNED fills red, then the logo and @sundarlyshmemories |
+
+Music (`carol_beat.py`): an original dark Christmas trap track at 140 bpm in 3/4, G minor. It has a music-box bell ostinato, 808s, hi-hat rolls, deep brass hits, risers, a whoosh on each word, glitch sounds and typewriter clicks. The 4-note bell motif comes from Leontovych's "Shchedryk" (public domain). Everything else is original, so no music credit is needed. Font: Anton (SIL Open Font License).
