@@ -19,7 +19,7 @@ The brief comes from the 17 Nov client meeting. The workshop is on 29 Nov, 5–7
 Cuts land on the beat (115 bpm), with snowfall, gold sparkles and plum + gold branding.
 
 ## Before posting
-- **Venue:** Aryka Studio, Hyderabad (changed 20 Nov; area to be confirmed). Edit `VENUE_L1` in `advent.py` to change it.
+- **Venue:** Aryka Studio, Financial District, Hyderabad (changed 20 Nov). Edit `VENUE_L1` in `advent.py` to change it.
 - **Images are AI-generated** illustrations. Turn on Instagram's "AI info" label. Replace them with real workshop photos later by saving over the same file names in `images/`.
 - **Music credit** (required, add to the caption):
   > Music: "We Wish You a Merry Christmas" by Kevin MacLeod (incompetech.com). Licensed under Creative Commons: By Attribution 4.0 License, http://creativecommons.org/licenses/by/4.0/
