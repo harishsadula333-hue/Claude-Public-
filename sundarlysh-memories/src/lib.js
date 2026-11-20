@@ -24,6 +24,11 @@ const FONT_FILES = {
   bodoni500: 'bodoni-moda/files/bodoni-moda-latin-500-normal.woff',
   bodoni600: 'bodoni-moda/files/bodoni-moda-latin-600-normal.woff',
   bodoni500i: 'bodoni-moda/files/bodoni-moda-latin-500-italic.woff',
+  jos300: 'josefin-sans/files/josefin-sans-latin-300-normal.woff',
+  jos400: 'josefin-sans/files/josefin-sans-latin-400-normal.woff',
+  jos600: 'josefin-sans/files/josefin-sans-latin-600-normal.woff',
+  mont400: 'montserrat/files/montserrat-latin-400-normal.woff',
+  mont500: 'montserrat/files/montserrat-latin-500-normal.woff',
 };
 const cache = {};
 function font(k) {

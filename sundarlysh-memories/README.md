@@ -46,3 +46,22 @@ Square PNGs are 2160×2160.
 | `png/memories-wax-seal.png` | **Wax Seal:** "Sundarlysh" in flowing script under a wine wax seal stamped with a gold S and star, like a luxury event invitation. |
 | `png/memories-polaroid.png` | **Polaroid:** a tilted instant photo holding a gold S, with "memories ♥" handwritten on the caption strip and a strip of washi tape; the name is in Bodoni capitals below. |
 | `png/memories-heritage-stamp.png` / `-dark.png` | **Heritage Stamp:** a round seal with SUNDARLYSH and the services curving around the ring and "Memories" in script at the centre, in wine on ivory or gold on black. |
+
+---
+
+## Line-frame styles (the letter becomes the frame)
+
+![Line-frame board](sundarlysh-memories-line-frame-board.png)
+
+Inspired by the *principles* of a reference logo, not its layout:
+* one fine double-line drawing in which the **S's own strokes turn into the frame**
+* the name continuing from the S
+* **MEMORIES** set along the frame
+* light, widely spaced geometric capitals (Josefin Sans)
+* a glowing line on dark backgrounds
+
+| Files | Concept |
+|-------|---------|
+| `png/memories-arch-door-{noir,ivory,wine}.png` | **Arch Door:** the left side of an Indian arched doorway runs down into the S, UNDARLYSH continues along the threshold, MEMORIES curves under the crown, and a heart hangs from the star at the top. |
+| `png/memories-ring-{noir,ivory,wine}.png` | **Ring:** the S's top and bottom strokes stretch out until they meet a ring, so the letter and the ring are one drawing. The services curve around the bottom. |
+| `png/memories-photo-frame-{noir,ivory,wine}.png` | **Photo Frame:** the S's top stroke becomes a photo frame with mounting corners, and MEMORIES rises up the left edge like a caption written on the back of a photo. |
