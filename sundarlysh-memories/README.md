@@ -65,3 +65,15 @@ Inspired by the *principles* of a reference logo, not its layout:
 | `png/memories-arch-door-{noir,ivory,wine}.png` | **Arch Door:** the left side of an Indian arched doorway runs down into the S, UNDARLYSH continues along the threshold, MEMORIES curves under the crown, and a heart hangs from the star at the top. |
 | `png/memories-ring-{noir,ivory,wine}.png` | **Ring:** the S's top and bottom strokes stretch out until they meet a ring, so the letter and the ring are one drawing. The services curve around the bottom. |
 | `png/memories-photo-frame-{noir,ivory,wine}.png` | **Photo Frame:** the S's top stroke becomes a photo frame with mounting corners, and MEMORIES rises up the left edge like a caption written on the back of a photo. |
+
+---
+
+## Line-art styles, set 2
+
+![Line-art board 2](sundarlysh-memories-line-art-2-board.png)
+
+| Files | Concept |
+|-------|---------|
+| `png/memories-film-strip-s-{noir,ivory,wine}.png` | **Film Strip S:** the S is a curling strip of film with sprocket holes, and its little frames hold hearts and stars. UNDARLYSH carries on from it, with MEMORIES and the services below. |
+| `png/memories-camera-{noir,ivory,wine}.png` | **Camera:** a fine-line camera with the S inside its lens, its arms reaching the lens ring. The brand star is the flash, and the name is printed on the body: capturing memories. |
+| `png/memories-keepsake-envelope-{noir,ivory,wine}.png` | **Keepsake Envelope:** the S forms the envelope's left side, the flap is sealed with a heart, and the name is written on it like an address: a letter full of memories. |
