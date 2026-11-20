@@ -89,3 +89,15 @@ Inspired by the *principles* of a reference logo, not its layout:
 | `png/memories-constellation-s-{night,noir,ivory}.png` | **Constellation S:** the S is drawn in the night sky as gold stars joined by fine lines, with a heart star at its centre. A shooting-star trail leads into the name: memories written in the stars. |
 | `png/memories-locket-{noir,ivory,wine}.png` | **Memory Locket:** a heart locket holding an engraved S, hung on a fine chain that drapes over the name. A locket is where precious memories are kept. |
 | `png/memories-vintage-key-{noir,ivory,wine}.png` | **Vintage Key:** the S sits in the key's ornate round handle. The stem runs under the name, and the key's teeth hold a pink heart: the key to your memories. |
+
+---
+
+## Line-art styles, set 4
+
+![Line-art board 4](sundarlysh-memories-line-art-4-board.png)
+
+| Files | Concept |
+|-------|---------|
+| `png/memories-hourglass-{noir,ivory,wine}.png` | **Hourglass:** time and memories. The S sits in the upper glass as sand, falls in a fine stream, and gathers below as a heart. |
+| `png/memories-memory-tree-{noir,ivory,wine}.png` | **Memory Tree:** the trunk is an S. Its branches carry heart leaves, tiny photos hang from them like keepsakes, and the roots run out as the line under the name. |
+| `png/memories-memory-album-{noir,ivory,wine}.png` | **Memory Album:** tiny photos, hearts and stars rise from an open album along an S-shaped path, like memories floating up from its pages. |
