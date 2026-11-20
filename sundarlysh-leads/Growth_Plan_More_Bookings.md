@@ -69,3 +69,15 @@ The same links, with a Status column, are in `Sundarlysh_Memories_Leads.xlsx` �
 - **Every 2 days:** a story poll or quiz ("Gift bags or goodies box?" / "Guess the 24 surprises")
 - **Final 3 days:** behind-the-scenes packing reel, guest DMs (with permission), "See you Sunday!"
 - **Event day:** live stories, guest reactions. Film everything; this footage sells every future workshop.
+
+## Instagram pages to DM (one click; also in the Leads workbook)
+Instagram has no public groups. Instead, get featured by pages and creators whose followers match the workshop:
+- **Event pages:** [@hyderabadlocals](https://www.instagram.com/hyderabadlocals/) · [@catchthehydevents](https://www.instagram.com/catchthehydevents/) · [@hyderabadpartyevents](https://www.instagram.com/hyderabadpartyevents/)
+- **Moms:** [@hyderabadmommies](https://www.instagram.com/hyderabadmommies/) · [@indianmommie](https://www.instagram.com/indianmommie/)
+- **Creators (barter: a free seat for a reel/story):** [@sunanda_arava](https://www.instagram.com/sunanda_arava/) · [@sunshine_smyles](https://www.instagram.com/sunshine_smyles/) · [@mrs_eattripclick](https://www.instagram.com/mrs_eattripclick/) · [@faezah_anam](https://www.instagram.com/faezah_anam/) · [@fooddrifter](https://www.instagram.com/fooddrifter/)
+
+**DM to event and mom pages:**
+> Hi! 🎄 We're Sundarlysh Memories (events & workshops, Hyderabad). On Sun 29 Nov we're hosting Hyderabad's first Christmas Advent Calendar Workshop at Van Lavino Café, Financial District. Would you be open to featuring it in your stories? We'd love to offer your followers 10% off, and we're happy to share the reel and flyer 💛
+
+**DM to creators:**
+> Hi {name}! We love your content 💛 We're hosting Hyderabad's first Christmas Advent Calendar Workshop (Sun 29 Nov, 5–7 PM, Van Lavino Café, FD). We'd love to invite you as our guest (a complimentary seat, plus a +1 for your little one or a friend) in exchange for a story before and a reel on the day. Would that interest you? 🎄
