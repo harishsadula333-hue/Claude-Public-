@@ -101,3 +101,15 @@ Inspired by the *principles* of a reference logo, not its layout:
 | `png/memories-hourglass-{noir,ivory,wine}.png` | **Hourglass:** time and memories. The S sits in the upper glass as sand, falls in a fine stream, and gathers below as a heart. |
 | `png/memories-memory-tree-{noir,ivory,wine}.png` | **Memory Tree:** the trunk is an S. Its branches carry heart leaves, tiny photos hang from them like keepsakes, and the roots run out as the line under the name. |
 | `png/memories-memory-album-{noir,ivory,wine}.png` | **Memory Album:** tiny photos, hearts and stars rise from an open album along an S-shaped path, like memories floating up from its pages. |
+
+---
+
+## Line-art styles, set 5
+
+![Line-art board 5](sundarlysh-memories-line-art-5-board.png)
+
+| Files | Concept |
+|-------|---------|
+| `png/memories-paper-plane-{noir,ivory,wine}.png` | **Paper Plane:** a paper plane flies off, its dotted trail drawing a big S with hearts along the way: memories that travel far. |
+| `png/memories-hot-air-balloon-{noir,ivory,wine}.png` | **Hot Air Balloon:** a celebration balloon carries the S on its centre panel, with floating hearts and stars. It's festive and suits events. |
+| `png/memories-ribbon-bow-{noir,ivory,wine}.png` | **Ribbon Bow:** an elegant bow with a heart knot, whose long ribbon tail curls into the S: a memory is the best gift. |
