@@ -1,0 +1,42 @@
+{
+ "style": "neon",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Electro_Cabello.mp3",
+ "start": 0.075,
+ "beat": 0.5124,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "WEDDING TIPS",
+   "main": "WHICH\nSPECIAL\nEFFECTS?"
+  },
+  {
+   "type": "photo",
+   "beats": 6,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/k_fx.jpg",
+   "top": "GRAND ENTRY",
+   "main": "COLD PYRO & FOG"
+  },
+  {
+   "type": "photo",
+   "beats": 5,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/gen/fx3_s2000.png",
+   "top": "FIRST DANCE",
+   "main": "SPARKLER FOUNTAINS"
+  },
+  {
+   "type": "photo",
+   "beats": 6,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/k_fx2.jpg",
+   "top": "CELEBRATE BIG",
+   "main": "CONFETTI BLASTS"
+  },
+  {
+   "type": "end",
+   "beats": 8,
+   "top": "We plan it with you, like family",
+   "main": "DM TO PLAN",
+   "sub": "@sundarlyshmemories"
+  }
+ ]
+}

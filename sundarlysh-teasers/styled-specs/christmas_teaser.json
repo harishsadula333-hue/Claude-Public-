@@ -1,0 +1,85 @@
+{
+ "style": "scrapbook",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Deck_the_Halls_B.mp3",
+ "start": 0.075,
+ "beat": 0.6663,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "THIS CHRISTMAS",
+   "main": "24 days.",
+   "sub": "24 little surprises."
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v7/photos/a_props.jpg",
+   "top": "STEP 1",
+   "main": "pick from 24 kinds of gifts",
+   "sub": "props & treats",
+   "rot": 3
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v7/photos/a_decor.jpg",
+   "top": "STEP 2",
+   "main": "decorate your bags",
+   "sub": "stamps, tags & ribbons",
+   "rot": -3
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v7/photos/a_open.jpg",
+   "top": "STEP 3",
+   "main": "fill every surprise",
+   "sub": "all chosen by you",
+   "rot": 2
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v7/photos/a_box.jpg",
+   "top": "STEP 4",
+   "main": "take it home!",
+   "sub": "open one every day",
+   "rot": -2
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v7/photos/a_friends.jpg",
+   "top": "BRING YOUR PEOPLE",
+   "main": "friends, family & kids",
+   "sub": "so much fun together",
+   "rot": 3
+  },
+  {
+   "type": "title",
+   "beats": 5,
+   "top": "FIRST TIME EVER IN HYDERABAD",
+   "main": "The Christmas",
+   "sub": "Advent Calendar Workshop"
+  },
+  {
+   "type": "stamp",
+   "beats": 5,
+   "top": "SUNDAY",
+   "main": "29 NOV",
+   "sub": "5 \u2013 7 PM",
+   "lines": [
+    "Van Lavino Caf\u00e9 & Patisserie",
+    "Financial District, Hyderabad"
+   ]
+  },
+  {
+   "type": "end",
+   "beats": 5,
+   "top": "Make Christmas wonderful",
+   "main": "DM to book",
+   "sub": "@sundarlyshmemories"
+  }
+ ]
+}

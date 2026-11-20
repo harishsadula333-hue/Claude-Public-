@@ -1,0 +1,233 @@
+{
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Fluffing_a_Duck.mp3",
+ "music_start": 0.012,
+ "bpm": 121.95,
+ "fonts": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/assets/fonts",
+ "logo": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v7/logo.jpg",
+ "segments": [
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/cari_up/c1_street.jpg",
+   "beats": 8,
+   "bubble": [
+    [
+     "bubk",
+     "RIYA"
+    ],
+    [
+     "bub",
+     "Hey Meera! What are you"
+    ],
+    [
+     "bub",
+     "doing this weekend?"
+    ]
+   ],
+   "bubble_y": 720,
+   "tail_x": 0.27,
+   "tail_up": true,
+   "lines": []
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/cari_up/c2_bored.jpg",
+   "beats": 8,
+   "zin": false,
+   "bubble": [
+    [
+     "bubk",
+     "MEERA"
+    ],
+    [
+     "bub",
+     "Nothing... same old"
+    ],
+    [
+     "bub",
+     "Netflix and nap!"
+    ]
+   ],
+   "bubble_y": 150,
+   "tail_x": 0.45,
+   "lines": []
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/cari_up/c3_idea.jpg",
+   "beats": 8,
+   "bubble": [
+    [
+     "bubk",
+     "RIYA"
+    ],
+    [
+     "bub",
+     "Ever made your own"
+    ],
+    [
+     "bub",
+     "ADVENT CALENDAR?"
+    ]
+   ],
+   "bubble_y": 760,
+   "tail_x": 0.5,
+   "tail_up": true,
+   "lines": []
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/cari_up/c5_make.jpg",
+   "beats": 8,
+   "zin": false,
+   "lines": [
+    [
+     "kick",
+     "SUNDARLYSH MEMORIES PRESENTS"
+    ],
+    [
+     "script",
+     "24 little surprises",
+     70
+    ],
+    [
+     "cap",
+     "MADE BY YOU",
+     80
+    ]
+   ]
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/cari_up/c6_family.jpg",
+   "beats": 7,
+   "lines": [
+    [
+     "kick",
+     "PERFECT FOR"
+    ],
+    [
+     "cap",
+     "FRIENDS \u00b7 FAMILIES \u00b7 KIDS",
+     66
+    ]
+   ]
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/cari_up/c7_open.jpg",
+   "beats": 7,
+   "zin": false,
+   "lines": [
+    [
+     "script",
+     "Open one every day",
+     66
+    ],
+    [
+     "white",
+     "all the way to Christmas"
+    ]
+   ]
+  },
+  {
+   "kind": "card",
+   "beats": 12,
+   "lines": [
+    [
+     "pill",
+     "FIRST TIME EVER IN HYDERABAD",
+     32
+    ],
+    [
+     "script",
+     "The Christmas",
+     84
+    ],
+    [
+     "cap",
+     "ADVENT CALENDAR",
+     80
+    ],
+    [
+     "cap",
+     "WORKSHOP",
+     96
+    ],
+    [
+     "kick",
+     "SUNDAY \u00b7 29 NOVEMBER",
+     40
+    ],
+    [
+     "sans",
+     "5 PM \u2013 7 PM",
+     58
+    ],
+    [
+     "script",
+     "Van Lavino Caf\u00e9 & Patisserie",
+     58
+    ],
+    [
+     "sans",
+     "Financial District, Hyderabad",
+     40
+    ]
+   ],
+   "bg": "green"
+  },
+  {
+   "kind": "photo",
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v8/cari_up/c8_cheer.jpg",
+   "beats": 7,
+   "bubble": [
+    [
+     "bub",
+     "See you there!"
+    ]
+   ],
+   "bubble_y": 200,
+   "tail_x": 0.5,
+   "lines": [
+    [
+     "kick",
+     "LIMITED SEATS"
+    ],
+    [
+     "cap",
+     "BOOK ON INSTAGRAM",
+     72
+    ]
+   ]
+  },
+  {
+   "kind": "card",
+   "beats": 11,
+   "logo": 560,
+   "logo_y": 560,
+   "lines": [
+    [
+     "white",
+     "Make Christmas wonderful",
+     56
+    ],
+    [
+     "cap",
+     "DM TO BOOK",
+     86
+    ],
+    [
+     "sans",
+     "@sundarlyshmemories",
+     52
+    ],
+    [
+     "kick",
+     "29 NOV \u00b7 5\u20137 PM \u00b7 FINANCIAL DISTRICT",
+     28
+    ]
+   ],
+   "bg": "green"
+  }
+ ]
+}

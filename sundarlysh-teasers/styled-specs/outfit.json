@@ -1,0 +1,56 @@
+{
+ "style": "fashion",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Hep_Cats.mp3",
+ "start": 0.279,
+ "beat": 0.6674,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "WEDDING TIPS",
+   "main": "WHICH OUTFIT\nTO CHOOSE?",
+   "sub": "for every function"
+  },
+  {
+   "type": "photo",
+   "beats": 4,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/k_outfit.jpg",
+   "top": "FOR EVERY FUNCTION",
+   "main": "Outfits, styled",
+   "sub": "the reception edit"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/gen/outfit2_s2000.png",
+   "top": "THE MEHENDI LOOK",
+   "main": "Emerald & Gold",
+   "sub": "bold, fresh, festive"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/gen/outfit3_s2000.png",
+   "top": "THE GROOM",
+   "main": "Ivory & Pink",
+   "sub": "classic, regal"
+  },
+  {
+   "type": "duo",
+   "beats": 4,
+   "imgs": [
+    "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/gen/outfit2_s2000.png",
+    "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/gen/outfit3_s2000.png"
+   ],
+   "top": "BRIDE & GROOM",
+   "main": "Looks that match"
+  },
+  {
+   "type": "end",
+   "beats": 5,
+   "top": "We plan it with you, like family",
+   "main": "DM TO PLAN",
+   "sub": "@sundarlyshmemories"
+  }
+ ]
+}

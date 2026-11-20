@@ -1,0 +1,48 @@
+{
+ "style": "haldi",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Carefree.mp3",
+ "start": 0.313,
+ "beat": 0.6253,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "WEDDING TIPS",
+   "main": "Make the bride's\nfamily feel special"
+  },
+  {
+   "type": "photo",
+   "beats": 4,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/k_bridefam.jpg",
+   "top": "HALDI MOMENTS",
+   "main": "with maa & sisters",
+   "sub": "pure joy",
+   "rot": -4
+  },
+  {
+   "type": "photo",
+   "beats": 4,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/gen/bridefam2_s2000.png",
+   "top": "LAUGHS & HUGS",
+   "main": "happy tears included",
+   "sub": "family first",
+   "rot": 3
+  },
+  {
+   "type": "photo",
+   "beats": 4,
+   "img": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/gen/bridefam3_s2000.png",
+   "top": "PERSONAL TOUCHES",
+   "main": "for her family",
+   "sub": "petal showers",
+   "rot": -3
+  },
+  {
+   "type": "end",
+   "beats": 6,
+   "top": "We plan it with you, like family",
+   "main": "DM TO PLAN",
+   "sub": "@sundarlyshmemories"
+  }
+ ]
+}

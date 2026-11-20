@@ -1,0 +1,99 @@
+{
+ "style": "ivory",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Heartwarming.mp3",
+ "start": 0.2,
+ "beat": 0.7372,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 5,
+   "top": "PLANNING A WEDDING?",
+   "main": "Leave everything\nto family"
+  },
+  {
+   "type": "video",
+   "beats": 3,
+   "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip1.mp4",
+   "top": "BUDGET-FRIENDLY",
+   "main": "Beautiful D\u00e9cor"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/w_mandap.jpg",
+   "top": "SOLID",
+   "main": "Event Management"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/w_anchor.jpg",
+   "top": "ENTERTAINMENT",
+   "main": "Anchors & Artists"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/w_food.jpg",
+   "top": "DELICIOUS",
+   "main": "Food, beautifully served"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/home/user/Claude-Public-/sundarlysh-experiences/ai-images/ubtan.jpg",
+   "top": "INNOVATIVE",
+   "main": "Guest Workshops"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/w_photo.jpg",
+   "top": "EVERY MOMENT",
+   "main": "Photography"
+  },
+  {
+   "type": "photo",
+   "beats": 2,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/w_invite.jpg",
+   "top": "",
+   "main": "Invites"
+  },
+  {
+   "type": "photo",
+   "beats": 2,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/k_fx.jpg",
+   "top": "",
+   "main": "Special Effects"
+  },
+  {
+   "type": "photo",
+   "beats": 2,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/w_choreo.jpg",
+   "top": "",
+   "main": "Choreography"
+  },
+  {
+   "type": "photo",
+   "beats": 2,
+   "img": "/home/user/Claude-Public-/sundarlysh-teasers/wedding-images/w_mehendi.jpg",
+   "top": "",
+   "main": "Mehendi & more"
+  },
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "SUNDARLYSH MEMORIES",
+   "main": "Your one-stop\nfamily event planners",
+   "sub": "Not just a business, family."
+  },
+  {
+   "type": "end",
+   "beats": 5,
+   "top": "Your family celebration, our family care",
+   "main": "DM TO PLAN",
+   "sub": "@sundarlyshmemories",
+   "foot": "HYDERABAD  \u00b7  BENGALURU"
+  }
+ ]
+}
