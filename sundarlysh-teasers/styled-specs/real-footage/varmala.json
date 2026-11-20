@@ -1,0 +1,58 @@
+{
+ "style": "floral",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Canon_in_D_Major.mp3",
+ "start": 1.526,
+ "beat": 0.75,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "WEDDING TIPS",
+   "main": "Which varmala\nto choose?"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip1.mp4",
+    "in": 0.0
+   },
+   "top": "ROSES",
+   "main": "Classic & romantic"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip3.mp4",
+    "in": 19.5
+   },
+   "top": "MARIGOLD & JASMINE",
+   "main": "Traditional"
+  },
+  {
+   "type": "title",
+   "beats": 3,
+   "top": "ORCHIDS",
+   "main": "Elegant\n& modern",
+   "sub": "lightweight for long ceremonies"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip3.mp4",
+    "in": 6.0
+   },
+   "top": "OUR TIP",
+   "main": "Match your outfit"
+  },
+  {
+   "type": "end",
+   "beats": 5,
+   "top": "We plan it with you, like family",
+   "main": "DM to plan",
+   "sub": "@sundarlyshmemories"
+  }
+ ]
+}

@@ -1,0 +1,57 @@
+{
+ "style": "fashion",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Hep_Cats.mp3",
+ "start": 0.279,
+ "beat": 0.6674,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "WEDDING TIPS",
+   "main": "WHICH OUTFIT\nTO CHOOSE?",
+   "sub": "a look for every function"
+  },
+  {
+   "type": "title",
+   "beats": 3,
+   "top": "HALDI",
+   "main": "SUNNY\nYELLOW",
+   "sub": "light cottons & florals"
+  },
+  {
+   "type": "title",
+   "beats": 3,
+   "top": "MEHENDI",
+   "main": "GREEN\n& GOLD",
+   "sub": "fresh, festive, playful"
+  },
+  {
+   "type": "title",
+   "beats": 3,
+   "top": "SANGEET",
+   "main": "SEQUINS\n& SHINE",
+   "sub": "made for dancing"
+  },
+  {
+   "type": "title",
+   "beats": 3,
+   "top": "THE WEDDING",
+   "main": "CLASSIC\nRED & IVORY",
+   "sub": "timeless and regal"
+  },
+  {
+   "type": "title",
+   "beats": 3,
+   "top": "BRIDE & GROOM",
+   "main": "MATCH\nYOUR PALETTE",
+   "sub": "coordinated, never identical"
+  },
+  {
+   "type": "end",
+   "beats": 5,
+   "top": "We plan it with you, like family",
+   "main": "DM TO PLAN",
+   "sub": "@sundarlyshmemories"
+  }
+ ]
+}

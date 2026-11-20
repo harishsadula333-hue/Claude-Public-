@@ -1,0 +1,96 @@
+{
+ "style": "ivory",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Heartwarming.mp3",
+ "start": 0.2,
+ "beat": 0.7372,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 5,
+   "top": "PLANNING A WEDDING?",
+   "main": "Leave everything\nto family"
+  },
+  {
+   "type": "photo",
+   "beats": 4,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip1.mp4",
+    "in": 0.0
+   },
+   "top": "BUDGET-FRIENDLY",
+   "main": "Beautiful D\u00e9cor"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip3.mp4",
+    "in": 6.0
+   },
+   "top": "FRESH & VIBRANT",
+   "main": "Flower D\u00e9cor"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip3.mp4",
+    "in": 19.5
+   },
+   "top": "TRADITIONAL",
+   "main": "Marigold Garlands"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip2.mp4",
+    "in": 5.0
+   },
+   "top": "EVERY CORNER",
+   "main": "Styled for you"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip2.mp4",
+    "in": 0.3
+   },
+   "top": "A WARM WELCOME",
+   "main": "Custom Signage"
+  },
+  {
+   "type": "photo",
+   "beats": 3,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip4.mp4",
+    "in": 34.0
+   },
+   "top": "FROM THE DOOR",
+   "main": "to the mandir"
+  },
+  {
+   "type": "title",
+   "beats": 5,
+   "top": "WE ALSO HANDLE",
+   "main": "Events \u00b7 Food\nEntertainment",
+   "sub": "Photography \u00b7 Mehendi \u00b7 Invites"
+  },
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "SUNDARLYSH MEMORIES",
+   "main": "Your one-stop\nfamily event planners",
+   "sub": "Not just a business, family."
+  },
+  {
+   "type": "end",
+   "beats": 5,
+   "top": "Your family celebration, our family care",
+   "main": "DM TO PLAN",
+   "sub": "@sundarlyshmemories",
+   "foot": "HYDERABAD  \u00b7  BENGALURU"
+  }
+ ]
+}

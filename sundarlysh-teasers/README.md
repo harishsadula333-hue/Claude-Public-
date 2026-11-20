@@ -92,3 +92,6 @@ The client found the 18 Nov videos too similar (same plum template, same music).
 
 **Caption credit for each:** Music: "<title>" by Kevin MacLeod (incompetech.com), CC BY 4.0
 New AI photos for the categories are in `wedding-images/generated/`. Fonts: Caveat, Bodoni Moda, Anton, Great Vibes, Cinzel, Cormorant, Playfair, Montserrat (all SIL OFL).
+
+### 20 Nov (later): wedding videos rebuilt with real footage only (no AI)
+The client asked for no AI-generated images in the wedding videos. All 6 now use only the client's own décor footage (`clip1–4`: floral door, flowers, marigold garlands, hangings, signage, mandir entrance) or text. Outfit and Special Effects are text-only tip videos until real photos arrive. The generated images were removed. Specs: `styled-specs/real-footage/`. Same styles and music as above.

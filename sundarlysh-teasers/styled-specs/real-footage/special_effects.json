@@ -1,0 +1,45 @@
+{
+ "style": "neon",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Electro_Cabello.mp3",
+ "start": 0.075,
+ "beat": 0.5124,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "WEDDING TIPS",
+   "main": "WHICH\nSPECIAL\nEFFECTS?"
+  },
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "GRAND ENTRY",
+   "main": "COLD\nPYRO"
+  },
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "DREAMY FIRST DANCE",
+   "main": "LOW\nFOG"
+  },
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "CELEBRATE BIG",
+   "main": "CONFETTI\nBLAST"
+  },
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "PHOTO MOMENT",
+   "main": "SPARK\nLERS"
+  },
+  {
+   "type": "end",
+   "beats": 8,
+   "top": "We plan it with you, like family",
+   "main": "DM TO PLAN",
+   "sub": "@sundarlyshmemories"
+  }
+ ]
+}

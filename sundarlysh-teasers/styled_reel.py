@@ -78,6 +78,10 @@ def photo(p, w, h):
         im = ImageOps.exif_transpose(Image.open(p)).convert("RGB"); _pc[k] = ImageOps.fit(im, (int(w * 1.12), int(h * 1.12)), Image.LANCZOS)
     return _pc[k]
 def kb(p, w, h, u, z0=1.0, z1=1.08, dx=0.0):
+    if isinstance(p, dict):                        # real video clip: {"src", "in", "dur"}
+        z = z0 + (z1 - z0) * ease(u); f = video_frame(p["src"], p.get("in", 0) + u * p.get("dur", 3), int(w * 1.1), int(h * 1.1))
+        cw, ch = f.width / z / 1.1 * 1.0, f.height / z / 1.1
+        return f.crop((int(f.width / 2 - cw / 2), int(f.height / 2 - ch / 2), int(f.width / 2 + cw / 2), int(f.height / 2 + ch / 2))).resize((w, h), Image.BILINEAR)
     im = photo(p, w, h); z = z0 + (z1 - z0) * ease(u); cw, ch = im.width / 1.12 / z * 1.0, im.height / 1.12 / z
     cx = im.width / 2 + dx * (im.width - cw) / 2 * (u - .5) * 2; cy = im.height / 2
     return im.crop((int(cx - cw / 2), int(cy - ch / 2), int(cx + cw / 2), int(cy + ch / 2))).resize((w, h), Image.BILINEAR).convert("RGBA")
@@ -380,7 +384,9 @@ render_scene = STYLES[STYLE]
 
 # ------------------------------------------------------------------ timeline
 scenes = SPEC["scenes"]; t0 = 0.0
-for sc in scenes: sc["t0"] = t0; sc["dur"] = sc["beats"] * BEAT; t0 += sc["dur"]
+for sc in scenes:
+    sc["t0"] = t0; sc["dur"] = sc["beats"] * BEAT; t0 += sc["dur"]
+    if isinstance(sc.get("img"), dict): sc["img"]["dur"] = sc["dur"]
 DUR = t0
 _last = {}
 def scene_at(t):

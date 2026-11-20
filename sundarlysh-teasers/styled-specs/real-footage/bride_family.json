@@ -1,0 +1,52 @@
+{
+ "style": "haldi",
+ "music": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v13/music/Carefree.mp3",
+ "start": 0.313,
+ "beat": 0.6253,
+ "scenes": [
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "WEDDING TIPS",
+   "main": "Make the bride's\nfamily feel special"
+  },
+  {
+   "type": "photo",
+   "beats": 4,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip3.mp4",
+    "in": 19.5
+   },
+   "top": "HALDI D\u00c9COR",
+   "main": "marigold everywhere",
+   "sub": "bright & happy",
+   "rot": -4
+  },
+  {
+   "type": "title",
+   "beats": 4,
+   "top": "PERSONAL TOUCHES",
+   "main": "name boards &\nfamily photo corner",
+   "sub": "for maa, papa & sisters"
+  },
+  {
+   "type": "photo",
+   "beats": 4,
+   "img": {
+    "src": "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec6241/scratchpad/v6/in/clip1.mp4",
+    "in": 2.0
+   },
+   "top": "WELCOME HOME",
+   "main": "a floral entrance",
+   "sub": "their own shaadi wala ghar",
+   "rot": 3
+  },
+  {
+   "type": "end",
+   "beats": 6,
+   "top": "We plan it with you, like family",
+   "main": "DM TO PLAN",
+   "sub": "@sundarlyshmemories"
+  }
+ ]
+}
