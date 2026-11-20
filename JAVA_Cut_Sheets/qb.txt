@@ -1,0 +1,336 @@
+                    JAVA PROGRAMMING –           LONG ANSWER QUESTION BANK
+
+
+
+
+UNIT– I: Object-Oriented Thinking and JavaBasics
+
+
+
+
+Q.No. LongAnswer Question                                                         BTL    CO    PO
+
+                                                                                               Mapping
+
+
+
+
+1     Explaintheneedfor theObject-OrientedProgramming(OOP) paradigm.Discuss       BTL2 CO1 PO1,
+      thefundamentalconceptsof OOPwithsuitableexamples.                                    PO2
+
+
+2     ExplaintheJavabuzzwords.Discusswhy Javaisplatform-independent.              BTL2 CO1 PO1
+
+
+3     Describevariables,scopeandlifetimeofvariableswithsuitableexamples.          BTL2 CO1 PO1,
+                                                                                           PO2
+
+
+4     ExplainJavaoperatorsandexpressions.Discussdifferenttypesof operatorswith    BTL3 CO1 PO1,
+      suitableJavaprograms.                                                                PO2
+
+
+5     ExplaincontrolstatementsinJavawith anexampleprogram.                        BTL3 CO1 PO1,
+                                                                                           PO2
+
+
+6     A) ExplaintheconceptsofclassesandobjectsinJava.B) Discussconstructors,methods BTL3 CO1 PO1,
+      and accesscontrolmechanismswithsuitableprograms.                                       PO2,
+                                                                                             PO3
+
+
+7     Whatismethodoverloadingandconstructoroverloading?Explaintheirdifferences    BTL4 CO1 PO1,
+      withsuitableJavaprograms.                                                            PO2
+
+
+8     Explaintheusesof thethisandsuper keywordswithanexampleprogram.              BTL3 CO1 PO1,
+                                                                                           PO2
+
+
+9     ExplaintypesofinnerclassesinJavawithsuitableexamples.                       BTL2 CO1 PO1,
+                                                                                           PO2
+
+
+10    ExplaintheStringclassinJava.DiscussvariousStringmethods,Stringimmutability BTL3 CO1 PO1,
+      and commonlyusedStringoperationswithsuitableprograms.                               PO2
+
+
+
+UNIT– II: Inheritance, Packages and Interfaces
+
+
+
+
+                                                                                       PO Mapping
+        s   LongAnswer Question                                             BTL   CO
+       1 Defineinheritance.ExplaindifferentformsofinheritanceinJavawith         BTL3 CO2 PO1,PO2,PO3
+         suitablediagramsand programs.
+
+
+       2 Explainsuperclass,subclass,subtypeandsubstitutability.Discuss          BTL4 CO2 PO1,PO2
+         benefitsandlimitationsofinheritance.
+
+
+       3 Discussdifferentformsof inheritance:specialization,specification,      BTL4 CO2 PO1,PO2
+         construction,extension,limitationandcombinationwithsuitable
+         examples.
+
+
+       4 WriteaJavaprogramto demonstratepolymorphism usingconstructors BTL3 CO2 PO1,PO2,PO3
+         andmethods.
+
+
+       5 Explaintheroleofthefinalkeywordininheritance.Discussfinal              BTL2 CO2 PO1,PO2
+         variables,finalmethodsandfinalclasseswithexamples.
+
+
+       6 Whatispolymorphism?Explainmethodoverridinganddynamic                   BTL4 CO2 PO1,PO2,PO3
+         method dispatchwithsuitableJavaprograms.
+
+
+       7 ExplainabstractclassesinJava.Discusstheir features,advantagesand       BTL4 CO2 PO1,PO2
+         differencesbetween abstractandconcreteclasses.
+
+
+       8 ExplaintheObjectclassinJava.Discussitsimportantmethodswith             BTL2 CO2 PO1
+         suitableexamples.
+
+
+       9 WhatisapackageinJava?Explainthestepsinvolvedindefining,                BTL3 CO2 PO1,PO2,PO5
+         creating,accessingandimportingpackages.Alsoexplaintheroleof
+         CLASSPATH.
+
+
+       10 WhatisaninterfaceinJava?Explainhow to defineandimplement              BTL4 CO2 PO1,PO2,PO3
+          interfaces.Discussdifferencesbetweenclassesand interfaces,interface
+          variablesandextendinginterfaceswithsuitableprograms.
+
+UNIT– III: Exception Handling and Multithreading
+
+
+
+
+                                                                                                  PO
+       Q.No. LongAnswer Question                                                       BTL   CO
+                                                                                                  Mapping
+
+
+
+
+       1     Defineexceptionhandling.Explainitsconcepts,advantagesandimportancein BTL2 CO1 PO1,
+             Javawithsuitableexamples.                                                     PO2
+
+
+       2     Explaintermination andresumptivemodelsofexceptionhandling.Discussthe BTL4 CO1 PO1,
+             Javaexceptionhierarchywithasuitablediagram.                                   PO2
+       3     Explainthepurposeand workingoftry,catch,throw,throwsandfinally          BTL3 CO1 PO1,
+             keywordswithsuitableJavaprograms.                                                PO2
+
+
+       4     Explaindifferentbuilt-inexceptionsinJava.Discusschecked andunchecked    BTL4 CO1 PO1,
+             exceptionswithsuitableexamples.                                                  PO2
+
+
+       5     Whatisauser-definedexception?Explaintheprocedureforcreatingand          BTL3 CO1 PO1,
+             handlingcustomexceptionsubclasseswithasuitableJavaprogram.                       PO2,
+                                                                                              PO3
+
+
+       6     Definemultithreading.Explaindifferencesbetweenmultithreadingand         BTL2 CO3 PO1,
+             multitasking.DiscussadvantagesofmultithreadinginJava.                            PO2
+
+
+       7     Explaindifferentstagesof thethreadlifecyclewithaneatdiagram.Discuss     BTL2 CO3 PO1,
+             variousmethodsusedinthreadmanagement.                                            PO2
+
+
+       8     ExplaindifferentwaysofcreatingthreadsinJava.Writesuitableprogramsto     BTL3 CO3 PO1,
+             demonstratethreadcreationby extendingThreadclassandimplementing                  PO2,
+             Runnableinterface.                                                               PO3
+
+
+       9     Whatisthreadsynchronization?Explaintheneedfor synchronization and       BTL4 CO3 PO1,
+             inter-threadcommunicationwithsuitableJavaprograms.                               PO2,
+                                                                                              PO3
+
+
+       10    Explainthreadpriorities,threadgroupsanddaemonthreadsinJava.Discuss      BTL3 CO3 PO1,
+             their purposeandapplicationswithsuitableexamples.                                PO2
+
+UNIT– IV: JavaUtility, I/O Packages and Event Handling
+
+
+
+
+       Q.No. LongAnswer Question                                                    BTL   CO   PO
+
+                                                                                               Mapping
+
+
+
+
+       1     a)ExplaintheStringclassinJava.DiscussvariousStringhandlingmethods      BTL3 CO1 PO1,
+             withsuitableexamples.                                                           PO2
+
+             b)Also explainimportantmethodsof theObjectclass.
+
+
+       2     ExplaintheJavaUtility(java.util) package.Discussimportantutility classes BTL3 CO1 PO1,
+             and interfaceswithsuitableexamples.                                               PO2,
+                                                                                               PO5
+
+
+       3     ExplaintheJavaI/O(java.io) package.Discussbytestreamsandcharacter      BTL3 CO1 PO1,
+             streamswithsuitableexamples.                                                    PO2,
+                                                                                             PO5
+      4    WhatiseventhandlinginJava?Explain events,eventsources,eventclasses   BTL2 CO4 PO1,
+           and eventlistenerswithsuitableexamples.                                       PO2
+
+
+      5    ExplaintheDelegationEventModelinJava.Discussitsarchitecture,         BTL4 CO4 PO1,
+           componentsandworkingprocedurewithasuitablediagram.                            PO2,
+                                                                                         PO3
+
+
+      6    ExplainmouseeventhandlinginJava.Discussdifferentmouseeventsand       BTL3 CO4 PO1,
+           their correspondinglistener interfaceswithasuitableprogram.                   PO2,
+                                                                                         PO3
+
+
+      7    ExplainkeyboardeventhandlinginJava.DiscussKeyListenerinterface       BTL3 CO4 PO1,
+           methodsanddemonstratekeyboardeventhandlingwithasuitableJava                   PO2,
+           program.                                                                      PO3
+
+
+      8    WhatareadapterclassesinJava?Explaintheir needandroleinhandling       BTL3 CO4 PO1,
+           mouseandkeyboard eventswithsuitableexamples.                                  PO2
+
+
+      9    ExplaingraphicsprogramminginJava.DiscusstheGraphicsclassandits BTL3 CO4 PO1,
+           importantmethodsusedfordrawinglines,rectangles,circles,arcsandother     PO2,
+           graphicalobjects.                                                       PO3,
+                                                                                   PO5
+
+
+      10   ExplaindifferentlayoutmanagersinJava.DiscussBorderLayout,            BTL4 CO4 PO1,
+           GridLayout,FlowLayout,CardLayoutandGridBagLayoutwithsuitable                  PO2,
+           examplesanddiagrams.                                                          PO3
+
+UNIT– V: Swing –   Important 10 Long Answer Questions
+
+
+
+
+      Q.No. LongAnswer Question                                             BTL   CO   POMapping
+
+
+
+
+      1    Discusstheintroductionto Swing,itsfeatures,advantagesand         BTL2 CO4 PO1,PO2
+           limitationsof AWT.
+
+
+      2    DescribetheModel,ViewandController (MVC) architecturewitha       BTL4 CO4 PO1,PO2,
+           neatdiagram.                                                              PO3
+
+
+      3    ExplainJFrameandJComponentinSwingwithsyntaxandsuitable           BTL2 CO4 PO1,PO2
+           examples.
+
+
+      4    ExplainJLabel,ImageIcon,JTextField,JButton,JCheckBoxand          BTL3 CO4 PO1,PO2,
+           JRadioButtonwith theirconstructors,methodsandexamples.                    PO3,PO5
+         5        Explaindifferentlistandcombo box componentsinJavaSwing.        BTL3 CO4 PO1,PO2,
+                                                                                          PO3
+
+
+         6        ExplainTabbed PanesandScrollPanesinJavaSwingwithsuitable       BTL3 CO4 PO1,PO2,
+                  examples.                                                               PO3
+
+
+         7        ExplainJTreeandJTablecomponentsinSwingwithsuitableexamples. BTL3 CO4 PO1,PO2,
+                                                                                       PO3
+
+
+         8        ExplainMenuBasicsinJavaSwing.DiscussJMenuBar,JMenu,            BTL3 CO4 PO1,PO2,
+                  JMenuItem,JCheckBoxMenuItem,JRadioButtonMenuItemand                     PO3
+                  JSeparatorwithconstructors,methodsandexamples.
+
+
+         9        Explainhowto createandimplementaPopupMenuinJavaSwing.      BTL3 CO4 PO1,PO2,
+                  WriteaJavaprogramto demonstrateapopupmenuwithdifferentmenu          PO3,PO5
+                  items.
+
+
+         10       Discusstop-levelcontainers,intermediatecontainersandcommonly   BTL4 CO4 PO1,PO2,
+                  usedSwingcomponentswithsuitableexamplesanddiagrams.                     PO3
+
+
+
+
+SHORT QUESTIONS
+
+
+
+
+UNIT –       I: Object-Oriented Thinkingand Java Basics
+
+   1. WhatisOOP?
+   2. Whatisabstraction?
+   3. Whatisencapsulation?
+   4. DifferStringandStringBuffer?
+   5. WhatisbytecodeinJava?
+   6. WhataretheprimitivedatatypesinJava?
+   7. Whatisthescopeofavariable?
+   8. Whatisaconstructor?
+   9. Whatismethodoverloading?
+   10. WhatisgarbagecollectioninJava?
+UNIT –       II: Inheritance, Packages and Interfaces
+
+   1.    Whatisinheritance?
+   2.    Whatisasuperclass?
+   3.    Whatisasubclass?
+   4.    Whatispolymorphism?
+   5.    Whatismethodoverriding?
+   6.    Whatistheuseof thesuper keyword?
+   7.    Whatisanabstractclass?
+   8.    WhatisapackageinJava?
+   9.    Whatisaninterface?
+   10. Whatistheuseof thefinalkeywordin inheritance?
+UNIT –   III: Exception Handlingand Multithreading
+
+   1. Whatisanexception?
+   2. Whatisexceptionhandling?
+   3. Whatisthepurposeof thetry block?
+   4. Whatistheuseof thecatchblock?
+   5. Whatisthedifferencebetween throw andthrows?
+   6. Whatisthepurposeof thefinally block?
+   7. Whatismultithreading?
+   8. Whatisthelifecycleofathread?
+   9. Whatisthread synchronization?
+   10. Whatisadaemonthread?
+UNIT –   IV: Java Packages, Event Handling and Layout Managers
+
+   1. WhatistheJavaCollectionsFramework?
+   2. Whatisthepurposeof thejava.utilpackage?
+   3. Whatisthepurposeof thejava.iopackage?
+   4. WhatisaneventinJava?
+   5. Whatisaneventsource?
+   6. Whatisaneventlistener?
+   7. Whatisthedelegationeventmodel?
+   8. Whatisanadapter class?
+   9. Whatisalayoutmanager?
+   10. Whatisthepurposeof aBorderLayout?
+UNIT –   V: SWINGS
+
+1.WhatisJavaSwing?Mentionanyfour featuresofSwing.
+2.Writeany fourdifferencesbetweenAWTandSwing.
+3.WhatisMVCarchitecture?Nameitsthreecomponents.
+4.WhatisthedifferencebetweenJFrameandJComponent?
+5.WhatareJLabelandImageIcon?Mentiontheiruses.
+6.DifferentiatebetweenJCheckBoxandJRadioButton.
+7.WhatisthepurposeofJListandJComboBoxinSwing?
+8.WhatareJTabbedPaneandJScrollPane?Mentiontheir uses.
+9.WhatareJTreeandJTable?Mentiontheir applications.
+10.WhatisaPopup Menu?Explainthepurposeof JPopupMenu.
+
