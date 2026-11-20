@@ -14,7 +14,7 @@ W, H, FPS = 1080, 1920, 30
 B = 60 / 115.02; M_START = 46.277
 PLUM, PLUM_D, GOLD, GOLD_L, CREAM = (69, 1, 40), (30, 0, 16), (201, 165, 94), (240, 216, 160), (251, 244, 238)
 DATE_L1, DATE_L2, TIME_L = "SUNDAY", "29 NOVEMBER", "5 PM – 7 PM"
-VENUE_L1, VENUE_L2 = "Van Lavino Café & Patisserie", "Financial District, Hyderabad"
+VENUE_L1, VENUE_L2 = "Aryka Studio", "Hyderabad"
 PRICE_L1, PRICE_L2 = "₹1,400 per person", "includes a ₹500 food voucher"
 GREEN, GREEN_D = (16, 74, 50), (6, 34, 22)
 HANDLE = "@sundarlyshmemories"
@@ -163,7 +163,7 @@ add(8, "photo", img="a_box", lines=[S_kick("STEP 3"), S_script("…or a goodies 
 add(8, "photo", img="a_friends", lines=[S_white("No pre-packed gifts."), S_cap("JUST YOURS", 86)])
 add(8, "photo", img="a_family", lines=[S_kick("PERFECT FOR"), S_cap("FRIENDS · FAMILIES · KIDS", 70)], zin=False)
 add(8, "photo", img="a_board", lines=[S_script("One surprise a day", 118), S_white("all the way to Christmas")])
-add(6, "photo", img="a_cafe", lines=[S_kick("HYDERABAD'S"), S_cap("FIRST", 110), S_white("advent calendar workshop")], zin=False)
+add(6, "photo", img="a_ribbon", lines=[S_kick("HYDERABAD'S"), S_cap("FIRST", 110), S_white("advent calendar workshop")], zin=False)
 add(12, "details")
 add(10, "photo", img="a_group", lines=[S_kick("LIMITED SEATS"), S_cap("BOOK ON INSTAGRAM", 74), S_white("Early bird: first 5 get 10% off"), S_white("any December workshop", 56)])
 add(10, "end")
@@ -258,7 +258,7 @@ E_3 = text_img("DM TO BOOK", CINZEL(86, 800), (255, 255, 255), tr=12, gold=True)
 E_4 = text_img(HANDLE, SANS(56, 800), (255, 255, 255), tr=1)
 _e5 = "29 NOV · 5–7 PM · " + VENUE_L1.upper()
 E_5 = text_img(_e5, fit(_e5, lambda z: SANS(z, 800), 30, W - 120, 3), (245, 228, 220), tr=3)
-E_6 = text_img("FINANCIAL DISTRICT, HYDERABAD", SANS(30, 800), (245, 228, 220), tr=4)
+E_6 = text_img(VENUE_L2.upper(), SANS(30, 800), (245, 228, 220), tr=4)
 def end(t, s):
     u = t - s["t0"]; fr = PLUMBG.copy(); snow(fr, t, .8); sparkles(fr, t, .8)
     lg = scaled(LOGO_L, .8 + .2 * eout(u / .6)); paste(fr, lg, (W - lg.width) / 2, 520 - lg.height / 2, ease(u / .3))
