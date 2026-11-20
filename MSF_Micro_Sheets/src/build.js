@@ -6,10 +6,13 @@ const { chromium } = require('playwright');
 const SHORT = process.env.SET === 'short';
 const TEN = process.env.SET === 'ten';
 const COA10 = process.env.SET === 'coa10';
-const JAVA = process.env.SET === 'java';
+const PAIR = process.env.SET === 'javapair';   // rows = Q1..Q5; front = unit PF, back = unit PB (same row)
+const JAVA = process.env.SET === 'java' || PAIR;
 const JV = JAVA ? require(path.resolve(process.env.JAVA_JS)) : null;
 const jvA = {}, jvQ = {};
-if (JAVA) for (const u in JV.A) for (const q in JV.A[u]) { (jvA[u] = jvA[u] || {})[q] = { full: JV.A[u][q] }; (jvQ[u] = jvQ[u] || {})[q] = { full: JV.Q[u][q] }; }
+if (JAVA && !PAIR) for (const u in JV.A) for (const q in JV.A[u]) { (jvA[u] = jvA[u] || {})[q] = { full: JV.A[u][q] }; (jvQ[u] = jvQ[u] || {})[q] = { full: JV.Q[u][q] }; }
+const PF = +(process.env.PF || 4), PB = +(process.env.PB || 5);
+if (PAIR) for (let r = 1; r <= 5; r++) { jvA[r] = { 1: { full: JV.A[PF][r] }, 2: { full: JV.A[PB][r] } }; jvQ[r] = { 1: { full: JV.Q[PF][r] }, 2: { full: JV.Q[PB][r] } }; }
 const COA = process.env.SET === 'coa' || COA10;
 const COAD = COA ? JSON.parse(fs.readFileSync(process.env.COA_JSON, 'utf8')) : null;
 const coaA = {}, coaQ = {};
@@ -17,9 +20,9 @@ if (COA) for (const e of COAD) { (coaA[e.u] = coaA[e.u] || {})[e.q] = { full: e.
 if (COA10) { const C10 = require(path.resolve(process.env.COA10_JS)); const FSZ = JSON.parse(fs.readFileSync(path.resolve(path.dirname(process.env.COA10_JS), '../fig10/sizes.json'), 'utf8')); for (const u in C10) for (const q in C10[u]) coaA[u][q] = { full: C10[u][q].replace('{{FIG}}', () => { const sz = FSZ[`U${u}Q${q}`]; const wide = sz && sz[0] / sz[1] > 2.1; return `<img class="${wide ? 'fig10w' : 'fig10'}" src="fig10/U${u}Q${q}.png">`; }) }; }
 const A = JAVA ? jvA : COA ? coaA : SHORT ? require('./short.js').A : TEN ? require('./answers_ten.js') : require('./answers.js');
 const Qs = JAVA ? jvQ : COA ? coaQ : SHORT ? require('./short.js').Q : require('./questions.js');
-const BASE = JAVA ? 'JAVA_10Marks' : COA10 ? 'COA_10Marks' : COA ? 'COA_Grid' : SHORT ? 'MSF_Short_CutSheet' : TEN ? 'MSF_Long10Marks_CutSheet' : 'MSF_CutSheet';
+const BASE = PAIR ? `JAVA_U${PF}_U${PB}_Q1-Q5` : JAVA ? 'JAVA_10Marks' : COA10 ? 'COA_10Marks' : COA ? 'COA_Grid' : SHORT ? 'MSF_Short_CutSheet' : TEN ? 'MSF_Long10Marks_CutSheet' : 'MSF_CutSheet';
 
-const PAGE_W = 210, MARGIN_X = +(process.env.MX || 6), TOP = +(process.env.TOP || 7), SAFE = +(process.env.SAFE || 1.6), MARK = 3, COLS = 5, ROWS = 5, ROW_H = +(process.env.ROW_H || 39);
+const PAGE_W = 210, MARGIN_X = +(process.env.MX || 6), TOP = +(process.env.TOP || 7), SAFE = +(process.env.SAFE || 1.6), MARK = 3, COLS = PAIR ? 1 : 5, ROWS = 5, ROW_H = +(process.env.ROW_H || 39);
 const SUFFIX = process.env.SUFFIX || '';
 const K = 2;   // layout at 2x and print at 50%: hairlines become truly thin (browser rounds lines below 1px up to 1px)
 const M = (v) => `${(v * K).toFixed(3)}mm`;
@@ -51,7 +54,7 @@ function cell(unit, q, x, y) {
   const fm = (FM[unit] || {})[q] || {};
   const a = Object.fromEntries(Object.entries(a0).map(([k, v]) => [k, (fm[k] ? `<b>Formula:</b> ${SUP(fm[k])}` + SEP : '') + dense(v)]));
   const qn = (t) => `<span class="q">Q. ${SUP(t)}</span>` + SEP + `<b>Ans:</b> `;
-  const tag = (s) => `<span class="tg">[U${ROMAN[unit]}·${s}]</span> `;
+  const tag = (s) => PAIR ? `<span class="tg">[U${ROMAN[q === 1 ? PF : PB]}·Q${unit}]</span> ` : `<span class="tg">[U${ROMAN[unit]}·${s}]</span> `;
   let inner;
   const IH = ROW_H - 2 * SAFE;
   if (a.full) {
@@ -114,6 +117,7 @@ sub{font-size:0.72em;line-height:0;vertical-align:-0.2em}
 .dg{display:inline-block;width:8.5em;height:3.4em;vertical-align:middle;margin:0.2em 0.3em}
 .dg text{font-family:RC,'Liberation Sans',sans-serif}
 .nt{display:block;font-style:italic;border:0.8pt solid #000;padding:0.3mm 0.8mm;margin:0.6mm 0}
+${PAIR ? '.jdw{width:40%;float:right;margin:0 0 0.3em 0.6em}.jc{column-count:2;column-gap:1.2em;column-rule:0.4pt solid #000}' : ''}
 </style></head><body><div id="root">${html}</div></body></html>`;
 }
 
@@ -142,7 +146,7 @@ async function fit(p) {
   const outDir = process.env.OUTDIR ? path.resolve(process.env.OUTDIR) : path.resolve(__dirname, '..');
   const b = await chromium.launch();
   const report = {}, rects = {};
-  for (const [name, cols] of ((COA || JAVA) ? [['Front', [1, 2, 3, 4, 5]], ['Back', [6, 7, 8, 9, 10]]] : [['Front', [1, 3, 5, 7, 9]], ['Back', [10, 8, 6, 4, 2]]])) {
+  for (const [name, cols] of (PAIR ? [['Front', [1]], ['Back', [2]]] : (COA || JAVA) ? [['Front', [1, 2, 3, 4, 5]], ['Back', [6, 7, 8, 9, 10]]] : [['Front', [1, 3, 5, 7, 9]], ['Back', [10, 8, 6, 4, 2]]])) {
     const file = path.join(outDir, `${BASE}_${name}${SUFFIX}.html`);
     fs.writeFileSync(file, page(cols, `MSF ${name}`));
     const p = await b.newPage();
@@ -157,8 +161,8 @@ async function fit(p) {
   await b.close();
   // Front Q(2k-1) must sit exactly behind back Q(2k) after a long-edge flip: x_back = pageW - x_front - w, same y.
   const pw = PAGE_W * K * 96 / 25.4; let worst = 0;
-  for (let u = 1; u <= ROWS; u++) for (let k = 1; k <= 5; k++) {
-    const f = rects.Front[(COA || JAVA) ? `${u}-${k}` : `${u}-${2 * k - 1}`], bk = rects.Back[(COA || JAVA) ? `${u}-${11 - k}` : `${u}-${2 * k}`];
+  for (let u = 1; u <= ROWS; u++) for (let k = 1; k <= (PAIR ? 1 : 5); k++) {
+    const f = rects.Front[PAIR ? `${u}-1` : (COA || JAVA) ? `${u}-${k}` : `${u}-${2 * k - 1}`], bk = rects.Back[PAIR ? `${u}-2` : (COA || JAVA) ? `${u}-${11 - k}` : `${u}-${2 * k}`];
     worst = Math.max(worst, Math.abs(pw - f[0] - f[2] - bk[0]), Math.abs(f[1] - bk[1]), Math.abs(f[2] - bk[2]), Math.abs(f[3] - bk[3]));
   }
   console.log('ALIGNMENT worst mismatch (mm):', (worst * 25.4 / 96 / K).toFixed(4));

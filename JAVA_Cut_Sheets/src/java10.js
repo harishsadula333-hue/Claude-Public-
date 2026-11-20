@@ -15,6 +15,7 @@ const B = (x, y, w, h, t, bold) => {
     ls.map((l, i) => `<text x="${x + w / 2}" y="${y + h / 2 + (i - (ls.length - 1) / 2) * 9 + 3}" font-size="8" text-anchor="middle"${bold ? ' font-weight="bold"' : ''}>${l}</text>`).join('');
 };
 const A = (x1, y1, x2, y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#000" stroke-width="1" marker-end="url(#MARK)"/>`;
+const Ls = (x, y, t) => `<text x="${x}" y="${y}" font-size="7">${t}</text>`;
 const Lb = (x, y, t) => `<text x="${x}" y="${y}" font-size="7" text-anchor="middle">${t}</text>`;
 
 const D = {
@@ -51,9 +52,9 @@ const D = {
     A(212, 22, 222, 8) + A(212, 26, 222, 26) + A(212, 30, 222, 44) + B(222, 1, 27, 13, 'JButton') + B(222, 20, 27, 13, 'JLabel') + B(222, 38, 27, 13, 'JList') +
     Lb(22, 46, 'top-level') + Lb(146, 46, 'intermediate') + Lb(236, 54, 'components')),
   streams: SVG(250, 50,
-    B(2, 2, 70, 14, 'InputStream (byte)', 1) + B(2, 30, 70, 14, 'OutputStream (byte)', 1) + B(128, 2, 60, 14, 'Reader (char)', 1) + B(128, 30, 60, 14, 'Writer (char)', 1) +
-    A(72, 9, 82, 9) + Lb(102, 12, 'FileInputStream') + A(72, 37, 82, 37) + Lb(104, 40, 'FileOutputStream') +
-    A(188, 9, 198, 9) + Lb(222, 12, 'FileReader') + A(188, 37, 198, 37) + Lb(222, 40, 'FileWriter') + Lb(125, 25, 'Buffered…, Data…, Print… wrap these')),
+    B(2, 2, 66, 14, 'InputStream (byte)', 1) + B(2, 30, 66, 14, 'OutputStream (byte)', 1) + B(132, 2, 54, 14, 'Reader (char)', 1) + B(132, 30, 54, 14, 'Writer (char)', 1) +
+    A(68, 9, 76, 9) + Ls(78, 12, 'FileInputStream') + A(68, 37, 76, 37) + Ls(78, 40, 'FileOutputStream') +
+    A(186, 9, 194, 9) + Ls(196, 12, 'FileReader') + A(186, 37, 194, 37) + Ls(196, 40, 'FileWriter') + Lb(125, 26, 'Buffered…, Data…, Print… classes wrap these')),
 };
 
 const Q = {
