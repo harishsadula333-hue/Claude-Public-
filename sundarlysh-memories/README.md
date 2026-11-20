@@ -113,3 +113,15 @@ Inspired by the *principles* of a reference logo, not its layout:
 | `png/memories-paper-plane-{noir,ivory,wine}.png` | **Paper Plane:** a paper plane flies off, its dotted trail drawing a big S with hearts along the way: memories that travel far. |
 | `png/memories-hot-air-balloon-{noir,ivory,wine}.png` | **Hot Air Balloon:** a celebration balloon carries the S on its centre panel, with floating hearts and stars. It's festive and suits events. |
 | `png/memories-ribbon-bow-{noir,ivory,wine}.png` | **Ribbon Bow:** an elegant bow with a heart knot, whose long ribbon tail curls into the S: a memory is the best gift. |
+
+---
+
+## Line-art styles, set 6
+
+![Line-art board 6](sundarlysh-memories-line-art-6-board.png)
+
+| Files | Concept |
+|-------|---------|
+| `png/memories-s-mandala-{noir,ivory,wine}.png` | **S Mandala:** six S's turned around a heart form a rangoli-like rosette inside a beaded ring: a flower where every petal is an S. |
+| `png/memories-fireworks-{noir,ivory,wine}.png` | **Fireworks:** the S glows at the heart of a celebration burst of gold rays and sparks, with smaller bursts beside it and a rocket trail below. |
+| `png/memories-message-in-a-bottle-{noir,ivory,wine}.png` | **Message in a Bottle:** a rolled letter stamped with the S and tied with a heart, kept safe in a bottle floating on gentle waves. |
