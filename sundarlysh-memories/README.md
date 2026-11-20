@@ -77,3 +77,15 @@ Inspired by the *principles* of a reference logo, not its layout:
 | `png/memories-film-strip-s-{noir,ivory,wine}.png` | **Film Strip S:** the S is a curling strip of film with sprocket holes, and its little frames hold hearts and stars. UNDARLYSH carries on from it, with MEMORIES and the services below. |
 | `png/memories-camera-{noir,ivory,wine}.png` | **Camera:** a fine-line camera with the S inside its lens, its arms reaching the lens ring. The brand star is the flash, and the name is printed on the body: capturing memories. |
 | `png/memories-keepsake-envelope-{noir,ivory,wine}.png` | **Keepsake Envelope:** the S forms the envelope's left side, the flap is sealed with a heart, and the name is written on it like an address: a letter full of memories. |
+
+---
+
+## Line-art styles, set 3
+
+![Line-art board 3](sundarlysh-memories-line-art-3-board.png)
+
+| Files | Concept |
+|-------|---------|
+| `png/memories-constellation-s-{night,noir,ivory}.png` | **Constellation S:** the S is drawn in the night sky as gold stars joined by fine lines, with a heart star at its centre. A shooting-star trail leads into the name: memories written in the stars. |
+| `png/memories-locket-{noir,ivory,wine}.png` | **Memory Locket:** a heart locket holding an engraved S, hung on a fine chain that drapes over the name. A locket is where precious memories are kept. |
+| `png/memories-vintage-key-{noir,ivory,wine}.png` | **Vintage Key:** the S sits in the key's ornate round handle. The stem runs under the name, and the key's teeth hold a pink heart: the key to your memories. |
