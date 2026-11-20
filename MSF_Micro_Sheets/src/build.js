@@ -6,12 +6,14 @@ const { chromium } = require('playwright');
 const SHORT = process.env.SET === 'short';
 const TEN = process.env.SET === 'ten';
 const COA10 = process.env.SET === 'coa10';
+const ROW1 = process.env.SET === 'javarow';    // one row: front PF Q1..Q5, back PB Q1..Q5 mirrored
 const PAIR = process.env.SET === 'javapair';   // rows = Q1..Q5; front = unit PF, back = unit PB (same row)
-const JAVA = process.env.SET === 'java' || PAIR;
+const JAVA = process.env.SET === 'java' || PAIR || ROW1;
 const JV = JAVA ? require(path.resolve(process.env.JAVA_JS)) : null;
 const jvA = {}, jvQ = {};
-if (JAVA && !PAIR) for (const u in JV.A) for (const q in JV.A[u]) { (jvA[u] = jvA[u] || {})[q] = { full: JV.A[u][q] }; (jvQ[u] = jvQ[u] || {})[q] = { full: JV.Q[u][q] }; }
+if (JAVA && !PAIR && !ROW1) for (const u in JV.A) for (const q in JV.A[u]) { (jvA[u] = jvA[u] || {})[q] = { full: JV.A[u][q] }; (jvQ[u] = jvQ[u] || {})[q] = { full: JV.Q[u][q] }; }
 const PF = +(process.env.PF || 4), PB = +(process.env.PB || 5);
+if (ROW1) { jvA[1] = {}; jvQ[1] = {}; for (let k = 1; k <= 5; k++) { jvA[1][k] = { full: JV.A[PF][k] }; jvQ[1][k] = { full: JV.Q[PF][k] }; jvA[1][11 - k] = { full: JV.A[PB][k] }; jvQ[1][11 - k] = { full: JV.Q[PB][k] }; } }
 if (PAIR) for (let r = 1; r <= 5; r++) { jvA[r] = { 1: { full: JV.A[PF][r] }, 2: { full: JV.A[PB][r] } }; jvQ[r] = { 1: { full: JV.Q[PF][r] }, 2: { full: JV.Q[PB][r] } }; }
 const COA = process.env.SET === 'coa' || COA10;
 const COAD = COA ? JSON.parse(fs.readFileSync(process.env.COA_JSON, 'utf8')) : null;
@@ -20,9 +22,9 @@ if (COA) for (const e of COAD) { (coaA[e.u] = coaA[e.u] || {})[e.q] = { full: e.
 if (COA10) { const C10 = require(path.resolve(process.env.COA10_JS)); const FSZ = JSON.parse(fs.readFileSync(path.resolve(path.dirname(process.env.COA10_JS), '../fig10/sizes.json'), 'utf8')); for (const u in C10) for (const q in C10[u]) coaA[u][q] = { full: C10[u][q].replace('{{FIG}}', () => { const sz = FSZ[`U${u}Q${q}`]; const wide = sz && sz[0] / sz[1] > 2.1; return `<img class="${wide ? 'fig10w' : 'fig10'}" src="fig10/U${u}Q${q}.png">`; }) }; }
 const A = JAVA ? jvA : COA ? coaA : SHORT ? require('./short.js').A : TEN ? require('./answers_ten.js') : require('./answers.js');
 const Qs = JAVA ? jvQ : COA ? coaQ : SHORT ? require('./short.js').Q : require('./questions.js');
-const BASE = PAIR ? `JAVA_U${PF}_U${PB}_Q1-Q5` : JAVA ? 'JAVA_10Marks' : COA10 ? 'COA_10Marks' : COA ? 'COA_Grid' : SHORT ? 'MSF_Short_CutSheet' : TEN ? 'MSF_Long10Marks_CutSheet' : 'MSF_CutSheet';
+const BASE = ROW1 ? `JAVA_U${PF}_U${PB}_OneRow` : PAIR ? `JAVA_U${PF}_U${PB}_Q1-Q5` : JAVA ? 'JAVA_10Marks' : COA10 ? 'COA_10Marks' : COA ? 'COA_Grid' : SHORT ? 'MSF_Short_CutSheet' : TEN ? 'MSF_Long10Marks_CutSheet' : 'MSF_CutSheet';
 
-const PAGE_W = 210, MARGIN_X = +(process.env.MX || 6), TOP = +(process.env.TOP || 7), SAFE = +(process.env.SAFE || 1.6), MARK = 3, COLS = PAIR ? 1 : 5, ROWS = 5, ROW_H = +(process.env.ROW_H || 39);
+const PAGE_W = 210, MARGIN_X = +(process.env.MX || 6), TOP = +(process.env.TOP || 7), SAFE = +(process.env.SAFE || 1.6), MARK = 3, COLS = PAIR ? 1 : 5, ROWS = ROW1 ? 1 : 5, ROW_H = +(process.env.ROW_H || 39);
 const SUFFIX = process.env.SUFFIX || '';
 const K = 2;   // layout at 2x and print at 50%: hairlines become truly thin (browser rounds lines below 1px up to 1px)
 const M = (v) => `${(v * K).toFixed(3)}mm`;
@@ -54,7 +56,7 @@ function cell(unit, q, x, y) {
   const fm = (FM[unit] || {})[q] || {};
   const a = Object.fromEntries(Object.entries(a0).map(([k, v]) => [k, (fm[k] ? `<b>Formula:</b> ${SUP(fm[k])}` + SEP : '') + dense(v)]));
   const qn = (t) => `<span class="q">Q. ${SUP(t)}</span>` + SEP + `<b>Ans:</b> `;
-  const tag = (s) => PAIR ? `<span class="tg">[U${ROMAN[q === 1 ? PF : PB]}·Q${unit}]</span> ` : `<span class="tg">[U${ROMAN[unit]}·${s}]</span> `;
+  const tag = (s) => ROW1 ? `<span class="tg">[U${ROMAN[q <= 5 ? PF : PB]}·Q${q <= 5 ? q : 11 - q}]</span> ` : PAIR ? `<span class="tg">[U${ROMAN[q === 1 ? PF : PB]}·Q${unit}]</span> ` : `<span class="tg">[U${ROMAN[unit]}·${s}]</span> `;
   let inner;
   const IH = ROW_H - 2 * SAFE;
   if (a.full) {
