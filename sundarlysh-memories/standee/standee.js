@@ -17,7 +17,7 @@ const W = 1728, H = 2304, C = W / 2; // 18x24 in at 96 px/in
   let mods = '';
   for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (data[r * n + c]) mods += `M${(qx + c * cell).toFixed(2)},${(qy + r * cell).toFixed(2)}h${(cell + 0.3).toFixed(2)}v${(cell + 0.3).toFixed(2)}h${-(cell + 0.3).toFixed(2)}z`;
   const logo = fs.readFileSync('sm_logo.png').toString('base64');
-  const gold = 'url(#gd)', ivory = '#F8EBD8';
+  const gold = 'url(#gd)', ivory = '#4A0A24';
   const T = (fk, s, x, y, size, fill, o = {}) => `<path d="${L.text(fk, s, x, y, size, { ls: o.ls ?? 0, anchor: o.anchor || 'middle' }).d}" fill="${fill}"/>`;
   // Instagram glyph (outline) at x,y size s
   const ig = (x, y, s, fill) => `<g fill="none" stroke="${fill}" stroke-width="${s * 0.09}"><rect x="${x}" y="${y}" width="${s}" height="${s}" rx="${s * 0.28}"/><circle cx="${x + s / 2}" cy="${y + s / 2}" r="${s * 0.23}"/></g><circle cx="${x + s * 0.76}" cy="${y + s * 0.24}" r="${s * 0.065}" fill="${fill}"/>`;
@@ -33,8 +33,8 @@ const W = 1728, H = 2304, C = W / 2; // 18x24 in at 96 px/in
   g += `<circle cx="${C}" cy="352" r="244" fill="none" stroke="${gold}" stroke-width="4"/>`;
   g += T('jos400', 'EVENTS  ·  WORKSHOPS  ·  BRANDING', C, 670, 34, ivory, { ls: 0.32 });
   // heading
-  g += T('vibes', "Let's Stay Connected", C, 792, 112, gold);
-  g += T('jos400', 'SCAN  TO  DM  US  ON  INSTAGRAM', C, 862, 38, ivory, { ls: 0.28 });
+  g += T('vibes', "Let's Stay Connected", C, 784, 108, gold);
+  g += T('jos600', 'SCAN TO DM US', C, 880, 72, ivory, { ls: 0.16 });
   // QR card
   const pad = 46;
   g += `<rect x="${qx - pad}" y="${qy - pad}" width="${qs + 2 * pad}" height="${qs + 2 * pad}" rx="36" fill="#FFFDF8" stroke="${gold}" stroke-width="8"/>`;
@@ -54,12 +54,12 @@ const W = 1728, H = 2304, C = W / 2; // 18x24 in at 96 px/in
   g += T('jos600', HANDLE, C + 50, hy, 62, ivory, { ls: 0.04 });
   g += `<rect x="${C - 300}" y="${hy + 46}" width="600" height="2.4" fill="${gold}"/>`;
   g += T('jos400', 'DM US FOR BOOKINGS & ENQUIRIES', C, hy + 112, 36, ivory, { ls: 0.24 });
-  g += T('vibes', 'Follow us for beautiful memories', C, hy + 210, 68, gold);
+  g += T('vibes', 'Follow us for more', C, hy + 214, 84, gold);
   // hearts row
   for (const [i, dx] of [-120, -60, 0, 60, 120].entries()) g += `<path d="${L.heart(C + dx, hy + 290, i === 2 ? 40 : 28)}" fill="${i === 2 ? '#E8275E' : gold}"/>`;
 
-  const defs = `<radialGradient id="bg" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#6A1238"/><stop offset="0.65" stop-color="#4A0A26"/><stop offset="1" stop-color="#2C0516"/></radialGradient>` +
-    L.goldGrad('gd', 0, 0, W, H, [[0, '#B98A34'], [0.3, '#F3D58E'], [0.5, '#D6A94F'], [0.7, '#F6E2A8'], [1, '#B98A34']]);
+  const defs = `<radialGradient id="bg" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#FFFBF8"/><stop offset="0.6" stop-color="#FBEDEA"/><stop offset="1" stop-color="#F2D9D9"/></radialGradient>` +
+    L.goldGrad('gd', 0, 0, W, H, [[0, '#9A6418'], [0.3, '#C9963A'], [0.5, '#A87418'], [0.7, '#D2A24A'], [1, '#9A6418']]);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><defs>${defs}</defs>${g}</svg>`;
   fs.mkdirSync('out24', { recursive: true });
   fs.writeFileSync('out24/standee.svg', svg);
