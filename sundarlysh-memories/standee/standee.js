@@ -58,7 +58,7 @@ const W = 1728, H = 2304, C = W / 2; // 18x24 in at 96 px/in
   // hearts row
   for (const [i, dx] of [-120, -60, 0, 60, 120].entries()) g += `<path d="${L.heart(C + dx, hy + 290, i === 2 ? 40 : 28)}" fill="${i === 2 ? '#E8275E' : gold}"/>`;
 
-  const defs = `<radialGradient id="bg" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#FFFBF8"/><stop offset="0.6" stop-color="#FBEDEA"/><stop offset="1" stop-color="#F2D9D9"/></radialGradient>` +
+  const defs = `<radialGradient id="bg" cx="50%" cy="38%" r="75%"><stop offset="0" stop-color="#FCE4EA"/><stop offset="0.6" stop-color="#F8D3DD"/><stop offset="1" stop-color="#F0BFCD"/></radialGradient>` +
     L.goldGrad('gd', 0, 0, W, H, [[0, '#9A6418'], [0.3, '#C9963A'], [0.5, '#A87418'], [0.7, '#D2A24A'], [1, '#9A6418']]);
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><defs>${defs}</defs>${g}</svg>`;
   fs.mkdirSync('out24', { recursive: true });
