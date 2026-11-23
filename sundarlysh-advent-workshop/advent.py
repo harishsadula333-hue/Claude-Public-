@@ -14,7 +14,7 @@ W, H, FPS = 1080, 1920, 30
 B = 60 / 115.02; M_START = 46.277
 PLUM, PLUM_D, GOLD, GOLD_L, CREAM = (69, 1, 40), (30, 0, 16), (201, 165, 94), (240, 216, 160), (251, 244, 238)
 DATE_L1, DATE_L2, TIME_L = "SUNDAY", "29 NOVEMBER", "5 PM – 7 PM"
-VENUE_L1, VENUE_L2 = "Aryka Studio", "Financial District, Hyderabad"
+VENUE_L1, VENUE_L2 = "Stuff idly India", "Kondapur, Hyderabad"
 PRICE_L1, PRICE_L2 = "₹1,400 per person", "includes a ₹500 food voucher"
 GREEN, GREEN_D = (16, 74, 50), (6, 34, 22)
 HANDLE = "@sundarlyshmemories"
