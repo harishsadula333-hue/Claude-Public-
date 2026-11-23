@@ -1,54 +1,46 @@
-# Advent Calendar Workshop – booking page with Razorpay + e-tickets
+# Advent Calendar Workshop – booking page with a Razorpay Payment Page + e-tickets
 
 **Event:** Christmas Advent Calendar Workshop · Sunday 29 Nov 2026 · 5–7 PM · **Stuff idly India, Kondapur, Hyderabad** · **₹999 per person** (includes ₹100 redeemable food & beverage).
 
-## How booking works
-1. The visitor enters name, email, WhatsApp number and seats, sees the total, and taps **Book your ticket**.
-2. The page asks the backend to create a Razorpay order. The backend decides the amount (₹999 × seats), so nobody can change the price in their browser.
-3. **Razorpay's secure payment window** opens (UPI, cards, netbanking, wallets). It fills the whole screen on phones.
-4. After payment, the backend **verifies Razorpay's signature** and double-checks the payment with Razorpay. Only then does it issue a ticket number (`SM-ADV-001`, `SM-ADV-002`…), save the booking in Google Sheets and **email the ticket as a PDF**.
-5. The page shows **"You're in!"**, the ticket, and a **Download ticket (PDF)** button. The ticket link (`?ticket=…&key=…`) also works later, and the email has a "View your ticket online" button.
-6. If someone pays and closes the page too early, the `reconcilePending` trigger issues and emails their ticket within 10 minutes.
+## How booking works (no Razorpay API keys needed)
+1. On this page the visitor enters name, email, WhatsApp number and seats, sees the total, and taps **Book your ticket**.
+2. They're sent to **your Razorpay Payment Page** with **name, email and phone already filled in**. They choose the number of tickets there and pay.
+3. Razorpay redirects them **back to this page**, which shows **"You're in!"** with their **ticket** (ticket number, name, date, time, venue, people, amount) and a **Download ticket (PDF)** button. Refreshing or reopening the ticket link shows the same ticket.
+4. **Email:** Razorpay automatically emails every payer its official payment receipt. If you also set up the optional Google Apps Script backend (`backend/Code.gs`), the page emails the **ticket PDF** from your Gmail, numbers tickets in order (SM-ADV-001, 002…) and saves every booking in a Google Sheet.
 
-To preview the success screen without paying, open the page with `?demo=1`.
+To preview the success screen, open the page with `?demo=1`.
 
-## One-time setup (about 15 minutes)
+## Setup
 
-### A. Razorpay API keys
-Razorpay Dashboard → **Account & Settings → API Keys → Generate Key**. Copy the **Key ID** and the **Key Secret** (the secret is shown only once).
-Start with **Test Mode** keys (`rzp_test_…`) to try it with Razorpay's test cards and UPI, then switch to **Live** keys.
+### 1. Razorpay Payment Page settings (Dashboard → Payment Pages → your page → Edit)
+- **Fields:** keep the input fields labelled exactly **Full name**, **Email** and **Phone**, as *Single Line* (name) and the Email and Phone field types. The page fills them using `full_name`, `email` and `phone`.
+  If you rename a field, update `PREFILL` in `index.html`: lowercase, spaces become underscores (e.g. "Your Name" → `your_name`).
+- **Page Settings → Action after successful payment → Redirect to your website** → enter your booking page link followed by `?paid=1`, e.g.
+  `https://your-site.netlify.app/?paid=1`
+- **Payment Receipts → Send Automated Receipts** (on), so every payer gets Razorpay's receipt by email.
+- **Ticket price:** keep it at ₹999 with quantity. Optional: to pre-fill the number of seats, mark the Ticket price field **Optional** and set `QTY_FIELD: "ticket_price"` in `index.html`.
 
-### B. The backend (Google Apps Script, free)
-1. Create a new **Google Sheet** (e.g. "Sundarlysh Bookings") using the business Gmail. Ticket emails are sent from this account.
-2. In the sheet: **Extensions → Apps Script**. Delete the sample code and paste all of `backend/Code.gs`. Save.
-3. **Project Settings (⚙️) → Script properties → Add**:
-   | Property | Value |
-   |---|---|
-   | `RAZORPAY_KEY_ID` | your Key ID |
-   | `RAZORPAY_KEY_SECRET` | your Key Secret |
-   | `PAGE_URL` | the booking page's public link (add it after step D) |
-   | `TOTAL_SEATS` | optional, e.g. `20`, stops sales when full |
-4. In the editor, choose `testSetup` → **Run** → allow the permissions. The log should say "Razorpay keys OK", and a **Bookings** tab appears in the sheet.
-5. **Deploy → New deployment → Web app**: Execute as **Me**, Who has access **Anyone** → Deploy. Copy the **Web app URL**.
-6. **Triggers (⏰) → Add trigger**: function `reconcilePending`, Time-driven, **Every 10 minutes**.
+### 2. Connect the page (`index.html`, settings block at the top)
+- `PAYMENT_PAGE_URL:` your Payment Page's long link. Open your `rzp.io/...` short link and copy the `https://pages.razorpay.com/pl_.../view` address it opens.
+- `WHATSAPP_NUMBER:` the business number, e.g. `919876543210`.
 
-> The Key Secret lives only in the Script properties. Never put it in `index.html`.
+### 3. Optional but recommended: ticket emails + Google Sheet (free, about 10 minutes)
+1. Create a Google Sheet with the business Gmail → **Extensions → Apps Script** → paste all of `backend/Code.gs` → Save.
+2. Run `testSetup` once → allow the permissions. It creates the **Bookings** tab and emails you a sample ticket.
+3. **Deploy → New deployment → Web app**: Execute as **Me**, Who has access **Anyone** → copy the URL into `TICKET_API_URL` in `index.html`.
+4. Optional: **Project Settings → Script properties** → `PAGE_URL` = your booking page link (adds a "View your ticket online" button to emails).
 
-### C. Connect the page
-In `index.html`, settings block near the top:
-- `API_URL:` paste the Web app URL from step B5.
-- `WHATSAPP_NUMBER:` the business number, e.g. `919876543210` (used by the WhatsApp buttons).
+### 4. Put it online
+Drag the `landing-page` folder onto **app.netlify.com/drop**, then use that link in step 1's redirect URL.
 
-### D. Put it online
-Drag the `landing-page` folder onto **app.netlify.com/drop**. You get a link immediately. Put that link in `PAGE_URL` (step B3).
+### 5. Test
+Book 1 seat and pay (you can refund yourself from the Razorpay dashboard). Check that the details were pre-filled, you came back to the ticket, the PDF downloads, the emails arrived, and the row appears in the sheet.
 
-### E. Test before sharing
-With **Test Mode** keys: book 1 seat → pay with a Razorpay test card or `success@razorpay` UPI → check the ticket shows, the PDF downloads, the email arrives and a PAID row appears in the sheet. Then swap in the **Live** keys (Script properties only) and do one real ₹999 booking, which you can refund from Razorpay.
-
-## At the event
-The **Bookings** sheet lists every PAID ticket number, name, seats and phone. Check names off at the door. There's no QR, so match the ticket number.
+## Important: checking payments
+A Payment Page doesn't send a payment proof back to your website, so the ticket is issued when the customer returns from Razorpay. Someone could open the success link without paying, so before the event (and at the door), match each ticket with Razorpay:
+**Dashboard → Payment Pages → your page → Payments** (names, phones, emails, amounts). Tick the **verified** checkbox in the Bookings sheet as you go. A guest can also show Razorpay's receipt email.
 
 ## Notes
-- Gmail sends up to ~100 emails a day from a free account, which is plenty for this event.
-- To change the price, change it in both `Code.gs` (`CFG.PRICE`) and `index.html` (`PRICE_PER_SEAT`, `PRICE`, `PRICE_NOTE`). The backend's number is what gets charged.
-- If you redeploy the Apps Script after editing it: **Deploy → Manage deployments → Edit → New version**, so the URL stays the same.
+- If someone pays on a different phone or browser from the one they booked on, the page asks them to re-enter their details to get the ticket.
+- Gmail sends about 100 emails a day from a free account, which is plenty for this event.
+- Price changes: update the Payment Page, plus `PRICE_PER_SEAT`, `PRICE` and `PRICE_NOTE` in `index.html` and `CFG.PRICE` in `Code.gs`.
