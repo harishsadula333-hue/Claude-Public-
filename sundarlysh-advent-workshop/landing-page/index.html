@@ -297,15 +297,13 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   <div class="ok">
     <div class="okic">✓</div>
     <div class="it" style="font-size:clamp(30px,6vw,44px);color:var(--gold-l);line-height:1.1">Payment done! 🎄</div>
-    <p>One last step: enter your name to create your e-ticket.</p>
+    <p>Enter the email or phone number you used on the payment page. We'll find your payment and show your e-ticket. It's also emailed to you automatically.</p>
   </div>
   <form id="claimForm" novalidate>
-    <label for="cName">Full name</label><input id="cName" autocomplete="name" required>
-    <div class="row2">
-      <div><label for="cSeats">Tickets bought</label><select id="cSeats"></select></div>
-      <div><label for="cPhone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label><input id="cPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Mobile no."></div>
-    </div>
-    <label for="cEmail" id="cEmailL">Email <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label><input id="cEmail" type="email" autocomplete="email">
+    <label for="cEmail">Email used for payment</label><input id="cEmail" type="email" autocomplete="email" placeholder="you@example.com">
+    <div class="or" style="margin:10px 0 0">OR</div>
+    <label for="cPhone">Phone number used for payment</label><input id="cPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="10-digit mobile">
+    <label for="cName">Your name <span style="text-transform:none;letter-spacing:0;font-weight:600">(for the ticket, optional)</span></label><input id="cName" autocomplete="name">
     <button class="btn" type="submit" id="cBtn">Get my e-ticket</button>
     <p class="msg" id="cErr"></p>
   </form>
@@ -412,8 +410,6 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   tick(); setInterval(tick, 1000);
   function inr(n) { return "₹" + Number(n).toLocaleString("en-IN"); }
   $("totalAmt").textContent = E.PRICE ? E.PRICE + " per person" : ""; if (!E.PRICE) $("totalRow").style.display = "none";
-  for (var i = 1; i <= (E.MAX_SEATS || 6); i++) { var o = document.createElement("option"); o.textContent = i; $("cSeats").appendChild(o); }
-  if (E.TICKET_API_URL) { $("cEmailL").innerHTML = 'Email <span style="text-transform:none;letter-spacing:0;font-weight:600">(your ticket is sent here)</span>'; }
   function cErr(t) { var m = $("cErr"); m.textContent = t; m.style.color = "#A3263A"; m.className = "msg show"; }
 
   // ---------- optional ticket backend (Google Apps Script: numbers, saves and emails tickets)
@@ -488,25 +484,22 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
 
   // ---------- after payment: the Payment Page redirects here with ?paid=1 (set in Razorpay: Page Settings → Redirect to your website)
   function makeRef() { return "SM" + Date.now().toString(36).toUpperCase().slice(-5) + Math.random().toString(36).slice(2, 5).toUpperCase(); }
-  function finish(p, claim) {
-    var base = { ref: p.ref, name: p.name, email: p.email, phone: p.phone, seats: p.seats, kids: p.kids, source: p.source, claim: !!claim };
-    var done = function (t) { store("sm_pending", null); $("confirmView").style.display = "none"; showTicket(t, true); };
-    if (!E.TICKET_API_URL) {   // no backend: can't check with Razorpay, show the ticket directly (unverified)
-      return done({ ticket_no: "SM-ADV-" + p.ref.slice(-6), ref: p.ref, name: p.name, email: p.email, seats: p.seats, amount: p.amount, payment_id: "", email_sent: false });
+  function finish(p) {
+    var done = function (t) { $("confirmView").style.display = "none"; showTicket(t, true); };
+    if (!E.TICKET_API_URL) {   // no backend configured: can't check payments, so show the ticket directly (unverified)
+      return done({ ticket_no: "SM-ADV-" + p.ref.slice(-6), ref: p.ref, name: p.name || "Guest", email: p.email, seats: 1, amount: E.PRICE_PER_SEAT, payment_id: "", email_sent: false });
     }
-    // verified: the backend asks Razorpay for a real payment from this email/phone before issuing a ticket
     document.body.classList.add("focus"); $("book").style.display = "none"; $("claimView").style.display = "none"; $("confirmView").style.display = "block"; window.scrollTo(0, 0);
-    var st = document.querySelector(".sticky"); if (st) st.style.display = "none";
-    var tries = 0, MAX = 20;
+    var tries = 0, MAX = 12;
     function ui(title, msg, spinning, retry) { $("cTitle").textContent = title; $("cMsg").textContent = msg; $("cSpin").style.display = spinning ? "block" : "none"; $("cRetry").style.display = retry ? "inline-flex" : "none"; }
     function attempt() {
-      tries++; ui("Confirming your payment…", "Checking with Razorpay. This usually takes a few seconds, please keep this page open.", true, false);
-      api(Object.assign({ action: "issue" }, base)).then(function (j) {
+      tries++; ui("Finding your payment…", "Checking Razorpay's records for " + (p.email || p.phone) + ". This can take up to a minute, please keep this page open.", true, false);
+      api({ action: "find", email: p.email, phone: p.phone, name: p.name }).then(function (j) {
         if (j.ticket) return done(j.ticket);
-        if (tries < MAX) return setTimeout(attempt, 4000);
-        ui("We couldn't find your payment yet", "If you've paid, don't worry: once Razorpay confirms it, your ticket is emailed to " + p.email + " automatically (usually within 10 minutes). If you haven't paid yet, go back and book again.", false, true);
+        if (tries < MAX) return setTimeout(attempt, 10000);
+        ui("Your payment is still being processed", "Razorpay can take a few minutes to confirm. Your e-ticket will be emailed to you automatically as soon as it's confirmed. You can also tap 'Check again' in a few minutes. Use the same email/phone you entered on the Razorpay page.", false, true);
       }).catch(function (err) {
-        if (tries < MAX) return setTimeout(attempt, 4000);
+        if (tries < MAX) return setTimeout(attempt, 10000);
         ui("Couldn't check right now", err.message + ". Please tap 'Check again', or DM us on Instagram.", false, true);
       });
     }
@@ -528,16 +521,15 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
     else if (E.TICKET_API_URL) api({ action: "lookup", ticket_no: qp.get("ticket"), key: qp.get("key") }).then(function (j) { showTicket(j.ticket, false); }).catch(function () {});
   }
 
-  // ---------- after payment: create the e-ticket
+  // ---------- "Get your e-ticket": find the payment by email or phone
   $("claimForm").addEventListener("submit", function (e) {
     e.preventDefault();
-    var name = $("cName").value.trim(), email = $("cEmail").value.trim(), phone = $("cPhone").value.replace(/\D/g, "").slice(-10), seats = parseInt($("cSeats").value, 10);
-    if (name.length < 2) return cErr("Please enter your name.");
-    if (E.TICKET_API_URL && !/^\S+@\S+\.\S+$/.test(email)) return cErr("Please enter your email, so we can send your ticket.");
-    if (email && !/^\S+@\S+\.\S+$/.test(email)) return cErr("Please check your email.");
-    if (phone && phone.length < 10) return cErr("Please check the phone number (10 digits), or leave it empty.");
-    $("cBtn").disabled = true; $("cBtn").textContent = "Creating your ticket…";
-    finish({ ref: makeRef(), name: name, email: email, phone: phone, seats: seats, kids: "", amount: seats * E.PRICE_PER_SEAT, source: src }, true);
+    var name = $("cName").value.trim(), email = $("cEmail").value.trim().toLowerCase(), phone = $("cPhone").value.replace(/\D/g, "").slice(-10);
+    if (!email && !phone) return cErr("Please enter the email or phone number you used on the payment page.");
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) return cErr("Please check the email address.");
+    if (!email && phone.length < 10) return cErr("Please enter a 10-digit phone number.");
+    $("cBtn").disabled = true; $("cBtn").textContent = "Finding your payment…";
+    finish({ ref: makeRef(), name: name, email: email, phone: phone });
   });
 })();
 </script>
