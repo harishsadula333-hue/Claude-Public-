@@ -181,6 +181,40 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
 /* focused screens after payment: only the form / confirmation / ticket */
 body.focus header.hero, body.focus section:not(#claimView):not(#confirmView):not(#ticketView), body.focus .sticky { display:none !important; }
 body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding-top:40px; }
+
+/* ---- buttons that invite a tap ---- */
+.btn.big { padding:19px 34px; font-size:20px; }
+.btn.shine { position:relative; overflow:hidden; animation:pulse 2.4s ease-in-out infinite; }
+.btn.shine::after { content:""; position:absolute; top:0; left:-60%; width:40%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent); transform:skewX(-20deg); animation:sweep 3s ease-in-out infinite; }
+@keyframes sweep { 0%,55% { left:-60%; } 100% { left:130%; } }
+@keyframes pulse { 0%,100% { box-shadow:0 8px 24px rgba(0,0,0,.35), 0 0 0 0 rgba(240,216,160,.55); } 50% { box-shadow:0 8px 24px rgba(0,0,0,.35), 0 0 0 10px rgba(240,216,160,0); } }
+@media (prefers-reduced-motion: reduce) { .btn.shine, .btn.shine::after { animation:none; } }
+.secure { margin-top:12px; font-size:14px; color:#EBD6CD; }
+/* ---- bottom bar ---- */
+.sticky { padding:10px 14px calc(10px + env(safe-area-inset-bottom)); gap:12px; box-shadow:0 -8px 24px rgba(0,0,0,.45); }
+.sticky .t { line-height:1.15; min-width:0; }
+.sticky .t b { font-size:22px; color:var(--gold-l); font-family:"Cinzel",serif; }
+.sticky .t span { font-size:13px; color:#EBD6CD; font-weight:600; }
+.sticky .t small { display:block; font-size:12.5px; color:#fff; font-weight:600; margin-top:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sticky .btn { padding:14px 22px; font-size:16px; }
+/* ---- phones ---- */
+@media (max-width:600px) {
+  section { padding:44px 0; }
+  .hero .in { padding-bottom:96px; }
+  .hero .cta { flex-direction:column; align-items:stretch; padding:0 6px; }
+  .hero .cta .btn { width:100%; }
+  .value li { font-size:16px; padding:9px 13px; }
+  .h2 { margin-bottom:24px; }
+  .steps { gap:14px; }
+  .card img { aspect-ratio:4/3; }
+  .card .b { padding:14px 16px 18px; }
+  .det { padding:22px 18px; }
+  .bookbox { padding:22px 18px; }
+  .bookbox .btn { padding:19px 20px; font-size:19px; }
+  .gift { padding:24px 18px; }
+  .gift .btn { width:100%; }
+  footer { padding-bottom:110px; }
+}
 </style>
 </head>
 <body>
@@ -204,7 +238,8 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
       <li>No experience needed · kids welcome with a parent</li>
     </ul>
     <div class="seatbar" id="seatbar"><div class="lbl" id="seatLbl"></div><div class="track"><div class="fill" id="seatFill"></div></div></div>
-    <div class="cta"><a class="btn" href="#book" id="heroBook">Book now</a><a class="btn wa" id="heroWa" href="#" target="_blank" rel="noopener">Book on WhatsApp</a></div>
+    <div class="cta"><a class="btn big shine" href="#book" id="heroBook">Book now</a></div>
+    <p class="secure">🔒 Secure payment via Razorpay · UPI, cards &amp; netbanking</p>
   </div>
 </header>
 
@@ -248,7 +283,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
       <h3>Book your ticket</h3>
       <p class="s">Tap <b>Book now</b> to pay securely on Razorpay (UPI, cards, netbanking). After payment you come straight back here to download your e-ticket.</p>
       <div id="totalRow" style="display:none"><b id="totalAmt"></b></div>
-      <a class="btn" id="bookNow" href="#" style="width:100%">Book now</a>
+      <a class="btn big shine" id="bookNow" href="#" style="width:100%">Book now</a>
       <div class="trust"><span>🔒 Secure payment via Razorpay</span><span>📧 Receipt by email</span><span>🎟️ E-ticket after payment</span></div>
     </div>
   </div>
@@ -310,8 +345,8 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   <div class="gift">
     <span class="kicker">Christmas gift idea</span>
     <div class="it" style="font-size:clamp(30px,5vw,42px);color:var(--gold-l);line-height:1.1;margin-top:6px">Gift a seat to someone special</div>
-    <p>A Christmas experience instead of another thing: your friend, mum, sister or partner makes their own advent calendar. Book in their name, and we'll send them a lovely invite on WhatsApp.</p>
-    <a class="btn wa" id="giftWa" href="#" target="_blank" rel="noopener">Gift a seat on WhatsApp</a>
+    <p>A Christmas experience instead of another thing: your friend, mum, sister or partner makes their own advent calendar. Book a seat, enter their name for the e-ticket, and share it with them.</p>
+    <a class="btn shine" id="giftBook" href="#book">Gift a seat 🎁</a>
   </div>
 </div></section>
 
@@ -319,7 +354,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   <div class="h2"><span class="kicker">FAQ</span><span class="it">Good to know</span></div>
   <details><summary>What's included in ₹999?</summary><p>The 2-hour guided workshop, all 24 kinds of props and gifts, the gift bags or goodies box, and ₹100 of redeemable food &amp; beverage at Stuff idly India. Everything you make goes home with you.</p></details>
   <details><summary>Do I need to bring anything?</summary><p>Nothing at all. Just bring yourself (and your friends!). Everything is set up for you.</p></details>
-  <details><summary>Can I gift a seat?</summary><p>Yes! Book in your friend's name or message us on WhatsApp, and we'll send them an invite.</p></details>
+  <details><summary>Can I gift a seat?</summary><p>Yes! Tap Book now, pay, and enter your friend's name when you create the e-ticket. Then share the ticket with them.</p></details>
   <details><summary>What is an advent calendar?</summary><p>A Christmas countdown: one small surprise to open every day in December until Christmas. At this workshop you create the whole calendar yourself.</p></details>
   <details><summary>Do I need any craft experience?</summary><p>Not at all. Everything is set up for you and our team guides you through each step.</p></details>
   <details><summary>Can I bring my kids?</summary><p>Yes, the workshop is fun for all ages. Please book a seat for each participant.</p></details>
@@ -336,7 +371,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   <p style="margin-top:14px;font-size:14px;opacity:.7">Images are for illustration only.</p>
 </footer>
 
-<div class="sticky"><div class="t"><b>Sun 29 Nov · 5–7 PM</b><br>Stuff idly India, Kondapur</div><div class="acts"><a class="btn wa" id="stickyWa" href="#" target="_blank" rel="noopener" aria-label="Book on WhatsApp">WhatsApp</a><a class="btn" href="#book" id="stickyBook">Book now</a></div></div>
+<div class="sticky"><div class="t"><b id="stPrice">₹999</b><span> per person</span><small>Sun 29 Nov · 5–7 PM · Kondapur</small></div><a class="btn shine" href="#book" id="stickyBook">Book now</a></div>
 
 <script>
 (function () {
@@ -351,12 +386,9 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
     return E.WHATSAPP_NUMBER ? "https://wa.me/" + E.WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text) : E.IG_DM;
   }
   var bookMsg = "Hi! I'd like to book the Christmas Advent Calendar Workshop on Sun 29 Nov (5–7 PM) 🎄";
-  ["heroWa", "stickyWa"].forEach(function (id) { $(id).href = chat(bookMsg); });
-  $("giftWa").href = chat("Hi! I'd like to GIFT a seat for the Christmas Advent Calendar Workshop on 29 Nov 🎁");
-  if (!E.WHATSAPP_NUMBER) { $("heroWa").textContent = "Book via Instagram DM"; $("stickyWa").textContent = "DM"; $("giftWa").textContent = "Gift a seat via DM"; }
-  if (E.PRICE) $("heroBook").textContent = "Book now · " + E.PRICE;
+  if (E.PRICE) { $("heroBook").textContent = "Book now · " + E.PRICE; $("stPrice").textContent = E.PRICE; }
   // every "Book now" button goes straight to the Razorpay Payment Page
-  ["heroBook", "stickyBook", "bookNow"].forEach(function (id) { $(id).href = live ? E.PAYMENT_PAGE_URL : chat(bookMsg); if (!live) $(id).target = "_blank"; });
+  ["heroBook", "stickyBook", "bookNow", "giftBook"].forEach(function (id) { $(id).href = live ? E.PAYMENT_PAGE_URL : chat(bookMsg); if (!live) $(id).target = "_blank"; });
   // honest seat counter
   var tot = parseInt(E.TOTAL_SEATS, 10), bk = parseInt(E.SEATS_BOOKED, 10);
   if (tot && !isNaN(bk)) {
