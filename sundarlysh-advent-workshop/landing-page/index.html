@@ -190,6 +190,8 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
 @keyframes pulse { 0%,100% { box-shadow:0 8px 24px rgba(0,0,0,.35), 0 0 0 0 rgba(240,216,160,.55); } 50% { box-shadow:0 8px 24px rgba(0,0,0,.35), 0 0 0 10px rgba(240,216,160,0); } }
 @media (prefers-reduced-motion: reduce) { .btn.shine, .btn.shine::after { animation:none; } }
 .secure { margin-top:12px; font-size:14px; color:#EBD6CD; }
+.paidlink { display:inline-block; margin-top:10px; padding:8px 14px; border-radius:30px; background:rgba(240,216,160,.12); border:1px solid rgba(240,216,160,.5); color:var(--gold-l); font-size:15px; text-decoration:none; }
+.btn.ghost2 { background:transparent; color:var(--plum); border:2px solid var(--plum); box-shadow:none; margin-top:12px; font-size:15px; padding:14px 18px; letter-spacing:.06em; }
 /* ---- bottom bar ---- */
 .sticky { padding:10px 14px calc(10px + env(safe-area-inset-bottom)); gap:12px; box-shadow:0 -8px 24px rgba(0,0,0,.45); }
 .sticky .t { line-height:1.15; min-width:0; }
@@ -240,6 +242,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
     <div class="seatbar" id="seatbar"><div class="lbl" id="seatLbl"></div><div class="track"><div class="fill" id="seatFill"></div></div></div>
     <div class="cta"><a class="btn big shine" href="#book" id="heroBook">Book now</a></div>
     <p class="secure">🔒 Secure payment via Razorpay · UPI, cards &amp; netbanking</p>
+    <a class="paidlink" href="?paid=1">Already paid? <b>Get your e-ticket →</b></a>
   </div>
 </header>
 
@@ -284,6 +287,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
       <p class="s">Tap <b>Book now</b> to pay securely on Razorpay (UPI, cards, netbanking). After payment you come straight back here to download your e-ticket.</p>
       <div id="totalRow" style="display:none"><b id="totalAmt"></b></div>
       <a class="btn big shine" id="bookNow" href="#" style="width:100%">Book now</a>
+      <a class="btn ghost2" href="?paid=1" style="width:100%">Already paid? Get your e-ticket</a>
       <div class="trust"><span>🔒 Secure payment via Razorpay</span><span>📧 Receipt by email</span><span>🎟️ E-ticket after payment</span></div>
     </div>
   </div>
@@ -359,7 +363,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   <details><summary>Do I need any craft experience?</summary><p>Not at all. Everything is set up for you and our team guides you through each step.</p></details>
   <details><summary>Can I bring my kids?</summary><p>Yes, the workshop is fun for all ages. Please book a seat for each participant.</p></details>
   <details><summary>What do I take home?</summary><p>Your own handmade advent calendar: decorated gift bags or a goodies box filled with surprises you chose.</p></details>
-  <details><summary>How do I get my ticket?</summary><p>As soon as your payment goes through, your e-ticket appears on this page (you can download it as a PDF) and a copy is emailed to you. Please show it at entry, on your phone or printed. Questions? DM us on Instagram.</p></details>
+  <details><summary>How do I get my ticket?</summary><p>After paying you're brought back here to create your e-ticket (download it as a PDF). If you paid with a UPI app and weren't brought back, just tap <b>“Already paid? Get your e-ticket”</b> on this page. Razorpay also emails your payment receipt. Please show your ticket at entry.</p></details>
   <details><summary>Is the payment secure?</summary><p>Yes. Payments are handled by Razorpay (UPI, cards, netbanking, wallets). We never see your card or UPI details.</p></details>
 </div></section>
 
