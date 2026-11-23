@@ -117,14 +117,14 @@ section { padding:64px 0; }
 .det .note { font-size:15px; color:#EBD6CD; }
 .det .eb { margin-top:16px; background:rgba(6,34,26,.7); border:1px dashed var(--gold); border-radius:12px; padding:12px; font-size:16px; }
 .det .eb b { color:var(--gold-l); letter-spacing:.12em; }
-form { background:var(--cream); color:var(--ink); border-radius:18px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.35); }
-form h3 { font-family:"Cinzel",serif; font-weight:800; font-size:26px; color:var(--plum); }
-form p.s { font-size:16px; color:#6c5560; margin:4px 0 16px; }
+form, .bookbox { background:var(--cream); color:var(--ink); border-radius:18px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.35); }
+form h3, .bookbox h3 { font-family:"Cinzel",serif; font-weight:800; font-size:26px; color:var(--plum); }
+form p.s, .bookbox p.s { font-size:16px; color:#6c5560; margin:4px 0 16px; }
 label { display:block; font-size:14px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--plum); margin:12px 0 6px; }
 input, select { width:100%; padding:13px 14px; border:1.5px solid #d9c6cc; border-radius:10px; font:600 19px "Montserrat",sans-serif; color:var(--ink); background:#fff; }
 input:focus, select:focus { outline:2px solid var(--gold); border-color:var(--gold); }
 .row2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-form .btn { width:100%; margin-top:20px; }
+form .btn, .bookbox .btn { width:100%; margin-top:20px; }
 .msg { margin-top:14px; font-size:16px; font-weight:600; display:none; }
 .msg.show { display:block; }
 .consent { font-size:14px; color:#6c5560; margin-top:10px; }
@@ -178,6 +178,9 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
 .sent { text-align:center; color:#EBD6CD; margin-top:12px; font-size:16px; }
 .spin { width:64px; height:64px; margin:0 auto 16px; border-radius:50%; border:6px solid rgba(240,216,160,.25); border-top-color:var(--gold-l); animation:sp 1s linear infinite; }
 @keyframes sp { to { transform:rotate(360deg); } }
+/* focused screens after payment: only the form / confirmation / ticket */
+body.focus header.hero, body.focus section:not(#claimView):not(#confirmView):not(#ticketView), body.focus .sticky { display:none !important; }
+body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding-top:40px; }
 </style>
 </head>
 <body>
@@ -201,7 +204,7 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
       <li>No experience needed · kids welcome with a parent</li>
     </ul>
     <div class="seatbar" id="seatbar"><div class="lbl" id="seatLbl"></div><div class="track"><div class="fill" id="seatFill"></div></div></div>
-    <div class="cta"><a class="btn" href="#book" id="heroBook">Book my seat</a><a class="btn wa" id="heroWa" href="#" target="_blank" rel="noopener">Book on WhatsApp</a></div>
+    <div class="cta"><a class="btn" href="#book" id="heroBook">Book now</a><a class="btn wa" id="heroWa" href="#" target="_blank" rel="noopener">Book on WhatsApp</a></div>
   </div>
 </header>
 
@@ -241,25 +244,32 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
         <div class="o" id="friendOffer" style="display:none"></div>
       </div>
     </div>
-    <form id="regForm" novalidate>
+    <div class="bookbox">
       <h3>Book your ticket</h3>
-      <p class="s" id="formSub">Takes 30 seconds. Pay securely and get your e-ticket instantly.</p>
-      <label for="name">Full name</label><input id="name" name="name" autocomplete="name" required>
-      <label for="email">Email <span style="text-transform:none;letter-spacing:0;font-weight:600">(your ticket is sent here)</span></label><input id="email" name="email" type="email" autocomplete="email" required>
-      <div class="row2">
-        <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Mobile no." required></div>
-        <div><label for="seats">Seats</label><select id="seats" name="seats"></select></div>
-      </div>
-      <label for="kids">Bringing kids?</label><select id="kids" name="kids"><option value="No">No</option><option value="Yes">Yes</option></select>
-      <div class="total" id="totalRow">Total <b id="totalAmt"></b></div>
-      <button class="btn" type="submit" id="submitBtn">Book your ticket</button>
-      <div class="or" id="orSep">OR</div>
-      <a class="btn wa" id="formWa" href="#" target="_blank" rel="noopener" style="width:100%">Book on WhatsApp</a>
-      <div class="trust"><span id="trustPay">🔒 Secure payment via Razorpay</span><span id="trustTicket">🎟️ Instant e-ticket + email copy</span><span>🎁 Gift a seat to someone</span></div>
-      <p class="consent">By booking you agree to be contacted on WhatsApp and email about this workshop.</p>
-      <p class="msg" id="msg"></p>
-    </form>
+      <p class="s">Tap <b>Book now</b> to pay securely on Razorpay (UPI, cards, netbanking). After payment you come straight back here to download your e-ticket.</p>
+      <div id="totalRow" style="display:none"><b id="totalAmt"></b></div>
+      <a class="btn" id="bookNow" href="#" style="width:100%">Book now</a>
+      <div class="trust"><span>🔒 Secure payment via Razorpay</span><span>📧 Receipt by email</span><span>🎟️ E-ticket after payment</span></div>
+    </div>
   </div>
+</div></section>
+
+<section id="claimView" style="display:none"><div class="wrap" style="max-width:560px">
+  <div class="ok">
+    <div class="okic">✓</div>
+    <div class="it" style="font-size:clamp(30px,6vw,44px);color:var(--gold-l);line-height:1.1">Payment done! 🎄</div>
+    <p>One last step: enter your name to create your e-ticket.</p>
+  </div>
+  <form id="claimForm" novalidate>
+    <label for="cName">Full name</label><input id="cName" autocomplete="name" required>
+    <div class="row2">
+      <div><label for="cSeats">Tickets bought</label><select id="cSeats"></select></div>
+      <div><label for="cPhone">Phone <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label><input id="cPhone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Mobile no."></div>
+    </div>
+    <label for="cEmail" id="cEmailL">Email <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label><input id="cEmail" type="email" autocomplete="email">
+    <button class="btn" type="submit" id="cBtn">Get my e-ticket</button>
+    <p class="msg" id="cErr"></p>
+  </form>
 </div></section>
 
 <section id="confirmView" style="display:none"><div class="wrap" style="max-width:560px">
@@ -326,7 +336,7 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
   <p style="margin-top:14px;font-size:14px;opacity:.7">Images are for illustration only.</p>
 </footer>
 
-<div class="sticky"><div class="t"><b>Sun 29 Nov · 5–7 PM</b><br>Stuff idly India, Kondapur</div><div class="acts"><a class="btn wa" id="stickyWa" href="#" target="_blank" rel="noopener" aria-label="Book on WhatsApp">WhatsApp</a><a class="btn" href="#book">Book now</a></div></div>
+<div class="sticky"><div class="t"><b>Sun 29 Nov · 5–7 PM</b><br>Stuff idly India, Kondapur</div><div class="acts"><a class="btn wa" id="stickyWa" href="#" target="_blank" rel="noopener" aria-label="Book on WhatsApp">WhatsApp</a><a class="btn" href="#book" id="stickyBook">Book now</a></div></div>
 
 <script>
 (function () {
@@ -341,10 +351,12 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     return E.WHATSAPP_NUMBER ? "https://wa.me/" + E.WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text) : E.IG_DM;
   }
   var bookMsg = "Hi! I'd like to book the Christmas Advent Calendar Workshop on Sun 29 Nov (5–7 PM) 🎄";
-  ["heroWa", "formWa", "stickyWa"].forEach(function (id) { $(id).href = chat(bookMsg); });
+  ["heroWa", "stickyWa"].forEach(function (id) { $(id).href = chat(bookMsg); });
   $("giftWa").href = chat("Hi! I'd like to GIFT a seat for the Christmas Advent Calendar Workshop on 29 Nov 🎁");
-  if (!E.WHATSAPP_NUMBER) { $("heroWa").textContent = "Book via Instagram DM"; $("formWa").textContent = "Book via Instagram DM"; $("stickyWa").textContent = "DM"; $("giftWa").textContent = "Gift a seat via DM"; }
-  if (E.PRICE) $("heroBook").textContent = "Book my seat · " + E.PRICE;
+  if (!E.WHATSAPP_NUMBER) { $("heroWa").textContent = "Book via Instagram DM"; $("stickyWa").textContent = "DM"; $("giftWa").textContent = "Gift a seat via DM"; }
+  if (E.PRICE) $("heroBook").textContent = "Book now · " + E.PRICE;
+  // every "Book now" button goes straight to the Razorpay Payment Page
+  ["heroBook", "stickyBook", "bookNow"].forEach(function (id) { $(id).href = live ? E.PAYMENT_PAGE_URL : chat(bookMsg); if (!live) $(id).target = "_blank"; });
   // honest seat counter
   var tot = parseInt(E.TOTAL_SEATS, 10), bk = parseInt(E.SEATS_BOOKED, 10);
   if (tot && !isNaN(bk)) {
@@ -362,20 +374,11 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     $("cd").textContent = dd + "d " + String(hh).padStart(2, "0") + "h " + String(mm).padStart(2, "0") + "m " + String(ss).padStart(2, "0") + "s";
   }
   tick(); setInterval(tick, 1000);
-  // ---------- seats + total
-  for (var i = 1; i <= (E.MAX_SEATS || 6); i++) { var o = document.createElement("option"); o.textContent = i; $("seats").appendChild(o); }
   function inr(n) { return "₹" + Number(n).toLocaleString("en-IN"); }
-  function updTotal() { $("totalAmt").textContent = inr(E.PRICE_PER_SEAT * parseInt($("seats").value, 10)); }
-  $("seats").addEventListener("change", updTotal); updTotal();
-  if (!E.PRICE) $("totalRow").style.display = "none";
-
-  if (!live) {
-    $("orSep").style.display = "none"; $("formWa").style.display = "none"; $("trustPay").style.display = "none"; $("trustTicket").style.display = "none";
-    $("submitBtn").textContent = "Reserve via WhatsApp / DM";
-    $("formSub").textContent = "Online booking opens soon. Leave your details and we'll confirm your seat on WhatsApp.";
-  }
-  function show(t, ok) { var m = $("msg"); m.textContent = t; m.style.color = ok ? "#1E6B48" : "#A3263A"; m.className = "msg show"; }
-  function busy(on, t) { $("submitBtn").disabled = on; $("submitBtn").textContent = on ? (t || "Please wait…") : "Book your ticket"; }
+  $("totalAmt").textContent = E.PRICE ? E.PRICE + " per person" : ""; if (!E.PRICE) $("totalRow").style.display = "none";
+  for (var i = 1; i <= (E.MAX_SEATS || 6); i++) { var o = document.createElement("option"); o.textContent = i; $("cSeats").appendChild(o); }
+  if (E.TICKET_API_URL) { $("cEmailL").innerHTML = 'Email <span style="text-transform:none;letter-spacing:0;font-weight:600">(your ticket is sent here)</span>'; }
+  function cErr(t) { var m = $("cErr"); m.textContent = t; m.style.color = "#A3263A"; m.className = "msg show"; }
 
   // ---------- optional ticket backend (Google Apps Script: numbers, saves and emails tickets)
   function api(payload) {
@@ -398,13 +401,13 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     $("tSeats").textContent = t.seats + (t.seats == 1 ? " person" : " people");
     $("tAmt").textContent = inr(t.amount); $("tPayL").textContent = t.payment_id ? "Payment ID" : "Booking ref"; $("tPay").textContent = t.payment_id || t.ref;
     $("tNote").textContent = "Please show this ticket at entry (on your phone or printed). Includes ₹100 redeemable food & beverage per person at " + (t.venue || E.VENUE) + ". Doors open 4:45 PM.";
-    $("tMail").textContent = t.email_sent ? "📧 A copy of your ticket has been emailed to " + t.email + ". Razorpay also emails your payment receipt." : "📧 Razorpay has emailed your payment receipt to " + t.email + ". Please download your ticket above and keep it handy.";
+    $("tMail").textContent = t.email_sent ? "📧 A copy of your ticket has been emailed to " + t.email + ". Razorpay also emails your payment receipt." : "📧 Razorpay has emailed your payment receipt. Please download your ticket above and keep it handy.";
     if (!fresh) $("okMsg").textContent = "Here's your ticket. See you on 29 November!";
-    $("book").style.display = "none"; $("ticketView").style.display = "block"; var st = document.querySelector(".sticky"); if (st) st.style.display = "none";
+    document.body.classList.add("focus"); $("book").style.display = "none"; $("claimView").style.display = "none"; $("ticketView").style.display = "block"; var st = document.querySelector(".sticky"); if (st) st.style.display = "none";
     store("sm_ticket", t);
     var u = new URL(location.href); ["paid", "demo", "razorpay_payment_id", "payment_id"].forEach(function (k) { u.searchParams.delete(k); });
     u.searchParams.set("ticket", t.ticket_no); u.searchParams.set("key", t.ref || t.payment_id); history.replaceState(null, "", u.toString());
-    setTimeout(function () { $("ticketView").scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+    window.scrollTo(0, 0);
   }
 
   // ---------- PDF ticket (jsPDF, loaded only when needed)
@@ -456,7 +459,7 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
       return done({ ticket_no: "SM-ADV-" + p.ref.slice(-6), ref: p.ref, name: p.name, email: p.email, seats: p.seats, amount: p.amount, payment_id: "", email_sent: false });
     }
     // verified: the backend asks Razorpay for a real payment from this email/phone before issuing a ticket
-    $("book").style.display = "none"; $("confirmView").style.display = "block"; $("confirmView").scrollIntoView();
+    document.body.classList.add("focus"); $("book").style.display = "none"; $("claimView").style.display = "none"; $("confirmView").style.display = "block"; window.scrollTo(0, 0);
     var st = document.querySelector(".sticky"); if (st) st.style.display = "none";
     var tries = 0, MAX = 20;
     function ui(title, msg, spinning, retry) { $("cTitle").textContent = title; $("cMsg").textContent = msg; $("cSpin").style.display = spinning ? "block" : "none"; $("cRetry").style.display = retry ? "inline-flex" : "none"; }
@@ -478,13 +481,10 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
   if (qp.get("demo") === "1") {
     showTicket({ ticket_no: "SM-ADV-001", ref: "SMDEMO123", name: "Sample Guest", email: "guest@example.com", seats: 2, amount: 2 * E.PRICE_PER_SEAT, payment_id: "", email_sent: true }, true);
   } else if (qp.get("paid") === "1") {
-    var saved = load("sm_ticket"), pend = load("sm_pending");
-    if (pend) finish(pend);
-    else if (saved) showTicket(saved, false);
-    else {   // paid on another device/browser: ask for the details used on the payment page
-      $("formSub").textContent = "Payment done? Enter the same details you used on the payment page to get your ticket.";
-      $("submitBtn").textContent = "Get my ticket"; $("orSep").style.display = "none"; $("formWa").style.display = "none";
-      window.__claim = true; setTimeout(function () { $("book").scrollIntoView(); }, 50);
+    var saved = load("sm_ticket");
+    if (saved) showTicket(saved, false);
+    else {   // back from the Razorpay Payment Page: ask for the name to put on the ticket
+      document.body.classList.add("focus"); $("book").style.display = "none"; $("claimView").style.display = "block"; window.scrollTo(0, 0);
     }
   } else if (qp.get("ticket") && qp.get("key")) {
     var sv = load("sm_ticket");
@@ -492,28 +492,16 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     else if (E.TICKET_API_URL) api({ action: "lookup", ticket_no: qp.get("ticket"), key: qp.get("key") }).then(function (j) { showTicket(j.ticket, false); }).catch(function () {});
   }
 
-  // ---------- booking: save details, then go to the Razorpay Payment Page with them pre-filled
-  $("regForm").addEventListener("submit", function (e) {
+  // ---------- after payment: create the e-ticket
+  $("claimForm").addEventListener("submit", function (e) {
     e.preventDefault();
-    var f = e.target, name = f.name.value.trim(), phone = f.phone.value.replace(/\D/g, "").slice(-10), email = f.email.value.trim(), seats = parseInt(f.seats.value, 10);
-    if (name.length < 2) return show("Please enter your name.");
-    if (live && !/^\S+@\S+\.\S+$/.test(email)) return show("Please enter a valid email, so we can send your ticket.");
-    if (phone.length < 10) return show("Please enter a valid 10-digit WhatsApp number.");
-    if (!live) { window.open(chat(bookMsg + "\nName: " + name + "\nSeats: " + seats + "\nKids: " + f.kids.value), "_blank"); return; }
-    var p = { ref: makeRef(), name: name, email: email, phone: phone, seats: seats, kids: f.kids.value, amount: seats * E.PRICE_PER_SEAT, source: src, ts: Date.now() };
-    if (window.__claim) { finish(p, true); return; }
-    store("sm_pending", p); store("sm_ticket", null);
-    busy(true, "Opening secure payment…");
-    var go = function () {
-      var F = E.PREFILL || {}, q = [];   // encodeURIComponent: spaces become %20, as Razorpay expects
-      var add = function (k, v) { if (k) q.push(encodeURIComponent(k) + "=" + encodeURIComponent(v)); };
-      add(F.name, name); add(F.email, email); add(F.phone, phone); if (E.QTY_FIELD) add(E.QTY_FIELD, String(seats));
-      location.href = E.PAYMENT_PAGE_URL + (E.PAYMENT_PAGE_URL.indexOf("?") < 0 ? "?" : "&") + q.join("&");
-    };
-    if (E.TICKET_API_URL) {   // log the booking attempt first (helps match payments later); never block on it
-      var t = setTimeout(go, 2500);
-      api(Object.assign({ action: "pending" }, p)).catch(function () {}).then(function () { clearTimeout(t); go(); });
-    } else go();
+    var name = $("cName").value.trim(), email = $("cEmail").value.trim(), phone = $("cPhone").value.replace(/\D/g, "").slice(-10), seats = parseInt($("cSeats").value, 10);
+    if (name.length < 2) return cErr("Please enter your name.");
+    if (E.TICKET_API_URL && !/^\S+@\S+\.\S+$/.test(email)) return cErr("Please enter your email, so we can send your ticket.");
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) return cErr("Please check your email.");
+    if (phone && phone.length < 10) return cErr("Please check the phone number (10 digits), or leave it empty.");
+    $("cBtn").disabled = true; $("cBtn").textContent = "Creating your ticket…";
+    finish({ ref: makeRef(), name: name, email: email, phone: phone, seats: seats, kids: "", amount: seats * E.PRICE_PER_SEAT, source: src }, true);
   });
 })();
 </script>

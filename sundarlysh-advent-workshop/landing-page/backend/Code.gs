@@ -207,7 +207,7 @@ function clean(d) {
   if (!b.ref) throw new Error("Missing booking reference");
   if (b.name.length < 2) throw new Error("Please enter your name.");
   if (!/^\S+@\S+\.\S+$/.test(b.email)) throw new Error("Please enter a valid email.");
-  if (b.phone.length !== 10) throw new Error("Please enter a valid 10-digit phone number.");
+  if (b.phone && b.phone.length !== 10) throw new Error("Please check the phone number (10 digits).");
   if (!(seats >= 1 && seats <= CFG.MAX_SEATS)) throw new Error("Please choose 1–" + CFG.MAX_SEATS + " seats.");
   return b;
 }

@@ -2,13 +2,13 @@
 
 **Event:** Christmas Advent Calendar Workshop · Sunday 29 Nov 2026 · 5–7 PM · **Stuff idly India, Kondapur, Hyderabad** · **₹999 per person** (includes ₹100 redeemable food & beverage).
 
-## How booking works (no Razorpay API keys needed)
-1. On this page the visitor enters name, email, WhatsApp number and seats, sees the total, and taps **Book your ticket**.
-2. They're sent to **your Razorpay Payment Page** with **name, email and phone already filled in**. They choose the number of tickets there and pay.
-3. Razorpay redirects them **back to this page**, which shows **"You're in!"** with their **ticket** (ticket number, name, date, time, venue, people, amount) and a **Download ticket (PDF)** button. Refreshing or reopening the ticket link shows the same ticket.
-4. **Payment check + email:** with the Google Apps Script backend (`backend/Code.gs`), the ticket appears **only after Razorpay confirms the payment**. It's then emailed as a PDF from your Gmail, numbered in order (SM-ADV-001, 002…) and saved in a Google Sheet. Razorpay also emails its own receipt.
+## How booking works
+1. Every **Book now** button on the page opens **your Razorpay Payment Page** (`pages.razorpay.com/pl_TrTGmhhveQIklu/view`). The customer fills in their details and pays there.
+2. Razorpay sends them **back to this page** (`?paid=1`). The page shows **"Payment done!"** and asks for their **name** (plus optional phone and email) and the **number of tickets bought**.
+3. It then shows their **e-ticket** with a **Download ticket (PDF)** button. Refreshing or reopening the ticket link shows the same ticket.
+4. Razorpay emails every payer its official receipt. With the optional Google Apps Script backend, the ticket PDF is also emailed and every booking is saved in a Google Sheet.
 
-To preview the success screen, open the page with `?demo=1`.
+To preview the ticket screen, open the page with `?demo=1`.
 
 ## Setup
 
