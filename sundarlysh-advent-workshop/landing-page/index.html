@@ -4,22 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Christmas Advent Calendar Workshop · Sundarlysh Memories</title>
-<meta name="description" content="Hyderabad's first Christmas Advent Calendar Workshop. Create 24 little surprises yourself. Sunday 29 November, 5–7 PM, Van Lavino Café & Patisserie, Financial District.">
+<meta name="description" content="Hyderabad's first Christmas Advent Calendar Workshop. Create 24 little surprises yourself. Sunday 29 November, 5–7 PM, Stuff idly India, Kondapur, Hyderabad.">
 <meta property="og:title" content="The Christmas Advent Calendar Workshop · Sundarlysh Memories">
-<meta property="og:description" content="First time ever in Hyderabad · Sunday 29 Nov · 5–7 PM · Van Lavino Café & Patisserie, Financial District">
+<meta property="og:description" content="First time ever in Hyderabad · Sunday 29 Nov · 5–7 PM · Stuff idly India, Kondapur">
 <meta property="og:image" content="img/hero.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Montserrat:wght@500;600;700;800&family=Playfair+Display:ital,wght@1,600;1,800&display=swap" rel="stylesheet">
 <script>
 /* =====================  SETTINGS: edit before going live  ===================== */
 window.EVENT = {
-  // Google Apps Script web-app URL that saves registrations to a Google Sheet (see README). Leave "" to skip.
-  SHEET_ENDPOINT: "",
-  // Razorpay Payment Page / Payment Link URL created in the Razorpay dashboard. Leave "" until approved.
-  PAYMENT_URL: "",
-  // Shown on the page. Set PRICE to "" to hide the price.
-  PRICE: "₹1,399",
-  PRICE_NOTE: "per person · includes a ₹500 food voucher at the café",
+  // Google Apps Script web-app URL (the ticket backend in backend/Code.gs, see README).
+  // While it's "", online payment is off and the button opens WhatsApp / Instagram DM instead.
+  API_URL: "",
+  // Price per seat in rupees. The backend has its own copy and is the one that decides the amount charged.
+  PRICE_PER_SEAT: 999,
+  MAX_SEATS: 6,
+  // Shown on the page. Set PRICE to "" to hide the price block.
+  PRICE: "₹999",
+  PRICE_NOTE: "per person · includes ₹100 redeemable food & beverage at Stuff idly India",
+  EVENT_NAME: "Christmas Advent Calendar Workshop",
+  DATE_TEXT: "Sunday, 29 November 2026",
+  TIME_TEXT: "5:00 PM – 7:00 PM",
+  VENUE: "Stuff idly India",
+  AREA: "Kondapur, Hyderabad",
   INSTAGRAM: "https://www.instagram.com/sundarlyshmemories/",
   IG_DM: "https://ig.me/m/sundarlyshmemories",          // opens an Instagram DM straight away
   // Business WhatsApp number with country code, digits only, e.g. "919876543210". Leave "" to use Instagram DM instead.
@@ -145,6 +152,22 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
 .trust { display:flex; flex-wrap:wrap; justify-content:center; gap:8px 16px; margin-top:12px; font-size:14px; color:#6c5560; font-weight:700; }
 .gift { background:linear-gradient(135deg,#7A1E50,#45012A); border:2px solid var(--gold); border-radius:18px; padding:26px; text-align:center; }
 .gift p { color:#F4E4DA; max-width:560px; margin:8px auto 16px; font-size:18px; }
+.total { display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding:12px 14px; border-radius:10px; background:#f4e9ee; color:var(--plum); font-weight:800; font-size:17px; }
+.total b { font-size:22px; }
+.ok { text-align:center; margin-bottom:20px; }
+.ok p { color:#F4E4DA; font-size:18px; margin-top:8px; }
+.okic { width:72px; height:72px; margin:0 auto 12px; border-radius:50%; background:#1FAF5A; color:#fff; font-size:40px; font-weight:800; line-height:72px; box-shadow:0 0 0 6px rgba(31,175,90,.25); }
+.ticket { background:var(--cream); color:var(--ink); border-radius:18px; overflow:hidden; box-shadow:0 14px 40px rgba(0,0,0,.45); border:2px solid var(--gold); }
+.ticket .th { display:flex; align-items:center; gap:14px; background:linear-gradient(135deg,#7A1E50,#45012A); color:var(--gold-l); padding:16px 20px; }
+.ticket .th img { width:56px; height:56px; border-radius:50%; box-shadow:0 0 0 2px var(--gold); }
+.ticket .tt { font-size:28px; color:var(--plum); padding:18px 20px 4px; line-height:1.15; }
+.ticket .tg { display:grid; grid-template-columns:1fr 1fr; gap:14px 18px; padding:14px 20px 18px; border-bottom:2px dashed #d9c6cc; }
+.ticket .tg .w2 { grid-column:1 / -1; }
+.ticket .tg span { display:block; font-size:12px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#8a6f7a; }
+.ticket .tg b { font-size:18px; color:var(--ink); }
+.ticket .tno { font-size:24px !important; color:var(--plum) !important; letter-spacing:.04em; }
+.ticket .tn { padding:14px 20px 18px; font-size:15px; color:#6c5560; }
+.sent { text-align:center; color:#EBD6CD; margin-top:12px; font-size:16px; }
 </style>
 </head>
 <body>
@@ -159,11 +182,11 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     <h1><span class="it">The Christmas</span><span class="cz foil">ADVENT CALENDAR WORKSHOP</span></h1>
     <p class="sub">24 little surprises, one to open every day till Christmas, and you make every one of them yourself.</p>
     <div class="facts">
-      <span><b>SUN</b> · 29 November</span><span><b>5 PM – 7 PM</b></span><span>Van Lavino Café &amp; Patisserie · <b>Financial District, Hyderabad</b></span>
+      <span><b>SUN</b> · 29 November</span><span><b>5 PM – 7 PM</b></span><span>Stuff idly India · <b>Kondapur, Hyderabad</b></span>
     </div>
     <ul class="value">
       <li>All 24 kinds of props &amp; gifts included</li>
-      <li>₹500 food voucher at Van Lavino Café</li>
+      <li>₹100 redeemable food &amp; beverage at Stuff idly India</li>
       <li>You take your finished advent calendar home</li>
       <li>No experience needed · kids welcome with a parent</li>
     </ul>
@@ -200,8 +223,8 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
       <div class="kicker">Sunday</div>
       <div class="date cz foil">29 NOVEMBER</div>
       <div class="time">5 PM – 7 PM</div>
-      <div class="ven it">Van Lavino Café &amp; Patisserie</div>
-      <div class="loc">Financial District, Hyderabad</div>
+      <div class="ven it">Stuff idly India</div>
+      <div class="loc">Kondapur, Hyderabad</div>
       <div id="priceBlock"><hr><div class="price" id="price"></div><div class="note" id="priceNote"></div></div>
       <div class="offers">
         <div class="o"><b>EARLY BIRD OFFER</b><br>The first 5 bookings get <b>10% off</b> any Sundarlysh Memories workshop in December.</div>
@@ -209,23 +232,49 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
       </div>
     </div>
     <form id="regForm" novalidate>
-      <h3>Book your seat</h3>
-      <p class="s" id="formSub">Takes 30 seconds. Your seat is confirmed on WhatsApp.</p>
+      <h3>Book your ticket</h3>
+      <p class="s" id="formSub">Takes 30 seconds. Pay securely and get your e-ticket instantly.</p>
       <label for="name">Full name</label><input id="name" name="name" autocomplete="name" required>
+      <label for="email">Email <span style="text-transform:none;letter-spacing:0;font-weight:600">(your ticket is sent here)</span></label><input id="email" name="email" type="email" autocomplete="email" required>
       <div class="row2">
         <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Mobile no." required></div>
-        <div><label for="seats">Seats</label><select id="seats" name="seats"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
+        <div><label for="seats">Seats</label><select id="seats" name="seats"></select></div>
       </div>
-      <label for="email">Email <span style="text-transform:none;letter-spacing:0;font-weight:600">(optional)</span></label><input id="email" name="email" type="email" autocomplete="email">
       <label for="kids">Bringing kids?</label><select id="kids" name="kids"><option value="No">No</option><option value="Yes">Yes</option></select>
-      <button class="btn" type="submit" id="submitBtn">Continue to payment</button>
+      <div class="total" id="totalRow">Total <b id="totalAmt"></b></div>
+      <button class="btn" type="submit" id="submitBtn">Book your ticket</button>
       <div class="or" id="orSep">OR</div>
       <a class="btn wa" id="formWa" href="#" target="_blank" rel="noopener" style="width:100%">Book on WhatsApp</a>
-      <div class="trust"><span id="trustPay">🔒 Secure payment via Razorpay</span><span>✅ Seat confirmed on WhatsApp</span><span>🎁 Gift a seat to someone</span></div>
-      <p class="consent">By booking you agree to be contacted on WhatsApp about this workshop.</p>
+      <div class="trust"><span id="trustPay">🔒 Secure payment via Razorpay</span><span id="trustTicket">🎟️ Instant e-ticket + email copy</span><span>🎁 Gift a seat to someone</span></div>
+      <p class="consent">By booking you agree to be contacted on WhatsApp and email about this workshop.</p>
       <p class="msg" id="msg"></p>
     </form>
   </div>
+</div></section>
+
+<section id="ticketView" style="display:none"><div class="wrap" style="max-width:640px">
+  <div class="ok">
+    <div class="okic">✓</div>
+    <div class="it" style="font-size:clamp(32px,6vw,46px);color:var(--gold-l);line-height:1.1">You're in! 🎄</div>
+    <p id="okMsg">Your payment was successful and your seat is booked. We can't wait to see you!</p>
+  </div>
+  <div class="ticket" id="ticketCard">
+    <div class="th"><img src="img/logo.jpg" alt=""><div><div class="cz" style="letter-spacing:.18em;font-size:15px">SUNDARLYSH MEMORIES</div><div class="kicker" style="font-size:12px">E-TICKET</div></div></div>
+    <div class="tt it" id="tEvent"></div>
+    <div class="tg">
+      <div class="w2"><span>Ticket no.</span><b id="tNo" class="tno"></b></div>
+      <div class="w2"><span>Name</span><b id="tName"></b></div>
+      <div><span>Date</span><b id="tDate"></b></div>
+      <div><span>Time</span><b id="tTime"></b></div>
+      <div class="w2"><span>Venue</span><b id="tVenue"></b></div>
+      <div><span>Admits</span><b id="tSeats"></b></div>
+      <div><span>Amount paid</span><b id="tAmt"></b></div>
+      <div class="w2"><span>Payment ID</span><b id="tPay" style="font-size:14px;word-break:break-all"></b></div>
+    </div>
+    <div class="tn" id="tNote"></div>
+  </div>
+  <div class="cta" style="margin-top:18px"><button class="btn" id="dlBtn" type="button">Download ticket (PDF)</button></div>
+  <p class="sent" id="tMail"></p>
 </div></section>
 
 <section style="padding-top:0"><div class="wrap" style="max-width:760px">
@@ -239,14 +288,15 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
 
 <section><div class="wrap" style="max-width:760px">
   <div class="h2"><span class="kicker">FAQ</span><span class="it">Good to know</span></div>
-  <details><summary>What's included in ₹1,399?</summary><p>The 2-hour guided workshop, all 24 kinds of props and gifts, the gift bags or goodies box, and a ₹500 food voucher to use at Van Lavino Café &amp; Patisserie. Everything you make goes home with you.</p></details>
+  <details><summary>What's included in ₹999?</summary><p>The 2-hour guided workshop, all 24 kinds of props and gifts, the gift bags or goodies box, and ₹100 of redeemable food &amp; beverage at Stuff idly India. Everything you make goes home with you.</p></details>
   <details><summary>Do I need to bring anything?</summary><p>Nothing at all. Just bring yourself (and your friends!). Everything is set up for you.</p></details>
   <details><summary>Can I gift a seat?</summary><p>Yes! Book in your friend's name or message us on WhatsApp, and we'll send them an invite.</p></details>
   <details><summary>What is an advent calendar?</summary><p>A Christmas countdown: one small surprise to open every day in December until Christmas. At this workshop you create the whole calendar yourself.</p></details>
   <details><summary>Do I need any craft experience?</summary><p>Not at all. Everything is set up for you and our team guides you through each step.</p></details>
   <details><summary>Can I bring my kids?</summary><p>Yes, the workshop is fun for all ages. Please book a seat for each participant.</p></details>
   <details><summary>What do I take home?</summary><p>Your own handmade advent calendar: decorated gift bags or a goodies box filled with surprises you chose.</p></details>
-  <details><summary>How do I get my booking confirmed?</summary><p>After registering and paying you'll receive a confirmation on WhatsApp. Questions? DM us on Instagram.</p></details>
+  <details><summary>How do I get my ticket?</summary><p>As soon as your payment goes through, your e-ticket appears on this page (you can download it as a PDF) and a copy is emailed to you. Please show it at entry, on your phone or printed. Questions? DM us on Instagram.</p></details>
+  <details><summary>Is the payment secure?</summary><p>Yes. Payments are handled by Razorpay (UPI, cards, netbanking, wallets). We never see your card or UPI details.</p></details>
 </div></section>
 
 <footer>
@@ -257,7 +307,7 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
   <p style="margin-top:14px;font-size:14px;opacity:.7">Images are for illustration only.</p>
 </footer>
 
-<div class="sticky"><div class="t"><b>Sun 29 Nov · 5–7 PM</b><br>Van Lavino, FD</div><div class="acts"><a class="btn wa" id="stickyWa" href="#" target="_blank" rel="noopener" aria-label="Book on WhatsApp">WhatsApp</a><a class="btn" href="#book">Book now</a></div></div>
+<div class="sticky"><div class="t"><b>Sun 29 Nov · 5–7 PM</b><br>Stuff idly India, Kondapur</div><div class="acts"><a class="btn wa" id="stickyWa" href="#" target="_blank" rel="noopener" aria-label="Book on WhatsApp">WhatsApp</a><a class="btn" href="#book">Book now</a></div></div>
 
 <script>
 (function () {
@@ -265,7 +315,7 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
   var $ = function (id) { return document.getElementById(id); };
   $("igLink").href = E.INSTAGRAM;
   if (E.PRICE) { $("price").textContent = E.PRICE; $("priceNote").textContent = E.PRICE_NOTE; } else { $("priceBlock").style.display = "none"; }
-  var live = !!E.PAYMENT_URL;
+  var live = !!E.API_URL;
   // where did this visitor come from? use links like  ...?src=ig-bio  ?src=wa-group  ?src=flyer
   var src = new URLSearchParams(location.search).get("src") || (document.referrer ? new URL(document.referrer).hostname : "direct");
   function chat(text) {
@@ -293,38 +343,137 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     $("cd").textContent = dd + "d " + String(hh).padStart(2, "0") + "h " + String(mm).padStart(2, "0") + "m " + String(ss).padStart(2, "0") + "s";
   }
   tick(); setInterval(tick, 1000);
+  // ---------- seats + total
+  for (var i = 1; i <= (E.MAX_SEATS || 6); i++) { var o = document.createElement("option"); o.textContent = i; $("seats").appendChild(o); }
+  function inr(n) { return "₹" + Number(n).toLocaleString("en-IN"); }
+  function updTotal() { $("totalAmt").textContent = inr(E.PRICE_PER_SEAT * parseInt($("seats").value, 10)); }
+  $("seats").addEventListener("change", updTotal); updTotal();
+  if (!E.PRICE) $("totalRow").style.display = "none";
+
   if (!live) {
-    $("orSep").style.display = "none"; $("formWa").style.display = "none"; $("trustPay").style.display = "none";
-    $("submitBtn").textContent = E.SHEET_ENDPOINT ? "Reserve my seat" : "Reserve via WhatsApp / DM";
-    $("formSub").textContent = "Leave your details and we'll confirm your seat on WhatsApp within the hour.";
+    $("orSep").style.display = "none"; $("formWa").style.display = "none"; $("trustPay").style.display = "none"; $("trustTicket").style.display = "none";
+    $("submitBtn").textContent = "Reserve via WhatsApp / DM";
+    $("formSub").textContent = "Online booking opens soon. Leave your details and we'll confirm your seat on WhatsApp.";
   }
   function show(t, ok) { var m = $("msg"); m.textContent = t; m.style.color = ok ? "#1E6B48" : "#A3263A"; m.className = "msg show"; }
+  function busy(on, t) { $("submitBtn").disabled = on; $("submitBtn").textContent = on ? (t || "Please wait…") : "Book your ticket"; }
 
+  // ---------- backend calls (Google Apps Script web app)
+  function api(payload) {
+    return fetch(E.API_URL, { method: "POST", body: JSON.stringify(payload) })   // text/plain body: no CORS preflight
+      .then(function (r) { return r.json(); })
+      .then(function (j) { if (!j.ok) throw new Error(j.error || "Something went wrong"); return j; });
+  }
+  var rzpLoaded = null;
+  function loadRzp() {
+    if (rzpLoaded) return rzpLoaded;
+    rzpLoaded = new Promise(function (res, rej) {
+      if (window.Razorpay) return res();
+      var sc = document.createElement("script"); sc.src = "https://checkout.razorpay.com/v1/checkout.js";
+      sc.onload = res; sc.onerror = function () { rzpLoaded = null; rej(new Error("Could not load the payment window. Check your internet and try again.")); };
+      document.head.appendChild(sc);
+    });
+    return rzpLoaded;
+  }
+
+  // ---------- ticket view
+  var current = null;
+  function showTicket(t, fresh) {
+    current = t;
+    $("tEvent").textContent = t.event || E.EVENT_NAME;
+    $("tNo").textContent = t.ticket_no; $("tName").textContent = t.name;
+    $("tDate").textContent = t.date || E.DATE_TEXT; $("tTime").textContent = t.time || E.TIME_TEXT;
+    $("tVenue").textContent = (t.venue || E.VENUE) + ", " + (t.area || E.AREA);
+    $("tSeats").textContent = t.seats + (t.seats == 1 ? " person" : " people");
+    $("tAmt").textContent = inr(t.amount); $("tPay").textContent = t.payment_id;
+    $("tNote").textContent = "Please show this ticket at entry (on your phone or printed). Includes ₹100 redeemable food & beverage per person at " + (t.venue || E.VENUE) + ". Doors open 4:45 PM.";
+    $("tMail").textContent = t.email_sent ? "📧 A copy of your ticket has been emailed to " + t.email + "." : "📧 Your ticket will also be emailed to " + t.email + ".";
+    if (!fresh) $("okMsg").textContent = "Here's your ticket. See you on 29 November!";
+    $("book").style.display = "none"; $("ticketView").style.display = "block"; var st = document.querySelector(".sticky"); if (st) st.style.display = "none";
+    try { localStorage.setItem("sm_ticket", JSON.stringify(t)); } catch (e) {}
+    var u = new URL(location.href); u.searchParams.set("ticket", t.ticket_no); u.searchParams.set("key", t.payment_id); history.replaceState(null, "", u.toString());
+    setTimeout(function () { $("ticketView").scrollIntoView({ behavior: "smooth", block: "start" }); }, 50);
+  }
+
+  // ---------- PDF ticket (jsPDF, loaded only when needed)
+  function loadPdf() {
+    return new Promise(function (res, rej) {
+      if (window.jspdf) return res();
+      var sc = document.createElement("script"); sc.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+      sc.onload = res; sc.onerror = function () { rej(new Error("Could not load the PDF tool. Please try again.")); }; document.head.appendChild(sc);
+    });
+  }
+  function logoData() {
+    try { var im = document.querySelector(".ticket .th img"), c = document.createElement("canvas"); c.width = c.height = 240;
+      c.getContext("2d").drawImage(im, 0, 0, 240, 240); return c.toDataURL("image/jpeg", .9); } catch (e) { return null; }
+  }
+  $("dlBtn").addEventListener("click", function () {
+    if (!current) return; var t = current, btn = this; btn.disabled = true; btn.textContent = "Preparing PDF…";
+    loadPdf().then(function () {
+      var doc = new window.jspdf.jsPDF({ orientation: "landscape", unit: "mm", format: "a5" });   // 210 x 148
+      var P = [69, 1, 42], G = [201, 165, 94], INK = [46, 26, 34], MUTE = [138, 111, 122], rs = function (n) { return "Rs. " + Number(n).toLocaleString("en-IN"); };
+      doc.setFillColor(251, 246, 241); doc.rect(0, 0, 210, 148, "F");
+      doc.setFillColor.apply(doc, P); doc.rect(0, 0, 210, 30, "F");
+      var lg = logoData(); if (lg) doc.addImage(lg, "JPEG", 10, 5, 20, 20);
+      doc.setTextColor.apply(doc, G); doc.setFont("helvetica", "bold"); doc.setFontSize(15); doc.text("SUNDARLYSH MEMORIES", lg ? 35 : 10, 15);
+      doc.setFontSize(9); doc.text("E-TICKET", lg ? 35 : 10, 22);
+      doc.setFontSize(10); doc.text("Ticket no.", 200, 13, { align: "right" }); doc.setFontSize(16); doc.text(t.ticket_no, 200, 22, { align: "right" });
+      doc.setTextColor.apply(doc, P); doc.setFont("times", "bolditalic"); doc.setFontSize(22); doc.text(t.event || E.EVENT_NAME, 12, 45);
+      var L = 12, R2 = 110, cell = function (k, v, x, y) {
+        doc.setFont("helvetica", "bold"); doc.setFontSize(7.5); doc.setTextColor.apply(doc, MUTE); doc.text(k, x, y);
+        doc.setFont("helvetica", "normal"); doc.setFontSize(12); doc.setTextColor.apply(doc, INK); doc.text(String(v), x, y + 6); };
+      cell("NAME", t.name, L, 58);                                   cell("ADMITS", t.seats + (t.seats == 1 ? " person" : " people"), R2, 58);
+      cell("DATE", t.date || E.DATE_TEXT, L, 73);                    cell("TIME", t.time || E.TIME_TEXT, R2, 73);
+      cell("VENUE", (t.venue || E.VENUE) + ", " + (t.area || E.AREA), L, 88);
+      cell("AMOUNT PAID", rs(t.amount), L, 103);                     cell("PAYMENT ID", t.payment_id, R2, 103);
+      doc.setDrawColor.apply(doc, G); doc.setLineDashPattern([2, 2], 0); doc.line(12, 124, 198, 124); doc.setLineDashPattern([], 0);
+      doc.setFont("helvetica", "normal"); doc.setFontSize(8.5); doc.setTextColor.apply(doc, MUTE);
+      doc.text("Please show this ticket at entry (on your phone or printed). Includes Rs. 100 redeemable food & beverage per person.", 12, 131);
+      doc.text("Doors open 4:45 PM.  Questions? DM @sundarlyshmemories on Instagram.", 12, 137);
+      doc.setDrawColor.apply(doc, G); doc.setLineWidth(.8); doc.rect(4, 4, 202, 140);
+      doc.save(t.ticket_no + "_Sundarlysh_Advent_Workshop.pdf");
+    }).catch(function (e) { alert(e.message); }).then(function () { btn.disabled = false; btn.textContent = "Download ticket (PDF)"; });
+  });
+
+  // ---------- returning visitor / link from the email: ?ticket=SM-ADV-001&key=pay_xxx
+  var qp = new URLSearchParams(location.search);
+  if (qp.get("demo") === "1") {
+    showTicket({ ticket_no: "SM-ADV-001", name: "Sample Guest", email: "guest@example.com", seats: 2, amount: 2 * E.PRICE_PER_SEAT, payment_id: "pay_DEMO1234567890", email_sent: true }, true);
+  } else if (qp.get("ticket") && qp.get("key")) {
+    var saved = null; try { saved = JSON.parse(localStorage.getItem("sm_ticket") || "null"); } catch (e) {}
+    if (saved && saved.ticket_no === qp.get("ticket") && saved.payment_id === qp.get("key")) showTicket(saved, false);
+    else if (E.API_URL) api({ action: "lookup", ticket_no: qp.get("ticket"), key: qp.get("key") }).then(function (j) { showTicket(j.ticket, false); }).catch(function () {});
+  }
+
+  // ---------- booking
   $("regForm").addEventListener("submit", function (e) {
     e.preventDefault();
-    var f = e.target, name = f.name.value.trim(), phone = f.phone.value.replace(/\D/g, ""), email = f.email.value.trim();
+    var f = e.target, name = f.name.value.trim(), phone = f.phone.value.replace(/\D/g, "").slice(-10), email = f.email.value.trim(), seats = parseInt(f.seats.value, 10);
     if (name.length < 2) return show("Please enter your name.");
+    if (live && !/^\S+@\S+\.\S+$/.test(email)) return show("Please enter a valid email, so we can send your ticket.");
     if (phone.length < 10) return show("Please enter a valid 10-digit WhatsApp number.");
-    if (email && !/^\S+@\S+\.\S+$/.test(email)) return show("Please check your email (or leave it empty).");
-    if (!E.SHEET_ENDPOINT && !live) {
-      window.open(chat(bookMsg + "\nName: " + name + "\nSeats: " + f.seats.value + "\nKids: " + f.kids.value), "_blank"); return;
-    }
-    var data = { name: name, phone: phone, email: email, seats: f.seats.value, kids: f.kids.value, source: src,
-                 event: "Advent Calendar Workshop 29 Nov", ts: new Date().toISOString() };
-    $("submitBtn").disabled = true; $("submitBtn").textContent = "Please wait…";
-    var save = E.SHEET_ENDPOINT
-      ? fetch(E.SHEET_ENDPOINT, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain" }, body: JSON.stringify(data) })
-      : Promise.resolve();
-    save.catch(function () {}).then(function () {
-      if (live) {
-        var u = new URL(E.PAYMENT_URL);
-        u.searchParams.set("name", name); if (email) u.searchParams.set("email", email); u.searchParams.set("phone", phone);
-        window.location.href = u.toString();
-      } else {
-        show("Thank you! We've received your details and will contact you on WhatsApp to confirm your seat.", true);
-        $("submitBtn").textContent = "Registered ✓"; f.reset();
-      }
-    });
+    if (!live) { window.open(chat(bookMsg + "\nName: " + name + "\nSeats: " + seats + "\nKids: " + f.kids.value), "_blank"); return; }
+    $("msg").className = "msg"; busy(true, "Opening payment…");
+    var info = { name: name, email: email, phone: phone, seats: seats, kids: f.kids.value, source: src };
+    Promise.all([api(Object.assign({ action: "create_order" }, info)), loadRzp()]).then(function (res) {
+      var o = res[0];
+      var rz = new window.Razorpay({
+        key: o.key_id, order_id: o.order_id, amount: o.amount, currency: o.currency,
+        name: "Sundarlysh Memories", description: E.EVENT_NAME + " · " + seats + (seats == 1 ? " seat" : " seats"),
+        image: new URL("img/logo.jpg", location.href).href,
+        prefill: { name: name, email: email, contact: "+91" + phone },
+        notes: { seats: String(seats) }, theme: { color: "#45012A" },
+        modal: { ondismiss: function () { busy(false); show("Payment was cancelled. Your seat isn't booked yet. Tap the button to try again."); } },
+        handler: function (r) {
+          busy(true, "Confirming your payment…");
+          api({ action: "verify", razorpay_order_id: r.razorpay_order_id, razorpay_payment_id: r.razorpay_payment_id, razorpay_signature: r.razorpay_signature })
+            .then(function (j) { showTicket(j.ticket, true); })
+            .catch(function (err) { busy(false); show("Your payment went through, but we couldn't confirm it automatically (" + err.message + "). Don't worry, please DM us your payment ID " + r.razorpay_payment_id + " and we'll send your ticket."); });
+        }
+      });
+      rz.on("payment.failed", function (r) { busy(false); show("Payment failed: " + (r.error && r.error.description || "please try again") + ". No money was taken for this attempt."); });
+      rz.open();
+    }).catch(function (err) { busy(false); show(err.message); });
   });
 })();
 </script>
