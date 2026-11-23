@@ -1,19 +1,20 @@
 /**
- * Sundarlysh Memories – ticket backend for Razorpay PAYMENT PAGES (no Razorpay API keys needed)
- * --------------------------------------------------------------------------------------------
- * Google Apps Script web app, bound to a Google Sheet. It:
- *  - pending : logs a booking attempt just before the visitor goes to the Payment Page
- *  - issue   : after Razorpay redirects back, gives the next ticket number (SM-ADV-001…),
- *              saves it in the "Bookings" sheet and EMAILS the ticket (PDF attached) from your Gmail
- *  - lookup  : re-shows a ticket from the link in the email
+ * Sundarlysh Memories – VERIFIED ticket backend for a Razorpay PAYMENT PAGE
+ * -------------------------------------------------------------------------
+ * Customers still pay on your Razorpay Payment Page. When they come back to the website, this script
+ * ASKS RAZORPAY whether a real, successful payment exists for them before issuing a ticket.
+ * Typing "?paid=1" by hand gets no ticket, and each payment can only produce one ticket.
  *
- * IMPORTANT: Payment Pages don't send a payment proof back to the website, so tickets are issued when
- * the customer returns from the Payment Page. Tick the "verified" column for each ticket after you
- * match it with Razorpay Dashboard → Payment Pages → your page → Payments (name / phone / email / amount).
- * Razorpay also emails every payer an official receipt.
+ *  - pending          : logs the booking just before the visitor goes to the Payment Page
+ *  - issue            : checks Razorpay for a matching successful payment (same email or phone, a multiple of the
+ *                       ticket price, recent, not already used). Found → ticket number + email. Not found → "waiting".
+ *  - lookup           : re-shows an issued ticket (link in the email)
+ *  - reconcilePending : time trigger every 10 min – emails tickets to people who paid but closed the page early
  *
- * Optional Script property (Project Settings → Script properties):
- *   PAGE_URL   public link of the booking page (adds a "View your ticket online" button to the email)
+ * Script properties (Project Settings → Script properties):
+ *   RAZORPAY_KEY_ID      rzp_live_...   (Razorpay Dashboard → Account & Settings → API Keys → Generate Key)
+ *   RAZORPAY_KEY_SECRET  the matching secret  — keep it ONLY here, never in the website
+ *   PAGE_URL             (optional) public link of the booking page, for the "View your ticket online" button
  */
 
 var CFG = {
@@ -22,16 +23,17 @@ var CFG = {
   TIME: "5:00 PM – 7:00 PM",
   VENUE: "Stuff idly India",
   AREA: "Kondapur, Hyderabad",
-  PRICE: 999,
-  MAX_SEATS: 6,
+  PRICE: 999,                 // rupees per ticket – must match the Payment Page
+  MAX_SEATS: 10,
   PREFIX: "SM-ADV-",
   FROM_NAME: "Sundarlysh Memories",
-  REPLY_TO: "",          // optional: business email for replies
+  REPLY_TO: "",               // optional business email for replies
+  LOOKBACK_MIN: 120,          // how far back to look for the payment after a booking attempt
   SHEET: "Bookings"
 };
 // columns: 1 created_at | 2 status | 3 ticket_no | 4 ref | 5 name | 6 email | 7 phone | 8 seats | 9 kids | 10 amount
-//          11 payment_id | 12 source | 13 issued_at | 14 email_sent | 15 verified (tick after checking Razorpay)
-var HEAD = ["created_at", "status", "ticket_no", "ref", "name", "email", "phone", "seats", "kids", "amount", "payment_id", "source", "issued_at", "email_sent", "verified"];
+//          11 payment_id | 12 source | 13 issued_at | 14 email_sent
+var HEAD = ["created_at", "status", "ticket_no", "ref", "name", "email", "phone", "seats", "kids", "amount", "payment_id", "source", "issued_at", "email_sent"];
 
 function doGet() { return out({ ok: true, service: "Sundarlysh tickets" }); }
 
@@ -47,36 +49,30 @@ function doPost(e) {
   }
 }
 
+/* ---------------- actions ---------------- */
+
 function pending(d) {
-  var b = clean(d);
-  var sh = sheet(), r = findRow(sh, b.ref);
-  if (r < 0) sh.appendRow([new Date(), "PENDING", "", b.ref, b.name, b.email, "'" + b.phone, b.seats, b.kids, b.amount, "", b.source, "", "", ""]);
+  var b = clean(d), sh = sheet();
+  if (findRow(sh, b.ref) < 0) sh.appendRow([new Date(), "PENDING", "", b.ref, b.name, b.email, "'" + b.phone, b.seats, b.kids, b.seats * CFG.PRICE, "", b.source, "", ""]);
   return { ok: true };
 }
 
 function issue(d) {
   var b = clean(d);
-  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  var lock = LockService.getScriptLock(); lock.waitLock(25000);
   try {
     var sh = sheet(), r = findRow(sh, b.ref);
-    if (r > 0) {
-      var cur = sh.getRange(r, 1, 1, HEAD.length).getValues()[0];
-      if (cur[1] === "TICKET ISSUED") return { ok: true, ticket: ticketOf(cur) };   // page refreshed: same ticket
-    } else {
-      sh.appendRow([new Date(), "PENDING", "", b.ref, b.name, b.email, "'" + b.phone, b.seats, b.kids, b.amount, "", b.source, "", "", ""]);
+    if (r < 0) {   // e.g. paid on another device: create the booking now
+      sh.appendRow([new Date(), "PENDING", "", b.ref, b.name, b.email, "'" + b.phone, b.seats, b.kids, b.seats * CFG.PRICE, "", b.source, "", ""]);
       r = sh.getLastRow();
     }
-    var v = sh.getDataRange().getValues(), n = 0;
-    for (var i = 1; i < v.length; i++) if (v[i][1] === "TICKET ISSUED") n++;
-    var ticketNo = CFG.PREFIX + ("00" + (n + 1)).slice(-3);
-    sh.getRange(r, 2).setValue("TICKET ISSUED"); sh.getRange(r, 3).setValue(ticketNo);
-    if (b.payment_id) sh.getRange(r, 11).setValue(b.payment_id);
-    sh.getRange(r, 13).setValue(new Date());
-    SpreadsheetApp.flush();
-    var t = ticketOf(sh.getRange(r, 1, 1, HEAD.length).getValues()[0]);
-    try { sendTicket(t); sh.getRange(r, 14).setValue("yes"); t.email_sent = true; }
-    catch (e) { sh.getRange(r, 14).setValue("FAILED: " + e); t.email_sent = false; }
-    return { ok: true, ticket: t };
+    var row = sh.getRange(r, 1, 1, HEAD.length).getValues()[0];
+    if (row[1] === "TICKET ISSUED") return { ok: true, ticket: ticketOf(row) };
+    var since = new Date(row[0]).getTime() - 15 * 60 * 1000;
+    if (d.claim) since = Date.now() - 3 * 24 * 3600 * 1000;      // "paid on another device": look back 3 days
+    var pay = findPayment(row[5], String(row[6]).replace("'", ""), since);
+    if (!pay) return { ok: true, waiting: true };
+    return { ok: true, ticket: markIssued(sh, r, pay) };
   } finally { lock.releaseLock(); }
 }
 
@@ -85,6 +81,64 @@ function lookup(d) {
   for (var i = 1; i < v.length; i++)
     if (v[i][2] === d.ticket_no && (v[i][3] === d.key || v[i][10] === d.key) && v[i][1] === "TICKET ISSUED") return { ok: true, ticket: ticketOf(v[i]) };
   throw new Error("Ticket not found");
+}
+
+/** Time-driven trigger, every 10 minutes: finds payments for bookings whose owners closed the page too early. */
+function reconcilePending() {
+  var lock = LockService.getScriptLock(); lock.waitLock(25000);
+  try {
+    var sh = sheet(), v = sh.getDataRange().getValues(), now = Date.now();
+    for (var i = 1; i < v.length; i++) {
+      if (v[i][1] !== "PENDING") continue;
+      var t0 = new Date(v[i][0]).getTime();
+      if (now - t0 < 60 * 1000 || now - t0 > 3 * 24 * 3600 * 1000) continue;
+      try {
+        var pay = findPayment(v[i][5], String(v[i][6]).replace("'", ""), t0 - 15 * 60 * 1000);
+        if (pay) markIssued(sh, i + 1, pay);
+      } catch (e) { Logger.log("reconcile row " + (i + 1) + ": " + e); }
+    }
+  } finally { lock.releaseLock(); }
+}
+
+/* ---------------- payment check (asks Razorpay) ---------------- */
+
+function findPayment(email, phone, sinceMs) {
+  email = String(email || "").toLowerCase().trim(); phone = String(phone || "").replace(/\D/g, "").slice(-10);
+  var used = usedPaymentIds(), from = Math.floor(Math.max(sinceMs, Date.now() - 3 * 24 * 3600 * 1000) / 1000);
+  for (var skip = 0; skip < 500; skip += 100) {
+    var res = rzp("get", "/payments?count=100&skip=" + skip + "&from=" + from), items = res.items || [];
+    for (var k = 0; k < items.length; k++) {
+      var p = items[k];
+      if (p.status !== "captured" && p.status !== "authorized") continue;
+      if (p.currency !== "INR" || p.amount % (CFG.PRICE * 100) !== 0) continue;
+      if (used[p.id]) continue;
+      var pe = String(p.email || "").toLowerCase().trim(), pc = String(p.contact || "").replace(/\D/g, "").slice(-10);
+      if ((email && pe === email) || (phone && pc === phone)) return p;
+    }
+    if (items.length < 100) break;
+  }
+  return null;
+}
+
+function markIssued(sh, r, pay) {
+  var v = sh.getDataRange().getValues(), n = 0;
+  for (var j = 1; j < v.length; j++) if (v[j][1] === "TICKET ISSUED") n++;
+  var seats = Math.round(pay.amount / (CFG.PRICE * 100));     // what they actually paid for on the Payment Page
+  var ticketNo = CFG.PREFIX + ("00" + (n + 1)).slice(-3);
+  sh.getRange(r, 2).setValue("TICKET ISSUED"); sh.getRange(r, 3).setValue(ticketNo);
+  sh.getRange(r, 8).setValue(seats); sh.getRange(r, 10).setValue(pay.amount / 100);
+  sh.getRange(r, 11).setValue(pay.id); sh.getRange(r, 13).setValue(new Date());
+  SpreadsheetApp.flush();
+  var t = ticketOf(sh.getRange(r, 1, 1, HEAD.length).getValues()[0]);
+  try { sendTicket(t); sh.getRange(r, 14).setValue("yes"); t.email_sent = true; }
+  catch (e) { sh.getRange(r, 14).setValue("FAILED: " + e); t.email_sent = false; }
+  return t;
+}
+
+function usedPaymentIds() {
+  var v = sheet().getDataRange().getValues(), u = {};
+  for (var i = 1; i < v.length; i++) if (v[i][10]) u[v[i][10]] = true;
+  return u;
 }
 
 /* ---------------- ticket + email ---------------- */
@@ -100,7 +154,7 @@ function sendTicket(t) {
   var pu = prop("PAGE_URL");
   var link = pu ? pu + (pu.indexOf("?") < 0 ? "?" : "&") + "ticket=" + encodeURIComponent(t.ticket_no) + "&key=" + encodeURIComponent(t.ref) : "";
   var body = '<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#2E1A22">' +
-    '<p>Hi ' + esc(t.name) + ',</p><p>Thank you for booking! 🎄 Your seat for the <b>' + esc(t.event) + '</b> is confirmed. Your ticket is below and attached as a PDF.</p>' +
+    '<p>Hi ' + esc(t.name) + ',</p><p>Thank you for booking! 🎄 Your payment is confirmed and your seat for the <b>' + esc(t.event) + '</b> is booked. Your ticket is below and attached as a PDF.</p>' +
     html.replace(/^[\s\S]*<body>|<\/body>[\s\S]*$/g, "") +
     (link ? '<p style="text-align:center"><a href="' + link + '" style="background:#45012A;color:#F0D8A0;padding:12px 22px;border-radius:30px;text-decoration:none;font-weight:bold">View your ticket online</a></p>' : "") +
     '<p>Please show this ticket at entry, on your phone or printed. Doors open 4:45 PM.</p><p>See you soon!<br><b>Team Sundarlysh Memories</b><br>Instagram: @sundarlyshmemories</p></div>';
@@ -118,19 +172,29 @@ function ticketHtml(t) {
     '<table width="100%" style="border-collapse:collapse;margin:4px 6px">' +
     '<tr>' + cell("NAME", t.name) + cell("ADMITS", t.seats + (t.seats == 1 ? " person" : " people")) + '</tr>' +
     '<tr>' + cell("DATE", t.date) + cell("TIME", t.time) + '</tr>' +
-    '<tr>' + cell("VENUE", t.venue + ", " + t.area) + cell("AMOUNT", "₹" + Number(t.amount).toLocaleString("en-IN")) + '</tr>' +
-    '<tr>' + cell(t.payment_id ? "PAYMENT ID" : "BOOKING REF", t.payment_id || t.ref) + '<td></td></tr></table>' +
+    '<tr>' + cell("VENUE", t.venue + ", " + t.area) + cell("AMOUNT PAID", "₹" + Number(t.amount).toLocaleString("en-IN")) + '</tr>' +
+    '<tr>' + cell("PAYMENT ID", t.payment_id) + '<td></td></tr></table>' +
     '<div style="border-top:2px dashed #d9c6cc;padding:12px 18px;font-size:12px;color:#6c5560">Please show this ticket at entry (on your phone or printed). Includes ₹100 redeemable food &amp; beverage per person at ' + esc(t.venue) + '.</div>' +
     '</div></body></html>';
 }
 
 /* ---------------- helpers ---------------- */
 
+function rzp(method, path, payload) {
+  var id = prop("RAZORPAY_KEY_ID"), secret = prop("RAZORPAY_KEY_SECRET");
+  if (!id || !secret) throw new Error("Payment check is not set up yet");
+  var opt = { method: method, muteHttpExceptions: true, contentType: "application/json",
+              headers: { Authorization: "Basic " + Utilities.base64Encode(id + ":" + secret) } };
+  if (payload) opt.payload = JSON.stringify(payload);
+  var res = UrlFetchApp.fetch("https://api.razorpay.com/v1" + path, opt), body = JSON.parse(res.getContentText() || "{}");
+  if (res.getResponseCode() >= 300) throw new Error((body.error && body.error.description) || "Payment service error");
+  return body;
+}
 function clean(d) {
   var c = function (s, n) { return String(s == null ? "" : s).replace(/[<>]/g, "").trim().slice(0, n); };
   var seats = parseInt(d.seats, 10);
-  var b = { ref: c(d.ref, 40), name: c(d.name, 80), email: c(d.email, 120), phone: String(d.phone || "").replace(/\D/g, "").slice(-10),
-            seats: seats, kids: c(d.kids, 5), amount: seats * CFG.PRICE, payment_id: c(d.payment_id, 40), source: c(d.source, 60) };
+  var b = { ref: c(d.ref, 40), name: c(d.name, 80), email: c(d.email, 120).toLowerCase(), phone: String(d.phone || "").replace(/\D/g, "").slice(-10),
+            seats: seats, kids: c(d.kids, 5), source: c(d.source, 60) };
   if (!b.ref) throw new Error("Missing booking reference");
   if (b.name.length < 2) throw new Error("Please enter your name.");
   if (!/^\S+@\S+\.\S+$/.test(b.email)) throw new Error("Please enter a valid email.");
@@ -145,19 +209,20 @@ function findRow(sh, ref) {
 }
 function sheet() {
   var ss = SpreadsheetApp.getActiveSpreadsheet(), sh = ss.getSheetByName(CFG.SHEET);
-  if (!sh) { sh = ss.insertSheet(CFG.SHEET); sh.appendRow(HEAD); sh.setFrozenRows(1); sh.getRange(1, 1, 1, HEAD.length).setFontWeight("bold");
-             sh.getRange(2, 15, 500, 1).insertCheckboxes(); }
+  if (!sh) { sh = ss.insertSheet(CFG.SHEET); sh.appendRow(HEAD); sh.setFrozenRows(1); sh.getRange(1, 1, 1, HEAD.length).setFontWeight("bold"); }
   return sh;
 }
 function prop(k) { return PropertiesService.getScriptProperties().getProperty(k); }
 function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
 function out(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 
-/** Run once from the editor: creates the Bookings sheet and sends YOU a sample ticket email. */
+/** Run once from the editor: checks the Razorpay keys, creates the sheet, and emails YOU a sample ticket. */
 function testSetup() {
   sheet();
+  var res = rzp("get", "/payments?count=5");
+  Logger.log("Razorpay keys OK – can read payments (" + (res.count || 0) + " recent shown).");
   var me = Session.getActiveUser().getEmail();
-  sendTicket({ ticket_no: "SM-ADV-000", ref: "SMTEST", name: "Test Guest", email: me, seats: 1, amount: CFG.PRICE, payment_id: "",
+  sendTicket({ ticket_no: "SM-ADV-000", ref: "SMTEST", name: "Test Guest", email: me, seats: 1, amount: CFG.PRICE, payment_id: "pay_TEST",
                event: CFG.EVENT, date: CFG.DATE, time: CFG.TIME, venue: CFG.VENUE, area: CFG.AREA });
-  Logger.log("Bookings sheet ready. Sample ticket emailed to " + me);
+  Logger.log("Sample ticket emailed to " + me);
 }

@@ -176,6 +176,8 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
 .ticket .tno { font-size:24px !important; color:var(--plum) !important; letter-spacing:.04em; }
 .ticket .tn { padding:14px 20px 18px; font-size:15px; color:#6c5560; }
 .sent { text-align:center; color:#EBD6CD; margin-top:12px; font-size:16px; }
+.spin { width:64px; height:64px; margin:0 auto 16px; border-radius:50%; border:6px solid rgba(240,216,160,.25); border-top-color:var(--gold-l); animation:sp 1s linear infinite; }
+@keyframes sp { to { transform:rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -257,6 +259,15 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
       <p class="consent">By booking you agree to be contacted on WhatsApp and email about this workshop.</p>
       <p class="msg" id="msg"></p>
     </form>
+  </div>
+</div></section>
+
+<section id="confirmView" style="display:none"><div class="wrap" style="max-width:560px">
+  <div class="ok">
+    <div class="spin" id="cSpin"></div>
+    <div class="it" id="cTitle" style="font-size:clamp(28px,5vw,40px);color:var(--gold-l);line-height:1.15">Confirming your payment…</div>
+    <p id="cMsg">Checking with Razorpay. This usually takes a few seconds, please keep this page open.</p>
+    <div class="cta" style="margin-top:16px"><button class="btn" id="cRetry" type="button" style="display:none">Check again</button></div>
   </div>
 </div></section>
 
@@ -437,15 +448,30 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
 
   // ---------- after payment: the Payment Page redirects here with ?paid=1 (set in Razorpay: Page Settings → Redirect to your website)
   function makeRef() { return "SM" + Date.now().toString(36).toUpperCase().slice(-5) + Math.random().toString(36).slice(2, 5).toUpperCase(); }
-  function finish(p) {
-    var payId = qp.get("razorpay_payment_id") || qp.get("payment_id") || "";   // only used if Razorpay ever passes it
-    var base = { ref: p.ref, name: p.name, email: p.email, phone: p.phone, seats: p.seats, kids: p.kids, amount: p.amount, payment_id: payId, source: p.source };
-    var done = function (t) { store("sm_pending", null); showTicket(t, true); };
-    if (E.TICKET_API_URL) {
-      $("book").scrollIntoView(); busy(true, "Issuing your ticket…");
-      api(Object.assign({ action: "issue" }, base)).then(function (j) { done(j.ticket); })
-        .catch(function () { done(Object.assign({ ticket_no: "SM-ADV-" + p.ref.slice(-6), email_sent: false }, base)); });
-    } else done(Object.assign({ ticket_no: "SM-ADV-" + p.ref.slice(-6), email_sent: false }, base));
+  function finish(p, claim) {
+    var base = { ref: p.ref, name: p.name, email: p.email, phone: p.phone, seats: p.seats, kids: p.kids, source: p.source, claim: !!claim };
+    var done = function (t) { store("sm_pending", null); $("confirmView").style.display = "none"; showTicket(t, true); };
+    if (!E.TICKET_API_URL) {   // no backend: can't check with Razorpay, show the ticket directly (unverified)
+      return done({ ticket_no: "SM-ADV-" + p.ref.slice(-6), ref: p.ref, name: p.name, email: p.email, seats: p.seats, amount: p.amount, payment_id: "", email_sent: false });
+    }
+    // verified: the backend asks Razorpay for a real payment from this email/phone before issuing a ticket
+    $("book").style.display = "none"; $("confirmView").style.display = "block"; $("confirmView").scrollIntoView();
+    var st = document.querySelector(".sticky"); if (st) st.style.display = "none";
+    var tries = 0, MAX = 20;
+    function ui(title, msg, spinning, retry) { $("cTitle").textContent = title; $("cMsg").textContent = msg; $("cSpin").style.display = spinning ? "block" : "none"; $("cRetry").style.display = retry ? "inline-flex" : "none"; }
+    function attempt() {
+      tries++; ui("Confirming your payment…", "Checking with Razorpay. This usually takes a few seconds, please keep this page open.", true, false);
+      api(Object.assign({ action: "issue" }, base)).then(function (j) {
+        if (j.ticket) return done(j.ticket);
+        if (tries < MAX) return setTimeout(attempt, 4000);
+        ui("We couldn't find your payment yet", "If you've paid, don't worry: once Razorpay confirms it, your ticket is emailed to " + p.email + " automatically (usually within 10 minutes). If you haven't paid yet, go back and book again.", false, true);
+      }).catch(function (err) {
+        if (tries < MAX) return setTimeout(attempt, 4000);
+        ui("Couldn't check right now", err.message + ". Please tap 'Check again', or DM us on Instagram.", false, true);
+      });
+    }
+    $("cRetry").onclick = function () { tries = 0; attempt(); };
+    attempt();
   }
   var qp = new URLSearchParams(location.search);
   if (qp.get("demo") === "1") {
@@ -474,7 +500,7 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
     if (phone.length < 10) return show("Please enter a valid 10-digit WhatsApp number.");
     if (!live) { window.open(chat(bookMsg + "\nName: " + name + "\nSeats: " + seats + "\nKids: " + f.kids.value), "_blank"); return; }
     var p = { ref: makeRef(), name: name, email: email, phone: phone, seats: seats, kids: f.kids.value, amount: seats * E.PRICE_PER_SEAT, source: src, ts: Date.now() };
-    if (window.__claim) { finish(p); return; }
+    if (window.__claim) { finish(p, true); return; }
     store("sm_pending", p); store("sm_ticket", null);
     busy(true, "Opening secure payment…");
     var go = function () {
