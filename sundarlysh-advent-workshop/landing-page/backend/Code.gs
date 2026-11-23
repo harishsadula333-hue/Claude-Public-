@@ -57,14 +57,14 @@ function doPost(e) {
 function find(d) {
   var email = String(d.email || "").toLowerCase().trim(), phone = digits(d.phone);
   if (!email && phone.length !== 10) throw new Error("Please enter the email or phone number you paid with.");
-  var t = matchTicket(email, phone);
-  if (!t) { try { autoTickets(); } catch (e) { Logger.log("scan: " + e); } t = matchTicket(email, phone); }
-  if (!t) return { ok: true, waiting: true };
-  if (d.name && (!t.name || t.name === "Guest")) {          // fill in the name if Razorpay didn't give one
-    var sh = sheet(), r = rowOfPayment(sh, t.payment_id);
-    if (r > 0) { sh.getRange(r, 5).setValue(String(d.name).slice(0, 80)); t.name = String(d.name).slice(0, 80); }
+  try { autoTickets(); } catch (e) { Logger.log("scan: " + e); }      // always pick up the newest payments first
+  var list = matchTickets(email, phone);
+  if (!list.length) return { ok: true, waiting: true };
+  if (d.name) {                                                          // fill in the name where Razorpay didn't give one
+    var sh = sheet(), nm = String(d.name).slice(0, 80);
+    list.forEach(function (t) { if (!t.name || t.name === "Guest") { var r = rowOfPayment(sh, t.payment_id); if (r > 0) { sh.getRange(r, 5).setValue(nm); t.name = nm; } } });
   }
-  return { ok: true, ticket: t };
+  return { ok: true, tickets: list, ticket: list[0] };
 }
 
 function lookup(d) {
@@ -73,14 +73,15 @@ function lookup(d) {
   throw new Error("Ticket not found");
 }
 
-function matchTicket(email, phone) {
-  var v = sheet().getDataRange().getValues();
+/** All issued tickets for this email or phone, newest first. */
+function matchTickets(email, phone) {
+  var v = sheet().getDataRange().getValues(), out_ = [];
   for (var i = v.length - 1; i >= 1; i--) {
     if (v[i][1] !== "TICKET ISSUED") continue;
     var ve = String(v[i][5]).toLowerCase(), vp = digits(v[i][6]);
-    if ((email && ve === email) || (phone && vp === phone)) return ticketOf(v[i]);
+    if ((email && ve === email) || (phone && vp === phone)) out_.push(ticketOf(v[i]));
   }
-  return null;
+  return out_;
 }
 
 /* =============================== the 5-minute job =============================== */

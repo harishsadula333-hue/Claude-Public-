@@ -175,6 +175,12 @@ footer img { width:80px; height:80px; border-radius:50%; margin:0 auto 10px; box
 .ticket .tg b { font-size:18px; color:var(--ink); }
 .ticket .tno { font-size:24px !important; color:var(--plum) !important; letter-spacing:.04em; }
 .ticket .tn { padding:14px 20px 18px; font-size:15px; color:#6c5560; }
+.tswitch { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:14px; }
+.tswitch .lbl { width:100%; text-align:center; color:var(--gold-l); font-weight:800; font-size:15px; }
+.tswitch button { border:2px solid var(--gold); background:transparent; color:var(--gold-l); border-radius:30px; padding:8px 14px; font:800 14px "Montserrat",sans-serif; cursor:pointer; }
+.tswitch button.on { background:var(--foil); color:var(--plum-d); }
+.lastlink { margin-top:12px; font-size:15px; text-align:center; }
+.lastlink a { color:var(--plum); font-weight:800; }
 .sent { text-align:center; color:#EBD6CD; margin-top:12px; font-size:16px; }
 .spin { width:64px; height:64px; margin:0 auto 16px; border-radius:50%; border:6px solid rgba(240,216,160,.25); border-top-color:var(--gold-l); animation:sp 1s linear infinite; }
 @keyframes sp { to { transform:rotate(360deg); } }
@@ -321,6 +327,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
     <label for="cName">Your name <span style="text-transform:none;letter-spacing:0;font-weight:600">(for the ticket, optional)</span></label><input id="cName" autocomplete="name">
     <button class="btn" type="submit" id="cBtn">Get my e-ticket</button>
     <p class="msg" id="cErr"></p>
+    <p class="lastlink" id="lastLink" style="display:none"></p>
   </form>
 </div></section>
 
@@ -339,6 +346,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
     <div class="it" style="font-size:clamp(32px,6vw,46px);color:var(--gold-l);line-height:1.1">You're in! 🎄</div>
     <p id="okMsg">Your payment was successful and your seat is booked. We can't wait to see you!</p>
   </div>
+  <div class="tswitch" id="tSwitch" style="display:none"></div>
   <div class="ticket" id="ticketCard">
     <div class="th"><img src="img/logo.jpg" alt=""><div><div class="cz" style="letter-spacing:.18em;font-size:15px">SUNDARLYSH MEMORIES</div><div class="kicker" style="font-size:12px">E-TICKET</div></div></div>
     <div class="tt it" id="tEvent"></div>
@@ -355,6 +363,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
     <div class="tn" id="tNote"></div>
   </div>
   <div class="cta" style="margin-top:18px"><button class="btn" id="dlBtn" type="button">Download ticket (PDF)</button></div>
+  <div class="cta" style="margin-top:12px"><button class="btn ghost" id="anotherBtn" type="button">Find another ticket</button></div>
   <p class="sent" id="tMail"></p>
 </div></section>
 
@@ -437,6 +446,32 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   function store(k, v) { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   function load(k) { try { return JSON.parse(localStorage.getItem(k) || "null"); } catch (e) { return null; } }
 
+  // ---------- search screen ("Already paid? Get your e-ticket")
+  function openSearch() {
+    document.body.classList.add("focus"); $("book").style.display = "none"; $("ticketView").style.display = "none"; $("confirmView").style.display = "none";
+    $("claimView").style.display = "block"; $("cBtn").disabled = false; $("cBtn").textContent = "Get my e-ticket"; $("cErr").className = "msg";
+    var last = load("sm_ticket");
+    if (last && last.ticket_no) {
+      $("lastLink").innerHTML = ""; var a = document.createElement("a"); a.href = "#"; a.textContent = "View my last ticket (" + last.ticket_no + ")";
+      a.onclick = function (e) { e.preventDefault(); showTickets([last], false); }; $("lastLink").appendChild(a); $("lastLink").style.display = "block";
+    }
+    window.scrollTo(0, 0);
+  }
+  // several tickets for the same email/phone: buttons to switch between them
+  function showTickets(list, fresh) {
+    var sw = $("tSwitch"); sw.innerHTML = "";
+    if (list.length > 1) {
+      var l = document.createElement("div"); l.className = "lbl"; l.textContent = "You have " + list.length + " tickets"; sw.appendChild(l);
+      list.forEach(function (t, i) {
+        var b = document.createElement("button"); b.type = "button"; b.textContent = t.ticket_no + " · " + t.seats + (t.seats == 1 ? " person" : " people");
+        b.onclick = function () { [].forEach.call(sw.querySelectorAll("button"), function (x) { x.className = ""; }); b.className = "on"; showTicket(t, false); };
+        if (i === 0) b.className = "on"; sw.appendChild(b);
+      });
+      sw.style.display = "flex";
+    } else sw.style.display = "none";
+    showTicket(list[0], fresh);
+  }
+
   // ---------- ticket view
   var current = null;
   function showTicket(t, fresh) {
@@ -501,7 +536,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   // ---------- after payment: the Payment Page redirects here with ?paid=1 (set in Razorpay: Page Settings → Redirect to your website)
   function makeRef() { return "SM" + Date.now().toString(36).toUpperCase().slice(-5) + Math.random().toString(36).slice(2, 5).toUpperCase(); }
   function finish(p) {
-    var done = function (t) { $("confirmView").style.display = "none"; showTicket(t, true); };
+    var done = function (t, list) { $("confirmView").style.display = "none"; showTickets(list && list.length ? list : [t], true); };
     if (!E.TICKET_API_URL) {   // no backend configured: can't check payments, so show the ticket directly (unverified)
       return done({ ticket_no: "SM-ADV-" + p.ref.slice(-6), ref: p.ref, name: p.name || "Guest", email: p.email, seats: 1, amount: E.PRICE_PER_SEAT, payment_id: "", email_sent: false });
     }
@@ -511,7 +546,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
     function attempt() {
       tries++; ui("Finding your payment…", "Checking Razorpay's records for " + (p.email || p.phone) + ". This can take up to a minute, please keep this page open.", true, false);
       api({ action: "find", email: p.email, phone: p.phone, name: p.name }).then(function (j) {
-        if (j.ticket) return done(j.ticket);
+        if (j.ticket || (j.tickets && j.tickets.length)) return done(j.ticket || j.tickets[0], j.tickets);
         if (tries < MAX) return setTimeout(attempt, 10000);
         ui("Your payment is still being processed", "Razorpay can take a few minutes to confirm. Your e-ticket will be emailed to you automatically as soon as it's confirmed. You can also tap 'Check again' in a few minutes. Use the same email/phone you entered on the Razorpay page.", false, true);
       }).catch(function (err) {
@@ -526,16 +561,14 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   if (qp.get("demo") === "1") {
     showTicket({ ticket_no: "SM-ADV-001", ref: "SMDEMO123", name: "Sample Guest", email: "guest@example.com", seats: 2, amount: 2 * E.PRICE_PER_SEAT, payment_id: "", email_sent: true }, true);
   } else if (qp.get("paid") === "1") {
-    var saved = load("sm_ticket");
-    if (saved) showTicket(saved, false);
-    else {   // back from the Razorpay Payment Page: ask for the name to put on the ticket
-      document.body.classList.add("focus"); $("book").style.display = "none"; $("claimView").style.display = "block"; window.scrollTo(0, 0);
-    }
+    openSearch();
   } else if (qp.get("ticket") && qp.get("key")) {
     var sv = load("sm_ticket");
     if (sv && sv.ticket_no === qp.get("ticket") && (sv.ref === qp.get("key") || sv.payment_id === qp.get("key"))) showTicket(sv, false);
     else if (E.TICKET_API_URL) api({ action: "lookup", ticket_no: qp.get("ticket"), key: qp.get("key") }).then(function (j) { showTicket(j.ticket, false); }).catch(function () {});
   }
+
+  $("anotherBtn").addEventListener("click", function () { $("cEmail").value = ""; $("cPhone").value = ""; $("cName").value = ""; openSearch(); });
 
   // ---------- "Get your e-ticket": find the payment by email or phone
   $("claimForm").addEventListener("submit", function (e) {
