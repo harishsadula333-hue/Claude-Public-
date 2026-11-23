@@ -1,5 +1,8 @@
 /**
- * Sundarlysh Memories – VERIFIED ticket backend for a Razorpay PAYMENT PAGE
+ * Sundarlysh Memories – ticket backend for a Razorpay PAYMENT PAGE
+ * WITHOUT Razorpay API keys: issues the ticket when the customer returns from the Payment Page, emails it and saves it.
+ * WITH keys (optional, add later): also VERIFIES the payment with Razorpay before issuing.
+ * ---- details below describe the verified mode ----
  * -------------------------------------------------------------------------
  * Customers still pay on your Razorpay Payment Page. When they come back to the website, this script
  * ASKS RAZORPAY whether a real, successful payment exists for them before issuing a ticket.
@@ -68,6 +71,9 @@ function issue(d) {
     }
     var row = sh.getRange(r, 1, 1, HEAD.length).getValues()[0];
     if (row[1] === "TICKET ISSUED") return { ok: true, ticket: ticketOf(row) };
+    if (!hasKeys()) {   // no API keys: issue on return from the Payment Page (unverified)
+      return { ok: true, ticket: markIssued(sh, r, { id: "", amount: Number(row[7]) * CFG.PRICE * 100 }) };
+    }
     var since = new Date(row[0]).getTime() - 15 * 60 * 1000;
     if (d.claim) since = Date.now() - 3 * 24 * 3600 * 1000;      // "paid on another device": look back 3 days
     var pay = findPayment(row[5], String(row[6]).replace("'", ""), since);
@@ -85,6 +91,7 @@ function lookup(d) {
 
 /** Time-driven trigger, every 10 minutes: finds payments for bookings whose owners closed the page too early. */
 function reconcilePending() {
+  if (!hasKeys()) return;
   var lock = LockService.getScriptLock(); lock.waitLock(25000);
   try {
     var sh = sheet(), v = sh.getDataRange().getValues(), now = Date.now();
@@ -127,7 +134,8 @@ function markIssued(sh, r, pay) {
   var ticketNo = CFG.PREFIX + ("00" + (n + 1)).slice(-3);
   sh.getRange(r, 2).setValue("TICKET ISSUED"); sh.getRange(r, 3).setValue(ticketNo);
   sh.getRange(r, 8).setValue(seats); sh.getRange(r, 10).setValue(pay.amount / 100);
-  sh.getRange(r, 11).setValue(pay.id); sh.getRange(r, 13).setValue(new Date());
+  if (pay.id) sh.getRange(r, 11).setValue(pay.id);
+  sh.getRange(r, 13).setValue(new Date());
   SpreadsheetApp.flush();
   var t = ticketOf(sh.getRange(r, 1, 1, HEAD.length).getValues()[0]);
   try { sendTicket(t); sh.getRange(r, 14).setValue("yes"); t.email_sent = true; }
@@ -135,6 +143,7 @@ function markIssued(sh, r, pay) {
   return t;
 }
 
+function hasKeys() { return !!(prop("RAZORPAY_KEY_ID") && prop("RAZORPAY_KEY_SECRET")); }
 function usedPaymentIds() {
   var v = sheet().getDataRange().getValues(), u = {};
   for (var i = 1; i < v.length; i++) if (v[i][10]) u[v[i][10]] = true;
@@ -154,7 +163,7 @@ function sendTicket(t) {
   var pu = prop("PAGE_URL");
   var link = pu ? pu + (pu.indexOf("?") < 0 ? "?" : "&") + "ticket=" + encodeURIComponent(t.ticket_no) + "&key=" + encodeURIComponent(t.ref) : "";
   var body = '<div style="font-family:Arial,sans-serif;max-width:560px;margin:auto;color:#2E1A22">' +
-    '<p>Hi ' + esc(t.name) + ',</p><p>Thank you for booking! 🎄 Your payment is confirmed and your seat for the <b>' + esc(t.event) + '</b> is booked. Your ticket is below and attached as a PDF.</p>' +
+    '<p>Hi ' + esc(t.name) + ',</p><p>Thank you for booking! 🎄 Your seat for the <b>' + esc(t.event) + '</b> is booked. Your ticket is below and attached as a PDF.</p>' +
     html.replace(/^[\s\S]*<body>|<\/body>[\s\S]*$/g, "") +
     (link ? '<p style="text-align:center"><a href="' + link + '" style="background:#45012A;color:#F0D8A0;padding:12px 22px;border-radius:30px;text-decoration:none;font-weight:bold">View your ticket online</a></p>' : "") +
     '<p>Please show this ticket at entry, on your phone or printed. Doors open 4:45 PM.</p><p>See you soon!<br><b>Team Sundarlysh Memories</b><br>Instagram: @sundarlyshmemories</p></div>';
@@ -173,7 +182,7 @@ function ticketHtml(t) {
     '<tr>' + cell("NAME", t.name) + cell("ADMITS", t.seats + (t.seats == 1 ? " person" : " people")) + '</tr>' +
     '<tr>' + cell("DATE", t.date) + cell("TIME", t.time) + '</tr>' +
     '<tr>' + cell("VENUE", t.venue + ", " + t.area) + cell("AMOUNT PAID", "₹" + Number(t.amount).toLocaleString("en-IN")) + '</tr>' +
-    '<tr>' + cell("PAYMENT ID", t.payment_id) + '<td></td></tr></table>' +
+    '<tr>' + cell(t.payment_id ? "PAYMENT ID" : "BOOKING REF", t.payment_id || t.ref) + '<td></td></tr></table>' +
     '<div style="border-top:2px dashed #d9c6cc;padding:12px 18px;font-size:12px;color:#6c5560">Please show this ticket at entry (on your phone or printed). Includes ₹100 redeemable food &amp; beverage per person at ' + esc(t.venue) + '.</div>' +
     '</div></body></html>';
 }
@@ -219,8 +228,8 @@ function out(o) { return ContentService.createTextOutput(JSON.stringify(o)).setM
 /** Run once from the editor: checks the Razorpay keys, creates the sheet, and emails YOU a sample ticket. */
 function testSetup() {
   sheet();
-  var res = rzp("get", "/payments?count=5");
-  Logger.log("Razorpay keys OK – can read payments (" + (res.count || 0) + " recent shown).");
+  if (hasKeys()) { var res = rzp("get", "/payments?count=5"); Logger.log("Razorpay keys OK – payments will be verified."); }
+  else Logger.log("No Razorpay keys – tickets are issued when customers return from the Payment Page (not verified).");
   var me = Session.getActiveUser().getEmail();
   sendTicket({ ticket_no: "SM-ADV-000", ref: "SMTEST", name: "Test Guest", email: me, seats: 1, amount: CFG.PRICE, payment_id: "pay_TEST",
                event: CFG.EVENT, date: CFG.DATE, time: CFG.TIME, venue: CFG.VENUE, area: CFG.AREA });
