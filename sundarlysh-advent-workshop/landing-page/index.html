@@ -217,6 +217,13 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   .gift .btn { width:100%; }
   footer { padding-bottom:110px; }
 }
+.partners { margin:0 auto 18px; max-width:560px; }
+.partners .assoc { display:block; font-size:12px; font-weight:800; letter-spacing:.24em; text-transform:uppercase; color:var(--gold-l); margin-bottom:8px; opacity:.9; }
+.partners .plogos { display:flex; justify-content:center; align-items:center; gap:10px; }
+.partners .plogos img { height:62px; width:auto; max-width:31%; object-fit:contain; border-radius:10px; box-shadow:0 0 0 2px rgba(240,216,160,.55), 0 6px 16px rgba(0,0,0,.4); background:#fff; }
+.partners.foot { margin:16px auto 6px; }
+.partners.foot .plogos img { height:52px; }
+@media (min-width:700px) { .partners .plogos img { height:80px; } }
 </style>
 </head>
 <body>
@@ -227,6 +234,14 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   <div class="bg" role="img" aria-label="Handmade advent calendar of 24 kraft pouches"></div>
   <div class="in wrap">
     <img class="logo" src="img/logo.jpg" alt="Sundarlysh Memories">
+    <div class="partners">
+      <span class="assoc">in association with</span>
+      <div class="plogos">
+        <img src="img/partner_stuff.jpg" alt="st-uff">
+        <img src="img/partner_yolk.jpg" alt="Yolk Theory">
+        <img src="img/partner_kulchas.jpg" alt="MV's Kulchas">
+      </div>
+    </div>
     <span class="pill">FIRST TIME EVER IN HYDERABAD</span>
     <h1><span class="it">The Christmas</span><span class="cz foil">ADVENT CALENDAR WORKSHOP</span></h1>
     <p class="sub">24 little surprises, one to open every day till Christmas, and you make every one of them yourself.</p>
@@ -369,6 +384,7 @@ body.focus #claimView, body.focus #confirmView, body.focus #ticketView { padding
   <img src="img/logo.jpg" alt="Sundarlysh Memories">
   <div class="cz" style="color:var(--gold-l);letter-spacing:.2em">SUNDARLYSH MEMORIES</div>
   <p>Experience bars, workshops &amp; celebrations · Hyderabad · Bengaluru</p>
+  <div class="partners foot"><span class="assoc">in association with</span><div class="plogos"><img src="img/partner_stuff.jpg" alt="st-uff"><img src="img/partner_yolk.jpg" alt="Yolk Theory"><img src="img/partner_kulchas.jpg" alt="MV's Kulchas"></div></div>
   <p style="margin-top:8px"><a id="igLink" href="#">@sundarlyshmemories</a></p>
   <p style="margin-top:14px;font-size:14px;opacity:.7">Images are for illustration only.</p>
 </footer>
