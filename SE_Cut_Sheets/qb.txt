@@ -1,0 +1,259 @@
+                                  SIDDHARTHA
+           INSTITUTE OF ENGINEERING & TECHNOLOGY
+           Vinobha Nagar, Ibrahimpatnam, Ranga Reddy District – 501506
+       ( Approved by AICTE, Affiliated to JNTUH, Accredited to NBA & NAAC)
+                                UGC Autonomous
+                                  A.Y. 2026-2027
+                               Software Engineering Question Bank
+
+                                            UNIT-I
+ Short Questions
+No                                              Question
+1    Define Software Engineering.
+
+2    What is meant by the evolving role of software?
+
+3    List any two characteristics of modern software.
+
+4    What are software myths? Give one example.
+
+5    Name the layers of Software Engineering as a layered technology.
+
+6    What is a software process framework?
+
+7    Expand CMMI and state its purpose.
+
+8    What is the main feature of the Waterfall model?
+
+9    What is the Spiral model based on?
+
+10   What is Agile methodology?
+
+ Long Questions
+No                                              Question
+      Explain the evolving role of software and the changing nature of software in modern
+1
+      systems with suitable examples.
+      Discuss common software myths related to management, customers, and developers. How
+2
+     do these myths affect software development?
+     Apply the concept of Software Engineering as a layered technology and illustrate its
+3
+     different layers with a neat diagram
+     Explain the generic process framework activities in software engineering. Illustrate with an
+4
+     example.
+     Discuss the Capability Maturity Model Integration (CMMI) levels and explain how they
+5
+     improve software process quality.
+6     Explain in Detail SDLC Model.
+
+7    Explain the Spiral model in detail. In a software application.
+     Illustrate how Agile methodology can be applied in modern software development
+8
+     environments, highlighting its advantages and disadvantages
+9    Explain Waterfall model in detail?.
+
+10   Explain component based development model.
+                                          UNIT-II
+ Short Questions
+No                                               Question
+1    What are functional requirements?
+
+2    What are non-functional requirements?
+
+3    Define user requirements.
+
+4    What are system requirements?
+
+5    What is meant by interface specification?
+
+6    What is a Software Requirements Document (SRS)?
+
+7    What is feasibility study in requirements engineering?
+
+8    What is requirements elicitation?
+
+9    What is requirements validation?
+
+10   What is requirements management?
+
+
+
+ Long Questions
+No                                               Question
+1    Explain functional and non-functional requirements with suitable examples.
+
+2    Differentiate between user requirements and system requirements with examples.
+     Discuss the importance of interface specification in software requirements. Explain
+3
+     different types of interfaces.
+     Describe the structure and contents of a Software Requirements Specification (SRS)
+4
+     document.
+     Demonstrate the requirements engineering process in software development with a neat
+5
+     diagram
+6    Discuss feasibility studies in software development. Explain different types of feasibility.
+
+7    Explain the process of requirements elicitation and analysis.
+     Describe requirements validation. How do you ensure that requirements are correct and
+8
+     complete?
+     Explain requirements management and discuss the challenges involved in managing
+9
+     changing requirements.
+10   Discuss the common problems in requirements gathering?
+                                          UNIT-III
+ Short Questions
+No                                             Question
+1    What is meant by design process in software engineering?
+
+2    What is design quality?
+
+3    Define software design concepts.
+
+4    What is a design model?
+
+5    What is software architecture?
+
+6    What is data design?
+
+7    What are architectural styles and patterns?
+
+8    What is a UML conceptual model?
+
+9    What is a class diagram?
+
+10   What is a sequence diagram?
+
+
+ Long Questions
+No                                             Question
+     Explain the software design process and design quality. Discuss the factors that influence
+1
+     design quality.
+     Describe various software design concepts such as abstraction, refinement, modularity, and
+2
+     information hiding with examples.
+3     Explain the design model and its different elements in software engineering.
+      Apply architectural design principles to design a simple software system (e.g., library
+4
+     management system).
+      Analyze different architectural styles and patterns used in software design. Compare their
+5
+     advantages and limitations.
+6    Explain data design, interface design with suitable examples.
+
+7    Explain the conceptual model of UML and its importance in software design.
+
+8    Explain use-case diagrams and class diagrams with suitable examples
+
+9    Differences between sequence diagrams and collaboration diagrams with examples.
+
+10   Explain activity diagrams and component diagrams with suitable examples and applications
+                                           UNIT-IV
+ Short Questions
+No                                             Question
+1    What is a strategic approach to software testing?
+
+2    What are test strategies for conventional software?
+
+3    What is black-box testing?
+
+4    What is white-box testing?
+
+5    Define validation testing.
+
+6    What is system testing?
+
+7    What is debugging?
+
+8    What is software measurement?
+
+9    What are software quality metrics?
+
+10   Give one example of a product metric in software engineering.
+
+
+
+ Long Questions
+No                                             Question
+     Explain the strategic approach to software testing. Discuss the different levels of testing in
+1
+     detail.
+      Describe various test strategies used for conventional software. How do they ensure
+2
+      software quality?
+      Explain black-box testing and white-box testing with suitable examples. Compare their
+3
+      advantages and limitations.
+     Discuss validation testing and system testing. How do they differ in terms of objectives and
+4
+     execution?
+      Explain the art of debugging. Describe different debugging strategies used in software
+5
+      development.
+6     Analyze the relationship between testing and debugging with suitable examples.
+
+7    Explain software measurement and its importance in software engineering.
+
+8    Discuss different types of software metrics used for process and product evaluation.
+
+9    Explain software quality metrics. How do they help in improving software quality?
+
+
+10   Explain software quality metrics and discuss how metrics help evaluate and improve
+     software quality.
+
+
+                                           UNIT-V
+ Short Questions
+No                                             Question
+1    What is risk management in software engineering?
+
+2    Define reactive and proactive risk strategies.
+
+3    What are software risks?
+
+4    What is risk identification?
+
+5    What is risk projection?
+
+6    What is risk refinement?
+
+7    What is RMMM in risk management?
+
+8    What is software quality assurance (SQA)?
+
+9    What are formal technical reviews (FTR)?
+
+10   What is ISO 9000 standard in software quality?
+
+
+ Long Questions
+No                                             Question
+1    Define software risk management. Explain its importance in software projects.
+
+2    Demonstrate reactive and proactive risk management strategies with examples.
+     Explain risk projection and risk refinement. How do they help in effective risk
+3
+     management?
+     Illustrate RMMM (Risk Mitigation, Monitoring, and Management) plan in detail with an
+4
+     example.
+5    Describe the software risk identification process and techniques used to identify risks.
+     Describe Software Quality Assurance (SQA) activities and their role in ensuring software
+6
+     quality.
+     Explain software reviews and formal technical reviews (FTR). Discuss their importance in
+7
+     defect detection.
+     Discuss statistical software quality assurance. How does it help in improving software
+8
+     processes?
+9    Explain software reliability and the factors affecting it. How can reliability be measured?
+     Discuss ISO 9000 quality standards and their significance in software development
+10
+     organizations.
+
