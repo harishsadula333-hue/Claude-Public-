@@ -1,0 +1,682 @@
+                                   SOFTWARE ENGINEERING
+               15 Important Long-Answer Questions | 10 Marks Each | Easy Exam-Preparation Notes
+
+
+ How to write a 10-mark answer
+ Start with a clear definition, explain each point using simple sentences, draw the suggested diagram where given,
+ and finish with a short conclusion. The answers below follow the five units and question order in the supplied
+ question sheet.
+
+
+ UNIT I – INTRODUCTION TO SOFTWARE ENGINEERING & PROCESS MODELS
+ Q3. Describe Software Engineering as a layered technology. Explain each layer in
+ detail with a neat diagram.
+ Introduction
+ Software engineering is a systematic, disciplined and measurable approach to the development, operation and
+ maintenance of software. It applies engineering principles to produce reliable, useful and cost-effective software.
+
+ Layered technology
+ Software engineering is called a layered technology because it is organised into four layers: quality focus, process,
+ methods and tools. Each upper layer depends on the support of the layer below it.
+
+ Diagram
+                         TOOLS\n               METHODS\n                    PROCESS\n               QUALITY FOCUS
+
+ 1. Quality focus
+ Quality focus is the foundation of software engineering. It means continuously aiming to produce software that
+ satisfies user needs, works correctly, is reliable, secure and easy to maintain. Reviews, testing, standards and
+ continuous improvement support quality.
+
+ 2. Process layer
+ The process layer provides the framework for managing software development. It defines the activities, their order,
+ milestones, deliverables and controls. Common framework activities include communication, planning, modelling,
+ construction and deployment. A defined process makes work organised and trackable.
+
+ 3. Methods layer
+ Methods provide the technical steps for building software. They explain how to understand requirements, analyse the
+ problem, design the system, write code, test it and maintain it. Examples include requirement analysis techniques,
+ design methods, coding practices and testing techniques.
+
+ 4. Tools layer
+ Tools provide automated or semi-automated support for the process and methods. Examples include code editors,
+ compilers, debuggers, testing tools, version-control systems and project-management tools. CASE tools can support
+ several software-development activities.
+
+ Relationship between layers
+ Quality focus supports the whole process. The process organises the work, methods provide the technical way to
+ perform it, and tools help apply the methods efficiently. The layers work together rather than independently.
+
+ Advantages
+ This layered approach improves product quality, gives a disciplined development structure, reduces errors, supports
+ teamwork, improves productivity and makes project progress easier to monitor.
+
+ Conclusion
+
+
+
+
+Software Engineering – 10 Mark Answers                                                                              Page 1
+ Software engineering is a layered technology in which quality is the base, process gives structure, methods give
+ technical guidance and tools provide automation. Together they help develop high-quality software.
+
+
+ Q7. Explain the Spiral Model in detail.
+ Introduction
+ The Spiral Model is a risk-driven software process model. It combines repeated development cycles with systematic
+ risk analysis. The project moves through a series of loops, called spirals, and each loop produces a more complete
+ version of the software.
+
+ Diagram
+              +-----------------------------+\n              | 1. Set objectives, options        |\n          |     and constraints
+
+ Phases of each spiral
+ 1. Determine objectives: identify the goals of the current cycle, possible approaches and limitations. 2. Risk analysis:
+ identify technical, cost, schedule and requirement risks; evaluate them and decide how to reduce them. Prototypes
+ may be built to understand difficult areas. 3. Development and testing: design, code and test the selected part of the
+ product. 4. Customer evaluation and planning: obtain customer feedback, review the result and plan the next cycle.
+
+ How it works
+ The first loop may focus on understanding feasibility and major requirements. Later loops add architecture, features
+ and detailed functions. The product becomes more complete after each loop. The project can be stopped if risks or
+ costs become unacceptable.
+
+ Advantages
+ It gives strong attention to risks, accepts changing requirements, encourages customer feedback, supports
+ prototyping and is suitable for large and complex projects where uncertainty is high.
+
+ Limitations
+ Risk analysis requires skilled people and can be costly. The model is more complex to manage than simple models.
+ It may not suit small, low-risk projects, and the number of loops and total cost can be difficult to predict.
+
+ Example
+ For an online banking system, early cycles can examine security and feasibility, later cycles can develop login and
+ account functions, and subsequent cycles can add transfers, statements and other services after risk review.
+
+ Conclusion
+ The Spiral Model is useful when a project has major risks or changing requirements. Repeated planning, risk
+ analysis, development and customer evaluation help control uncertainty.
+
+
+ Q9. Explain the Waterfall Model in detail.
+ Introduction
+ The Waterfall Model is a traditional linear and sequential software development model. Work moves through defined
+ phases, and each phase is generally completed before the next phase begins.
+
+ Diagram
+    Requirements Analysis\n              ↓\nSystem and Software Design\n              ↓\nImplementation (Coding)\n            ↓\nIn
+
+ Phases
+ 1. Requirements analysis: collect, study and document what the customer expects. The requirements are recorded in
+ an SRS document. 2. Design: prepare the system architecture, database design, interfaces and detailed module
+ design. 3. Implementation: programmers convert the design into source code and develop individual modules. 4.
+ Integration and testing: combine modules and test the complete system to find defects and check requirements. 5.
+ Deployment: install and deliver the software to users. 6. Maintenance: correct errors, adapt the system to changes
+
+
+
+Software Engineering – 10 Mark Answers                                                                              Page 2
+ and improve its performance.
+
+ Characteristics
+ The model has clearly defined phases, documents and review points. Progress is measured phase by phase. It
+ works best when requirements are understood and stable before development starts.
+
+ Advantages
+ It is simple to understand and manage, has clear milestones, encourages documentation, makes responsibilities
+ clear and can work well for small projects with fixed requirements.
+
+ Disadvantages
+ Changes are difficult and expensive after a phase is completed. Working software is usually available late. Users
+ may not see the complete product until testing or delivery, and errors in early requirements can affect later phases.
+
+ Example
+ A small payroll application with fixed rules and well-understood requirements may use the Waterfall Model:
+ requirements are documented first, then the design, coding, testing and release are completed in sequence.
+
+ Conclusion
+ The Waterfall Model provides a disciplined step-by-step approach. It is suitable when requirements are clear and
+ unlikely to change, but less suitable for projects with frequent changes.
+
+
+
+
+Software Engineering – 10 Mark Answers                                                                             Page 3
+ UNIT II – SOFTWARE REQUIREMENTS & REQUIREMENTS ENGINEERING
+ Q1. Explain functional and non-functional requirements with suitable examples.
+ Introduction
+ A software requirement describes a service the system must provide or a condition it must satisfy. Requirements are
+ commonly classified as functional and non-functional requirements.
+
+ Functional requirements
+ Functional requirements describe what the system must do. They specify features, services, inputs, outputs and
+ behaviour in response to user actions. Examples for a library system include: the system shall allow a librarian to add
+ a book; a member shall be able to search books by title; the system shall issue a book to a registered member; and
+ the system shall calculate a fine for a late return.
+
+ Non-functional requirements
+ Non-functional requirements describe how well the system must work or the constraints under which it operates.
+ They concern quality attributes such as performance, security, reliability, usability, maintainability and portability.
+ Examples include: a search result should appear within two seconds under normal load; only authorised staff may
+ change book records; the system should be available 99.5% of the month; and the interface should be easy to use.
+
+ Types of non-functional requirements
+ Product requirements relate to the software product, such as speed, reliability and usability. Organisational
+ requirements arise from policies or standards, such as using a particular database or coding standard. External
+ requirements arise from laws, regulations or outside systems, such as privacy and data-protection rules.
+
+ Differences
+ Functional requirements define system actions and services; non-functional requirements define quality levels and
+ constraints. Functional requirements are often checked using use cases and functional tests. Non-functional
+ requirements are checked using performance, security, usability and reliability tests.
+
+ Why both are important
+ A system may provide all required features but still be poor if it is slow, insecure or difficult to use. Therefore, both
+ types must be clear, measurable where possible, consistent and testable.
+
+ Conclusion
+ Functional requirements state what the software does, while non-functional requirements state how well it must do it
+ and the conditions it must satisfy. Both are essential for a successful system.
+
+
+ Q4. Describe the structure and contents of a Software Requirements Specification
+ (SRS) document.
+ Introduction
+ A Software Requirements Specification (SRS) is a formal document that describes the services, features, constraints
+ and quality requirements of a software system. It acts as an agreement and reference for customers, developers and
+ testers.
+
+ Typical SRS structure
+ 1. Introduction: purpose of the document, scope of the product, definitions, abbreviations, references and document
+ overview. 2. Overall description: product perspective, major product functions, user classes, operating environment,
+ constraints, assumptions and dependencies. 3. Specific requirements: detailed functional requirements, external
+ interface requirements, performance requirements, database requirements, design constraints and quality attributes.
+ 4. Appendices: supporting information, models, sample reports or other reference material. 5. Index: helps readers
+ locate topics, if needed.
+
+ Functional requirements
+
+
+Software Engineering – 10 Mark Answers                                                                                  Page 4
+ This section explains each service the system must provide. Each requirement should have a unique identifier and
+ clear description. For example: FR-01 – The system shall allow a registered member to search the catalogue by
+ book title.
+
+ External interface requirements
+ These describe how the system interacts with users, hardware, other software and communication networks.
+ User-interface requirements may describe screens and messages; software interfaces may identify external
+ applications or databases.
+
+ Non-functional requirements
+ This section records performance, security, reliability, usability, maintainability, portability and legal or organisational
+ constraints. Requirements should be measurable where possible, such as a response time or availability target.
+
+ Characteristics of a good SRS
+ A good SRS is correct, complete, clear and unambiguous, consistent, verifiable, modifiable and traceable. Each
+ requirement should be necessary and should not conflict with another requirement.
+
+ Importance
+ The SRS reduces misunderstanding, provides a basis for design and coding, supports test-case preparation, helps
+ estimate cost and schedule, and provides a basis for checking whether the delivered product meets the agreed
+ needs.
+
+ Conclusion
+ The SRS is a key document in software development. A well-written SRS communicates requirements clearly and
+ guides the project from design through testing and acceptance.
+
+
+ Q5. Explain the Requirements Engineering process in detail with a neat diagram.
+ Introduction
+ Requirements Engineering (RE) is the systematic process of discovering, analysing, documenting, validating and
+ managing the needs and constraints of stakeholders for a software system.
+
+ Diagram
+    Feasibility Study\n             ↓\nRequirements Elicitation\n              ↓\nRequirements Analysis and Negotiation\n
+
+ 1. Feasibility study
+ Study whether the proposed system is practical. Consider technical feasibility, economic feasibility, operational
+ feasibility, legal feasibility and schedule feasibility. The result helps decide whether the project should proceed.
+
+ 2. Requirements elicitation
+ Gather requirements from stakeholders using interviews, questionnaires, observation, workshops, document study
+ and prototypes. Stakeholders may include customers, end users, managers and external organisations.
+
+ 3. Analysis and negotiation
+ Classify and organise the gathered requirements, identify missing or conflicting needs, check technical possibility
+ and prioritise requirements. Stakeholders discuss conflicts and agree on realistic requirements.
+
+ 4. Requirements specification
+ Write the agreed requirements in a clear form, commonly using an SRS document. Use cases, user stories, tables
+ and models may help explain system behaviour.
+
+ 5. Requirements validation
+ Check that requirements describe the correct system and are complete, consistent, clear, feasible and testable.
+ Reviews, walkthroughs, prototypes and test-case preparation can be used.
+
+ 6. Requirements management
+
+
+
+Software Engineering – 10 Mark Answers                                                                                  Page 5
+ Control requirement changes throughout the project. Maintain versions, record change requests, analyse their
+ impact and trace each requirement to design, code and tests.
+
+ Importance
+ The process reduces misunderstandings, prevents unnecessary development, supports cost and schedule
+ estimation, improves customer satisfaction and provides a reliable basis for design and testing.
+
+ Conclusion
+ Requirements Engineering converts stakeholder needs into clear and agreed software requirements. It is continuous
+ because requirements may be clarified or changed during a project.
+
+
+
+
+Software Engineering – 10 Mark Answers                                                                          Page 6
+ UNIT III – SOFTWARE DESIGN & UML MODELING
+ Q1. Explain the software design process and design quality. Discuss the factors that
+ influence design quality.
+ Introduction
+ Software design transforms the requirements into a blueprint for building the system. It describes the system
+ structure, components, data, interfaces and interactions. Good design makes software easier to build, test and
+ maintain.
+
+ Software design process
+ 1. Data or class design: identify data structures, database tables and classes. 2. Architectural design: define the
+ major components or subsystems and how they relate. 3. Interface design: specify user interfaces and
+ communication between components or external systems. 4. Component-level design: describe the internal logic
+ and responsibilities of each module. 5. Deployment design: map software components to hardware or execution
+ environments where relevant.
+
+ Design quality
+ A high-quality design correctly represents requirements and provides a clear structure. It should be understandable,
+ efficient, reliable, secure, reusable, testable and easy to modify.
+
+ Factors influencing design quality
+ 1. Correctness: design must satisfy all stated requirements. 2. Simplicity: avoid unnecessary complexity. 3.
+ Modularity: divide the system into manageable modules. 4. High cohesion: each module should focus on a closely
+ related set of tasks. 5. Low coupling: modules should have minimum unnecessary dependency on one another. 6.
+ Information hiding: keep internal details private and expose only required interfaces. 7. Reusability: components
+ should be usable in other parts or projects. 8. Maintainability: changes and corrections should be easy. 9. Efficiency:
+ use resources such as time and memory appropriately. 10. Testability: design should make components easy to test.
+
+ Design review
+ Design quality can be checked through technical reviews, walkthroughs, prototypes and traceability to requirements.
+ Reviewers look for missing functions, unclear interfaces, excessive dependencies and possible failure points.
+
+ Conclusion
+ The design process creates the blueprint of software. Correctness, simplicity, modularity, cohesion, low coupling,
+ security and maintainability are important factors that influence design quality.
+
+
+ Q2. Describe various software design concepts such as abstraction, refinement,
+ modularity, and information hiding with examples.
+ Introduction
+ Software design concepts are basic ideas used to organise a software solution. They help developers manage
+ complexity and create systems that are easier to understand, test and maintain.
+
+ 1. Abstraction
+ Abstraction means showing essential features and hiding unnecessary details. It allows a designer to think about
+ what a component does without first considering how it works. Example: a user of an ATM sees options such as
+ withdraw and check balance, but does not need to know the internal banking calculations.
+
+ 2. Refinement
+ Refinement is the step-by-step expansion of a high-level description into more detailed design. Example: an
+ instruction 'process a library loan' can be refined into verify member, check book availability, record issue date and
+ update book status.
+
+ 3. Modularity
+
+
+Software Engineering – 10 Mark Answers                                                                              Page 7
+ Modularity means dividing a large system into smaller, independent modules. Each module performs a specific task.
+ Example: a library system can have separate modules for member management, book catalogue, issue/return and
+ fine calculation. Modules make development, testing and maintenance easier.
+
+ 4. Information hiding
+ Information hiding means keeping a module's internal data and implementation details private and allowing access
+ only through defined interfaces. Example: a bank account module may provide deposit(), withdraw() and
+ getBalance() operations while preventing other modules from directly changing its internal balance.
+
+ 5. Software architecture
+ Architecture describes the overall structure of the system, its major components and their relationships. Example: a
+ three-tier application may have presentation, business-logic and database layers.
+
+ 6. Functional independence
+ A module is functionally independent when it has high cohesion and low coupling. High cohesion means its tasks
+ belong together; low coupling means it has few dependencies on other modules.
+
+ Benefits
+ These concepts reduce complexity, support reuse, improve testing, make teamwork easier, limit the effect of
+ changes and improve maintainability.
+
+ Conclusion
+ Abstraction, refinement, modularity and information hiding are important design concepts. Applying them produces
+ clear, organised and maintainable software.
+
+
+ Q4. Apply architectural design principles to design a simple software system (e.g.,
+ Library Management System).
+ Introduction
+ Architectural design defines the major parts of a software system and how they communicate. A Library
+ Management System (LMS) can be designed using a simple layered architecture.
+
+ Requirements considered
+ The system should maintain book and member details, allow searching, issue and return books, calculate overdue
+ fines, and provide reports. Members and librarians have different access permissions.
+
+ Architecture diagram
+ USERS\n Member / Librarian\n |\n v\n PRESENTATION LAYER\n Screens and forms\n |\n v\n BUSINESS LOGIC
+ LAYER\n Search | Issue/Return | Fine | Reports\n |\n v\n DATA ACCESS LAYER\n Database operations\n |\n v\n
+ DATABASE\n Books | Members | Loans | Fines
+
+ Main components
+ 1. Presentation layer: displays screens for members and librarians and accepts user input. 2. Business logic layer:
+ checks membership, availability, loan limits, due dates and fine rules. 3. Data access layer: performs controlled
+ database operations. 4. Database: stores books, members, loans and fine records.
+
+ Important data entities
+ Book (BookID, title, author, status); Member (MemberID, name, contact); Loan (LoanID, BookID, MemberID, issue
+ date, due date, return date); Fine (FineID, LoanID, amount, payment status).
+
+ Example operation – issue a book
+ The librarian selects a member and book. The presentation layer sends the request to the business logic layer. The
+ logic checks whether the member is active and the book is available. If valid, the data access layer records the loan
+ and changes the book status to issued. The system then displays confirmation.
+
+ Architectural principles applied
+
+
+Software Engineering – 10 Mark Answers                                                                            Page 8
+ Separation of concerns keeps screens, business rules and data operations separate. Modularity divides work into
+ manageable components. High cohesion keeps related functions together. Low coupling reduces dependencies.
+ Information hiding protects database details. Security checks restrict librarian-only operations. The design should
+ also support backup, validation and future expansion.
+
+ Advantages
+ The architecture is easy to understand, test and maintain. A change to the screen need not change database rules.
+ Modules can be tested separately, and new functions such as reservations can be added later.
+
+ Conclusion
+ A layered architecture provides a clear structure for the Library Management System. Separating presentation,
+ business logic and data access improves maintainability, security and reliability.
+
+
+
+
+Software Engineering – 10 Mark Answers                                                                            Page 9
+ UNIT IV – SOFTWARE TESTING, DEBUGGING & METRICS
+ Q1. Explain the strategic approach to software testing. Discuss the different levels of
+ testing in detail.
+ Introduction
+ Software testing is the process of executing or evaluating software to find defects and check whether it satisfies
+ specified requirements. A testing strategy plans testing activities from individual components to the complete system.
+
+ Strategic approach
+ Testing begins early and is planned along with development. Test objectives and acceptance criteria are defined.
+ Test cases are prepared from requirements and design. Testing proceeds from small units to the complete product.
+ Defects are recorded, corrected and retested. Regression testing checks that changes have not damaged existing
+ features.
+
+ Testing levels diagram
+ Unit Testing\n ↓\nIntegration Testing\n ↓\nSystem Testing\n ↓\nAcceptance Testing
+
+ 1. Unit testing
+ Individual functions, classes or modules are tested separately. Developers commonly perform this level. It checks
+ local logic, input handling, boundary conditions and error handling. Example: test a fine-calculation function with
+ different overdue days.
+
+ 2. Integration testing
+ Two or more tested modules are combined and their interfaces are checked. It finds problems in data flow,
+ communication and interaction. Approaches include top-down, bottom-up and incremental integration. Example:
+ check that the issue-book module correctly updates the book database.
+
+ 3. System testing
+ The complete integrated system is tested as a whole against system requirements. It includes functional testing and
+ relevant non-functional testing such as performance, security, recovery and usability. Example: test the full library
+ application from login to book return.
+
+ 4. Acceptance testing
+ Users or customers check whether the system meets their needs and is ready for delivery. User acceptance testing
+ is often performed in a realistic environment. Alpha testing may take place at the developer's site; beta testing may
+ involve selected users in their environment.
+
+ Supporting activities
+ Test planning defines scope, resources and schedule. Test design creates cases and data. Execution compares
+ actual and expected results. Defect reporting records problems. Retesting verifies fixes, while regression testing
+ checks unaffected functions.
+
+ Conclusion
+ A strategic testing approach uses planned testing at unit, integration, system and acceptance levels. Testing
+ progressively increases confidence that the software is correct and useful.
+
+
+ Q2. Describe various test strategies for conventional software. How do they ensure
+ software quality?
+ Introduction
+ A test strategy is an organised approach for testing software. Conventional software testing commonly uses a
+ sequence of testing activities, starting with individual modules and moving towards the complete application.
+
+ 1. Unit testing strategy
+
+
+Software Engineering – 10 Mark Answers                                                                           Page 10
+ Test each module independently. Check internal logic, local data structures, control paths, boundary values and error
+ conditions. It helps find defects close to where they are introduced.
+
+ 2. Integration testing strategy
+ Combine modules gradually and test their interfaces. Top-down integration begins with higher-level control modules
+ and uses stubs for unfinished lower modules. Bottom-up integration begins with lower-level modules and uses
+ drivers. Incremental integration adds and tests a few modules at a time.
+
+ 3. Validation testing strategy
+ Check whether the developed software satisfies the requirements and user expectations. Functional requirements
+ are tested using planned test cases. Acceptance criteria are used to decide whether the product is acceptable.
+
+ 4. System testing strategy
+ Test the complete system in its intended environment. Common system tests include recovery testing, security
+ testing, stress testing, performance testing and usability testing.
+
+ 5. Regression testing
+ After a change or defect fix, rerun selected tests to ensure that previously working features still work. Automated
+ regression suites can save time.
+
+ How strategies ensure quality
+ They detect defects at different stages, verify interfaces and complete workflows, check both functional and quality
+ requirements, reduce the risk of changes, provide evidence for acceptance and improve confidence before release.
+
+ Good practices
+ Prepare test cases from requirements, include normal and boundary inputs, use realistic test data, record results,
+ prioritise high-risk areas, maintain traceability and fix important defects before release.
+
+ Conclusion
+ Unit, integration, validation, system and regression testing provide complementary checks. Together they help
+ identify defects early and improve the reliability and quality of conventional software.
+
+
+ Q3. Explain black-box testing and white-box testing with suitable examples. Compare
+ their advantages and limitations.
+ Introduction
+ Black-box and white-box testing are two major approaches to software testing. Black-box testing focuses on external
+ behaviour, while white-box testing examines the internal program structure.
+
+ Black-box testing
+ In black-box testing, the tester gives inputs and checks outputs without needing to know the internal code. Test
+ cases are based on requirements and expected behaviour. Techniques include equivalence partitioning,
+ boundary-value analysis, decision-table testing and state-transition testing.
+
+ Black-box example
+ For a login screen, test a correct username and password, an incorrect password, empty fields and a locked account.
+ Check whether the displayed result matches the expected requirement.
+
+ White-box testing
+ In white-box testing, the tester uses knowledge of the internal code and control structure. Tests are designed to
+ exercise statements, branches, conditions, paths and loops. It is often used during unit testing.
+
+ White-box example
+ For a function that calculates a fine, create tests that execute both the 'days overdue = 0' branch and the 'days
+ overdue > 0' branch, and check the calculation paths.
+
+
+
+Software Engineering – 10 Mark Answers                                                                               Page 11
+ Comparison
+ Black-box testing checks what the software does; white-box testing checks how the code works. Black-box tests are
+ derived mainly from requirements; white-box tests are derived from code and design. Black-box testing can reveal
+ missing functions and incorrect outputs; white-box testing can reveal untested branches and logic errors.
+
+ Advantages of black-box testing
+ It does not require programming knowledge, reflects the user's viewpoint, is useful for validating requirements and
+ can be designed independently of implementation.
+
+ Limitations of black-box testing
+ It cannot directly show which code paths were executed, may miss hidden internal logic defects and depends on
+ clear requirements. Exhaustive input testing is usually impossible.
+
+ Advantages of white-box testing
+ It measures code coverage, helps find logical and control-flow errors, can identify untested branches and is useful for
+ detailed unit testing.
+
+ Limitations of white-box testing
+ It requires code knowledge, can be time-consuming, may not detect missing requirements and high code coverage
+ does not prove that the software is correct.
+
+ Conclusion
+ Black-box and white-box testing are complementary. Using both gives a stronger assessment of external behaviour
+ and internal program logic.
+
+
+
+
+Software Engineering – 10 Mark Answers                                                                            Page 12
+ UNIT V – RISK MANAGEMENT & SOFTWARE QUALITY ASSURANCE
+ Q1. Define software risk management. Explain its importance in software projects.
+ Introduction
+ A software risk is an uncertain event or condition that may negatively affect project cost, schedule, quality, scope or
+ success. Risk management is the systematic process of identifying, analysing, prioritising and controlling such risks.
+
+ Types of software risks
+ 1. Project risks: affect the project plan, such as staff shortage, schedule delay or budget overrun. 2. Technical risks:
+ affect product quality or implementation, such as new technology failure, design problems or performance issues. 3.
+ Business risks: affect the business value or continuation of the project, such as market changes, loss of funding or
+ customer priorities changing.
+
+ Risk management steps
+ 1. Risk identification: list possible risks through discussions, checklists and past project experience. 2. Risk analysis:
+ estimate the likelihood and impact of each risk. 3. Risk prioritisation: rank risks so the most serious receive attention
+ first. 4. Risk response planning: decide how to avoid, reduce, transfer or accept each risk. 5. Monitoring: regularly
+ review risks, warning signs and response actions. 6. Control: take corrective action when a risk occurs or changes.
+
+ Risk exposure
+ A simple way to estimate risk exposure is: Risk Exposure = Probability of risk × Loss if it occurs. For example, if a
+ delay has a 0.3 probability and its estimated loss is 10 project-days, exposure is 3 expected project-days. This is a
+ planning estimate, not a guarantee.
+
+ Importance
+ Risk management reduces unexpected problems, supports realistic planning, protects budget and schedule,
+ improves decision-making, helps focus limited resources on major threats and increases the chance of project
+ success.
+
+ Example
+ If a project depends on a new database technology, the team can identify technology failure as a risk, test the
+ technology early, train staff and prepare an alternative solution. This reduces the effect if the technology does not
+ work as expected.
+
+ Conclusion
+ Software risk management helps teams prepare for uncertainty instead of reacting only after problems occur.
+ Continuous identification, analysis, response and monitoring improve project control.
+
+
+ Q4. Discuss the RMMM (Risk Mitigation, Monitoring, and Management) plan in detail
+ with an example.
+ Introduction
+ An RMMM plan is a document that explains how important project risks will be reduced, watched and handled if they
+ occur. RMMM stands for Risk Mitigation, Monitoring and Management.
+
+ 1. Risk mitigation
+ Mitigation consists of actions taken in advance to reduce the probability or impact of a risk. Examples include staff
+ training, prototypes, code reviews, backup resources and early technical experiments.
+
+ 2. Risk monitoring
+ Monitoring means tracking identified risks and warning signs throughout the project. The team checks whether
+ probability or impact has changed, whether mitigation actions are working and whether new risks have appeared.
+ Risk owners report status at regular reviews.
+
+ 3. Risk management
+
+Software Engineering – 10 Mark Answers                                                                               Page 13
+ Management, sometimes called contingency planning, describes what the team will do if the risk actually occurs. It
+ includes the response steps, responsible person, required resources and escalation process.
+
+ Contents of an RMMM plan
+ A useful plan records the risk description, category, probability, impact, priority, mitigation actions, monitoring
+ indicators, contingency actions, risk owner and current status.
+
+ Example – key developer may leave
+ Risk: a developer with important system knowledge may leave the project. Mitigation: share knowledge through
+ documentation, code reviews and pair work; train another team member. Monitoring: review staff availability and
+ workload, and check whether critical modules have more than one knowledgeable person. Management: if the
+ developer leaves, assign the trained backup, use the documentation and revise the schedule if required.
+
+ Another example – technology failure
+ Risk: a selected technology may not meet performance needs. Mitigation: build an early prototype and run
+ performance checks. Monitoring: track response time and technical issues. Management: switch to the approved
+ alternative technology or redesign the affected component.
+
+ Benefits
+ An RMMM plan assigns responsibility, encourages early action, reduces confusion during a problem, supports
+ project continuity and makes risk status visible to managers.
+
+ Conclusion
+ Mitigation reduces risks before they happen, monitoring watches their status, and management defines the response
+ if they occur. A clear RMMM plan helps control project uncertainty.
+
+
+ Q6. Describe Software Quality Assurance (SQA) activities and their role in ensuring
+ software quality.
+ Introduction
+ Software Quality Assurance (SQA) is a planned set of activities used to provide confidence that software processes
+ and products follow specified requirements, standards and procedures. It focuses on preventing defects and
+ improving the development process.
+
+ Major SQA activities
+ 1. Prepare an SQA plan: define quality goals, standards, responsibilities, reviews, audits and reports. 2. Define
+ standards and procedures: establish coding, documentation, design and testing standards. 3. Conduct reviews and
+ inspections: examine requirements, design, code and documents to identify defects early. 4. Perform audits: check
+ whether project activities follow approved plans, processes and standards. 5. Support testing: ensure test plans, test
+ cases, execution and defect records are adequate. 6. Defect tracking: record, classify, assign and monitor defects
+ until closure. 7. Configuration management: control versions and changes to code, documents and test assets. 8.
+ Metrics and reporting: measure defects, test coverage, review results and process performance. 9. Process
+ improvement: analyse recurring problems and improve methods and standards. 10. Training: help team members
+ understand quality practices and tools.
+
+ Role in software quality
+ SQA helps prevent defects, detect process problems early, ensure consistency, improve reliability and
+ maintainability, support compliance with standards and provide management with evidence about product quality.
+
+ SQA and testing
+ Testing finds defects in software by executing or evaluating it. SQA is broader: it also checks whether suitable
+ processes are followed to prevent defects. Testing is one important activity within an overall quality approach.
+
+ Example
+
+
+
+
+Software Engineering – 10 Mark Answers                                                                                 Page 14
+ In a college management system, SQA may require approved coding standards, review of fee-calculation logic,
+ security checks, documented test results, defect tracking and version control. These activities reduce errors and
+ make the product more dependable.
+
+ Benefits
+ SQA improves customer satisfaction, reduces rework and maintenance costs, increases team discipline, supports
+ timely delivery and helps produce software that meets user expectations.
+
+ Conclusion
+ SQA is a continuous quality-focused activity throughout the software life cycle. Planning, standards, reviews, audits,
+ testing support, defect tracking and improvement all contribute to dependable software.
+
+
+
+
+Software Engineering – 10 Mark Answers                                                                            Page 15
+
