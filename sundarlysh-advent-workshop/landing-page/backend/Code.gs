@@ -35,8 +35,9 @@ var CFG = {
   SHEET: "Bookings"
 };
 // columns: 1 created_at | 2 status | 3 ticket_no | 4 payment_id | 5 name | 6 email | 7 phone | 8 seats | 9 amount
-//          10 source | 11 email_sent | 12 notes
-var HEAD = ["created_at", "status", "ticket_no", "payment_id", "name", "email", "phone", "seats", "amount", "source", "email_sent", "notes"];
+//          10 source | 11 email_sent | 12 notes | 13 paid_at | 14 claimed_by (browser that collected it after redirect)
+var HEAD = ["created_at", "status", "ticket_no", "payment_id", "name", "email", "phone", "seats", "amount", "source", "email_sent", "notes", "paid_at", "claimed_by"];
+var CLAIM_WINDOW_MIN = 45;   // a payment must be made within this many minutes after the visitor tapped "Book now"
 
 /* =============================== web app (called by the booking page) =============================== */
 
@@ -45,12 +46,63 @@ function doGet() { return out({ ok: true, service: "Sundarlysh tickets" }); }
 function doPost(e) {
   try {
     var d = JSON.parse(e.postData.contents || "{}");
+    if (d.action === "start") return out(start(d));
+    if (d.action === "claim") return out(claim(d));
     if (d.action === "find") return out(find(d));
     if (d.action === "lookup") return out(lookup(d));
     return out({ ok: false, error: "Unknown action" });
   } catch (err) {
     return out({ ok: false, error: String(err && err.message || err) });
   }
+}
+
+/** Visitor tapped "Book now": remember when (server time) for this browser's token. */
+function start(d) {
+  var tok = String(d.token || "").slice(0, 40); if (!tok) throw new Error("Missing token");
+  var st = startsSheet(), v = st.getDataRange().getValues();
+  for (var i = 1; i < v.length; i++) if (v[i][0] === tok) return { ok: true };
+  st.appendRow([tok, new Date(), ""]);
+  return { ok: true };
+}
+
+/**
+ * Back from Razorpay (?paid=1): give this browser the first not-yet-collected payment made after it tapped "Book now" –
+ * but ONLY when nobody else started a booking around the same time (otherwise we can't be sure whose payment it is,
+ * and the page asks for email / mobile instead of guessing).
+ */
+function claim(d) {
+  var tok = String(d.token || "").slice(0, 40); if (!tok) throw new Error("Missing token");
+  try { autoTickets(); } catch (e) { Logger.log("scan: " + e); }
+  var lock = LockService.getScriptLock(); lock.waitLock(20000);
+  try {
+    var st = startsSheet(), sv = st.getDataRange().getValues(), t0 = 0, srow = -1;
+    for (var k = 1; k < sv.length; k++) if (sv[k][0] === tok) { t0 = new Date(sv[k][1]).getTime(); srow = k + 1; }
+    if (!t0) throw new Error("Booking not recognised");
+    var W = CLAIM_WINDOW_MIN * 60 * 1000;
+    var sh = sheet(), v = sh.getDataRange().getValues(), best = -1, bestT = Infinity;
+    for (var i = 1; i < v.length; i++) {
+      if (v[i][1] !== "TICKET ISSUED") continue;
+      if (v[i][13] === tok) return { ok: true, ticket: ticketOf(v[i]) };          // already collected by this browser
+      if (v[i][13]) continue;                                                    // collected by someone else
+      var pt = v[i][12] ? new Date(v[i][12]).getTime() : new Date(v[i][0]).getTime();
+      if (pt >= t0 - 60 * 1000 && pt <= t0 + W && pt < bestT) { best = i; bestT = pt; }
+    }
+    if (best < 0) return { ok: true, waiting: true };
+    // anyone else who tapped "Book now" in the window before this payment and hasn't collected a ticket yet?
+    for (var j = 1; j < sv.length; j++) {
+      if (sv[j][0] === tok || sv[j][2]) continue;
+      var tj = new Date(sv[j][1]).getTime();
+      if (tj <= bestT + 60 * 1000 && tj >= bestT - W) return { ok: true, ambiguous: true };
+    }
+    sh.getRange(best + 1, 14).setValue(tok); st.getRange(srow, 3).setValue(v[best][3]);
+    return { ok: true, ticket: ticketOf(v[best]) };
+  } finally { lock.releaseLock(); }
+}
+
+function startsSheet() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet(), st = ss.getSheetByName("Starts");
+  if (!st) { st = ss.insertSheet("Starts"); st.appendRow(["token", "started_at", "claimed_payment"]); st.setFrozenRows(1); }
+  return st;
 }
 
 /** Customer says "I paid": look for their ticket by email or phone (after a fresh scan). */
@@ -60,6 +112,8 @@ function find(d) {
   try { autoTickets(); } catch (e) { Logger.log("scan: " + e); }      // always pick up the newest payments first
   var list = matchTickets(email, phone);
   if (!list.length) return { ok: true, waiting: true };
+  var shx = sheet();
+  list.forEach(function (t) { var r = rowOfPayment(shx, t.payment_id); if (r > 0 && !shx.getRange(r, 14).getValue()) shx.getRange(r, 14).setValue("found-by-" + (email || phone)); });
   if (d.name) {                                                          // fill in the name where Razorpay didn't give one
     var sh = sheet(), nm = String(d.name).slice(0, 80);
     list.forEach(function (t) { if (!t.name || t.name === "Guest") { var r = rowOfPayment(sh, t.payment_id); if (r > 0) { sh.getRange(r, 5).setValue(nm); t.name = nm; } } });
@@ -104,7 +158,7 @@ function issueTicket(sh, p) {
   var v = sh.getDataRange().getValues(), n = 0;
   for (var j = 1; j < v.length; j++) if (v[j][1] === "TICKET ISSUED") n++;
   var ticketNo = CFG.PREFIX + ("00" + (n + 1)).slice(-3), seats = Math.round(p.amount / CFG.PRICE);
-  sh.appendRow([new Date(), "TICKET ISSUED", ticketNo, p.id, p.name || "Guest", p.email || "", p.phone ? "'" + p.phone : "", seats, p.amount, p.source, "", ""]);
+  sh.appendRow([new Date(), "TICKET ISSUED", ticketNo, p.id, p.name || "Guest", p.email || "", p.phone ? "'" + p.phone : "", seats, p.amount, p.source, "", "", p.paid_at || new Date(), ""]);
   var r = sh.getLastRow(), t = ticketOf(sh.getRange(r, 1, 1, HEAD.length).getValues()[0]);
   if (t.email) {
     try { sendTicket(t); sh.getRange(r, 11).setValue("yes"); } catch (e) { sh.getRange(r, 11).setValue("FAILED: " + e); }
@@ -119,7 +173,7 @@ function paymentsFromApi() {
     items.forEach(function (p) {
       if ((p.status === "captured" || p.status === "authorized") && p.currency === "INR") {
         var nm = p.notes && (p.notes.full_name || p.notes.name || p.notes["Full name"]) || "";
-        out_.push({ id: p.id, amount: p.amount / 100, email: String(p.email || "").toLowerCase(), phone: digits(p.contact), name: nm, source: "api" });
+        out_.push({ id: p.id, amount: p.amount / 100, email: String(p.email || "").toLowerCase(), phone: digits(p.contact), name: nm, source: "api", paid_at: new Date(p.created_at * 1000) });
       }
     });
     if (items.length < 100) break;
@@ -135,7 +189,7 @@ function paymentsFromGmail() {
     th.getMessages().forEach(function (m) {
       if (m.getDate() < since) return;
       var p = parseRazorpayEmail(m.getSubject(), m.getPlainBody() || stripHtml(m.getBody()));
-      if (p && !seen[p.id]) { seen[p.id] = true; p.source = "gmail"; out_.push(p); }
+      if (p && !seen[p.id]) { seen[p.id] = true; p.source = "gmail"; p.paid_at = m.getDate(); out_.push(p); }
     });
   });
   return out_;
@@ -209,6 +263,7 @@ function rowOfPayment(sh, id) { var v = sh.getDataRange().getValues(); for (var 
 function sheet() {
   var ss = SpreadsheetApp.getActiveSpreadsheet(), sh = ss.getSheetByName(CFG.SHEET);
   if (!sh) { sh = ss.insertSheet(CFG.SHEET); sh.appendRow(HEAD); sh.setFrozenRows(1); sh.getRange(1, 1, 1, HEAD.length).setFontWeight("bold"); }
+  else if (String(sh.getRange(1, HEAD.length).getValue()) !== HEAD[HEAD.length - 1]) sh.getRange(1, 1, 1, HEAD.length).setValues([HEAD]).setFontWeight("bold");
   return sh;
 }
 function digits(s) { return String(s == null ? "" : s).replace(/\D/g, "").slice(-10); }
