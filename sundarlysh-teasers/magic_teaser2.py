@@ -127,8 +127,27 @@ R5 = text_img("24 little surprises, made by you", PLAYI(56, 600), (255, 244, 236
 D1 = text_img("SAVE THE DATE", SANS(36), GOLD_L, tr=9)
 D2 = text_img("SUNDAY", CINZEL(70), (255, 240, 230), tr=14)
 D3 = text_img("29 NOVEMBER", fit("29 NOVEMBER", CINZEL, 118, 720, 6), (255, 255, 255), tr=6, glow=.7, gold=True)
-D4 = text_img("Stuff idly India", fit("Stuff idly India", PLAYI, 70, 700), GOLD_L, glow=.3)
+D4 = text_img("Yolk Theory", fit("Yolk Theory", PLAYI, 76, 700), GOLD_L, glow=.3)
 D5 = text_img("KONDAPUR, HYDERABAD", fit("KONDAPUR, HYDERABAD", SANS, 40, 660, 3), (255, 255, 255), tr=3)
+PARTNER_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../sundarlysh-advent-workshop/landing-page/img")
+def partners(th=96, gap=26, pad=40):
+    """Small row of the three partner logos, each on a rounded tile with a thin gold edge."""
+    tiles = []
+    for n in ("partner_stuff", "partner_yolk", "partner_kulchas"):
+        im = Image.open(os.path.join(PARTNER_DIR, n + ".jpg")).convert("RGB")
+        bg = im.getpixel((2, 2)); ih = th - 16; iw = int(im.width * ih / im.height)
+        tw_ = max(iw + 28, th); tile = Image.new("RGBA", (tw_, th), (0, 0, 0, 0)); dd = ImageDraw.Draw(tile)
+        dd.rounded_rectangle((0, 0, tw_ - 1, th - 1), 16, fill=bg + (255,), outline=GOLD + (255,), width=3)
+        lg = im.resize((iw, ih), Image.LANCZOS).convert("RGBA")
+        m = Image.new("L", (iw, ih), 0); ImageDraw.Draw(m).rounded_rectangle((0, 0, iw - 1, ih - 1), 10, fill=255); lg.putalpha(m)
+        tile.alpha_composite(lg, ((tw_ - iw) // 2, 8)); tiles.append(tile)
+    lab = text_img("IN ASSOCIATION WITH", SANS(24, 700), GOLD_L, tr=5, pad=0)
+    rw = sum(t.width for t in tiles) + gap * (len(tiles) - 1)
+    out = Image.new("RGBA", (max(rw, lab.width) + 2 * pad, lab.height + 14 + th + 2 * pad), (0, 0, 0, 0))
+    out.alpha_composite(lab, ((out.width - lab.width) // 2, pad)); x = (out.width - rw) // 2
+    for t in tiles: out.alpha_composite(t, (x, pad + lab.height + 14)); x += t.width + gap
+    return out
+D6 = partners()
 E1 = text_img("COMING SOON", CINZEL(96), (255, 255, 255), tr=14, glow=.8, gold=True)
 E2 = text_img("@sundarlyshmemories", SANS(52, 700), (255, 255, 255), tr=1)
 E3 = text_img("Stay tuned", PLAYI(64, 600), GOLD_L)
@@ -218,7 +237,7 @@ def reveal(t):
 def date_card(t):
     u = t - 16.0; fr = PLUMBG.copy(); dust(fr, t, .8)
     d = ImageDraw.Draw(fr); kk = eout(u / .5); m = int(90 + (1 - kk) * 40)
-    rows = ((D1, -40), (D2, -50), (D3, -10), (D4, -40), (D5, 0))
+    rows = ((D1, -40), (D2, -50), (D3, -10), (D4, -40), (D5, -30), (D6, 0))
     content = sum(sp.height + g for sp, g in rows) - 80          # minus top/bottom sprite padding
     top = int(H * .47 - content / 2 - 70); bot = int(H * .47 + content / 2 + 70)
     d.rounded_rectangle((m, top, W - m, bot), 30, outline=GOLD + (int(255 * kk),), width=5)

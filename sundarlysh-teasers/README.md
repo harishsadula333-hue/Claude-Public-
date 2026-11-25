@@ -76,6 +76,8 @@ An earlier version with Christmas trap music can be rebuilt with `kinetic_teaser
 `Sundarlysh_Memories_Are_You_Ready_Teaser_v3.mp4` (`kinetic_teaser3.py out.mp4 hitman_mix.wav`) has Christmas red, green and white backgrounds with snow and confetti, and no black. "WONDERFUL" replaces "MAGICAL". The plain Christmas cake replaces the cake-painting photo, and only advent and Christmas photos are used. *Advent Calendar* is set in a script font, the venue in Playfair italic and the date in Cinzel. The elements copied from the sample videos are replaced with festive effects. The script with timings for the client's review is in `Teaser_Script_for_Review.md`.
 `Sundarlysh_Memories_Something_Wonderful_Teaser_BEATS.mp4` is the gold teaser with "Something wonderful…" (it replaces the "magical" versions, which should no longer be used).
 
+`Sundarlysh_Memories_Something_Wonderful_Teaser_YolkTheory.mp4` is the latest version. Its date card says **Yolk Theory, Kondapur, Hyderabad** and shows the three partner logos (st-uff, Yolk Theory, MV's Kulchas) small under "In association with".
+
 ## 20 Nov remake: every video has its own look and music
 The client found the 18 Nov videos too similar (same plum template, same music). Each one now has a different style and track. Rendered with `styled_reel.py styled-specs/<name>.json out.mp4`; the caricature uses `teaser.py styled-specs/cari2.json`.
 
