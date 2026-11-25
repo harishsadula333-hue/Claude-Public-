@@ -109,7 +109,7 @@ def logo(size):
     lg = LOGO_IM.resize((size, size), Image.LANCZOS).convert("RGBA")
     yy, xx = np.mgrid[0:size, 0:size].astype(np.float32); r = np.sqrt((xx - size / 2) ** 2 + (yy - size / 2) ** 2) / (size / 2)
     lg.putalpha(Image.fromarray((np.clip((1 - r) / .14, 0, 1) * 255).astype(np.uint8))); return lg
-LOGO_L = logo(620)
+LOGO_L = logo(620); LOGO_S = logo(330)
 
 # ---------------------------------------------------------------- sprites
 M1 = text_img("Something", PLAYI(130, 800), GOLD_L, glow=.8)
@@ -127,7 +127,7 @@ R5 = text_img("24 little surprises, made by you", PLAYI(56, 600), (255, 244, 236
 D1 = text_img("SAVE THE DATE", SANS(36), GOLD_L, tr=9)
 D2 = text_img("SUNDAY", CINZEL(70), (255, 240, 230), tr=14)
 D3 = text_img("29 NOVEMBER", fit("29 NOVEMBER", CINZEL, 118, 720, 6), (255, 255, 255), tr=6, glow=.7, gold=True)
-D4 = text_img("Yolk Theory", fit("Yolk Theory", PLAYI, 76, 700), GOLD_L, glow=.3)
+D4 = text_img("Stuf Idli", fit("Stuf Idli", PLAYI, 80, 700), GOLD_L, glow=.3)
 D5 = text_img("KONDAPUR, HYDERABAD", fit("KONDAPUR, HYDERABAD", SANS, 40, 660, 3), (255, 255, 255), tr=3)
 PARTNER_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../sundarlysh-advent-workshop/landing-page/img")
 def partners(th=96, gap=26, pad=40):
@@ -239,12 +239,13 @@ def date_card(t):
     d = ImageDraw.Draw(fr); kk = eout(u / .5); m = int(90 + (1 - kk) * 40)
     rows = ((D1, -40), (D2, -50), (D3, -10), (D4, -40), (D5, -30), (D6, 0))
     content = sum(sp.height + g for sp, g in rows) - 80          # minus top/bottom sprite padding
-    top = int(H * .47 - content / 2 - 70); bot = int(H * .47 + content / 2 + 70)
+    top = int(H * .555 - content / 2 - 70); bot = int(H * .555 + content / 2 + 70)
     d.rounded_rectangle((m, top, W - m, bot), 30, outline=GOLD + (int(255 * kk),), width=5)
     d.rounded_rectangle((m + 18, top + 18, W - m - 18, bot - 18), 22, outline=GOLD_L + (int(140 * kk),), width=2)
     yy = top + 70 - 40
     for i, (sp, gap) in enumerate(rows):
         d0 = .08 + i * .14; paste(fr, sp, (W - sp.width) / 2, yy + (1 - eout((u - d0) / .4)) * 34, ease((u - d0) / .25)); yy += sp.height + gap
+    lg = scaled(LOGO_S, .9 + .1 * back(u / .5)); paste(fr, lg, (W - lg.width) / 2, top - 70 - LOGO_S.height / 2 - lg.height / 2, ease(u / .25))
     if u < .12: fr = Image.blend(Image.alpha_composite(reveal(15.999), Image.new("RGBA", (W, H), (0, 0, 0, 0))), fr, ease(u / .12))
     return fr
 
