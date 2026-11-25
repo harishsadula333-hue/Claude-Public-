@@ -11,7 +11,7 @@ S = "/tmp/claude-0/-home-user-Claude-Public-/e6dc3aa3-d0dd-5e70-ae91-a743f4ec624
 OUT = sys.argv[1]
 PREVIEW = [float(x) for x in sys.argv[sys.argv.index("--preview") + 1].split(",")] if "--preview" in sys.argv else None
 W, H, FPS = 1080, 1920, 30
-B = 0.5; DUR = 40 * B; M0 = 2.450
+B = 0.5; DUR = 40 * B + 4.0; M0 = 2.450   # +4 s: the QR end card is held long enough to scan
 MUSIC = f"{S}/v9/music/wish.mp3"; FONTS = f"{S}/assets/fonts"; LOGO = f"{S}/v7/logo.jpg"
 P7, P4 = f"{S}/v7/photos/", f"{S}/v4/photos/"
 PLUM_D, GOLD, GOLD_L = (30, 0, 16), (201, 165, 94), (240, 216, 160)
@@ -148,9 +148,20 @@ def partners(th=96, gap=26, pad=40):
     for t in tiles: out.alpha_composite(t, (x, pad + lab.height + 14)); x += t.width + gap
     return out
 D6 = partners()
-E1 = text_img("COMING SOON", CINZEL(96), (255, 255, 255), tr=14, glow=.8, gold=True)
+E1 = text_img("SCAN NOW", CINZEL(112), (255, 255, 255), tr=16, glow=.8, gold=True)
+E4 = text_img("Limited seats  ·  Sun 29 Nov  ·  5–7 PM", fit("Limited seats  ·  Sun 29 Nov  ·  5–7 PM", SANS, 36, 820, 2), (255, 255, 255), tr=2)
+QR_PNG = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../sundarlysh-advent-workshop/booking_qr.png")
+def qr_tile(size=560, border=7):
+    q = Image.open(QR_PNG).convert("L").point(lambda v: 0 if v < 128 else 255)
+    bb = Image.eval(q, lambda v: 255 - v).getbbox(); q = q.crop(bb)             # tight crop to the modules
+    inner = size - 2 * 44; q = q.resize((inner, inner), Image.NEAREST).convert("RGBA")
+    t = Image.new("RGBA", (size, size), (0, 0, 0, 0)); d = ImageDraw.Draw(t)
+    d.rounded_rectangle((0, 0, size - 1, size - 1), 36, fill=GOLD + (255,))
+    d.rounded_rectangle((border, border, size - 1 - border, size - 1 - border), 30, fill=(255, 255, 255, 255))
+    t.alpha_composite(q, (44, 44)); return t
+QR = qr_tile()
 E2 = text_img("@sundarlyshmemories", SANS(52, 700), (255, 255, 255), tr=1)
-E3 = text_img("Stay tuned", PLAYI(64, 600), GOLD_L)
+E3 = text_img("& book your spot", PLAYI(76, 700), GOLD_L, glow=.4)
 
 MONT = [P7 + "a_props.jpg", P7 + "a_fill.jpg", P7 + "a_decor.jpg", P4 + "c2_paint.jpg", P7 + "a_box.jpg", P4 + "v4_glow.jpg", P4 + "p4_final.jpg", P7 + "a_friends.jpg",
         P4 + "c4_final.jpg", P7 + "a_group.jpg"]
@@ -158,7 +169,9 @@ MONT = [P7 + "a_props.jpg", P7 + "a_fill.jpg", P7 + "a_decor.jpg", P4 + "c2_pain
 
 # ---------------------------------------------------------------- beat sync
 KICKS = [k * B for k in range(8)] + [4.0, 4.5] + [6 + k * B for k in range(10)] + [12 + k * B for k in range(14)] + [19.0]
+def amap(t): return t if t < 18 else (14 + (t - 18) if t < 22 else t - 4)
 def pulse(t):
+    t = amap(t)
     ks = [k for k in KICKS if k <= t + 1e-6]
     return math.exp(-(t - ks[-1]) / .11) if ks else 0.0
 _gy, _gx = np.mgrid[0:H, 0:W].astype(np.float32)
@@ -171,6 +184,7 @@ def glow_at(p):
     return GLOW_LV[q]
 HITS = [(4.0, 10), (4.5, 16), (6.0, 26), (12.0, 30), (13.5, 12), (19.0, 22)]
 def shake(fr, t):
+    if t >= 18: return fr                                       # keep the QR steady so it scans
     for t0, amp in HITS:
         u = t - t0
         if 0 <= u < .35:
@@ -250,13 +264,21 @@ def date_card(t):
     return fr
 
 def end_card(t):
-    u = t - 18.0; fr = PLUMBG.copy(); dust(fr, t, .9)
-    burst(fr, t - 19.0, cy=640)
-    lg = scaled(LOGO_L, (.85 + .15 * back(u / .5)) * (1 + .04 * pulse(t))); paste(fr, lg, (W - lg.width) / 2, 640 - lg.height / 2, ease(u / .2))
-    e1 = shimmer(E1, (u - .4) / 1.0) if u > .4 else E1
-    paste(fr, e1, (W - E1.width) / 2, 1010 + (1 - eout((u - .15) / .4)) * 40, ease((u - .15) / .25))
-    paste(fr, E3, (W - E3.width) / 2, 1160, ease((u - .4) / .3))
-    paste(fr, E2, (W - E2.width) / 2, 1290, ease((u - .55) / .3))
+    u = t - 18.0; fr = PLUMBG.copy(); dust(fr, t, .7)
+    burst(fr, u - .3, cy=920)
+    lg = scaled(LOGO_S, .85 + .15 * back(u / .5)); paste(fr, lg, (W - lg.width) / 2, 250 - lg.height / 2, ease(u / .2))
+    e1 = shimmer(E1, ((u - .4) % 2.2) / 1.0) if u > .4 else E1
+    paste(fr, e1, (W - E1.width) / 2, 405 + (1 - eout((u - .12) / .4)) * 40, ease((u - .12) / .25))
+    k = back((u - .3) / .5); qs = scaled(QR, max(.01, .7 + .3 * k)) if k < 1 else QR
+    gl = .5 + .5 * math.sin(u * 3.2)                                                   # soft gold halo, QR itself stays still
+    halo = Image.new("RGBA", (QR.width + 120, QR.height + 120), (0, 0, 0, 0))
+    ImageDraw.Draw(halo).rounded_rectangle((60, 60, QR.width + 60, QR.height + 60), 40, fill=GOLD_L + (int(90 + 70 * gl),))
+    halo = halo.filter(ImageFilter.GaussianBlur(28)); qy = 600
+    paste(fr, halo, (W - halo.width) / 2, qy - 60, ease((u - .3) / .3))
+    paste(fr, qs, (W - qs.width) / 2, qy + (QR.height - qs.height) / 2, ease((u - .3) / .2))
+    paste(fr, E3, (W - E3.width) / 2, qy + QR.height + 10 + (1 - eout((u - .6) / .4)) * 30, ease((u - .6) / .3))
+    paste(fr, E4, (W - E4.width) / 2, qy + QR.height + 150, ease((u - .8) / .3))
+    paste(fr, E2, (W - E2.width) / 2, qy + QR.height + 235, ease((u - 1.0) / .3))
     if u < .12: fr = Image.blend(date_card(17.999), fr, ease(u / .12))
     if t > DUR - .35: fr = Image.blend(fr, Image.new("RGBA", (W, H), (0, 0, 0, 255)), ease((t - (DUR - .35)) / .35))
     return fr
