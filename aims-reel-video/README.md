@@ -1,6 +1,6 @@
 # AIMS "Hotel Management is EASY!" — 40 s Instagram Reel
 
-Rendered output: `../AIMS_Reel_40s_vertical_v3.mp4` (poster-style Join AIMS ending + Indian-fusion music; earlier: v2, v1) (1080×1920, 30 fps, H.264 + AAC).
+Rendered output: `../AIMS_Reel_40s_vertical_v4.mp4` (poster-style Join AIMS ending + electronic-pop beats; earlier: v3 Indian-fusion, v2, v1) (1080×1920, 30 fps, H.264 + AAC).
 Concept follows the client's "Hotel Management is Easy" poster; photos are real AIMS brochure photos
 (shared with `../aims-promo-video/img`, linked as `img/`).
 
@@ -18,8 +18,8 @@ Concept follows the client's "Hotel Management is Easy" poster; photos are real 
 Re-render:
 ```bash
 cd aims-reel-video
-python3 music_reel.py music.wav      # original Indian-fusion / Bhangra track + synced SFX
+python3 music_reel_beats.py music.wav   # original electronic-pop beat + synced SFX (music_reel.py = Indian-fusion alternative)
 W=1080 H=1920 node ../aims-promo-video/tools/capture.js index.html - 30 | ffmpeg -y -f image2pipe -framerate 30 \
   -c:v mjpeg -i - -i music.wav -map 0:v -map 1:a -c:v libx264 -crf 19 -pix_fmt yuv420p -c:a aac -b:a 192k \
-  -movflags +faststart -shortest ../AIMS_Reel_40s_vertical_v3.mp4
+  -movflags +faststart -shortest ../AIMS_Reel_40s_vertical_v4.mp4
 ```
