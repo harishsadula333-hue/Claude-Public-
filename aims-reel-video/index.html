@@ -5,6 +5,7 @@
 <title>AIMS Easy Reel</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="fonts/extra.css">
+<link rel="stylesheet" href="fonts/extra2.css">
 <style>
 :root{--red:#E31E24;--red2:#B3121B;--orange:#F7931E;--yellow:#FFD21F;--blue:#1E63C6;--green:#22964A;--ink:#141414;--muted:#5d5555}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -93,23 +94,25 @@ body{font-family:'Montserrat',sans-serif;color:var(--ink);-webkit-font-smoothing
 .ph img{width:100%;height:100%;object-fit:cover}
 .ph span{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(90deg,var(--red),var(--red2));color:#fff;text-align:center;font-weight:900;font-size:27px;letter-spacing:1px;padding:14px 6px}
 
-/* S8 CTA */
-#s8{background:#fff}
-#s8 .logo{left:390px;top:190px;width:300px}
-#s8 .j1{left:0;width:1080px;top:500px;text-align:center;font-weight:900;font-size:150px;color:var(--red);letter-spacing:-3px;line-height:1}
-#s8 .j2{left:0;width:1080px;top:660px;text-align:center;font-weight:900;font-size:62px;color:var(--red2)}
-#s8 .ticks{left:0;width:1080px;top:770px;display:flex;justify-content:center;gap:38px;font-size:54px;color:var(--ink)}
-#s8 .ticks span b{color:var(--red);margin-right:6px}
-#s8 .adm{left:0;width:1080px;top:880px;text-align:center}
-#s8 .adm span{display:inline-block;background:linear-gradient(90deg,var(--orange),var(--red));color:#fff;font-weight:900;font-size:36px;letter-spacing:6px;padding:16px 36px;border-radius:16px}
-#s8 .box{left:110px;top:1000px;width:860px;height:270px;border-radius:30px;border:5px solid var(--ink);background:#fff;display:flex;align-items:center;gap:40px;padding-left:40px;box-shadow:0 18px 40px rgba(0,0,0,.15)}
-#s8 .box i{flex:none;width:170px;height:170px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center}
+/* S8 CTA — "Join AIMS" block styled after the client's poster */
+#s8{background:linear-gradient(180deg,#fff 0%,#FBF6F2 100%)}
+#s8 .logo{left:400px;top:120px;width:280px}
+#s8 .join{left:50px;top:440px;width:980px;font-family:'League Spartan',sans-serif;color:#E8141C}
+#s8 .j1{font-weight:800;font-size:178px;line-height:.9;letter-spacing:-6px;white-space:nowrap;transform-origin:0 70%}
+#s8 .j1 .dots{letter-spacing:-2px;margin-left:4px}
+#s8 .j2{font-weight:700;font-size:74px;line-height:1;letter-spacing:-2px;margin-top:4px;text-align:right;padding-right:70px}
+#s8 .tks{left:70px;top:715px;width:300px;height:260px}
+#s8 .tk{position:absolute;left:0;display:flex;align-items:center;gap:14px;font-family:'Kalam',cursive;font-weight:700;font-size:54px;color:#151515;transform-origin:20% 50%}
+#s8 .tk svg{width:62px;height:62px}
+#s8 .box{left:80px;top:1000px;width:920px;height:250px;border-radius:30px;border:5px solid #111;background:#fff;display:flex;align-items:center;gap:44px;padding-left:44px;box-shadow:-14px 16px 0 #111}
+#s8 .box i{flex:none;width:170px;height:170px;border-radius:50%;background:#EE1C25;display:flex;align-items:center;justify-content:center}
 #s8 .box i svg{width:96px;height:96px;fill:#fff}
-#s8 .box div{font-weight:900;font-size:76px;line-height:1.15}
-#s8 .box div b{color:var(--red)}
-#s8 .web{left:110px;top:1310px;width:860px;height:120px;border-radius:60px;background:linear-gradient(90deg,var(--red),var(--red2));display:flex;align-items:center;justify-content:center;gap:22px;color:#fff;font-weight:800;font-size:54px;box-shadow:0 14px 34px rgba(227,30,36,.35)}
-#s8 .web svg{width:60px;height:60px;stroke:#fff;fill:none;stroke-width:1.8}
-#s8 .addr{left:0;width:1080px;top:1465px;text-align:center;font-weight:600;font-size:28px;color:var(--muted)}
+#s8 .box div{font-family:'League Spartan',sans-serif;font-weight:800;font-size:88px;line-height:1.05;letter-spacing:-1px;color:#111}
+#s8 .box div b{color:#EE1C25;font-weight:800}
+#s8 .web{left:80px;top:1300px;width:920px;height:122px;border-radius:61px;background:linear-gradient(180deg,#F23A40 0%,#E31E24 45%,#B5121A 100%);display:flex;align-items:center;justify-content:center;gap:26px;color:#fff;font-family:'League Spartan',sans-serif;font-weight:700;font-size:64px;letter-spacing:-.5px;box-shadow:0 14px 26px rgba(150,10,15,.35),inset 0 3px 0 rgba(255,255,255,.25)}
+#s8 .web svg{width:66px;height:66px;stroke:#fff;fill:none;stroke-width:1.6}
+#s8 .adm{left:0;width:1080px;top:1460px;text-align:center}
+#s8 .adm span{display:inline-block;background:linear-gradient(90deg,var(--orange),var(--red));color:#fff;font-weight:900;font-size:34px;letter-spacing:6px;padding:14px 34px;border-radius:14px}
 </style>
 </head>
 <body>
@@ -189,16 +192,30 @@ body{font-family:'Montserrat',sans-serif;color:var(--ink);-webkit-font-smoothing
 <section class="scene" id="s8" data-vis="35 40">
   <svg class="abs" style="left:0;top:0" width="1080" height="1920" viewBox="0 0 1080 1920">
     <g data-a="wipeR 35.05 0.8"><path d="M0,0 L560,0 C440,120 250,200 0,240 Z" fill="#E31E24"/><path d="M560,0 L610,0 C470,150 260,240 0,280 L0,240 C250,200 440,120 560,0 Z" fill="#F7931E"/></g>
-    <g data-a="wipeL 35.1 0.8"><path d="M1080,1920 L1080,1560 C980,1720 820,1840 560,1920 Z" fill="#E31E24"/><path d="M1080,1560 L1080,1520 C970,1700 800,1830 500,1920 L560,1920 C820,1840 980,1720 1080,1560 Z" fill="#F7931E"/></g>
+    <g data-a="wipeL 35.1 0.8"><path d="M1080,1920 L1080,1600 C980,1750 820,1860 560,1920 Z" fill="#E31E24"/><path d="M1080,1600 L1080,1560 C970,1730 800,1850 500,1920 L560,1920 C820,1860 980,1750 1080,1600 Z" fill="#F7931E"/></g>
   </svg>
   <img class="abs logo" src="img/logo.png" data-a="pop 35.25 0.6">
-  <div class="abs j1" data-a="slam 35.6 0.4|shake 36.0 0.4 lin">Join AIMS….</div>
-  <div class="abs j2" data-a="fadeUp 36.0 0.5">To AIM your DREAMS</div>
-  <div class="abs ticks hand"><span data-a="pop 36.3 0.4"><b>✓</b>Learn</span><span data-a="pop 36.45 0.4"><b>✓</b>Travel</span><span data-a="pop 36.6 0.4"><b>✓</b>Earn</span><span data-a="pop 36.75 0.4"><b>✓</b>Grow</span></div>
-  <div class="abs adm" data-a="pop 36.9 0.5"><span data-pulse="37.6">ADMISSIONS OPEN</span></div>
-  <div class="abs box" data-a="fadeUp 37.1 0.6"><i><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></i><div><b>88855 29279</b><br>8712 279 279</div></div>
-  <div class="abs web" data-a="fadeUp 37.35 0.6"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c3 3 3 16 0 19M12 2.5c-3 3-3 16 0 19"/></svg>www.aimshyd.com</div>
-  <div class="abs addr" data-a="fadeUp 37.55 0.6">L.B. Nagar, Mansoorabad Road, Hyderabad – 500074</div>
+  <div class="abs join">
+    <div class="j1" data-a="slam 35.6 0.4|shake 36.0 0.4 lin">Join AIMS<span class="dots">....</span></div>
+    <div class="j2" data-a="fadeUp 36.0 0.5">To AIM your DREAMS</div>
+  </div>
+  <!-- checklist + flight path, as in the poster -->
+  <div class="abs tks"><div class="tk" style="top:0px" data-a="pop 36.30 0.4"><svg viewBox="0 0 40 40"><rect x="4" y="12" width="22" height="22" rx="2" transform="rotate(-6 15 23)" fill="none" stroke="#222" stroke-width="2.6"/><path d="M9 22 L17 31 L36 5" fill="none" stroke="#E31E24" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Learn</span></div><div class="tk" style="top:64px" data-a="pop 36.45 0.4"><svg viewBox="0 0 40 40"><rect x="4" y="12" width="22" height="22" rx="2" transform="rotate(-6 15 23)" fill="none" stroke="#222" stroke-width="2.6"/><path d="M9 22 L17 31 L36 5" fill="none" stroke="#E31E24" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Travel</span></div><div class="tk" style="top:128px" data-a="pop 36.60 0.4"><svg viewBox="0 0 40 40"><rect x="4" y="12" width="22" height="22" rx="2" transform="rotate(-6 15 23)" fill="none" stroke="#222" stroke-width="2.6"/><path d="M9 22 L17 31 L36 5" fill="none" stroke="#E31E24" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Earn</span></div><div class="tk" style="top:192px" data-a="pop 36.75 0.4"><svg viewBox="0 0 40 40"><rect x="4" y="12" width="22" height="22" rx="2" transform="rotate(-6 15 23)" fill="none" stroke="#222" stroke-width="2.6"/><path d="M9 22 L17 31 L36 5" fill="none" stroke="#E31E24" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Grow</span></div></div>
+  <svg class="abs" style="left:330px;top:700px" width="700" height="260" viewBox="0 0 700 260">
+    <g fill="#E4E4E4" data-a="fade 36.2 0.6">
+      <path d="M40 60 L150 40 L230 60 L250 100 L200 130 L170 170 L140 190 L120 160 L80 130 L50 110 Z"/>
+      <path d="M170 190 L210 200 L230 240 L205 258 L185 255 L175 230 Z"/>
+      <path d="M290 60 L340 50 L360 75 L330 95 L300 90 Z"/>
+      <path d="M300 105 L360 100 L390 140 L370 200 L345 240 L320 210 L300 160 Z"/>
+      <path d="M360 50 L480 40 L580 70 L560 120 L500 140 L455 130 L425 150 L392 110 L362 90 Z"/>
+      <path d="M520 190 L585 185 L600 220 L555 238 L528 225 Z"/>
+    </g>
+    <path d="M90 200 C 20 150, 70 90, 170 120 S 330 160, 470 70" stroke="#E31E24" stroke-width="4.5" stroke-dasharray="12 10" fill="none" stroke-linecap="round" data-a="wipeR 36.5 0.9"/>
+    <g transform="translate(520 52) rotate(-22) scale(1.25)" data-a="fadeLeft 37.1 0.5"><path d="M-34 -6 L10 -6 L30 -26 L40 -26 L28 -6 L44 -6 L52 -16 L58 -16 L54 0 L58 16 L52 16 L44 6 L28 6 L40 26 L30 26 L10 6 L-34 6 Q-44 0 -34 -6 Z" fill="#E31E24"/></g>
+  </svg>
+  <div class="abs box" data-a="fadeUp 37.3 0.6"><i><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></i><div><b>88855 29279</b><br>8712 279 279</div></div>
+  <div class="abs web" data-a="fadeUp 37.5 0.6"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c3 3 3 16 0 19M12 2.5c-3 3-3 16 0 19"/></svg>www.aimshyd.com</div>
+  <div class="abs adm" data-a="pop 37.7 0.5"><span data-pulse="38.3">ADMISSIONS OPEN</span></div>
 </section>
 
 <div id="flash"></div>

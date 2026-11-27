@@ -177,10 +177,10 @@ for t in (10.05, 11.05, 12.05, 13.05): put(X, boom(), t, 0.65); duck(t, 0.6, 0.5
 for c in (4, 10, 14, 21, 26, 31, 35):
     put(X, reverse_cymbal(0.85), c - 0.85, 0.20); put(X, dhol_bass(), c, 0.35)
 pops = [0.15] + [5.0 + 0.7 * i for i in range(5)] + [14.8 + 0.75 * i for i in range(4)] + \
-       [28.6 + 0.1 * i for i in range(6)] + [31.6 + 0.25 * i for i in range(4)] + [35.25, 36.9] + [36.3 + 0.15 * i for i in range(4)]
+       [28.6 + 0.1 * i for i in range(6)] + [31.6 + 0.25 * i for i in range(4)] + [35.25, 37.7] + [36.3 + 0.15 * i for i in range(4)]
 for k, t in enumerate(pops): put(X, blip(1 + 0.12 * (k % 5)), t + 0.05, 0.16, (-0.3, 0.3)[k % 2])
 for i in range(5): put(X, swish(), 21.7 + 0.42 * i - 0.05, 0.22, (-0.5, 0.5)[i % 2])
-for t in (2.2, 2.45, 2.7, 14.3, 31.15, 4.3): put(X, swish(0.22), t - 0.04, 0.12, 0.4)
+for t in (2.2, 2.45, 2.7, 14.3, 31.15, 4.3, 37.1, 37.3, 37.5): put(X, swish(0.22), t - 0.04, 0.12, 0.4)
 for f in (0, .22, .42, .6, .8, 1): put(X, blip(1.6), 26.6 + f * 2.2, 0.13, -0.5 + f)
 jt = jet(2.6); put(X, jt, 26.4, 0.34, -0.6); put(X, jt * 0.6, 26.42, 0.0, 0.6)
 
