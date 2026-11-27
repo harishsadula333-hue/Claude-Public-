@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AIMS Easy Reel</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="fonts/extra.css">
+<style>
+:root{--red:#E31E24;--red2:#B3121B;--orange:#F7931E;--yellow:#FFD21F;--blue:#1E63C6;--green:#22964A;--ink:#141414;--muted:#5d5555}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+body{font-family:'Montserrat',sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;inset:0;overflow:hidden;background:#fff}
+.scene,.sub{position:absolute;inset:0;overflow:hidden}
+.abs{position:absolute}
+.frame{position:absolute;overflow:hidden}
+.frame img,.cover{width:100%;height:100%;object-fit:cover;display:block}
+.cover{position:absolute;inset:0}
+.anton{font-family:'Anton',sans-serif;text-transform:uppercase;line-height:.95;letter-spacing:1px}
+.hand{font-family:'Permanent Marker',cursive}
+.brush{position:absolute;overflow:visible}
+.w{display:inline-block;white-space:pre}
+
+/* wipe */
+#wipe{position:absolute;top:-200px;left:0;height:2320px;width:2900px;z-index:50;transform:translateX(-5000px);display:flex;pointer-events:none}
+#wipe i{display:block;height:100%}
+#wipe .o{width:150px;background:var(--yellow)}
+#wipe .r{width:2500px;background:linear-gradient(90deg,var(--red),var(--red2))}
+#wipe .d{width:250px;background:var(--orange)}
+#flash{position:absolute;inset:0;background:#fff;z-index:49;opacity:0;pointer-events:none}
+
+/* S1 hook */
+#s1 .shade{position:absolute;left:0;top:0;width:1080px;height:960px;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 30%,rgba(255,255,255,0) 60%,#fff 100%)}
+.logocard{background:#fff;border-radius:26px;padding:16px 22px;box-shadow:0 14px 40px rgba(0,0,0,.25)}
+.logocard img{display:block}
+#s1 .note{right:46px;top:96px;transform-origin:100% 0;color:#fff;font-size:50px;line-height:1.2;text-align:right;text-shadow:0 4px 18px rgba(0,0,0,.6)}
+#s1 .note div{transform:rotate(5deg)}
+#s1 .t1{left:70px;top:800px;font-size:250px;color:var(--ink)}
+#s1 .t2{left:70px;top:1050px;font-size:178px;color:var(--ink)}
+#s1 .t3{left:150px;top:1296px;font-size:200px;color:#fff;transform-origin:0 50%}
+
+/* S2 reasons */
+#s2 .top{left:0;top:0;width:1080px;height:640px;clip-path:polygon(0 0,100% 0,100% 82%,0 100%)}
+#s2 .kick{left:70px;top:660px;font-weight:800;font-size:30px;letter-spacing:7px;color:var(--red)}
+#s2 .h{left:70px;top:715px;font-size:118px}
+#s2 .h .r{color:var(--red)}
+.chk{position:absolute;left:70px;display:flex;align-items:center;gap:30px;font-weight:800;font-size:50px}
+.chk i{flex:none;width:88px;height:88px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(34,150,74,.35)}
+.chk i svg{width:54px;height:54px;stroke:#fff;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* S3 kinetic */
+.kin .ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.25),rgba(0,0,0,.65))}
+.kin .word{left:0;width:1080px;top:760px;text-align:center;font-size:290px;color:#fff;text-shadow:0 10px 40px rgba(0,0,0,.5)}
+.kin .cap{left:0;width:1080px;top:1110px;text-align:center;font-weight:800;font-size:44px;color:#fff;letter-spacing:1px}
+.kin .num{left:0;width:1080px;top:600px;text-align:center;font-size:60px;color:var(--yellow)}
+
+/* S4 courses */
+#s4{background:linear-gradient(180deg,#fff 0%,#FFF4EE 100%)}
+.ribbon{left:90px;top:250px;width:900px;height:130px;background:linear-gradient(90deg,var(--red),var(--red2));clip-path:polygon(4% 0,96% 0,100% 50%,96% 100%,4% 100%,0 50%);display:flex;align-items:center;justify-content:center;color:#fff;font-size:84px}
+.tile{position:absolute;width:465px;height:540px;border-radius:30px;color:#fff;text-align:center;padding:40px 26px;box-shadow:0 22px 50px rgba(0,0,0,.18);overflow:hidden}
+.tile svg{width:150px;height:150px;fill:#fff}
+.tile .ab{font-weight:900;font-size:80px;line-height:1;margin-top:18px;letter-spacing:-1px}
+.tile .nm{font-weight:600;font-size:29px;line-height:1.25;margin-top:14px;min-height:110px}
+.tile .du{display:inline-block;margin-top:14px;background:#fff;font-weight:900;font-size:30px;padding:10px 24px;border-radius:40px}
+#s4 .aff{left:0;width:1080px;top:1560px;text-align:center;font-weight:700;font-size:32px;color:var(--muted)}
+
+/* S5 benefits */
+#s5{background:radial-gradient(ellipse at 50% 0%,#F03A3F 0%,var(--red) 40%,#8E0F16 100%);color:#fff}
+#s5 .kick{left:0;width:1080px;top:250px;text-align:center;font-weight:800;font-size:30px;letter-spacing:8px;color:var(--yellow)}
+#s5 .h{left:0;width:1080px;top:305px;text-align:center;font-size:150px}
+.ben{position:absolute;left:80px;width:920px;height:160px;border-radius:26px;background:#fff;color:var(--ink);display:flex;align-items:center;gap:30px;padding:0 34px;box-shadow:0 16px 40px rgba(0,0,0,.25)}
+.ben i{flex:none;width:104px;height:104px;border-radius:24px;display:flex;align-items:center;justify-content:center}
+.ben i svg{width:62px;height:62px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ben b{font-weight:900;font-size:44px;line-height:1.1}
+
+/* S6 global */
+#s6{background:linear-gradient(180deg,#DDEEFF 0%,#F4F9FF 55%,#fff 100%)}
+#s6 .h1{left:70px;top:240px;font-size:84px;color:var(--red)}
+#s6 .h2{left:70px;top:340px;font-size:170px}
+.pin{position:absolute;transform:translate(-50%,-100%);display:flex;flex-direction:column;align-items:center}
+.pin span{background:#fff;color:var(--red2);font-weight:900;font-size:30px;padding:8px 18px;border-radius:30px;box-shadow:0 8px 20px rgba(0,0,0,.18);white-space:nowrap}
+.pin svg{width:44px;height:52px;fill:var(--red);margin-top:4px}
+.hs{position:absolute;width:150px;height:150px;border-radius:50%;overflow:hidden;border:6px solid #fff;box-shadow:0 10px 26px rgba(0,0,0,.25)}
+.hs img{width:100%;height:100%;object-fit:cover}
+#s6 .cap{left:0;width:1080px;top:1395px;text-align:center;font-weight:800;font-size:36px}
+#s6 .cap b{color:var(--red)}
+#s6 .hand2{left:0;width:1080px;top:1460px;text-align:center;font-size:37px;color:var(--red)}
+
+/* S7 experience */
+#s7{background:#fff}
+#s7 .tape{left:-40px;top:200px;width:1160px;height:330px;background:var(--yellow);box-shadow:0 14px 34px rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:84px;line-height:1.05}
+.ph{position:absolute;width:465px;height:440px;border-radius:24px;overflow:hidden;box-shadow:0 16px 36px rgba(0,0,0,.2)}
+.ph img{width:100%;height:100%;object-fit:cover}
+.ph span{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(90deg,var(--red),var(--red2));color:#fff;text-align:center;font-weight:900;font-size:27px;letter-spacing:1px;padding:14px 6px}
+
+/* S8 CTA */
+#s8{background:#fff}
+#s8 .logo{left:390px;top:190px;width:300px}
+#s8 .j1{left:0;width:1080px;top:500px;text-align:center;font-weight:900;font-size:150px;color:var(--red);letter-spacing:-3px;line-height:1}
+#s8 .j2{left:0;width:1080px;top:660px;text-align:center;font-weight:900;font-size:62px;color:var(--red2)}
+#s8 .ticks{left:0;width:1080px;top:770px;display:flex;justify-content:center;gap:38px;font-size:54px;color:var(--ink)}
+#s8 .ticks span b{color:var(--red);margin-right:6px}
+#s8 .adm{left:0;width:1080px;top:880px;text-align:center}
+#s8 .adm span{display:inline-block;background:linear-gradient(90deg,var(--orange),var(--red));color:#fff;font-weight:900;font-size:36px;letter-spacing:6px;padding:16px 36px;border-radius:16px}
+#s8 .box{left:110px;top:1000px;width:860px;height:270px;border-radius:30px;border:5px solid var(--ink);background:#fff;display:flex;align-items:center;gap:40px;padding-left:40px;box-shadow:0 18px 40px rgba(0,0,0,.15)}
+#s8 .box i{flex:none;width:170px;height:170px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center}
+#s8 .box i svg{width:96px;height:96px;fill:#fff}
+#s8 .box div{font-weight:900;font-size:76px;line-height:1.15}
+#s8 .box div b{color:var(--red)}
+#s8 .web{left:110px;top:1310px;width:860px;height:120px;border-radius:60px;background:linear-gradient(90deg,var(--red),var(--red2));display:flex;align-items:center;justify-content:center;gap:22px;color:#fff;font-weight:800;font-size:54px;box-shadow:0 14px 34px rgba(227,30,36,.35)}
+#s8 .web svg{width:60px;height:60px;stroke:#fff;fill:none;stroke-width:1.8}
+#s8 .addr{left:0;width:1080px;top:1465px;text-align:center;font-weight:600;font-size:28px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div id="stage">
+
+<!-- ============ S1 HOOK 0–4 ============ -->
+<section class="scene" id="s1" data-vis="0 4">
+  <div class="frame" style="left:0;top:0;width:1080px;height:960px"><img src="img/chef_tall.jpg" style="object-position:50% 22%" data-kb="0 4 1.18 1.03 0 0 0 0"></div>
+  <div class="shade"></div>
+  <div class="abs logocard" style="left:56px;top:70px" data-a="pop 0.15 0.6"><img src="img/logo.png" style="width:190px"></div>
+  <div class="abs note hand"><div><div data-a="fadeRight 2.2 0.4">“Easy to Learn</div><div data-a="fadeRight 2.45 0.4">High Opportunities</div><div data-a="fadeRight 2.7 0.4">Bright Future”</div></div></div>
+  <svg class="brush" data-brush="#FFD21F 3" style="left:30px;top:830px" width="1020" height="440" data-a="wipeR 0.35 0.45"></svg>
+  <div class="abs anton t1" data-a="slam 0.5 0.35|shake 0.85 0.4 lin">Hotel</div>
+  <div class="abs anton t2" data-a="slam 0.9 0.35|shake 1.25 0.4 lin">Management</div>
+  <svg class="brush" data-brush="#E31E24 9" style="left:100px;top:1262px;transform:rotate(-4deg)" width="860" height="290" data-a="wipeR 1.35 0.35"></svg>
+  <div class="abs anton t3" style="transform:rotate(-4deg)" data-a="slam 1.5 0.35|shake 1.85 0.5 lin">is Easy!</div>
+</section>
+
+<!-- ============ S2 REASONS 4–10 ============ -->
+<section class="scene" id="s2" data-vis="4 10">
+  <div class="frame top"><img src="img/p12_00.jpg" style="object-position:50% 35%" data-kb="4 10 1.15 1.02 0 0 0 0"></div>
+  <div class="abs kick" data-a="fadeLeft 4.3 0.5">WHY HOTEL MANAGEMENT?</div>
+  <div class="abs anton h" data-words="4.45 0.08">Because it's <span class="r">simple!</span></div>
+  <div id="checks"></div>
+</section>
+
+<!-- ============ S3 LEARN PRACTICE WORK EARN 10–14 ============ -->
+<section class="scene" id="s3" data-vis="10 14"></section>
+
+<!-- ============ S4 COURSES 14–21 ============ -->
+<section class="scene" id="s4" data-vis="14 21">
+  <div class="abs logocard" style="left:405px;top:70px;padding:10px 16px" data-a="fadeDown 14.2 0.5"><img src="img/logo.png" style="width:120px"></div>
+  <div class="abs ribbon anton" data-a="wipeR 14.3 0.6">Courses Offered</div>
+  <div id="tiles"></div>
+  <div class="abs aff" data-a="fadeUp 17.6 0.6">Affiliated to Osmania University</div>
+</section>
+
+<!-- ============ S5 BENEFITS 21–26 ============ -->
+<section class="scene" id="s5" data-vis="21 26">
+  <div class="abs kick" data-a="fadeDown 21.2 0.5">YOUR FUTURE WITH</div>
+  <div class="abs anton h" data-a="slam 21.35 0.4|shake 21.75 0.4 lin">AIMS</div>
+  <div id="bens"></div>
+</section>
+
+<!-- ============ S6 GLOBAL 26–31 ============ -->
+<section class="scene" id="s6" data-vis="26 31">
+  <div class="abs hand h1" style="transform:rotate(-4deg)" data-a="fadeLeft 26.2 0.5">Global Career</div>
+  <div class="abs anton h2" data-a="slam 26.4 0.4|shake 26.8 0.4 lin">Begins Here!</div>
+  <svg class="abs" style="left:0;top:560px" width="1080" height="640" viewBox="0 0 1080 640" id="map">
+    <g fill="#C9DEF5" data-a="fade 26.3 0.6">
+      <!-- generic skyline -->
+      <rect x="40" y="520" width="70" height="120"/><rect x="120" y="470" width="60" height="170"/><rect x="190" y="540" width="90" height="100"/>
+      <path d="M330 640 L345 300 L352 180 L356 90 L360 180 L367 300 L382 640 Z"/>
+      <rect x="400" y="500" width="80" height="140"/><rect x="490" y="560" width="60" height="80"/>
+      <circle cx="610" cy="440" r="34"/><rect x="606" y="440" width="8" height="200"/><circle cx="660" cy="500" r="22"/><rect x="657" y="500" width="6" height="140"/>
+      <rect x="700" y="520" width="70" height="120"/>
+      <path d="M800 640 L830 420 L860 420 L890 640 Z"/><rect x="826" y="380" width="38" height="44"/><path d="M826 380 L845 330 L864 380 Z"/>
+      <rect x="910" y="500" width="60" height="140"/><rect x="980" y="550" width="70" height="90"/>
+    </g>
+    <defs><mask id="routeMask"><path id="routeM" d="M90 470 C 260 300, 420 380, 560 250 S 860 120, 990 70" stroke="#fff" stroke-width="30" fill="none"/></mask></defs>
+    <path id="route" d="M90 470 C 260 300, 420 380, 560 250 S 860 120, 990 70" stroke="#E31E24" stroke-width="7" stroke-dasharray="4 18" stroke-linecap="round" fill="none" mask="url(#routeMask)"/>
+    <g id="plane"><path d="M-34 -6 L10 -6 L30 -26 L40 -26 L28 -6 L44 -6 L52 -16 L58 -16 L54 0 L58 16 L52 16 L44 6 L28 6 L40 26 L30 26 L10 6 L-34 6 Q-44 0 -34 -6 Z" fill="#1E63C6"/></g>
+  </svg>
+  <div id="pins"></div>
+  <div id="heads"></div>
+  <div class="abs cap" data-a="fadeUp 29.3 0.5">Our students work in <b>top hotels abroad</b></div>
+  <div class="abs hand hand2" data-a="fadeUp 29.7 0.5">Work Abroad • Explore the World • Build Your Future</div>
+</section>
+
+<!-- ============ S7 EXPERIENCE 31–35 ============ -->
+<section class="scene" id="s7" data-vis="31 35">
+  <div class="abs tape anton" style="transform:rotate(-4deg)" data-a="wipeR 31.15 0.5"><div>Meet Celebrities</div><div style="color:var(--red)">Serve the Best</div><div>Be Part of Big Events</div></div>
+  <div id="grid"></div>
+</section>
+
+<!-- ============ S8 CTA 35–40 ============ -->
+<section class="scene" id="s8" data-vis="35 40">
+  <svg class="abs" style="left:0;top:0" width="1080" height="1920" viewBox="0 0 1080 1920">
+    <g data-a="wipeR 35.05 0.8"><path d="M0,0 L560,0 C440,120 250,200 0,240 Z" fill="#E31E24"/><path d="M560,0 L610,0 C470,150 260,240 0,280 L0,240 C250,200 440,120 560,0 Z" fill="#F7931E"/></g>
+    <g data-a="wipeL 35.1 0.8"><path d="M1080,1920 L1080,1560 C980,1720 820,1840 560,1920 Z" fill="#E31E24"/><path d="M1080,1560 L1080,1520 C970,1700 800,1830 500,1920 L560,1920 C820,1840 980,1720 1080,1560 Z" fill="#F7931E"/></g>
+  </svg>
+  <img class="abs logo" src="img/logo.png" data-a="pop 35.25 0.6">
+  <div class="abs j1" data-a="slam 35.6 0.4|shake 36.0 0.4 lin">Join AIMS….</div>
+  <div class="abs j2" data-a="fadeUp 36.0 0.5">To AIM your DREAMS</div>
+  <div class="abs ticks hand"><span data-a="pop 36.3 0.4"><b>✓</b>Learn</span><span data-a="pop 36.45 0.4"><b>✓</b>Travel</span><span data-a="pop 36.6 0.4"><b>✓</b>Earn</span><span data-a="pop 36.75 0.4"><b>✓</b>Grow</span></div>
+  <div class="abs adm" data-a="pop 36.9 0.5"><span data-pulse="37.6">ADMISSIONS OPEN</span></div>
+  <div class="abs box" data-a="fadeUp 37.1 0.6"><i><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg></i><div><b>88855 29279</b><br>8712 279 279</div></div>
+  <div class="abs web" data-a="fadeUp 37.35 0.6"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c3 3 3 16 0 19M12 2.5c-3 3-3 16 0 19"/></svg>www.aimshyd.com</div>
+  <div class="abs addr" data-a="fadeUp 37.55 0.6">L.B. Nagar, Mansoorabad Road, Hyderabad – 500074</div>
+</section>
+
+<div id="flash"></div>
+<div id="wipe"><i class="o"></i><i class="r"></i><i class="d"></i></div>
+</div>
+
+<script>
+const DURATION = 40, CUTS = [4, 10, 14, 21, 26, 31, 35], FLASHES = [11, 12, 13];
+const CHECK = '<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+/* S2 checklist */
+['Anyone Can Learn','No Tough Mathematics','More Practical Learning','Good Jobs &amp; High Salary','Global Opportunities'].forEach((t,i)=>{
+  document.getElementById('checks').insertAdjacentHTML('beforeend',
+    `<div class="chk" style="top:${975+i*118}px" data-a="pop ${5.0+i*0.7} 0.45"><i>${CHECK}</i><span>${t}</span></div>`);
+});
+
+/* S3 kinetic words */
+[['Learn','p02_05','in professional training kitchens','50% 30%'],
+ ['Practice','p20_01','in real front-office &amp; service labs','50% 40%'],
+ ['Work','p08_00','in hotels, airlines &amp; resorts','35% 40%'],
+ ['Earn','p42_01','a rewarding global career','60% 30%']].forEach(([w,img,cap,pos],i)=>{
+  const s = 10+i;
+  document.getElementById('s3').insertAdjacentHTML('beforeend',`
+  <div class="sub kin" data-vis="${s} ${s+1}">
+    <img class="cover" src="img/${img}.jpg" style="object-position:${pos}" data-kb="${s} ${s+1} 1.18 1.06 0 0 0 0">
+    <div class="ov"></div>
+    <div class="abs num anton" data-a="fadeDown ${s+0.05} 0.3">Step 0${i+1}</div>
+    <div class="abs word anton" data-a="slam ${s+0.05} 0.3|shake ${s+0.35} 0.35 lin">${w}</div>
+    <svg class="brush" data-brush="#FFD21F ${20+i}" style="left:240px;top:1060px" width="600" height="34" data-a="wipeR ${s+0.25} 0.3"></svg>
+    <div class="abs cap" data-a="fadeUp ${s+0.3} 0.35">${cap}</div>
+  </div>`);
+});
+
+/* S4 course tiles */
+const ICONS = {
+  hat:'<svg viewBox="0 0 64 64"><path d="M18 34c-6 0-10-5-10-11 0-7 6-12 13-11 2-5 6-8 11-8s9 3 11 8c7-1 13 4 13 11 0 6-4 11-10 11v10H18z"/><rect x="18" y="47" width="28" height="9" rx="2"/></svg>',
+  cloche:'<svg viewBox="0 0 64 64"><circle cx="32" cy="12" r="4"/><path d="M8 44a24 24 0 0 1 48 0z"/><rect x="4" y="47" width="56" height="6" rx="3"/></svg>',
+  cutlery:'<svg viewBox="0 0 64 64"><path d="M14 6h3v16h3V6h3v16h3V6h3v18a7 7 0 0 1-5 7v27h-6V31a7 7 0 0 1-5-7z"/><path d="M44 6c6 0 9 9 9 20 0 5-3 8-6 8v24h-6V6z"/></svg>',
+  cap:'<svg viewBox="0 0 64 64"><path d="M32 8L2 22l30 14 24-11v17h4V22z"/><path d="M14 32v12c8 7 28 7 36 0V32L32 41z"/></svg>'
+};
+[['BHMCT','Bachelor of Hotel Management &amp; Catering Technology','3 Years','#E31E24','#B3121B','hat'],
+ ['DHM','Diploma in<br>Hotel Management','18 Months','#F7931E','#E0661A','cloche'],
+ ['ADHM','Advanced Diploma in Hotel Management','18 Months','#2B74D8','#1A4FA0','cutlery'],
+ ['PGDHM','Post Graduate Diploma in Hotel Management','18 Months','#27A352','#177A3A','cap']].forEach(([ab,nm,du,c1,c2,ic],i)=>{
+  const x = 55 + (i%2)*505, y = 440 + Math.floor(i/2)*575;
+  document.getElementById('tiles').insertAdjacentHTML('beforeend',
+   `<div class="tile" style="left:${x}px;top:${y}px;background:linear-gradient(160deg,${c1},${c2})" data-a="pop ${14.8+i*0.75} 0.55">${ICONS[ic]}<div class="ab">${ab}</div><div class="nm">${nm}</div><div class="du" style="color:${c2}">${du}</div></div>`);
+});
+
+/* S5 benefits */
+const BI = {
+  hand:'<svg viewBox="0 0 24 24"><path d="M2 12l4-4 4 2 3-2 4 1 5 4"/><path d="M6 8v6l5 5c1 1 2 1 3 0l5-5"/><path d="M10 15l2 2M12 13l3 3"/></svg>',
+  plane:'<svg viewBox="0 0 24 24"><path d="M2.5 13.5l19-8-5 15-4.5-5.5z"/><path d="M12 15l3.5-4.5"/></svg>',
+  chart:'<svg viewBox="0 0 24 24"><path d="M4 20V14M10 20V10M16 20V6M3 21h18"/><path d="M14 4h5v5M19 4l-6 6"/></svg>',
+  ppl:'<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6M15 14.5c3 0 6 1.5 6 5"/></svg>',
+  shield:'<svg viewBox="0 0 24 24"><path d="M12 2.5l8 3v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10v-6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>'
+};
+[['100% Placement Support','hand','#E31E24'],['Opportunities Abroad','plane','#1E63C6'],['Good Salary &amp; Career Growth','chart','#22964A'],
+ ['Work with International Brands','ppl','#F7931E'],['Skill-Based Practical Training','shield','#7B2CBF']].forEach(([t,ic,c],i)=>{
+  document.getElementById('bens').insertAdjacentHTML('beforeend',
+   `<div class="ben" style="top:${560+i*188}px" data-a="${i%2?'fadeRight':'fadeLeft'} ${21.7+i*0.42} 0.5"><i style="background:${c}">${BI[ic]}</i><b>${t}</b></div>`);
+});
+
+/* S6 heads */
+[0,4,10,14,16,24].forEach((h,i)=>{
+  document.getElementById('heads').insertAdjacentHTML('beforeend',
+   `<div class="hs" style="left:${70+i*162}px;top:1220px" data-a="pop ${28.6+i*0.1} 0.45"><img src="img/head${String(h).padStart(2,'0')}.jpg"></div>`);
+});
+
+/* S7 grid */
+[['p28_00','PRACTICAL TRAINING'],['p20_04','INDUSTRY EXPOSURE'],['p32_00','REAL-WORLD EXPERIENCE'],['p42_08','GLOBAL OPPORTUNITIES']].forEach(([f,l],i)=>{
+  const x = 55 + (i%2)*505, y = 610 + Math.floor(i/2)*475;
+  document.getElementById('grid').insertAdjacentHTML('beforeend',
+   `<div class="ph" style="left:${x}px;top:${y}px" data-a="pop ${31.6+i*0.25} 0.5"><img src="img/${f}.jpg" data-kb="31 35 1.15 1.0 0 0 0 0"><span>${l}</span></div>`);
+});
+
+/* brushes: rough painted strokes */
+function rnd(seed){ let s = seed*9301+49297; return () => (s = (s*9301+49297) % 233280) / 233280; }
+document.querySelectorAll('[data-brush]').forEach(svg => {
+  const [col, seed] = svg.dataset.brush.split(' '); const r = rnd(+seed);
+  const W = +svg.getAttribute('width'), H = +svg.getAttribute('height');
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  const n = 26, top = [], bot = [];
+  for (let k = 0; k <= n; k++) { const x = W*0.02 + (W*0.96)*k/n; top.push([x, H*0.08 + r()*H*0.12]); bot.push([x, H*0.92 - r()*H*0.12]); }
+  let d = `M${W*0.01},${H*0.5} `;
+  top.forEach(([x,y]) => d += `L${x.toFixed(1)},${y.toFixed(1)} `);
+  d += `L${W*0.995},${H*0.35} L${W},${H*0.6} `;
+  bot.reverse().forEach(([x,y]) => d += `L${x.toFixed(1)},${y.toFixed(1)} `);
+  d += 'Z';
+  let streaks = '';
+  for (let k = 0; k < 5; k++) { const y = H*(0.2 + r()*0.6), x0 = W*(0.05 + r()*0.3), x1 = x0 + W*(0.2 + r()*0.4); streaks += `<path d="M${x0},${y} L${x1},${y+r()*4}" stroke="rgba(255,255,255,.18)" stroke-width="${2+r()*3}" />`; }
+  svg.innerHTML = `<path d="${d}" fill="${col}"/>${streaks}`;
+});
+
+/* word splitting */
+document.querySelectorAll('[data-words]').forEach(el => {
+  const [st, gap] = el.dataset.words.split(' ').map(Number); let k = 0;
+  const walk = node => [...node.childNodes].forEach(c => {
+    if (c.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach(tok => {
+        if (!tok) return;
+        if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(' ')); return; }
+        const s = document.createElement('span'); s.className = 'w'; s.textContent = tok;
+        s.dataset.a = `fadeUp ${(st + k*gap).toFixed(3)} 0.5`; k++; frag.appendChild(s);
+      });
+      c.replaceWith(frag);
+    } else if (c.nodeType === 1) walk(c);
+  });
+  walk(el);
+});
+
+/* ---------- engine ---------- */
+const EASE = {
+  lin: t => t, out: t => 1 - Math.pow(1 - t, 3),
+  io: t => t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2,
+  back: t => { const c1 = 1.6, c3 = c1 + 1; return 1 + c3*Math.pow(t - 1, 3) + c1*Math.pow(t - 1, 2); },
+};
+const FX = {
+  fade:(p,s)=>{s.o*=p},
+  fadeUp:(p,s)=>{s.o*=Math.min(1,p*1.4); s.ty+=(1-p)*70},
+  fadeDown:(p,s)=>{s.o*=Math.min(1,p*1.4); s.ty-=(1-p)*70},
+  fadeLeft:(p,s)=>{s.o*=Math.min(1,p*1.4); s.tx-=(1-p)*120},
+  fadeRight:(p,s)=>{s.o*=Math.min(1,p*1.4); s.tx+=(1-p)*120},
+  pop:(p,s)=>{s.o*=Math.min(1,p*2.5); s.sc*=.5+.5*p},
+  slam:(p,s)=>{s.o*=Math.min(1,p*3); s.sc*=1+1.6*(1-p); s.bl+=(1-p)*14},
+  shake:(p,s)=>{ if(p>0&&p<1){ const a=(1-p)*14; s.tx+=Math.sin(p*60)*a; s.ty+=Math.cos(p*47)*a*.6; } },
+  wipeR:(p,s)=>{s.clip=`inset(-10% ${(1-p)*110}% -10% -10%)`},
+  wipeL:(p,s)=>{s.clip=`inset(-10% -10% -10% ${(1-p)*110}%)`},
+};
+const DEF_EASE = {pop:'back', wipeR:'io', wipeL:'io', slam:'out'};
+const anims = [], kbs = [], vis = [], pulses = [];
+const clamp = x => Math.max(0, Math.min(1, x));
+const wipe = document.getElementById('wipe'), flash = document.getElementById('flash');
+let route, routeM, routeLen, plane, PINS = [];
+const ROUTE_S = 26.6, ROUTE_D = 2.2;
+function setup(){
+  document.querySelectorAll('[data-a]').forEach(el => {
+    const list = el.dataset.a.split('|').map(x => { const [n, s, d, e] = x.trim().split(/\s+/); return {n, s:+s, d:+d, e: e || DEF_EASE[n] || 'out'}; });
+    // keep any static transform (e.g. rotate) authored inline
+    anims.push({el, list, base: el.style.transform || ''});
+  });
+  document.querySelectorAll('[data-kb]').forEach(el => kbs.push({el, v: el.dataset.kb.split(' ').map(Number)}));
+  document.querySelectorAll('[data-vis]').forEach(el => { const [s, e] = el.dataset.vis.split(' ').map(Number); vis.push({el, s, e}); });
+  document.querySelectorAll('[data-pulse]').forEach(el => pulses.push({el, s:+el.dataset.pulse}));
+  route = document.getElementById('route'); routeM = document.getElementById('routeM'); routeLen = route.getTotalLength();
+  routeM.setAttribute('stroke-dasharray', routeLen); plane = document.getElementById('plane');
+  // pins along the route (map svg sits at top:560)
+  const P = [['Hyderabad',0],['Dubai',.22],['Abu Dhabi',.42],['Qatar',.6],['Kuwait',.8],['USA',1]];
+  const host = document.getElementById('pins');
+  P.forEach(([name, f], i) => {
+    const pt = route.getPointAtLength(f*routeLen);
+    const d = document.createElement('div'); d.className = 'pin';
+    d.style.left = Math.min(980, Math.max(110, pt.x)) + 'px'; d.style.top = (560 + pt.y - 6) + 'px';
+    d.innerHTML = `<span>${name}</span><svg viewBox="0 0 24 28"><path d="M12 0a10 10 0 0 0-10 10c0 7.5 10 18 10 18s10-10.5 10-18A10 10 0 0 0 12 0zm0 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/></svg>`;
+    host.appendChild(d);
+    anims.push({el: d, base: 'translate(-50%,-100%)', list: [{n:'pop', s: ROUTE_S + f*ROUTE_D - 0.05, d: 0.45, e: 'back'}]});
+  });
+}
+window.seek = function (t) {
+  for (const v of vis) v.el.style.visibility = (t >= v.s && t < v.e) ? 'visible' : 'hidden';
+  for (const {el, list, base} of anims) {
+    const s = {o:1, tx:0, ty:0, sc:1, bl:0, clip:null};
+    for (const a of list) FX[a.n](EASE[a.e](clamp((t - a.s) / a.d)), s);
+    for (const pu of pulses) if (pu.el === el && t > pu.s) s.sc *= 1 + 0.04*Math.max(0, Math.sin((t - pu.s) * Math.PI * 2));
+    el.style.opacity = s.o;
+    let tr = base + ' ';
+    if (s.tx || s.ty) tr += `translate(${s.tx}px,${s.ty}px) `;
+    if (s.sc !== 1) tr += `scale(${s.sc}) `;
+    el.style.transform = tr.trim();
+    el.style.filter = s.bl > 0.05 ? `blur(${s.bl}px)` : '';
+    el.style.clipPath = s.clip || '';
+  }
+  for (const pu of pulses) if (!anims.some(a => a.el === pu.el)) pu.el.style.transform = t > pu.s ? `scale(${1 + 0.04*Math.max(0, Math.sin((t - pu.s)*Math.PI*2))})` : '';
+  for (const {el, v:[s, e, s0, s1, x0, x1, y0, y1]} of kbs) {
+    const p = clamp((t - s) / (e - s));
+    el.style.transform = `translate(${x0 + (x1-x0)*p}%,${y0 + (y1-y0)*p}%) scale(${s0 + (s1-s0)*p})`;
+  }
+  // plane along route
+  const rp = EASE.io(clamp((t - ROUTE_S) / ROUTE_D));
+  const L = rp*routeLen, a = route.getPointAtLength(L), b = route.getPointAtLength(Math.min(routeLen, L + 2));
+  const ang = Math.atan2(b.y - a.y, b.x - a.x)*180/Math.PI;
+  plane.setAttribute('transform', `translate(${a.x},${a.y}) rotate(${ang}) scale(${t < ROUTE_S - 0.3 ? 0 : 1.3})`);
+  routeM.setAttribute('stroke-dashoffset', routeLen*(1 - rp));
+  // red swoosh wipe across cuts
+  let x = null, dir = 1;
+  CUTS.forEach((c, i) => { const D = 0.8; if (t > c - D/2 && t < c + D/2) { x = -860 + (EASE.io((t - (c - D/2)) / D) - 0.5)*5200; dir = i % 2 ? -1 : 1; } });
+  if (x === null) wipe.style.transform = 'translateX(-6000px)';
+  else if (dir === 1) wipe.style.transform = `translateX(${x}px) skewX(-16deg)`;
+  else wipe.style.transform = `translateX(${1080 - x - 2900}px) scaleX(-1) skewX(-16deg)`;
+  // white flash on fast cuts
+  let f = 0; FLASHES.forEach(c => { if (t >= c && t < c + 0.18) f = 1 - (t - c)/0.18; }); flash.style.opacity = f*0.85;
+};
+window.ready = (async () => {
+  await document.fonts.ready;
+  await Promise.all([...document.images].map(i => i.complete ? 0 : new Promise(r => { i.onload = i.onerror = r; })));
+  setup(); seek(0); return true;
+})();
+const q = new URLSearchParams(location.search);
+if (q.has('t')) window.ready.then(() => seek(+q.get('t')));
+</script>
+</body>
+</html>

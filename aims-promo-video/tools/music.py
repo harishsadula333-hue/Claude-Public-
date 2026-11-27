@@ -57,7 +57,9 @@ def hat(open_=False):
 prog = [(57,[57,60,64]), (53,[53,57,60]), (48,[48,52,55,60]), (55,[55,59,62])]
 bars = int(np.ceil(DUR/BAR))
 end_t = DUR - 5.0   # final hit time
-CUTS = [9.5, 19.5, 28.5, 33.5, 39.0]
+import os
+CUTS = [float(x) for x in os.environ.get('CUTS','9.5,19.5,28.5,33.5,39.0').split(',')]
+HITS = [float(x) for x in os.environ['HITS'].split(',')] if os.environ.get('HITS') else []
 for b in range(bars):
     t0 = b*BAR
     if t0 >= end_t: break
@@ -115,6 +117,8 @@ def whoosh(d=0.7):
     x = np.fft.irfft(S, len(n)); e = np.sin(np.pi*t/d)**2
     return x*e
 for c in CUTS: add(whoosh(), c-0.4, 0, 0.35)
+for h in HITS:
+    add(whoosh(0.35), h-0.2, 0, 0.22); add(kick(), h, 0, 0.5); add(hat(True), h, 0, 0.18)
 add(whoosh(0.9), end_t-0.55, 0, 0.3)
 # Reverb (FFT convolution with decaying noise IR)
 ir_len = int(1.6*SR); t = np.arange(ir_len)/SR
