@@ -1,0 +1,13 @@
+# Token = spoken|shown (underscore in shown = space). Plain token = same both.
+#intro
+మనం రోజూ వందల సార్లు Screen ని Touch చేస్తాం. కానీ మనం ఎక్కడ Touch చేశామో, Phone కి అంత కరెక్ట్ గా ఎలా తెలుస్తుంది? రండి, చూద్దాం!
+#grid
+Screen Glass కింద, కంటికి కనిపించని ఒక సన్నని Grid ఉంటుంది. అడ్డంగా, నిలువుగా ఉండే ఈ Lines లో, ఎప్పుడూ ఒక చిన్న Electric Field ఉంటుంది.
+#finger
+మన శరీరంలో నీరు, లవణాలు ఉంటాయి కాబట్టి, మన వేలు కరెంట్ ని కొంచెం Conduct చేస్తుంది. వేలు పెట్టగానే, ఆ చోట Electric Field మారిపోతుంది.
+#scan
+Phone లోని Controller Chip, ఈ Grid ని సెకనుకు వందల సార్లు Scan చేస్తుంది. ఏ Row, ఏ Column దగ్గర మార్పు వచ్చిందో చూసి, మీ Touch Point ని లెక్కిస్తుంది. పది వేళ్ళు పెట్టినా, అన్నిటినీ ఒకేసారి గుర్తిస్తుంది!
+#why
+మరి Pen, Gloves, గోరు తో ఎందుకు పనిచేయదు? ఎందుకంటే అవి కరెంట్ ని Conduct చేయవు. అందుకే Touch Pen చివర, Conductive Rubber ఉంటుంది.
+#fact
+ఇంకో Fun Fact! కొరియాలో చలికాలంలో, Gloves తీయకుండా Phone వాడటానికి, కొందరు Sausage తో Touch చేశారట. ఎందుకంటే, అది కూడా కరెంట్ ని Conduct చేస్తుంది!
