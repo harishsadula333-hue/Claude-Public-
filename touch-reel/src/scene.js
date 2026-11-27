@@ -209,7 +209,8 @@ sfx(Wi(108), 'tap', 0.7); sfx(Wi(108) + 0.05, 'check', 0.7); sfx(S.fact, 'wind',
 window.SFX = SFX;
 
 window.render = function (t) {
-  reset(); let k = 0; for (let i = 0; i < ORDER.length; i++) if (t >= (i === 0 ? 0 : S[ORDER[i]] - 0.02)) k = i;
+  reset(); renderer.toneMappingExposure = 1.0;   // must reset every frame: the transition flash below multiplies it
+  let k = 0; for (let i = 0; i < ORDER.length; i++) if (t >= (i === 0 ? 0 : S[ORDER[i]] - 0.02)) k = i;
   const name = ORDER[k], a = k === 0 ? 0 : S[name], b = k + 1 < ORDER.length ? S[ORDER[k + 1]] : END;
   Object.values(LBL).forEach(L => (L.e.style.visibility = 'hidden'));
   SH[name](t, a, b);
