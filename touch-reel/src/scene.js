@@ -25,12 +25,14 @@ renderer.setPixelRatio(1); renderer.setSize(1080, 1920, false);
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.0;
 renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFShadowMap;
 const scene = new THREE.Scene();
-const pmrem = new THREE.PMREMGenerator(renderer); scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+// no PMREM environment map here: it came out corrupted in some parallel render workers (washed-out white surfaces).
+// Lighting is done with hemisphere + key + rim + a soft fill instead, which is fully deterministic.
 const camera = new THREE.PerspectiveCamera(45, 1080 / 1920, 0.01, 200);
 const hemi = new THREE.HemisphereLight(0xdfe9ff, 0x2a2438, 0.6); scene.add(hemi);
 const key = new THREE.DirectionalLight(0xffffff, 2.0); key.castShadow = true; key.shadow.mapSize.set(1024, 1024);
 Object.assign(key.shadow.camera, { left: -3, right: 3, top: 3, bottom: -3, near: 0.5, far: 20 }); key.shadow.bias = -0.0005; key.shadow.normalBias = 0.02; scene.add(key, key.target);
 const rim = new THREE.DirectionalLight(0x7dd3fc, 0.8); rim.position.set(-3, 2, -2); scene.add(rim);
+const fill = new THREE.DirectionalLight(0xffe6cc, 0.7); fill.position.set(-2, 1.5, 3); scene.add(fill);
 function ctex(w, h, draw) { const c = document.createElement('canvas'); c.width = w; c.height = h; const g = c.getContext('2d'); draw(g, w, h);
   const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; t.userData = { c, g, draw }; return t; }
 const FONT = "'Poppins', sans-serif";
@@ -146,7 +148,7 @@ function reset() {
   explode(0); gridGlow(0, 0, 0); heat([], 0); cells.forEach(c => (c.m.material.opacity = 0)); scanBar.material.opacity = 0; scanBarV.material.opacity = 0; cross.forEach(c => (c.material.opacity = 0)); chipWire.material.opacity = 0; chip.visible = false;
   ripples.forEach(r => (r.material.opacity = 0)); charges.forEach(c => (c.material.opacity = 0)); stylus.userData.path.material.opacity = 0;
   phone.position.set(0, 1.0, 0); phone.rotation.set(-0.12, 0, 0); scene.background = new THREE.Color(0x10131f); scene.fog = new THREE.Fog(0x10131f, 6, 16);
-  key.position.set(1.5, 4, 3); key.target.position.set(0, 1, 0); key.intensity = 2.0; hemi.intensity = 0.6; bokeh.forEach(b => (b.visible = true)); desk.visible = true;
+  key.position.set(1.5, 4, 3); key.target.position.set(0, 1, 0); key.intensity = 2.2; hemi.intensity = 1.0; bokeh.forEach(b => (b.visible = true)); desk.visible = true;
 }
 const SH = {};
 const TAPS = [Wi(4), Wi(11), Wi(16)];
