@@ -5,7 +5,9 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 const TL = window.TL, words = TL.words, W = words.map(w => w.t), WE = words.map(w => w.t + w.dur);
 const S = {}; TL.scenes.forEach(s => (S[s.name] = s.t));
-const END = Math.round((TL.voiceDur + 2.5) * 30) / 30; window.DURATION = END;
+// the spoken follow-us outro was dropped: the reel ends ~1.5 s after the last fact
+const LAST = TL.words.filter(w => w.scene !== 'outro').slice(-1)[0];
+const END = Math.round((LAST.t + LAST.dur + 1.56) * 30) / 30; window.DURATION = END;
 const Wi = i => W[i];
 
 // ------------------------------------------------------------ utils
@@ -206,7 +208,7 @@ function renderChips(t) { chips.forEach(c => { const i = E.back(P(t, c.a, 0.45))
 QDEF.slice(1).forEach(([n]) => sfx(S[n] - 0.08, 'whoosh', 0.5));
 const caps = $('#caps');
 const EMPH = { 25: '#C4B5FD', 26: '#C4B5FD', 41: '#FDBA74', 44: '#7DD3FC', 45: '#7DD3FC', 53: '#CBD5E1', 54: '#CBD5E1', 65: '#FFE14D', 81: '#F9A8D4', 89: '#FDBA74', 94: '#FF5A6E', 108: '#FFE14D', 109: '#FFE14D', 117: '#FF5A6E' };
-const chunks = []; { let cur = []; words.forEach((w, i) => { cur.push(i); const txt = cur.map(j => words[j].text).join(' '), nx = words[i + 1];
+const chunks = []; { let cur = []; words.forEach((w, i) => { if (w.scene === 'outro') return; cur.push(i); const txt = cur.map(j => words[j].text).join(' '), nx = words[i + 1];
   if (w.end || !nx || nx.scene !== w.scene || cur.length >= 4 || txt.length >= 18 || (/,$/.test(w.text) && cur.length >= 2)) { chunks.push(cur); cur = []; } }); }
 const capEls = chunks.map((idx, ci) => { const e = document.createElement('div'); e.className = 'cap'; e.innerHTML = idx.map(i => `<span>${words[i].text}</span>`).join(''); caps.appendChild(e);
   const a = W[idx[0]] - 0.1, nextA = chunks[ci + 1] ? W[chunks[ci + 1][0]] - 0.1 : END, lastEnd = WE[idx[idx.length - 1]], b = Math.min(nextA, nextA - lastEnd > 0.6 ? lastEnd + 0.4 : nextA);
@@ -337,7 +339,7 @@ SH.facts = (t, a, b) => {
 SH.outro = (t, a, b) => { dreamLight(); stars.rotation.y = t * 0.01; flyer.visible = true; const u = P(t, a, END - a);
   flyer.rotation.set(Math.PI / 2 - 0.25, -0.3, 0.1 * Math.sin(t * 2)); flyer.position.set(DX + lerp(2, -2, u), 3.5 + Math.sin(t * 2) * 0.15, lerp(-6, -12, u)); pose(flyer, { fly: 1 });
   camLook(V3(DX + lerp(1, -1, u), lerp(3, 4.5, u), lerp(2.5, 1, u)).add(hh(t, 2)), V3(DX, 2.5, -8), 55);
-  showFixed(logo, t, Wi(130) - 0.3, END + 5, 60); showFixed(follow, t, Wi(134) - 0.2, END + 5, 60); };
+};
 const ORDER = ['intro', 'cycle', 'brain', 'memory', 'lock', 'facts', 'outro'];
 // sound cues
 sfx(0.05, 'whooshS', 0.6); sfx(Wi(3), 'swoosh', 0.6); sfx(Wi(5), 'pop', 0.5); sfx(Wi(9) - 0.25, 'shimmer', 0.6);
@@ -346,7 +348,6 @@ sfx(Wi(40), 'shimmer', 0.5); sfx(Wi(43), 'sparkle', 0.5); sfx(Wi(53), 'down', 0.
 sfx(Wi(65), 'shimmer', 0.5); [0, 1, 2, 3, 4].forEach(i => sfx(Wi(68) + i * 0.35, 'pop', 0.35)); sfx(Wi(76) - 0.2, 'sparkle', 0.7);
 sfx(Wi(89), 'lock', 0.9); sfx(Wi(94), 'lock', 0.7); sfx(Wi(96), 'check', 0.5);
 sfx(Wi(108), 'ding', 0.6); sfx(Wi(115) - 0.2, 'poof', 0.6); sfx(Wi(122) - 0.1, 'chime', 0.5);
-sfx(Wi(130) - 0.3, 'pop', 0.6); sfx(Wi(134), 'click', 0.8);
 window.SFX = SFX;
 
 window.render = function (t) {

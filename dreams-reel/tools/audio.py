@@ -299,10 +299,12 @@ def reverb(x, d=1.6, decay=3.2, seed=1):
 def main():
     info = json.load(open(os.path.join(B, "sfx.json")))
     tl = json.load(open(os.path.join(B, "timeline.json")))
-    dur = info["duration"]; n = int(dur * SR)
+    dur = float(os.environ.get("DUR_OVERRIDE", info["duration"])); n = int(dur * SR)
     sr, v = wf.read(os.path.join(B, "voice.wav")); assert sr == SR
     voice = np.zeros(n); vv = v.astype(np.float64) / 32768; voice[:min(n, len(vv))] = vv[:n]
     voice = hp(voice, 80)
+    if os.environ.get("VOICE_CUT"):   # drop everything after this time (e.g. the follow-us outro line)
+        vc = int(float(os.environ["VOICE_CUT"]) * SR); f = int(0.03 * SR); voice[vc - f:vc] *= np.linspace(1, 0, f); voice[vc:] = 0
     # light voice polish: gentle presence + compression
     pres = bp(voice, 2500, 6000); voice = voice + 0.18 * pres
     # gentle voice compression (3:1 above -26 dBFS RMS, 15 ms attack / 120 ms release) + make-up gain
