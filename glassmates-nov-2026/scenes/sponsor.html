@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Visa Tree Sponsor</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .bgphoto {
+    position: absolute; inset: 0;
+    background: url(../assets/sponsor_trio.jpg) 50% 30% / cover no-repeat;
+    animation: kbTrio 9s linear both;
+    transform-origin: 50% 38%;
+  }
+  @keyframes kbTrio { from { transform: scale(1.0); } to { transform: scale(1.09); } }
+  .shade-top {
+    position: absolute; left: 0; right: 0; top: 0; height: 520px;
+    background: linear-gradient(180deg, rgba(8,3,4,.78) 0%, rgba(8,3,4,.35) 55%, transparent 100%);
+  }
+  .shade-bottom {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 1000px;
+    background: linear-gradient(0deg, rgba(8,3,4,.97) 0%, rgba(8,3,4,.9) 40%, rgba(8,3,4,.55) 68%, transparent 100%);
+  }
+  .flash {
+    position: absolute; inset: 0; background: #fff;
+    animation: flash .6s ease-out .15s both;
+  }
+  @keyframes flash { 0% { opacity: .0; } 15% { opacity: .55; } 100% { opacity: 0; } }
+
+  /* Sponsor logo card */
+  .vt-card {
+    position: absolute; top: 70px; left: 50%;
+    width: 330px; margin-left: -165px;
+    background: #fff;
+    border-radius: 34px;
+    padding: 22px 26px 18px;
+    box-shadow: 0 24px 60px rgba(0,0,0,.55), 0 0 0 6px rgba(244,197,66,.85), 0 0 0 12px rgba(255,255,255,.18);
+    animation: dropIn 1s cubic-bezier(.25,1.5,.5,1) .5s both;
+  }
+  .vt-card img { width: 100%; display: block; }
+  @keyframes dropIn {
+    from { opacity: 0; transform: translateY(-260px) scale(.8); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .ribbon {
+    position: absolute; top: 412px; left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #B5231A, var(--red), #B5231A);
+    color: #fff;
+    font-weight: 800; letter-spacing: 7px; font-size: 26px;
+    padding: 12px 40px;
+    border-radius: 40px;
+    white-space: nowrap;
+    box-shadow: 0 10px 30px rgba(0,0,0,.45);
+    animation: ribbonIn .6s ease-out 1.25s both;
+  }
+  @keyframes ribbonIn {
+    from { opacity: 0; transform: translateX(-50%) scale(.6); }
+    to   { opacity: 1; transform: translateX(-50%) scale(1); }
+  }
+
+  /* Bottom headline block */
+  .copy {
+    position: absolute; left: 60px; right: 60px; bottom: 120px;
+    text-align: center;
+  }
+  .copy > * { animation: fadeUp .8s cubic-bezier(.2,.9,.3,1) both; }
+  .copy .kicker { font-size: 32px; animation-delay: 1.6s; }
+  .copy .event {
+    font-weight: 900; font-size: 92px; line-height: 1.02; letter-spacing: 1px;
+    margin-top: 8px;
+    animation-delay: 1.85s;
+    text-shadow: 0 6px 30px rgba(0,0,0,.6);
+  }
+  .copy .event small { display: block; font-size: 50px; font-weight: 700; letter-spacing: 6px; color: #ffd9d2; }
+  .copy .by {
+    font-family: 'Dancing Script', cursive; font-weight: 700;
+    font-size: 76px; color: var(--gold-2);
+    margin-top: 18px;
+    animation-delay: 2.3s;
+  }
+  .copy .name {
+    font-weight: 900; font-size: 150px; line-height: 1;
+    letter-spacing: 3px;
+    margin-top: 4px;
+    animation: namePop 1s cubic-bezier(.2,1.4,.4,1) 2.7s both;
+    display: inline-block;
+    filter: drop-shadow(0 8px 24px rgba(244,197,66,.35));
+  }
+  .copy .name .mr { font-size: 84px; vertical-align: 22px; margin-right: 10px; }
+  @keyframes namePop {
+    from { opacity: 0; transform: scale(.5); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .copy .company {
+    margin-top: 18px;
+    font-weight: 800; font-size: 40px; letter-spacing: 8px;
+    animation-delay: 3.3s;
+  }
+  .copy .company .v { color: #5FB1F0; }
+  .copy .company .t { color: #4CC46F; }
+  .copy .company .c { display: block; font-size: 26px; letter-spacing: 12px; color: #c9c9c9; font-weight: 600; margin-top: 6px; }
+  .copy .rule {
+    width: 520px; height: 2px; margin: 30px auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: fadeIn .8s ease-out 3.8s both;
+  }
+  .copy .thanks {
+    margin-top: 24px;
+    font-size: 36px; font-weight: 500; color: #f3e9e0;
+    animation-delay: 4.1s;
+  }
+
+  /* Falling gold confetti */
+  .confetti { position: absolute; inset: 0; pointer-events: none; }
+  .confetti i {
+    position: absolute; top: -40px; width: 14px; height: 24px; border-radius: 3px;
+    animation: fall linear both;
+  }
+  @keyframes fall {
+    from { transform: translateY(0) rotate(0deg); opacity: 1; }
+    to   { transform: translateY(2050px) rotate(var(--spin)); opacity: .9; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="bgphoto"></div>
+  <div class="shade-top"></div>
+  <div class="shade-bottom"></div>
+  <div class="confetti" id="confetti"></div>
+  <div class="frame"></div>
+
+  <div class="vt-card shine" style="--shine-at: 1.8s;"><img src="../assets/visatree_logo.png" alt="Visa Tree Consultants"></div>
+  <div class="ribbon">OUR PROUD SPONSOR</div>
+
+  <div class="copy">
+    <div class="kicker">November 2026</div>
+    <div class="event">GLASSMATES<small>PARTY</small></div>
+    <div class="by">proudly sponsored by</div>
+    <div><span class="name gold-text"><span class="mr">Mr.</span>KIRAN</span></div>
+    <div class="company"><span class="v">VISA</span> <span class="t">TREE</span><span class="c">CONSULTANTS</span></div>
+    <div class="rule"></div>
+    <div class="thanks">Thank you for making November memorable! 🥂</div>
+  </div>
+
+  <div class="flash"></div>
+</div>
+<script>
+  // Deterministic confetti burst when the name lands
+  (function () {
+    let a = 42;
+    const rnd = () => { a = (a * 1664525 + 1013904223) % 4294967296; return a / 4294967296; };
+    const colors = ['#F4C542', '#FFE08A', '#E2412F', '#ffffff', '#2F86C8', '#1E9A4A'];
+    const box = document.getElementById('confetti');
+    for (let i = 0; i < 70; i++) {
+      const c = document.createElement('i');
+      c.style.left = (rnd() * 1080) + 'px';
+      c.style.background = colors[Math.floor(rnd() * colors.length)];
+      const s = .5 + rnd() * .8;
+      c.style.width = (14 * s) + 'px'; c.style.height = (24 * s) + 'px';
+      c.style.animationDuration = (3.2 + rnd() * 2.8) + 's';
+      c.style.animationDelay = (2.7 + rnd() * 1.6) + 's';
+      c.style.setProperty('--spin', (360 + rnd() * 900) * (rnd() > .5 ? 1 : -1) + 'deg');
+      box.appendChild(c);
+    }
+  })();
+</script>
+</body>
+</html>

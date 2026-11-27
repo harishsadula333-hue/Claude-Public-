@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Glassmates Intro</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .kicker.top {
+    position: absolute; top: 92px; left: 0; right: 0;
+    animation: fadeIn .7s ease-out .2s both;
+  }
+  .kicker.top span { color: #fff; }
+
+  /* Logo */
+  .logo-wrap {
+    position: absolute; top: 150px; left: 50%;
+    width: 780px; margin-left: -390px;
+    animation: logoIn 1.3s cubic-bezier(.2,.9,.25,1.15) .3s both;
+  }
+  .logo-wrap img { width: 100%; display: block; animation: float 4s ease-in-out 1.8s infinite; }
+  .logo-glow {
+    position: absolute; left: 50%; top: 50%;
+    width: 820px; height: 820px; margin: -410px 0 0 -410px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(226,65,47,.32) 0%, rgba(226,65,47,.08) 45%, transparent 68%);
+    animation: fadeIn 1.2s ease-out .6s both;
+  }
+  @keyframes logoIn {
+    0%   { opacity: 0; transform: scale(.55); filter: blur(18px); }
+    100% { opacity: 1; transform: scale(1);   filter: blur(0); }
+  }
+  /* Sparkle burst where the two glasses clink */
+  .clink {
+    position: absolute; left: 448px; top: 92px;
+    width: 0; height: 0;
+  }
+  .clink i {
+    position: absolute; left: 0; top: 0;
+    width: 6px; height: 46px; margin-left: -3px;
+    background: linear-gradient(180deg, transparent, #FFE08A);
+    border-radius: 3px;
+    transform-origin: 50% 0;
+    animation: ray .9s ease-out 1.25s both;
+  }
+  @keyframes ray {
+    0%   { opacity: 0; transform: rotate(var(--r)) translateY(10px) scaleY(.2); }
+    35%  { opacity: 1; }
+    100% { opacity: 0; transform: rotate(var(--r)) translateY(70px) scaleY(1); }
+  }
+
+  /* "say CHEERS to BEERS" card, styled after the club's own banner */
+  .cheers {
+    position: absolute; top: 845px; left: 60px; right: 60px;
+    background: #fff;
+    border: 14px solid var(--banner-red);
+    border-radius: 26px;
+    padding: 26px 30px 30px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,.55), 0 0 0 4px rgba(244,197,66,.35);
+    animation: fadeUp .8s cubic-bezier(.2,.9,.3,1) 1.9s both;
+  }
+  .cheers h2 {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 76px;
+    line-height: 1.05;
+    white-space: nowrap;
+    color: var(--banner-red);
+    letter-spacing: 1px;
+  }
+  .cheers h2 .dots { letter-spacing: 4px; }
+  .cheers .bow {
+    display: block; width: 560px; margin: 14px auto 18px;
+    transform-origin: 50% 50%;
+    animation: bowIn .7s cubic-bezier(.3,1.4,.5,1) 2.5s both;
+  }
+  @keyframes bowIn { from { opacity: 0; transform: scaleX(0); } to { opacity: 1; transform: scaleX(1); } }
+  .cheers .strip {
+    background: var(--banner-red);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 800;
+    font-size: 38px;
+    color: #fff;
+    white-space: nowrap;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    animation: stripIn .6s ease-out 2.9s both;
+    clip-path: inset(0 0 0 0);
+  }
+  @keyframes stripIn { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  .strip .emo { display: inline-block; font-size: 36px; animation: popIn .45s ease-out both; }
+  .strip .emo:nth-of-type(1) { animation-delay: 3.35s; }
+  .strip .emo:nth-of-type(2) { animation-delay: 3.47s; }
+  .strip .emo:nth-of-type(3) { animation-delay: 3.59s; }
+  .strip .emo:nth-of-type(4) { animation-delay: 3.71s; }
+  .strip .emo:nth-of-type(5) { animation-delay: 3.83s; }
+
+  .masked {
+    -webkit-mask-image: url(../assets/glassmates_logo.png);
+    -webkit-mask-size: 100% 100%;
+    mask-image: url(../assets/glassmates_logo.png);
+    mask-size: 100% 100%;
+  }
+  .masked::after { mix-blend-mode: normal; background: linear-gradient(100deg, transparent 0%, rgba(255,250,220,.85) 50%, transparent 100%); }
+
+  /* Founders photo */
+  .photo {
+    position: absolute; top: 1262px; left: 110px;
+    width: 860px; height: 590px;
+    border-radius: 30px;
+    padding: 8px;
+    background: linear-gradient(135deg, #FFE08A, #C9971C 40%, #FFE08A 60%, #B8860B);
+    box-shadow: 0 30px 70px rgba(0,0,0,.6), 0 0 60px rgba(244,197,66,.18);
+    animation: photoIn 1s cubic-bezier(.2,.9,.3,1) 3.7s both;
+  }
+  .photo .inner {
+    width: 100%; height: 100%;
+    border-radius: 23px; overflow: hidden; position: relative;
+  }
+  .photo img {
+    width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%;
+    display: block;
+    animation: kb 6s linear 3.7s both;
+  }
+  @keyframes kb { from { transform: scale(1.16); } to { transform: scale(1.02); } }
+  @keyframes photoIn {
+    from { opacity: 0; transform: translateY(80px) scale(.92); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="bg-wine"></div>
+  <div class="particles" data-seed="11" data-count="50"></div>
+  <div class="frame"></div>
+
+  <div class="kicker top">November <span>Meet</span> · 2026</div>
+
+  <div class="logo-wrap">
+    <div class="logo-glow"></div>
+    <div style="position: relative;">
+      <img src="../assets/glassmates_logo.png" alt="Glassmates">
+      <div class="shine masked" style="--shine-at: 1.9s; position: absolute; inset: 0;"></div>
+    </div>
+    <div class="clink">
+      <i style="--r:-150deg"></i><i style="--r:-120deg"></i><i style="--r:-90deg"></i>
+      <i style="--r:90deg"></i><i style="--r:120deg"></i><i style="--r:150deg"></i><i style="--r:180deg"></i>
+    </div>
+  </div>
+
+  <div class="cheers">
+    <h2>say CHEERS to BEERS<span class="dots">.....</span></h2>
+    <img class="bow" src="../assets/bow.png" alt="">
+    <div class="strip">
+      <span>no BUSINESS....only FUN.....</span>
+      <span class="emo">🍻</span><span class="emo">🥂</span><span class="emo">🍾</span><span class="emo">💃</span><span class="emo">🕺</span>
+    </div>
+  </div>
+
+  <div class="photo"><div class="inner"><img src="../assets/founders.jpg" alt="Glassmates founders"></div></div>
+</div>
+<script src="particles.js"></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video Overlays</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  html, body { background: transparent; }
+  .stage { background: transparent; }
+
+  /* Corner bug: Glassmates logo, top-right */
+  #bug {
+    position: absolute; top: 60px; right: 50px;
+    width: 250px; padding: 14px 16px;
+    background: rgba(10,4,5,.55);
+    border-radius: 22px;
+    border: 2px solid rgba(244,197,66,.55);
+  }
+  #bug img { width: 100%; display: block; }
+
+  /* Sponsor badge, bottom-left */
+  #badge {
+    position: absolute; bottom: 70px; left: 50px;
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,.94);
+    border-radius: 22px;
+    padding: 10px 18px 10px 18px;
+    border: 3px solid rgba(244,197,66,.9);
+  }
+  #badge span { color: #444; font-weight: 700; font-size: 22px; line-height: 1.1; text-align: right; }
+  #badge img { height: 84px; display: block; }
+
+  /* Lower-third shown at the start of the party video */
+  #lower {
+    position: absolute; left: 50px; right: 50px; bottom: 210px;
+    background: linear-gradient(90deg, rgba(120,16,20,.95), rgba(30,6,8,.92));
+    border-left: 10px solid var(--gold);
+    border-radius: 18px;
+    padding: 22px 34px;
+  }
+  #lower .t1 { font-weight: 900; font-size: 54px; line-height: 1.05; }
+  #lower .t2 { font-family: 'Dancing Script', cursive; font-weight: 700; font-size: 46px; color: var(--gold-2); }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div id="bug"><img src="../assets/glassmates_logo.png" alt=""></div>
+  <div id="badge"><span>Sponsored<br>by</span><img src="../assets/visatree_logo.png" alt=""></div>
+  <div id="lower">
+    <div class="t1">GLASSMATES · NOVEMBER MEET</div>
+    <div class="t2">no business… only fun! 🍻</div>
+  </div>
+</div>
+</body>
+</html>

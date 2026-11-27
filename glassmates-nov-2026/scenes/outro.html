@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Glassmates Outro</title>
+<link rel="stylesheet" href="common.css">
+<style>
+  .rings { position: absolute; left: 50%; top: 820px; width: 0; height: 0; }
+  .rings i {
+    position: absolute; left: -500px; top: -500px; width: 1000px; height: 1000px;
+    border-radius: 50%;
+    border: 3px solid rgba(244,197,66,.5);
+    animation: ring 3s ease-out infinite both;
+  }
+  .rings i:nth-child(2) { animation-delay: 1s; }
+  .rings i:nth-child(3) { animation-delay: 2s; }
+  @keyframes ring { from { transform: scale(.45); opacity: .9; } to { transform: scale(1.25); opacity: 0; } }
+
+  .logo-wrap {
+    position: absolute; top: 380px; left: 50%;
+    width: 960px; margin-left: -480px;
+    animation: logoIn 1.4s cubic-bezier(.2,.9,.25,1.15) .2s both;
+  }
+  .logo-wrap img { width: 100%; display: block; }
+  @keyframes logoIn {
+    0%   { opacity: 0; transform: scale(1.5); filter: blur(24px); }
+    100% { opacity: 1; transform: scale(1);   filter: blur(0); }
+  }
+  .masked {
+    -webkit-mask-image: url(../assets/glassmates_logo.png); -webkit-mask-size: 100% 100%;
+    mask-image: url(../assets/glassmates_logo.png); mask-size: 100% 100%;
+  }
+  .masked::after { mix-blend-mode: normal; background: linear-gradient(100deg, transparent 0%, rgba(255,250,220,.85) 50%, transparent 100%); }
+
+  .cheers-line {
+    position: absolute; top: 1280px; left: 0; right: 0; text-align: center;
+    font-family: 'Dancing Script', cursive; font-weight: 700;
+    font-size: 96px; color: var(--gold-2);
+    animation: fadeUp .9s cubic-bezier(.2,.9,.3,1) 1.6s both;
+  }
+  .sub {
+    position: absolute; top: 1420px; left: 0; right: 0;
+    animation: fadeUp .9s cubic-bezier(.2,.9,.3,1) 2s both;
+  }
+  .sub .kicker { font-size: 28px; letter-spacing: 10px; color: #f1e3d4; }
+
+  .sponsor-pill {
+    position: absolute; bottom: 120px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; align-items: center; gap: 22px;
+    background: #fff; border-radius: 60px;
+    padding: 14px 36px 14px 30px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.5), 0 0 0 4px rgba(244,197,66,.7);
+    animation: pillIn .8s ease-out 2.5s both;
+    white-space: nowrap;
+  }
+  .sponsor-pill span { color: #444; font-weight: 600; font-size: 28px; letter-spacing: 1px; }
+  .sponsor-pill img { height: 96px; display: block; }
+  @keyframes pillIn {
+    from { opacity: 0; transform: translateX(-50%) translateY(50px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="bg-wine" style="background:
+    radial-gradient(ellipse 900px 800px at 50% 42%, rgba(226,65,47,.42), transparent 70%),
+    linear-gradient(180deg, #160407 0%, #0b0405 60%, #140406 100%);"></div>
+  <div class="particles" data-seed="23" data-count="60"></div>
+  <div class="rings"><i></i><i></i><i></i></div>
+  <div class="frame"></div>
+
+  <div class="logo-wrap">
+    <div style="position: relative;">
+      <img src="../assets/glassmates_logo.png" alt="Glassmates">
+      <div class="shine masked" style="--shine-at: 1.5s; position: absolute; inset: 0;"></div>
+    </div>
+  </div>
+
+  <div class="cheers-line">Cheers to many more!</div>
+  <div class="sub"><div class="kicker">See you at the next meet</div></div>
+
+  <div class="sponsor-pill"><span>November meet sponsored by</span><img src="../assets/visatree_logo.png" alt="Visa Tree"></div>
+</div>
+<script src="particles.js"></script>
+</body>
+</html>
