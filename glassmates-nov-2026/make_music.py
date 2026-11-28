@@ -1,7 +1,8 @@
 """Synthesizes an original, royalty-free party track + glass clinks for the edit.
 
 usage: python3 make_music.py <out.wav> <total_seconds> <music_off_at> <music_back_at> [style]
-style: "swing" (default) - electro-swing lounge: walking bass, jazz e-piano, muted trumpet, 124 bpm
+style: "edm" (default)   - high-energy festival EDM: build-up, drop on the sponsor scene, 128 bpm
+       "swing"           - electro-swing lounge: walking bass, jazz e-piano, muted trumpet, 124 bpm
        "dhol"            - festive dhol + tumbi party groove, 100 bpm swing
        "pop"             - mellow pop groove (plucks, pad, four-on-the-floor), 112 bpm
 The music plays under the intro/sponsor scenes, ducks out while the party video
@@ -12,11 +13,11 @@ import numpy as np
 
 SR = 44100
 out, TOTAL, OFF_AT, BACK_AT = sys.argv[1], *map(float, sys.argv[2:5])
-STYLE = sys.argv[5] if len(sys.argv) > 5 else "swing"
+STYLE = sys.argv[5] if len(sys.argv) > 5 else "edm"
 N = int(TOTAL * SR)
 rng = np.random.default_rng(7)
 
-BPM = {'pop': 112, 'dhol': 100, 'swing': 124}[STYLE]
+BPM = {'pop': 112, 'dhol': 100, 'swing': 124, 'edm': 128}[STYLE]
 BEAT = 60 / BPM
 BAR = 4 * BEAT
 
@@ -317,7 +318,163 @@ def swing_groove():
             L[i:i + len(seg)] += seg * 0.8; R[i:i + len(seg)] += seg
             wet_L[i:i + len(seg)] += seg * 0.25; wet_R[i:i + len(seg)] += seg * 0.25
 
-{"pop": pop_groove, "dhol": dhol_groove, "swing": swing_groove}[STYLE]()
+# ---- High-energy EDM -------------------------------------------------------------
+def lp_var(x, fc):
+    """One-pole low-pass with a per-sample cutoff (for filter sweeps)."""
+    a = np.exp(-2 * np.pi * np.asarray(fc) / SR)
+    y = np.empty_like(x); acc = 0.0
+    for k in range(len(x)):
+        acc = (1 - a[k]) * x[k] + a[k] * acc
+        y[k] = acc
+    return y
+
+DETUNE = (-0.24, -0.15, -0.06, 0.0, 0.06, 0.15, 0.24)      # semitones
+def supersaw(freqs, dur, attack=0.005, decay=None):
+    t = np.arange(int(dur * SR)) / SR
+    l = np.zeros_like(t); r = np.zeros_like(t)
+    for f in freqs:
+        for j, d in enumerate(DETUNE):
+            w = 2 * ((f * 2 ** (d / 12) * t + rng.uniform()) % 1) - 1
+            if j % 2: l += w
+            else: r += w
+            if d == 0.0: l += w * 0.5; r += w * 0.5
+    env = np.minimum(1, t / attack) * np.minimum(1, (dur - t) / 0.02).clip(0, 1)
+    if decay: env *= np.exp(-t * decay)
+    n = len(freqs) * 4
+    return l * env / n, r * env / n
+
+def edm_kick():
+    t = np.arange(int(0.42 * SR)) / SR
+    f = 48 + 170 * np.exp(-t * 35)
+    body = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 6.5)
+    click = rng.uniform(-1, 1, len(t)) * np.exp(-t * 400)
+    return np.tanh(1.8 * body) + 0.3 * click
+
+def snare(pitch=1.0):
+    t = np.arange(int(0.2 * SR)) / SR
+    n = rng.uniform(-1, 1, len(t)); n = n - onepole_lp(n, 1200)
+    tone = np.sin(2 * np.pi * 190 * pitch * t) * np.exp(-t * 30)
+    return n * np.exp(-t * 22) + 0.6 * tone
+
+def crash():
+    t = np.arange(int(2.2 * SR)) / SR
+    n = rng.uniform(-1, 1, len(t)); n = n - onepole_lp(n, 4500)
+    return n * np.exp(-t * 2.2)
+
+def impact(t0, gain=0.9):
+    t = np.arange(int(1.8 * SR)) / SR
+    boom = np.sin(2 * np.pi * np.cumsum(30 + 50 * np.exp(-t * 6)) / SR) * np.exp(-t * 2.4)
+    add(np.tanh(2 * boom), t0, 0, gain)
+    add(crash(), t0, -0.3, 0.32); add(crash(), t0 + 0.01, 0.3, 0.32)
+
+def edm_groove():
+    # Am - F - C - G (vi - IV - I - V)
+    chords = [[57, 60, 64, 69], [57, 60, 65, 69], [55, 60, 64, 67], [55, 59, 62, 67]]
+    roots = [45, 41, 48, 43]
+    hook = [
+        [(0, 76), (3, 76), (6, 74), (8, 72), (10, 74), (12, 76), (14, 79)],
+        [(0, 77), (3, 77), (6, 76), (8, 72), (10, 72), (12, 69), (14, 72)],
+        [(0, 76), (3, 76), (6, 74), (8, 72), (10, 74), (12, 76), (14, 79)],
+        [(0, 79), (3, 79), (6, 81), (8, 83), (10, 81), (12, 79), (14, 74)],
+    ]
+    S16 = BEAT / 4
+    SPON = OFF_AT - 8.3
+    G0 = SPON - 4 * BAR                    # grid start: 4-bar build, drop lands on the sponsor scene
+    pump_L = np.zeros(N); pump_R = np.zeros(N)
+    kicks = []
+
+    def put(buf_l, buf_r, sig, t0, gain):
+        i = int(t0 * SR)
+        if i >= N or i < 0: return
+        l, r = sig; l = l[: N - i] * gain; r = r[: N - i] * gain
+        buf_l[i:i + len(l)] += l; buf_r[i:i + len(r)] += r
+
+    # pickup before the grid: a reverse-cymbal swell
+    if G0 > 0.05:
+        sw = crash()[: int(G0 * SR)][::-1] * np.linspace(0, 1, int(G0 * SR)) ** 2
+        add(sw, 0, 0, 0.35)
+
+    nbars = int((TOTAL - G0) / BAR) + 1
+    for b in range(nbars):
+        t0 = G0 + b * BAR
+        if OFF_AT + 1.2 < t0 and t0 + BAR + 0.6 < BACK_AT: continue   # muted under the party video
+        build = b < 4
+        ch = chords[b % 4]; root = roots[b % 4]
+        # --- chords: sustained, filtered during the build, wide open in the drop
+        l, r = supersaw([midi(n) for n in ch] + [midi(ch[0] - 12)], BAR, attack=0.01)
+        if build:
+            prog = (b + np.arange(len(l)) / len(l)) / 4
+            fc = 350 + 7000 * prog ** 2
+            l, r = lp_var(l, fc), lp_var(r, fc)
+            put(pump_L, pump_R, (l, r), t0, 1.1 + 0.4 * b / 4)
+        else:
+            l, r = onepole_lp(l, 6500), onepole_lp(r, 6500)
+            put(pump_L, pump_R, (l, r), t0, 1.25)
+        # --- kick (dropped for the last two beats of the build)
+        for k in range(4):
+            if build and b == 3 and k >= 2: continue
+            add(edm_kick(), t0 + k * BEAT, 0, 0.8); kicks.append(t0 + k * BEAT)
+        # --- hats
+        for k in range(16):
+            if k % 4 == 2: add(hat(open_=True), t0 + k * S16, 0.25, 0.30 if not build else 0.18)
+            elif not build or b >= 2: add(hat(), t0 + k * S16, -0.35, 0.10 if k % 2 else 0.15)
+        if build:
+            # snare roll that speeds up and rises, plus a noise riser in bars 3-4
+            if b >= 2:
+                steps = 8 if b == 2 else 16
+                for k in range(steps):
+                    tt = t0 + k * BAR / steps
+                    prog = ((b - 2) + k / steps) / 2
+                    add(snare(1 + prog), tt, 0, 0.18 + 0.4 * prog)
+                if b == 3:
+                    for k in range(8): add(snare(2.0), t0 + BAR / 2 + k * BAR / 16, 0, 0.6)
+                noise = rng.uniform(-1, 1, int(BAR * SR))
+                prog = ((b - 2) + np.arange(len(noise)) / len(noise)) / 2
+                rise = lp_var(noise, 400 + 9000 * prog ** 2) * prog ** 1.5
+                add(rise, t0, 0, 0.55)
+            # light bass pulse
+            for k in (2, 6, 10, 14):
+                add(bass(midi(root), S16 * 1.8), t0 + k * S16, 0, 0.35 * (b >= 1))
+            continue
+        # --- DROP
+        if (b - 4) % 8 == 0: add(crash(), t0, 0.2, 0.28)
+        for k in (1, 3):
+            add(clap(), t0 + k * BEAT, -0.1, 0.55); add(snare(), t0 + k * BEAT, 0.1, 0.35)
+        # rolling offbeat bass: saw + sub
+        for k in range(16):
+            if k % 4 == 0: continue
+            d = S16 * 0.9
+            tb = np.arange(int(d * SR)) / SR
+            fb = midi(root - 12)
+            saw = 2 * ((fb * tb) % 1) - 1
+            sig = onepole_lp(saw, 900) * 0.7 + np.sin(2 * np.pi * fb / 2 * tb) * 0.45
+            sig *= np.minimum(1, tb / 0.003) * np.minimum(1, (d - tb) / 0.01).clip(0, 1)
+            put(pump_L, pump_R, (sig, sig), t0 + k * S16, 0.55)
+        # supersaw lead hook
+        notes = hook[(b - 4) % 4]
+        for j, (k, n) in enumerate(notes):
+            nxt = notes[j + 1][0] if j + 1 < len(notes) else 16
+            d = min(nxt - k, 3) * S16 - 0.01
+            l, r = supersaw([midi(n), midi(n + 12)], d, attack=0.003, decay=3.5)
+            l, r = onepole_lp(l, 7000), onepole_lp(r, 7000)
+            put(L, R, (l, r), t0 + k * S16, 1.1)
+            put(wet_L, wet_R, (l, r), t0 + k * S16, 0.45)
+
+    impact(SPON, 0.9)                     # the drop
+    impact(BACK_AT + 0.15, 0.7)           # outro hit
+
+    # sidechain pump on chords + bass, keyed from the kick
+    t = np.arange(N) / SR
+    sc = np.ones(N)
+    for kt in kicks:
+        i0 = int(kt * SR); i1 = min(N, i0 + int(BEAT * SR))
+        if i0 >= N: continue
+        dt = t[i0:i1] - kt
+        sc[i0:i1] = np.minimum(sc[i0:i1], 1 - 0.85 * np.exp(-dt / 0.11))
+    L[:] += pump_L * sc; R[:] += pump_R * sc
+    wet_L[:] += pump_L * sc * 0.2; wet_R[:] += pump_R * sc * 0.2
+
+{"pop": pop_groove, "dhol": dhol_groove, "swing": swing_groove, "edm": edm_groove}[STYLE]()
 
 # Cheap reverb for the pad
 ir_t = np.arange(int(1.4 * SR)) / SR
@@ -340,7 +497,7 @@ L *= env; R *= env
 # Normalise the music bed to roughly match the party video's loudness, then add SFX on top.
 mask = env > 0.9
 rms = np.sqrt(np.mean((L[mask] ** 2 + R[mask] ** 2) / 2))
-target = 10 ** ({'pop': -17, 'dhol': -18, 'swing': -18}[STYLE] / 20)
+target = 10 ** ({'pop': -17, 'dhol': -18, 'swing': -18, 'edm': -17}[STYLE] / 20)
 L *= target / rms; R *= target / rms
 
 SPONSOR_AT = OFF_AT - 8.3          # sponsor scene starts one scene (9s - 0.7s xfade) before the video
