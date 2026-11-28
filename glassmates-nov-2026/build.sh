@@ -5,7 +5,8 @@
 #   2. Trio photo + Visa Tree logo: "November Glassmates party sponsored by Mr. Kiran"
 #   3. The party video
 #   4. Glassmates logo to close
-# usage: [MUSIC_STYLE=edm|swing|dhol|pop] ./build.sh <party_video.mp4> [work_dir]
+# usage: [MUSIC_STYLE=rock|edm|swing|dhol|pop] [KEEP_VIDEO_AUDIO=1] ./build.sh <party_video.mp4> [work_dir]
+#   default: party video's own sound is muted and the music plays under the whole edit
 set -euo pipefail
 cd "$(dirname "$0")"
 VIDEO="$1"
@@ -32,11 +33,20 @@ for o in bug badge lower; do
 done
 wait
 
-# 2) Soundtrack: original synth bed under intro/sponsor/outro, party audio in between
-python3 make_music.py "$WORK/music.wav" "$TOTAL" "$OFF2" "$OFF3" "${MUSIC_STYLE:-edm}"
+# 2) Soundtrack: original music. Continuous (party audio muted) unless KEEP_VIDEO_AUDIO=1,
+#    in which case the music ducks out under the party video and its own sound plays.
+KEEP_VIDEO_AUDIO="${KEEP_VIDEO_AUDIO:-0}"
+CONT=$([ "$KEEP_VIDEO_AUDIO" = "1" ] && echo 0 || echo 1)
+python3 make_music.py "$WORK/music.wav" "$TOTAL" "$OFF2" "$OFF3" "${MUSIC_STYLE:-rock}" "$CONT"
+if [ "$KEEP_VIDEO_AUDIO" = "1" ]; then
+  AUDIO_GRAPH="[3:a]aresample=44100,aformat=channel_layouts=stereo,loudnorm=I=-16:TP=-1.5:LRA=11,aresample=44100,
+         afade=t=in:st=0:d=0.6,afade=t=out:st=$(python3 -c "print(round($VD-$XF,3))"):d=${XF},adelay=$(python3 -c "print(int($OFF2*1000))"):all=1[va];
+    [7:a][va]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[aout]"
+else
+  AUDIO_GRAPH="[7:a]alimiter=limit=0.95[aout]"
+fi
 
 # 3) Assemble
-VA_FADE_OUT=$(python3 -c "print(round($VD-$XF,3))")
 ffmpeg -y -hide_banner -loglevel warning -stats \
   -framerate 30 -i "$WORK/intro/%05d.jpg" \
   -framerate 30 -i "$WORK/sponsor/%05d.jpg" \
@@ -58,9 +68,7 @@ ffmpeg -y -hide_banner -loglevel warning -stats \
     [intro][sponsor]xfade=transition=circleopen:duration=${XF}:offset=${OFF1}[x1];
     [x1][party]xfade=transition=smoothup:duration=${XF}:offset=${OFF2}[x2];
     [x2][outro]xfade=transition=fade:duration=${XF}:offset=${OFF3},fade=t=out:st=${FADE_END}:d=0.9[vout];
-    [3:a]aresample=44100,aformat=channel_layouts=stereo,loudnorm=I=-16:TP=-1.5:LRA=11,aresample=44100,
-         afade=t=in:st=0:d=0.6,afade=t=out:st=${VA_FADE_OUT}:d=${XF},adelay=$(python3 -c "print(int($OFF2*1000))"):all=1[va];
-    [7:a][va]amix=inputs=2:duration=first:normalize=0,alimiter=limit=0.95[aout]
+    ${AUDIO_GRAPH}
   " \
   -map "[vout]" -map "[aout]" \
   -c:v libx264 -preset slow -crf 23 -maxrate 4M -bufsize 8M -profile:v high -pix_fmt yuv420p \
