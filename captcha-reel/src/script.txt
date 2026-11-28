@@ -1,0 +1,15 @@
+# Token = spoken|shown (underscore in shown = space). Plain token = same both.
+#intro
+Website లో, I'm not a robot అని ఒక Box ఉంటుంది కదా? ఒక్క Click తో, మనం Robot కాదని దానికి ఎలా తెలుస్తుంది? అసలు ఇది ఎందుకు?
+#bots
+Internet లో లక్షల Bots తిరుగుతుంటాయి. అవి Fake Accounts చేస్తాయి, Spam పంపిస్తాయి, Tickets అన్నీ ఒకేసారి కొనేస్తాయి. వాటిని ఆపడానికే, CAPTCHA.
+#name
+CAPTCHA అంటే, Computers కి, మనుషులకి తేడా కనిపెట్టే, ఒక Automatic Test.
+#click
+అసలు సీక్రెట్ ఏంటంటే, ఆ Click కాదు ముఖ్యం. Click చేసే ముందు, మీ Mouse ఎలా కదిలిందో చూస్తుంది. మనుషుల కదలిక కొంచెం వంకరగా, Natural గా ఉంటుంది. Bots మాత్రం, Straight గా, Perfect గా వెళ్తాయి. Browser, Timing లాంటి Clues కూడా చెక్ చేస్తుంది.
+#images
+అనుమానం వస్తే, Traffic Lights, Bus లాంటి Photos Select చేయమంటుంది. Interesting విషయం ఏంటంటే, మనం ఇచ్చిన ఈ Answers, AI ని Train చేయడానికి కూడా ఉపయోగపడ్డాయి!
+#books
+పాత CAPTCHA లో వచ్చే వంకర Words, పాత పుస్తకాల నుంచే వచ్చాయి. అలా మనకి తెలియకుండానే, పాత పుస్తకాల్ని, Newspapers ని, Digital చేశాం!
+#future
+ఇప్పుడు కొన్ని AI Bots, మనకంటే వేగంగా CAPTCHA Solve చేస్తున్నాయి. అందుకే కొత్త CAPTCHAs, Click కూడా లేకుండా, Background లోనే మనల్ని చెక్ చేస్తున్నాయి!
