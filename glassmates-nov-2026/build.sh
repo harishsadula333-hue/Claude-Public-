@@ -5,7 +5,7 @@
 #   2. Trio photo + Visa Tree logo: "November Glassmates party sponsored by Mr. Kiran"
 #   3. The party video
 #   4. Glassmates logo to close
-# usage: [MUSIC_STYLE=dhol|pop] ./build.sh <party_video.mp4> [work_dir]
+# usage: [MUSIC_STYLE=swing|dhol|pop] ./build.sh <party_video.mp4> [work_dir]
 set -euo pipefail
 cd "$(dirname "$0")"
 VIDEO="$1"
@@ -33,7 +33,7 @@ done
 wait
 
 # 2) Soundtrack: original synth bed under intro/sponsor/outro, party audio in between
-python3 make_music.py "$WORK/music.wav" "$TOTAL" "$OFF2" "$OFF3" "${MUSIC_STYLE:-dhol}"
+python3 make_music.py "$WORK/music.wav" "$TOTAL" "$OFF2" "$OFF3" "${MUSIC_STYLE:-swing}"
 
 # 3) Assemble
 VA_FADE_OUT=$(python3 -c "print(round($VD-$XF,3))")

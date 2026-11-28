@@ -1,8 +1,9 @@
 """Synthesizes an original, royalty-free party track + glass clinks for the edit.
 
 usage: python3 make_music.py <out.wav> <total_seconds> <music_off_at> <music_back_at> [style]
-style: "dhol" (default) - festive dhol + tumbi party groove, 100 bpm swing
-       "pop"            - mellow pop groove (plucks, pad, four-on-the-floor), 112 bpm
+style: "swing" (default) - electro-swing lounge: walking bass, jazz e-piano, muted trumpet, 124 bpm
+       "dhol"            - festive dhol + tumbi party groove, 100 bpm swing
+       "pop"             - mellow pop groove (plucks, pad, four-on-the-floor), 112 bpm
 The music plays under the intro/sponsor scenes, ducks out while the party video
 (with its own audio) plays, and returns for the outro.
 """
@@ -11,11 +12,11 @@ import numpy as np
 
 SR = 44100
 out, TOTAL, OFF_AT, BACK_AT = sys.argv[1], *map(float, sys.argv[2:5])
-STYLE = sys.argv[5] if len(sys.argv) > 5 else "dhol"
+STYLE = sys.argv[5] if len(sys.argv) > 5 else "swing"
 N = int(TOTAL * SR)
 rng = np.random.default_rng(7)
 
-BPM = 112 if STYLE == 'pop' else 100
+BPM = {'pop': 112, 'dhol': 100, 'swing': 124}[STYLE]
 BEAT = 60 / BPM
 BAR = 4 * BEAT
 
@@ -227,7 +228,96 @@ def dhol_groove():
             i = int(eighth(t0, k) * SR); seg = st[: max(0, N - i)]
             wet_L[i:i + len(seg)] += seg * 0.30; wet_R[i:i + len(seg)] += seg * 0.30
 
-(pop_groove if STYLE == "pop" else dhol_groove)()
+# ---- Electro-swing lounge groove -------------------------------------------------
+def epiano(freq, dur=1.2):
+    """FM electric piano: bell-like attack that mellows out."""
+    t = np.arange(int(dur * SR)) / SR
+    idx = 1.6 * np.exp(-t * 7) + 0.25
+    y = np.sin(2 * np.pi * freq * t + idx * np.sin(2 * np.pi * freq * t))
+    y += 0.12 * np.sin(2 * np.pi * freq * 7.1 * t) * np.exp(-t * 25)       # tine ping
+    return y * np.exp(-t * 2.6) * np.minimum(1, t / 0.004)
+
+def upright(freq, dur):
+    t = np.arange(int(dur * SR)) / SR
+    y = np.sin(2 * np.pi * freq * t) + 0.45 * np.sin(4 * np.pi * freq * t) + 0.15 * np.sin(6 * np.pi * freq * t)
+    thump = rng.uniform(-1, 1, len(t)) * np.exp(-t * 90)
+    return onepole_lp(y + 0.3 * thump, 900) * np.exp(-t * 3.2) * np.minimum(1, t / 0.006) * np.minimum(1, (dur - t) / 0.03).clip(0, 1)
+
+def ride(acc=1.0):
+    t = np.arange(int(0.9 * SR)) / SR
+    y = np.zeros_like(t)
+    for f in (3150, 4370, 5230, 6170, 7410, 8830, 10120):
+        y += np.sin(2 * np.pi * f * t + rng.uniform(0, 6.28))
+    n = rng.uniform(-1, 1, len(t)); n = n - onepole_lp(n, 6000)
+    return (y / 7 * np.exp(-t * 4.5) * 0.6 + n * np.exp(-t * 14) * 0.5) * acc
+
+def snap():
+    t = np.arange(int(0.07 * SR)) / SR
+    n = rng.uniform(-1, 1, len(t)); n = onepole_lp(n, 3800) - onepole_lp(n, 1500)
+    return n * np.exp(-t * 70) * 1.6
+
+def trumpet(freq, dur):
+    """Harmon-muted trumpet: nasal saw with delayed vibrato."""
+    t = np.arange(int(dur * SR)) / SR
+    vib = 1 + 0.006 * np.minimum(1, t / 0.25) * np.sin(2 * np.pi * 5.6 * t)
+    ph = np.cumsum(freq * vib) / SR
+    saw = 2 * (ph % 1) - 1
+    nasal = onepole_lp(saw, 2600) - 0.85 * onepole_lp(saw, 650)
+    env = np.minimum(1, t / 0.035) * np.minimum(1, (dur - t) / 0.06).clip(0, 1) * (0.85 + 0.15 * np.exp(-t * 8))
+    return nasal * env
+
+SW = 0.66                                         # swing ratio for eighths
+def sw8(t0, k): return t0 + (k // 2) * BEAT + (k % 2) * BEAT * SW
+
+def swing_groove():
+    # I - vi - ii - V in F:  Fmaj9  Dm9  Gm9  C13 (rootless voicings)
+    voicings = [[57, 60, 64, 67], [53, 57, 60, 64], [53, 58, 62, 65], [52, 58, 62, 69]]
+    walk = [[41, 45, 48, 39], [38, 41, 45, 42], [43, 46, 41, 37], [36, 40, 43, 40]]
+    # 4-bar muted-trumpet tune: (eighth, midi, length in eighths)
+    tune = [
+        [(0, 72, 2), (2, 74, 1), (3, 76, 1), (4, 77, 2), (6, 76, 1), (7, 74, 1)],
+        [(0, 72, 3), (3, 69, 1), (4, 72, 3)],
+        [(0, 70, 1), (1, 74, 1), (2, 77, 2), (4, 76, 1), (5, 74, 1), (6, 72, 2)],
+        [(0, 70, 2), (2, 69, 2), (4, 67, 3), (7, 72, 1)],
+        [(0, 77, 2), (2, 76, 1), (3, 74, 1), (4, 72, 2), (6, 69, 1), (7, 72, 1)],
+        [(0, 74, 3), (3, 72, 1), (4, 69, 2), (6, 65, 2)],
+        [(0, 67, 1), (1, 70, 1), (2, 74, 1), (3, 77, 1), (4, 76, 2), (6, 74, 1), (7, 70, 1)],
+        [(0, 72, 6)],
+    ]
+    for b in range(bars):
+        t0 = b * BAR
+        if OFF_AT + 1.2 < t0 and t0 + BAR + 0.6 < BACK_AT: continue   # muted under the party video
+        full = b >= 1
+        v = voicings[b % 4]
+        # walking bass, quarter notes
+        for k, note in enumerate(walk[b % 4]):
+            add(upright(midi(note), BEAT * 0.95), t0 + k * BEAT, 0, 0.5)
+        # e-piano comping: Charleston rhythm, alternating with a push on the "and" of 4
+        hits = (0, 3) if b % 2 == 0 else (2, 7)
+        for k in hits:
+            for j, n in enumerate(v):
+                ep = epiano(midi(n), 1.0) * (0.25 if k in (0, 2) else 0.19)
+                i = int((sw8(t0, k) + j * 0.006) * SR); seg = ep[: max(0, N - i)]
+                wet_L[i:i + len(seg)] += seg * (0.9 if j % 2 else 0.6); wet_R[i:i + len(seg)] += seg * (0.6 if j % 2 else 0.9)
+        # ride: spang-a-lang
+        for k in (0, 2, 3, 4, 6, 7):
+            add(ride(1.0 if k in (2, 6) else 0.7), sw8(t0, k), 0.35, 0.24 if full else 0.15)
+        if not full: continue
+        # electro side: four-on-the-floor kick, snaps + soft clap on 2 & 4, off-beat hats
+        for k in range(4):
+            add(kick(), t0 + k * BEAT, 0, 0.4)
+            if k in (1, 3):
+                add(snap(), t0 + k * BEAT, -0.3, 0.5)
+                add(clap(), t0 + k * BEAT, 0.15, 0.2)
+        for k in (1, 3, 5, 7): add(hat(), sw8(t0, k), -0.4, 0.12)
+        # muted trumpet tune
+        for k, note, ln in tune[(b - 1) % 8]:
+            tr = trumpet(midi(note), sw8(0, k + ln) - sw8(0, k) - 0.02 if k + ln < 8 else BAR - sw8(0, k) - 0.02)
+            i = int(sw8(t0, k) * SR); seg = tr[: max(0, N - i)] * 0.42
+            L[i:i + len(seg)] += seg * 0.8; R[i:i + len(seg)] += seg
+            wet_L[i:i + len(seg)] += seg * 0.25; wet_R[i:i + len(seg)] += seg * 0.25
+
+{"pop": pop_groove, "dhol": dhol_groove, "swing": swing_groove}[STYLE]()
 
 # Cheap reverb for the pad
 ir_t = np.arange(int(1.4 * SR)) / SR
@@ -250,7 +340,7 @@ L *= env; R *= env
 # Normalise the music bed to roughly match the party video's loudness, then add SFX on top.
 mask = env > 0.9
 rms = np.sqrt(np.mean((L[mask] ** 2 + R[mask] ** 2) / 2))
-target = 10 ** ((-17 if STYLE == 'pop' else -18) / 20)
+target = 10 ** ({'pop': -17, 'dhol': -18, 'swing': -18}[STYLE] / 20)
 L *= target / rms; R *= target / rms
 
 SPONSOR_AT = OFF_AT - 8.3          # sponsor scene starts one scene (9s - 0.7s xfade) before the video
